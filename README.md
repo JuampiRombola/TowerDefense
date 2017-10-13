@@ -7,4 +7,4 @@ Ayudante a cargo: Martín Di Paola \
 Integrantes: \
 Martín Queija 96455 \
 Damián Cassinotti 96618 \
-Juan Pablo Rombolá 97131 \
+Juan Pablo Rombolá 97131 
