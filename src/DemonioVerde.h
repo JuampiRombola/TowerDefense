@@ -1,12 +1,14 @@
 #ifndef _DEMONIO_VERDE_
 #define _DEMONIO_VERDE_
 
-#include "IEnviormentUnit.h"
+#include "EnviormentUnit.h"
+#include "PathTile.h"
 
-class DemonioVerde : public IEnviormentUnit {
+class DemonioVerde : public EnviormentUnit {
 public:
-	DemonioVerde();
+	DemonioVerde(unsigned int id);
 	~DemonioVerde();
+	void PrintDebug();
 };
 
 #endif

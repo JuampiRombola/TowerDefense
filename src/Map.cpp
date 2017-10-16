@@ -1,77 +1,65 @@
 #include <string>
 #include <iostream>
 
-#include <cstdlib>
-#include <ctime>
-
 #include "Map.h"
+#include "IncompletePathException.h"
+#include "EnviormentUnit.h"
+#include "PathTile.h"
 
 Map::Map(uint sideLength, std::string mapJsonConfig) 
-: _sideLength(sideLength), _tiles()
+: _sideLength(sideLength), _pathTiles(), _structureTiles()
 {
-
-	//
-	// Aca levantariamos de archivo el mapa creado
-	// en el editor de mapas, ahora en cambio armo un
-	// mapa de manera random (lo mas tonto del mundo)
-	//
-	// Donde deje estaba probando hacer un mapa solo de 
-	// caminos con orientacion derecha y abajo y intentando
-	// poner el spawn en el (0,0) para despues spawnear bichos
-	// y ver como paso a paso caminan por el path que hay
-	//
-
-	PathTile* tile; 
-	std::srand(std::time(0)); // use current time as seed for random generator
-	int random_variable = 0;
-	for (int i = 0; (uint) i < _sideLength; i++)
-	{
-		_tiles.push_back(new std::vector<ITile*>(sideLength));
-		for (int j = 0; (uint) j < sideLength; j++)
-		{
-			random_variable = std::rand() % 2;
-    		ITile* newTile = NULL;
-    		switch (random_variable){
-    			case 0:
-    				tile = new PathTile(right);
-    				newTile = tile;
-    				if (i == 0 && j == 0) _spawnTile = tile;
-    				break;
-    			case 1:
-    				newTile = new PathTile(down);
-    				break;
-    		}
-    		(*_tiles[i])[j] = newTile;		
-		}
-	}
+	//Armo un camino a mano
+	PathTile *tile00 = new PathTile(0,0);
+	_pathTiles.push_back(tile00);
+	PathTile *tile10 = new PathTile(1,0);
+	_pathTiles.push_back(tile10);
+	PathTile *tile11 = new PathTile(1,1);
+	_pathTiles.push_back(tile11);
+	PathTile *tile12 = new PathTile(1,2);
+	_pathTiles.push_back(tile12);
+	PathTile *tile13 = new PathTile(1,3);
+	_pathTiles.push_back(tile13);
+	PathTile *tile23 = new PathTile(2,3);
+	_pathTiles.push_back(tile23);
+	PathTile *tile33 = new PathTile(3,3);
+	_pathTiles.push_back(tile33);
+	PathTile *tile34 = new PathTile(3,4);
+	_pathTiles.push_back(tile34);
+	PathTile *tile35 = new PathTile(3,5);
+	_pathTiles.push_back(tile35);
+	
+	tile00->SetNextTile(tile10);
+	tile10->SetNextTile(tile11);
+	tile11->SetNextTile(tile12);
+	tile12->SetNextTile(tile13);
+	tile13->SetNextTile(tile23);
+	tile23->SetNextTile(tile33);
+	tile33->SetNextTile(tile34);
+	tile34->SetNextTile(tile35);
+	
+	_spawnTile = tile00;
+	_finishTile = tile35;
 }
 
 Map::~Map(){
-	for (int i = 0; (uint) i < _sideLength; i++)
-	{
-		std::vector<ITile*> *row = _tiles[i];
-		for (int j = 0; (uint) j < _sideLength; j++)
-		{
-			ITile *tile = (*row)[j];
-			delete tile;
-		}
-		delete row;
-	}
+
+	for (auto it = _pathTiles.begin(); it != _pathTiles.end(); it++)
+		delete *it;
+	
+	for (auto it = _structureTiles.begin(); it != _structureTiles.end(); it++)
+		delete *it;
 }
 
-void Map::DebugPrint(){
-	for (int i = 0; (uint) i < _sideLength; i++)
-	{
-		std::vector<ITile*> *row = _tiles[i];
-		for (int j = 0; (uint) j < _sideLength; j++)
-		{
-			ITile *tile = (*row)[j];
-			std::cout << tile->GetSymbol();
-		}
-		std::cout << '\n';
-	}
+
+void Map::SpawnUnit(EnviormentUnit* unit){
+	unit->SetPosition(_spawnTile);
 }
 
-void Map::SpawnUnit(IEnviormentUnit* unit){
+PathTile* Map::GetSpawnTile(){
+	return _spawnTile;
+}
 
+PathTile* Map::GetFinishTile(){
+	return _finishTile;
 }

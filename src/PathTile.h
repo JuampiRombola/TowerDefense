@@ -1,23 +1,18 @@
 #ifndef _PATH_TILE_
 #define _PATH_TILE_
 
-#include <unordered_set>
-#include "ITile.h"
-#include "IEnviormentUnit.h"
+#include <vector>
+#include "Tile.h"
 
-enum Direction { up, down, left, right };
-
-class PathTile : public ITile {
+class PathTile : public Tile {
 private:
-	Direction _direction;
-	std::unordered_set<IEnviormentUnit*> _units;
+	PathTile* _next;
 public:
-	PathTile(Direction dir);
+	PathTile(unsigned int xPos, unsigned int yPos);
 	~PathTile();
-	bool AcceptsStructures();
-	bool IsPath();
-	Direction GetDirection();
 	char GetSymbol();
+	PathTile* Next();
+	void SetNextTile(PathTile* tile);
 };
 
 #endif

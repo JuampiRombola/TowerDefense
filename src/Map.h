@@ -2,24 +2,30 @@
 #define _MAP_
 
 #include <vector>
+#include <map>
 #include <string>
 
-#include "ITile.h"
+#include "Tile.h"
 #include "PathTile.h"
-#include "SceneTile.h"
 #include "StructureTile.h"
-#include "IEnviormentUnit.h"
+#include "EnviormentUnit.h"
 
 class Map{
 private:
 	uint _sideLength;
-	std::vector<std::vector<ITile*>*> _tiles;
+
 	PathTile* _spawnTile;
+	PathTile* _finishTile;
+
+	std::vector<PathTile*> _pathTiles;
+	std::vector<StructureTile*> _structureTiles;
+
 public:
 	Map(uint sideLength, std::string mapJsonConfig);
 	~Map();
-	void DebugPrint();
-	void SpawnUnit(IEnviormentUnit* unit);
+	void SpawnUnit(EnviormentUnit* unit);
+	PathTile* GetSpawnTile();
+	PathTile* GetFinishTile();
 };
 
 #endif

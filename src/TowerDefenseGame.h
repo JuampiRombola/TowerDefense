@@ -2,19 +2,22 @@
 #define _TOWER_DEFENSE_GAME_
 
 #include <vector>
-#include <string>
-#include <unordered_set>
 
 #include "Map.h"
-#include "IEnviormentUnit.h"
+#include "EnviormentUnit.h"
 
 class TowerDefenseGame{
 private:
-	std::unordered_set<IEnviormentUnit*> _units;
+	unsigned int _steps;
+	unsigned int _enemyIdCounter;
+	std::vector<EnviormentUnit*> _units;
 	Map _map;
+	void _Step();
 public:
 	TowerDefenseGame();
 	~TowerDefenseGame();
+	void NewEnemy();
+	void Run();
 };
 
 #endif

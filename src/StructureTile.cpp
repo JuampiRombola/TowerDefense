@@ -1,17 +1,9 @@
 #include <iostream>
 #include "StructureTile.h"
 
-StructureTile::StructureTile(){}
+StructureTile::StructureTile(unsigned int xPos, unsigned int yPos) : Tile(xPos, yPos) {}
 
 StructureTile::~StructureTile(){}
-
-bool StructureTile::AcceptsStructures(){
-	return true;
-}
-
-bool StructureTile::IsPath(){
-	return false;
-}
 
 char StructureTile::GetSymbol(){
 	return 'L';

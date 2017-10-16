@@ -1,33 +1,21 @@
 #include <iostream>
 #include "PathTile.h"
+#include "EnviormentUnit.h"
 
-PathTile::PathTile(Direction dir) : _direction(dir), _units() {}
+PathTile::PathTile(unsigned int xPos, unsigned int yPos) 
+: Tile(xPos, yPos), _next(NULL) {}
 
 PathTile::~PathTile(){}
 
-bool PathTile::AcceptsStructures(){
-	return false;
-}
-
-bool PathTile::IsPath(){
-	return true;
-}
-
-Direction PathTile::GetDirection(){
-	return _direction;
-}
 
 char PathTile::GetSymbol(){
-	switch (_direction){
-		case up:
-			return 'u';
-		case down:
-			return 'd';
-		case right:
-			return 'r';
-		case left: 
-			return 'l';
-		default:
-			return 'P';
-	}
+	return 'P';
+}
+
+PathTile* PathTile::Next(){
+	return _next;
+}
+
+void PathTile::SetNextTile(PathTile* tile){
+	_next = tile;
 }

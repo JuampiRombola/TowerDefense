@@ -1,15 +1,12 @@
 #ifndef _STRUCTURE_TILE_
 #define _STRUCTURE_TILE_
 
-#include "ITile.h"
+#include "Tile.h"
 
-
-class StructureTile : public ITile {
+class StructureTile : public Tile {
 public:
-	StructureTile();
+	StructureTile(unsigned int xPos, unsigned int yPos);
 	~StructureTile();
-	bool AcceptsStructures();
-	bool IsPath();
 	char GetSymbol();
 };
 

@@ -9,5 +9,6 @@
 
 int main(int argc, char** argv)
 {
-    TowerDefenseGame game;
+    TowerDefenseGame game = TowerDefenseGame();
+    game.Run();
 }
