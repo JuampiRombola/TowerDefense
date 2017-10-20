@@ -7,24 +7,34 @@
 
 #include "Tile.h"
 #include "PathTile.h"
-#include "StructureTile.h"
+#include "SolidGroundTile.h"
 #include "EnviormentUnit.h"
 
 class Map{
 private:
 	uint _sideLength;
 
-	PathTile* _spawnTile;
+	std::vector<PathTile*> _spawnTiles;
 	PathTile* _finishTile;
 
 	std::vector<PathTile*> _pathTiles;
-	std::vector<StructureTile*> _structureTiles;
+	std::vector<SolidGroundTile*> _groundTiles;
+
+	// Setea "tile" como SpawnTile, si la tile 
+	// ya es spawn no hace nada.
+	void _SetSpawnTile(PathTile* tile);
 
 public:
 	Map(uint sideLength, std::string mapJsonConfig);
 	~Map();
-	void SpawnUnit(EnviormentUnit* unit);
-	PathTile* GetSpawnTile();
+
+	// "Pone la unit en la tile "
+
+	void SpawnUnit(EnviormentUnit* unit, PathTile* tile);
+
+	std::vector<PathTile*>& SpawnTiles();
+
+
 	PathTile* GetFinishTile();
 };
 

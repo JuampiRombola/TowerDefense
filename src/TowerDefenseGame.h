@@ -12,7 +12,7 @@ private:
 	unsigned int _enemyIdCounter;
 	std::vector<EnviormentUnit*> _units;
 	Map _map;
-	void _Step();
+	bool _Step();
 public:
 	TowerDefenseGame();
 	~TowerDefenseGame();

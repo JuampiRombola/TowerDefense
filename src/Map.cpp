@@ -1,13 +1,15 @@
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 #include "Map.h"
 #include "IncompletePathException.h"
+#include "TileCannotSpawnException.h"
 #include "EnviormentUnit.h"
 #include "PathTile.h"
 
 Map::Map(uint sideLength, std::string mapJsonConfig) 
-: _sideLength(sideLength), _pathTiles(), _structureTiles()
+: _sideLength(sideLength), _spawnTiles(), _pathTiles(), _groundTiles()
 {
 	//Armo un camino a mano
 	PathTile *tile00 = new PathTile(0,0);
@@ -38,8 +40,10 @@ Map::Map(uint sideLength, std::string mapJsonConfig)
 	tile33->SetNextTile(tile34);
 	tile34->SetNextTile(tile35);
 	
-	_spawnTile = tile00;
+	_SetSpawnTile(tile00);
+
 	_finishTile = tile35;
+
 }
 
 Map::~Map(){
@@ -47,19 +51,33 @@ Map::~Map(){
 	for (auto it = _pathTiles.begin(); it != _pathTiles.end(); it++)
 		delete *it;
 	
-	for (auto it = _structureTiles.begin(); it != _structureTiles.end(); it++)
+	for (auto it = _groundTiles.begin(); it != _groundTiles.end(); it++)
 		delete *it;
 }
 
 
-void Map::SpawnUnit(EnviormentUnit* unit){
-	unit->SetPosition(_spawnTile);
+void Map::SpawnUnit(EnviormentUnit* unit, PathTile* tile){
+	if (tile->CanSpawn()){
+		tile->Place(unit);
+		unit->SetPosition(tile);
+	} else {
+		throw new TileCannotSpawnException();
+	}
 }
 
-PathTile* Map::GetSpawnTile(){
-	return _spawnTile;
+std::vector<PathTile*>& Map::SpawnTiles(){
+	return _spawnTiles;
 }
 
 PathTile* Map::GetFinishTile(){
 	return _finishTile;
+}
+
+
+void Map::_SetSpawnTile(PathTile* tile){
+	auto it = std::find(_spawnTiles.begin(), _spawnTiles.end(), tile);
+	if (it == _spawnTiles.end()){
+		_spawnTiles.push_back(tile);
+		tile->SetCanSpawn();
+	} 
 }

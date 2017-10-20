@@ -1,7 +1,7 @@
 #ifndef __ENVIORMENT_UNIT__
 #define __ENVIORMENT_UNIT__
 
-#include "PathTile.h"
+class PathTile;
 
 class EnviormentUnit{
 private:
