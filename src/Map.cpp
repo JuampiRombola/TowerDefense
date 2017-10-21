@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <vector>
 
 #include "Map.h"
 #include "IncompletePathException.h"
@@ -8,28 +9,41 @@
 #include "EnviormentUnit.h"
 #include "PathTile.h"
 
-Map::Map(uint sideLength, std::string mapJsonConfig) 
-: _sideLength(sideLength), _spawnTiles(), _pathTiles(), _groundTiles()
+Map::Map(uint rows, uint cols, std::string mapJsonConfig):
+
+_rows(rows), _cols(cols), _tiles(rows * cols), _spawnTiles(), 
+_pathTiles(rows, std::vector<PathTile*>(cols)), 
+_groundTiles(rows, std::vector<SolidGroundTile*>(cols))
+
 {
 	//Armo un camino a mano
 	PathTile *tile00 = new PathTile(0,0);
-	_pathTiles.push_back(tile00);
+	_pathTiles[0][0] = tile00;
+	_tiles.push_back(tile00);
 	PathTile *tile10 = new PathTile(1,0);
-	_pathTiles.push_back(tile10);
+	_pathTiles[0][1] = tile10;
+	_tiles.push_back(tile10);
 	PathTile *tile11 = new PathTile(1,1);
-	_pathTiles.push_back(tile11);
+	_pathTiles[1][1] = tile11;
+	_tiles.push_back(tile11);
 	PathTile *tile12 = new PathTile(1,2);
-	_pathTiles.push_back(tile12);
+	_pathTiles[1][2] = tile12;
+	_tiles.push_back(tile12);
 	PathTile *tile13 = new PathTile(1,3);
-	_pathTiles.push_back(tile13);
+	_pathTiles[1][3] = tile13;
+	_tiles.push_back(tile13);
 	PathTile *tile23 = new PathTile(2,3);
-	_pathTiles.push_back(tile23);
+	_pathTiles[2][3] = tile23;
+	_tiles.push_back(tile23);
 	PathTile *tile33 = new PathTile(3,3);
-	_pathTiles.push_back(tile33);
+	_pathTiles[3][3] = tile33;
+	_tiles.push_back(tile33);
 	PathTile *tile34 = new PathTile(3,4);
-	_pathTiles.push_back(tile34);
+	_pathTiles[3][4] = tile34;
+	_tiles.push_back(tile34);
 	PathTile *tile35 = new PathTile(3,5);
-	_pathTiles.push_back(tile35);
+	_pathTiles[3][5] = tile35;
+	_tiles.push_back(tile35);
 	
 	tile00->SetNextTile(tile10);
 	tile10->SetNextTile(tile11);
@@ -43,20 +57,14 @@ Map::Map(uint sideLength, std::string mapJsonConfig)
 	_SetSpawnTile(tile00);
 
 	_finishTile = tile35;
-
 }
 
 Map::~Map(){
-
-	for (auto it = _pathTiles.begin(); it != _pathTiles.end(); it++)
-		delete *it;
-	
-	for (auto it = _groundTiles.begin(); it != _groundTiles.end(); it++)
+	for (auto it = _tiles.begin(); it != _tiles.end(); ++it)
 		delete *it;
 }
 
-
-void Map::SpawnUnit(EnviormentUnit* unit, PathTile* tile){
+void Map::PlaceUnit(EnviormentUnit* unit, PathTile* tile){
 	if (tile->CanSpawn()){
 		tile->Place(unit);
 		unit->SetPosition(tile);

@@ -1,13 +1,21 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
+#include <thread>
+#include <chrono>
+#include <mutex>
 
 #include "TowerDefenseGame.h"
 #include "Map.h"
 #include "DemonioVerde.h"
 #include "EnviormentUnit.h"
 
-TowerDefenseGame::TowerDefenseGame() : _steps(0), _enemyIdCounter(0), _units(), _map(10, "jsonmapconfigfilename") 
+#include "CannotSpawnWithoutSettingSpawnTiles.h"
+
+
+TowerDefenseGame::TowerDefenseGame() : 
+ _ended_mutex(), _ended(false), _steps(0), 
+ _enemyIdCounter(0), _units(), _map(10, 10, "jsonmapconfigfilename") 
 {
 
 }
@@ -19,7 +27,7 @@ TowerDefenseGame::~TowerDefenseGame()
 }
 
 
-void TowerDefenseGame::NewEnemy(){
+void TowerDefenseGame::SpawnEnemy(){
 	//Por ahora solo tengo demonios verdes.
 	//aca iria la logica de que bicho sacar de manera random
 
@@ -28,14 +36,14 @@ void TowerDefenseGame::NewEnemy(){
 	// por ahora agarro el primero :P
 
 
-	if (_map.SpawnTiles().begin() == _map.SpawnTiles().end()){
-		std::cout << "throw cannot spawn, there are no spawntiles";
-	} else {
+	if (_map.SpawnTiles().begin() != _map.SpawnTiles().end()){
 		PathTile* _spawn = *_map.SpawnTiles().begin();
 		EnviormentUnit* u = new DemonioVerde(++_enemyIdCounter);
-		_map.SpawnUnit(u, _spawn);
+		_map.PlaceUnit(u, _spawn);
 		_units.push_back(u);
-	} 
+	} else 
+		throw new CannotSpawnWithoutSettingSpawnTiles();
+
 	std::cout << " new enemy created \n";
 }
 
@@ -48,30 +56,29 @@ bool TowerDefenseGame::_Step(){
 		(*it)->PrintDebug();
 	}
 
-	return _map.GetFinishTile()->HasAnyUnit();
+	
+	std::lock_guard<std::mutex> lock(_ended_mutex);
+	_ended = _map.GetFinishTile()->HasAnyUnit();
+	return !_ended;
+}
+
+
+bool TowerDefenseGame::Ended(){
+	std::lock_guard<std::mutex> lock(_ended_mutex);
+	return _ended;
 }
 
 
 
-
-void TowerDefenseGame::Run(){
-	char c = 'a';
-	bool gameEnded = false;
-	while (c != 'q' && !gameEnded){
-		std::cin.get(c);
-
-		if (c == '+')
-			NewEnemy();
-
-		gameEnded = _Step();
-	}
-	
+void TowerDefenseGame::Run()
+{
+	while(_Step()) 
+		std::this_thread::sleep_for (std::chrono::milliseconds(CLOCK_FREQUENCY_MS));
 
 	//
 	// Por ahora solo se puede perder.
 	// jeje que juego divertido.
 	//
 
-	std::cout << "GAME OVER!\n";
-
+	std::cout << "GAME OVER! \n\nPRESS ENTER TO EXIT... \n";
 }
