@@ -23,8 +23,9 @@ private:
 	std::vector<std::vector<PathTile*>> _pathTiles;
 	std::vector<std::vector<SolidGroundTile*>> _groundTiles;
 
-	// Setea "tile" como SpawnTile, si la tile 
-	// ya es spawn no hace nada.
+	void _PlaceTile(Tile* tile);
+	void _PlaceGroundTile(SolidGroundTile* tile);
+	void _PlacePathTile(PathTile* tile);
 	void _SetSpawnTile(PathTile* tile);
 public:
 	Map(uint rows, uint cols, std::string mapJsonConfig);

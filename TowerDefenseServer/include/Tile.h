@@ -3,14 +3,14 @@
 
 class Tile{
 private:
-	unsigned int _xPos;
-	unsigned int _yPos;
+	uint _xPos;
+	uint _yPos;
 public:
-	Tile(unsigned int xPos, unsigned int yPos);
+	Tile(uint xPos, uint yPos);
 	virtual ~Tile();
 	virtual char GetSymbol() = 0;
-	unsigned int GetXPos();
-	unsigned int GetYPos();
+	uint GetXPos();
+	uint GetYPos();
 };
 
 #endif

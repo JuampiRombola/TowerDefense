@@ -15,7 +15,7 @@
 
 TowerDefenseGame::TowerDefenseGame() : 
  _ended_mutex(), _ended(false), _steps(0), 
- _enemyIdCounter(0), _units(), _map(10, 10, "jsonmapconfigfilename") 
+ _enemyIdCounter(0), _units(), _map(2, 2, "jsonmapconfigfilename") 
 {
 
 }

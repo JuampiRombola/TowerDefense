@@ -6,7 +6,7 @@
 #include "EnviormentUnit.h"
 #include "PathTile.h"
 
-PathTile::PathTile(unsigned int xPos, unsigned int yPos) 
+PathTile::PathTile(uint xPos, uint yPos) 
 : Tile(xPos, yPos), _next(NULL), _units() {}
 
 PathTile::~PathTile(){}

@@ -1,18 +1,19 @@
 #include <algorithm>
+#include <iostream>
 #include <iterator>
 
 #include "Tile.h"
 
-Tile::Tile(unsigned int xPos, unsigned int yPos) : _xPos(xPos), _yPos(yPos) 
+Tile::Tile(uint xPos, uint yPos) : _xPos(xPos), _yPos(yPos) 
 {
-
+	//std::cout << "Tile init: " << xPos << ", " << yPos << '\n';
 }
 
 Tile::~Tile(){}
 
-unsigned int Tile::GetXPos(){
+uint Tile::GetXPos(){
 	return _xPos;
 }
-unsigned int Tile::GetYPos(){
+uint Tile::GetYPos(){
 	return _yPos;
 }

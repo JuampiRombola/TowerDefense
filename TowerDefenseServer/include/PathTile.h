@@ -15,7 +15,7 @@ private:
 	bool _canSpawn;
 	std::vector<EnviormentUnit*> _units;
 public:
-	PathTile(unsigned int xPos, unsigned int yPos);
+	PathTile(uint xPos, uint yPos);
 	~PathTile();
 	char GetSymbol();
 	PathTile* Next();
