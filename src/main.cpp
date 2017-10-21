@@ -4,7 +4,7 @@
 #include "TowerDefenseGame.h"
 
 
-int main(int argc, char** argv)
+/*int main(int argc, char** argv)
 {
     TowerDefenseGame game;
     std::thread gameClock(&TowerDefenseGame::Run, &game);
@@ -22,5 +22,5 @@ int main(int argc, char** argv)
 
     gameClock.join();
     return 0;
-}
+}*/
 

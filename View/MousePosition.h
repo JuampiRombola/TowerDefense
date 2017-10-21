@@ -6,13 +6,14 @@ class MousePosition {
 private:
     int &x;
     int &y;
-    bool &active;
+    bool active;
 public:
-    MousePosition(int &x, int&y, bool& active);
+    MousePosition(int &x, int&y);
     ~MousePosition();
     int getPosX();
     int getPosY();
     bool isActive();
+    void toggleActive();
 };
 
 

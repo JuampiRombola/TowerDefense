@@ -16,6 +16,7 @@ public:
     Renderer(Window *window, int mapWidth);
     ~Renderer();
     void copy(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *dst);
+    void copyEuclidean(SDL_Texture *texture, SDL_Rect *dst);
     void clearRender();
     void present();
     void updateCamera(int x, int y);

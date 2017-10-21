@@ -7,7 +7,8 @@
 
 class TextureLoader {
 private:
-    enum PNGS{PRADERA = 0, TIERRAFIRME, CAMINOTIERRA, /*PORTALENTRADA,
+    enum PNGS{PRADERA = 0, TIERRAFIRME, CAMINOTIERRA, BOTON_PRUEBA,
+        /*PORTALENTRADA,
         PORTALSALIDA, TORRETIERRA, ABOMINABLE,*/ TOTAL};
 
     std::vector<SDL_Surface *> images;

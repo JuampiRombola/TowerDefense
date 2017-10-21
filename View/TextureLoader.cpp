@@ -4,7 +4,7 @@
 TextureLoader::TextureLoader(SDL_Renderer *renderer) {
     IMG_Init(IMG_INIT_PNG);
     for (int i = 0; i < TOTAL; ++i) {
-        SDL_Surface *im = IMG_Load(("../Resources/"
+        SDL_Surface *im = IMG_Load(("Resources/"
                                     + std::to_string(i)
                                     + ".png").c_str());
         images.push_back(im);

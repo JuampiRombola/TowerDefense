@@ -52,7 +52,7 @@ void MapView::draw(Uint32 ticks) {
 
     srcRect.x = XSPRITESRC;
     srcRect.y = YSPRITESRC;
-    for (int i = 0; i < (*pathTiles).size(); ++i) {
+    for (unsigned int i = 0; i < (*pathTiles).size(); ++i) {
         dstRect.x = ((*pathTiles)[i])->GetXPos(); // Paso x en coord cartesianas
         dstRect.y = ((*pathTiles)[i])->GetYPos(); // Paso y en coord cartesianas
         // Dentro de render->copy() se cambia a coord isometricas
@@ -61,7 +61,7 @@ void MapView::draw(Uint32 ticks) {
 
     srcRect.x = XSPRITESRC;
     srcRect.y = YSPRITESRC;
-    for (int i = 0; i < (*structureTiles).size(); ++i) {
+    for (unsigned int i = 0; i < (*structureTiles).size(); ++i) {
         dstRect.x = ((*structureTiles)[i])->GetXPos(); // Paso x en coord cartesianas
         dstRect.y = ((*structureTiles)[i])->GetYPos(); // Paso y en coord cartesianas
         // Dentro de render->copy() se cambia a coord isometricas

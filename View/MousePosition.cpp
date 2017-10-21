@@ -1,7 +1,6 @@
 #include "MousePosition.h"
 
-MousePosition::MousePosition(int &x, int &y, bool &active) : x(x), y(y), active
-        (active) {}
+MousePosition::MousePosition(int &x, int &y) : x(x), y(y), active(false) {}
 
 MousePosition::~MousePosition() = default;
 
@@ -15,4 +14,8 @@ int MousePosition::getPosY() {
 
 bool MousePosition::isActive() {
     return active;
+}
+
+void MousePosition::toggleActive() {
+    active = !active;
 }

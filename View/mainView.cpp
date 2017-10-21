@@ -29,25 +29,12 @@ int mainView(int argc, char** argv) {
     MapView mapView(MAPSIZE, MAPSIZE, ENVPRADERA, &renderer,
                     &pathTiles, &structureTiles,&textureLoader);
 
-    int mouse_x = 0, mouse_y = 0;
-    bool clicked = false;
-    MousePosition mouse(mouse_x, mouse_y, clicked);
-
     while (!quit) {
         SDL_PollEvent(&event);
 
         switch (event.type) {
             case SDL_QUIT:
                 quit = true;
-                break;
-            case SDL_MOUSEBUTTONDOWN:
-                std::cout << "Estoy haciendo click" << "\n";
-                SDL_GetMouseState(&mouse_x, &mouse_y);
-                clicked = true;
-                break;
-            case SDL_MOUSEBUTTONUP:
-                std::cout << "Solté el click" << "\n";
-                clicked = false;
                 break;
         }
         event.type = 0;
