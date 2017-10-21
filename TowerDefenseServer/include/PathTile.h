@@ -2,29 +2,30 @@
 #define _PATH_TILE_
 
 #include <vector>
+#include <mutex>
 
 #include "Tile.h"
 
-
+class Map;
 class EnviormentUnit;
 class PathTile;
 
 class PathTile : public Tile {
 private:
-	PathTile* _next;
+	std::mutex _unitsMutex;
+
 	bool _canSpawn;
 	std::vector<EnviormentUnit*> _units;
 public:
 	PathTile(uint xPos, uint yPos);
 	~PathTile();
 	char GetSymbol();
-	PathTile* Next();
-	void SetNextTile(PathTile* tile);
 	bool CanSpawn();
 	void SetCanSpawn();
-	void Place(EnviormentUnit* unit);
 
 	bool HasAnyUnit();
+
+	bool DrivesStraightToSpawnFrom(PathTile* tile, Map* map);
 
 	void UnitLeave(EnviormentUnit* unit);
 	void UnitEnter(EnviormentUnit* unit);

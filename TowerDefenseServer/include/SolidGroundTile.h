@@ -2,7 +2,8 @@
 #define _SOLID_GROUND_TILE
 
 #include "Tile.h"
-#include "Tower.h"
+
+class Tower;
 
 class SolidGroundTile : public Tile {
 
@@ -13,7 +14,6 @@ public:
 	SolidGroundTile(unsigned int xPos, unsigned int yPos);
 	~SolidGroundTile();
 	char GetSymbol();
-
 	void PlaceTower(Tower* tower);
 };
 

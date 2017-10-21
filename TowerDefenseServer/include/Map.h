@@ -4,6 +4,8 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <mutex>
+
 
 #include "Tile.h"
 #include "PathTile.h"
@@ -12,6 +14,9 @@
 
 class Map{
 private:
+	//Synchronization
+	std::mutex _spawnTilesMutex;
+
 	uint _rows;
 	uint _cols;
 
@@ -35,7 +40,8 @@ public:
 
 	void PlaceUnit(EnviormentUnit* unit, PathTile* tile);
 
-	std::vector<PathTile*>& SpawnTiles();
+	PathTile* GetPathTile(uint x, uint y);
+	PathTile* GetRandomSpawnTile();
 
 
 	PathTile* GetFinishTile();

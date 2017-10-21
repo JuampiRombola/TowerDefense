@@ -1,20 +1,24 @@
 #include <iostream>
 
 #include "Tower.h"
+#include "Projectile.h"
 #include "GroundTower.h"
 
-GroundTower::GroundTower(unsigned int cooldown_sec)
-: Tower(cooldown_sec) {}
+GroundTower::GroundTower(unsigned int cooldown_sec, Map* map)
+: Tower(cooldown_sec, map) {}
 
 GroundTower::~GroundTower(){}
 
-void GroundTower::Step(){
+GroundProjectile* GroundTower::Step(){
 	if (_CanFire())
-		_Fire();
-
+		return _Fire();
+	return NULL;
 }
 
-void GroundTower::_Fire(){
-
+GroundProjectile* GroundTower::_Fire(){
+	return NULL;
 }
 
+void GroundTower::PrintDebug(){
+
+}

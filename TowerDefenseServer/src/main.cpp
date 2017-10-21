@@ -1,4 +1,5 @@
 #include <thread> 
+#include <chrono>
 
 
 #include "TowerDefenseGame.h"
@@ -6,21 +7,14 @@
 
 int main(int argc, char** argv)
 {
-    TowerDefenseGame game;
-    std::thread gameClock(&TowerDefenseGame::Run, &game);
+	TowerDefenseGame game;
+	std::thread gameClock(&TowerDefenseGame::Run, &game);
 
-   	char c = 'a';
+	std::this_thread::sleep_for (std::chrono::milliseconds(3000));
 
+	
 
-   	do {
-		std::cin.get(c);
-
-		if (c == '+')
-			game.SpawnEnemy();
-
-	} while (!game.Ended());
-
-    gameClock.join();
-    return 0;
+	gameClock.join();
+	return 0;
 }
 

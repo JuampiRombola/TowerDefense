@@ -3,8 +3,8 @@
 #include "Tower.h"
 
 
-Tower::Tower(unsigned int cooldown_sec) : 
-_lastTimeStamp_ms(0), _cooldown_sec(cooldown_sec) {
+Tower::Tower(unsigned int cooldown_sec, Map* map) : 
+_lastTimeStamp_ms(0), _cooldown_sec(cooldown_sec), _map(map) {
 
 }
 

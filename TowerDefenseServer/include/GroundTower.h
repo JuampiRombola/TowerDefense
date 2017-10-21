@@ -2,15 +2,17 @@
 #define _GROUND_TOWER_
 
 #include "Tower.h"
+#include "GroundProjectile.h"
+#include "Map.h"
 
 class GroundTower : public Tower {
 private:
-	 void _Fire();
+	GroundProjectile* _Fire();
 public:
-	GroundTower(unsigned int cooldown_sec);
+	GroundTower(unsigned int cooldown_sec, Map* map);
 	~GroundTower();
-	void Step();
-
+	GroundProjectile* Step();
+	void PrintDebug();
 };
 
 #endif

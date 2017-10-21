@@ -9,13 +9,17 @@
 #include "Map.h"
 #include "DemonioVerde.h"
 #include "EnviormentUnit.h"
+#include "Tower.h"
+#include "GroundTower.h"
 
 #include "CannotSpawnWithoutSettingSpawnTiles.h"
 
 
 TowerDefenseGame::TowerDefenseGame() : 
- _ended_mutex(), _ended(false), _steps(0), 
- _enemyIdCounter(0), _units(), _map(2, 2, "jsonmapconfigfilename") 
+	_endedMutex(), _unitsMutex(), _towersMutex(), _projectilesMutex(),
+	_ended(false), _steps(0), _enemyIdCounter(0), 
+	_units(), _towers(), _projectiles(),
+	_map(10, 10, "jsonmapconfigfilename") 
 {
 
 }
@@ -24,10 +28,13 @@ TowerDefenseGame::~TowerDefenseGame()
 {
 	for (auto it = _units.begin(); it != _units.end(); it++)
 		delete *it;
+
+	for (auto it = _towers.begin(); it != _towers.end(); it++)
+		delete *it;
 }
 
 
-void TowerDefenseGame::SpawnEnemy(){
+void TowerDefenseGame::_SpawnEnemy(){
 	//Por ahora solo tengo demonios verdes.
 	//aca iria la logica de que bicho sacar de manera random
 
@@ -35,36 +42,82 @@ void TowerDefenseGame::SpawnEnemy(){
 	// como lo elegimos el politica del juego
 	// por ahora agarro el primero :P
 
-
-	if (_map.SpawnTiles().begin() != _map.SpawnTiles().end()){
-		PathTile* _spawn = *_map.SpawnTiles().begin();
+	PathTile* spawn = _map.GetRandomSpawnTile();
+	if (spawn != NULL){
 		EnviormentUnit* u = new DemonioVerde(++_enemyIdCounter);
-		_map.PlaceUnit(u, _spawn);
+		std::lock_guard<std::mutex> lock(_unitsMutex);
 		_units.push_back(u);
+		_map.PlaceUnit(u, spawn);
 	} else 
 		throw new CannotSpawnWithoutSettingSpawnTiles();
 
-	std::cout << " new enemy created \n";
 }
 
 
+void TowerDefenseGame::PlaceGroundTower(uint x, uint y){
+	Tower* t = new GroundTower(5, &_map);
+	std::lock_guard<std::mutex> lock(_towersMutex);
+	_towers.push_back(t);
+}
+
+
+
+
 bool TowerDefenseGame::_Step(){
-	std::cout << "Step " << _steps << '\n' ;
+
+	//std::cout << "Step " << _steps << '\n' ;
 	_steps = _steps + 1;
-	for (auto it = _units.begin(); it != _units.end(); it++){
-		(*it)->Step();
-		(*it)->PrintDebug();
+
+
+	if (_steps % 10 == 0){
+		_SpawnEnemy();
 	}
 
+	std::unique_lock<std::mutex> lock0(_towersMutex);
+	std::unique_lock<std::mutex> lock1(_projectilesMutex);
+	for (auto it = _towers.begin(); it != _towers.end(); ++it){
+		(*it)->PrintDebug();
+		Projectile* projectile = (*it)->Step();
+		if (projectile != NULL){
+			_projectiles.push_back(projectile);
+		}
+	}
+	lock0.unlock();
+
+	std::vector<Projectile*> toDelete;
+
+	for (auto it = _projectiles.begin(); it != _projectiles.end(); ++it){
+		(*it)->PrintDebug();
+		(*it)->Step();
+		if ((*it)->Impacted())
+			toDelete.push_back((*it));
+	}
+
+	for (auto it = toDelete.begin(); it != toDelete.end(); ++it){
+		auto it2 = std::find(_projectiles.begin(), _projectiles.end(), *it);
+		_projectiles.erase(it2);
+		delete *it;
+	}
+
+	lock1.unlock();
+
+
+	std::unique_lock<std::mutex> lock2(_unitsMutex);
+	for (auto it = _units.begin(); it != _units.end(); ++it){
+		(*it)->PrintDebug();
+		(*it)->Step();
+	}
+	lock2.unlock();
+
 	
-	std::lock_guard<std::mutex> lock(_ended_mutex);
+	std::lock_guard<std::mutex> lock3(_endedMutex);
 	_ended = _map.GetFinishTile()->HasAnyUnit();
 	return !_ended;
 }
 
 
 bool TowerDefenseGame::Ended(){
-	std::lock_guard<std::mutex> lock(_ended_mutex);
+	std::lock_guard<std::mutex> lock(_endedMutex);
 	return _ended;
 }
 
@@ -80,5 +133,5 @@ void TowerDefenseGame::Run()
 	// jeje que juego divertido.
 	//
 
-	std::cout << "GAME OVER! \n\nPRESS ENTER TO EXIT... \n";
+	std::cout << "GAME OVER! \n";
 }
