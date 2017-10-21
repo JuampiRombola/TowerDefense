@@ -14,7 +14,7 @@
 #define MAPSIZE 10
 #define ENVPRADERA 0
 
-int mainView(int argc, char** argv) {
+int mainEditor(int argc, char** argv) {
     bool quit = false;
     SDL_Event event;
     SDL_Init(SDL_INIT_VIDEO);
@@ -22,12 +22,12 @@ int mainView(int argc, char** argv) {
     Renderer renderer(&window, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer());
 
-    std::vector<PathTile*> pathTiles;
-    std::vector<SolidGroundTile*> structureTiles;
+    std::vector<PathTile *> pathTiles;
+    std::vector<SolidGroundTile *> structureTiles;
 
 
-    MapView mapView(MAPSIZE, MAPSIZE, ENVPRADERA, &renderer,
-                    &pathTiles, &structureTiles,&textureLoader);
+    MapView mapView(MAPSIZE, MAPSIZE, ENVPRADERA, &renderer, &pathTiles,
+                    &structureTiles, &textureLoader);
 
     int mouse_x = 0, mouse_y = 0;
     bool clicked = false;
@@ -59,3 +59,4 @@ int mainView(int argc, char** argv) {
     SDL_Quit();
     return 0;
 }
+
