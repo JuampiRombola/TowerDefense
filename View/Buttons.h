@@ -7,6 +7,7 @@
 #include "TestButton.h"
 #include "MousePosition.h"
 #include "Renderer.h"
+#include "TestToggleButton.h"
 
 class Buttons {
 private:
@@ -18,6 +19,8 @@ public:
     ~Buttons();
     void draw();
     void addTestButton(SDL_Texture* texture);
+    void addTestToggleButton(SDL_Texture* activeTexture, SDL_Texture*
+                            inactiveTexture);
 };
 
 

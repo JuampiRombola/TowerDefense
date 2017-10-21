@@ -4,9 +4,9 @@
 #define MIDWIDTHTILE 80
 
 Renderer::Renderer(Window *window, int mapWidth) :
-        mapWidth(mapWidth * MIDWIDTHTILE), // Para hacer el calculo de coord isometricas
         renderer(SDL_CreateRenderer(window->getWindow(), -1, 0)),
-        x(window->get_width()), y(window->get_height()) {}
+        x(window->get_width()), y(window->get_height()),
+        mapWidth(mapWidth * MIDWIDTHTILE) {} // Para hacer el calculo de coord isometricas
 
 Renderer::~Renderer() {
     SDL_DestroyRenderer(renderer);

@@ -28,6 +28,8 @@ int mainEditor(int argc, char** argv) {
 
     Buttons buttons(mouse, renderer);
     buttons.addTestButton(textureLoader.getTexture(3));
+    buttons.addTestToggleButton(textureLoader.getTexture(4),textureLoader
+            .getTexture(5));
 
     while (!quit) {
         SDL_PollEvent(&event);
