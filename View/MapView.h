@@ -5,7 +5,7 @@
 #include "Renderer.h"
 #include "TextureLoader.h"
 #include "../src/PathTile.h"
-#include "../src/StructureTile.h"
+#include "../src/SolidGroundTile.h"
 
 class MapView {
 private:
@@ -13,7 +13,7 @@ private:
     int height;
     Renderer *renderer;
     std::vector<PathTile*> *pathTiles;
-    std::vector<StructureTile*> *structureTiles;
+    std::vector<SolidGroundTile*> *structureTiles;
     SDL_Texture *tileTexture;
     SDL_Texture *pathTexture;
     SDL_Texture *structureTexture;
@@ -24,7 +24,7 @@ public:
     MapView(int width, int height, int env,
             Renderer *renderer,
             std::vector<PathTile*> *pTiles,
-            std::vector<StructureTile*> *sTiles,
+            std::vector<SolidGroundTile*> *sTiles,
             TextureLoader *textures);
     ~MapView();
     void draw(Uint32 ticks);
