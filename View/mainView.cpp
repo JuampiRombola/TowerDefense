@@ -1,9 +1,10 @@
+#include <iostream>
 #include "Window.h"
 #include "Renderer.h"
 #include "TextureLoader.h"
 #include "MapView.h"
 #include "../src/PathTile.h"
-#include "../src/StructureTile.h"
+#include "../src/SolidGroundTile.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -21,7 +22,7 @@ int main(int argc, char** argv) {
     TextureLoader textureLoader(renderer.getRenderer());
 
     std::vector<PathTile*> pathTiles;
-    std::vector<StructureTile*> structureTiles;
+    std::vector<SolidGroundTile*> structureTiles;
 
     MapView mapView(MAPSIZE, MAPSIZE, ENVPRADERA, &renderer,
                     &pathTiles, &structureTiles,&textureLoader);
@@ -32,6 +33,12 @@ int main(int argc, char** argv) {
         switch (event.type) {
             case SDL_QUIT:
                 quit = true;
+                break;
+            case SDL_MOUSEBUTTONUP:
+                std::cout << "Estoy haciendo click" << "\n";
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+                std::cout << "Hice click en (" << x << "," << y << ")\n";
                 break;
         }
         renderer.clearRender();

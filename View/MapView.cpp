@@ -19,7 +19,7 @@
 MapView::MapView(int width, int height, int env,
                  Renderer *renderer,
                  std::vector<PathTile*> *pTiles,
-                 std::vector<StructureTile*> *sTiles,
+                 std::vector<SolidGroundTile*> *sTiles,
                  TextureLoader *textures) :
         width(width), height(height), renderer(renderer),
         pathTiles(pTiles), structureTiles(sTiles) {
