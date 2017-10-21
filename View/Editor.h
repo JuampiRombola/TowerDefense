@@ -1,17 +1,15 @@
 #ifndef TOWERDEFENSE_EDITOR_H
 #define TOWERDEFENSE_EDITOR_H
 
-#include "Renderer.h"
-#include "Buttons.h"
+#include <string>
 
 class Editor {
 private:
-    Renderer &renderer;
-    Buttons &buttons;
+    std::string superficie;
 public:
-    Editor(Renderer& renderer, Buttons &buttons);
+    Editor();
     ~Editor();
-    void draw();
+    void setSuperficie(const std::string &superficie);
 };
 
 

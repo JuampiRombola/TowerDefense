@@ -1,10 +1,11 @@
 #include "Editor.h"
+#include <iostream>
 
-Editor::Editor(Renderer &renderer, Buttons &buttons) :
-        renderer(renderer), buttons(buttons) {}
+Editor::Editor() = default;
 
 Editor::~Editor() = default;
 
-void Editor::draw() {
-    buttons.draw();
+void Editor::setSuperficie(const std::string &superficie) {
+    std::cout << "La nueva superficie es " << superficie << "\n";
+    this->superficie = superficie;
 }

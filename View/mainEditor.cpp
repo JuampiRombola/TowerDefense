@@ -7,6 +7,7 @@
 #include "../src/PathTile.h"
 #include "../src/SolidGroundTile.h"
 #include "Buttons.h"
+#include "Editor.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -26,10 +27,12 @@ int mainEditor(int argc, char** argv) {
     int mouse_x = -1, mouse_y = -1;
     MousePosition mouse(mouse_x, mouse_y);
 
-    Buttons buttons(mouse, renderer);
-    buttons.addTestButton(textureLoader.getTexture(3));
-    buttons.addTestToggleButton(textureLoader.getTexture(4),textureLoader
-            .getTexture(5));
+    Editor editor;
+
+    Buttons buttons(mouse, renderer, editor);
+    buttons.addSuperficieButtons(textureLoader.getTexture(9), textureLoader
+            .getTexture(6), textureLoader.getTexture(7), textureLoader
+            .getTexture(8));
 
     while (!quit) {
         SDL_PollEvent(&event);
@@ -39,7 +42,6 @@ int mainEditor(int argc, char** argv) {
                 quit = true;
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                std::cout << "Estoy haciendo click" << "\n";
                 SDL_GetMouseState(&mouse_x, &mouse_y);
                 mouse.toggleActive();
                 break;
