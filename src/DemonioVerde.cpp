@@ -2,7 +2,7 @@
 
 #include "DemonioVerde.h"
 
-DemonioVerde::DemonioVerde(unsigned int id) : EnviormentUnit(id, 5) {}
+DemonioVerde::DemonioVerde(unsigned int id) : EnviormentUnit(id) {}
 
 DemonioVerde::~DemonioVerde(){}
 

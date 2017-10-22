@@ -1,26 +1,19 @@
 #ifndef __ENVIORMENT_UNIT__
 #define __ENVIORMENT_UNIT__
 
-class Map;
-class PathTile;
+#include "PathTile.h"
 
 class EnviormentUnit{
 private:
-	uint _id;
-	uint _speed;
-	uint _movementTimer;
-
+	unsigned int _id;
 	PathTile* _position;
-	PathTile* _lastPosition;
-
-	Map* _map;
 public:
-	EnviormentUnit(uint id, uint speed);
+	EnviormentUnit(unsigned int id);
 	virtual ~EnviormentUnit();
 	void Step();
 	unsigned int GetId();
 	PathTile* GetPosition();
-	void SetPosition(PathTile* pos, Map* map);
+	void SetPosition(PathTile* pos);
 	virtual void PrintDebug() = 0;
 };
 

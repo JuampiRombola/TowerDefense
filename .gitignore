@@ -1,5 +1,4 @@
-TowerDefenseServer/bin/
-TowerDefenseServer/build/
+
 # Created by https://www.gitignore.io/api/linux,macos,clion,windows,sublimetext
 
 ### CLion ###
@@ -163,7 +162,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/linux,macos,clion,windows,sublimetext
-
-\.idea/
-
-*.o

@@ -5,8 +5,13 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES
         Resources/0.png
+        Resources/disparoTierra.png
+        Resources/teleport1.png
+        Resources/teleport2.png
+        Resources/teleport3.png
         Resources/1.png
         Resources/2.png
+        Resources/torreTierra.png
         src/DemonioVerde.cpp
         src/DemonioVerde.h
         src/EnviormentUnit.cpp
@@ -22,20 +27,7 @@ set(SOURCE_FILES
         src/Tile.cpp
         src/Tile.h
         src/TowerDefenseGame.cpp
-        src/TowerDefenseGame.h
-        View/Window.cpp
-        View/Window.h
-        View/ViewError.cpp
-        View/ViewError.h
-        View/Renderer.cpp
-        View/Renderer.h
-        View/TextureLoader.cpp
-        View/TextureLoader.h
-        View/MapView.cpp
-        View/MapView.h
-        View/mainView.cpp
-        View/Sprite.cpp
-        View/Sprite.h View/SpriteNamesConfig.h)
+        src/TowerDefenseGame.h View/Window.cpp View/Window.h View/ViewError.cpp View/ViewError.h View/Renderer.cpp View/Renderer.h View/TextureLoader.cpp View/TextureLoader.h View/MapView.cpp View/MapView.h View/mainView.cpp)
 
 add_executable(TowerDefense ${SOURCE_FILES})
 
