@@ -5,7 +5,6 @@
 #define STRUCTURETILE 2
 
 MapView::MapView(int width, int height, int env,
-<<<<<<< HEAD
                  Renderer &renderer, TextureLoader &textures) :
         width(width), height(height),
         envTile(textures.getTexture(env), renderer),
@@ -18,21 +17,6 @@ MapView::MapView(int width, int height, int env,
     pathTile.setDestRect(0, 0, 160, 80);
     structureTile.setSourceRect(0, 0, 511, 256);
     structureTile.setDestRect(0, 0, 160, 80);
-=======
-                 Renderer *renderer,
-                 std::vector<PathTile*> *pTiles,
-                 std::vector<SolidGroundTile*> *sTiles,
-                 TextureLoader *textures) :
-        width(width), height(height), renderer(renderer),
-        pathTiles(pTiles), structureTiles(sTiles) {
-    tileTexture = textures->getTexture(env);
-    structureTexture = textures->getTexture(STRUCTURETILE);
-    pathTexture = textures->getTexture(PATHTILE);
-    srcRect.w = WIDTHTILE;
-    srcRect.h = HEIGHTTILE;
-    dstRect.w = WIDTHTILE;
-    dstRect.h = HEIGHTTILE;
->>>>>>> a6e3d36613f80f66fc031a8349f388a120cee68a
 }
 
 MapView::~MapView() {}
