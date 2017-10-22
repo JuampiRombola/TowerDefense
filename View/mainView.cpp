@@ -1,8 +1,14 @@
+#include <iostream>
 #include "Window.h"
 #include "Renderer.h"
 #include "TextureLoader.h"
 #include "MapView.h"
+<<<<<<< HEAD
 #include "SpriteNamesConfig.h"
+=======
+#include "../src/PathTile.h"
+#include "../src/SolidGroundTile.h"
+>>>>>>> a6e3d36613f80f66fc031a8349f388a120cee68a
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -18,7 +24,12 @@ int main(int argc, char** argv) {
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer());
 
+<<<<<<< HEAD
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
+=======
+    std::vector<PathTile*> pathTiles;
+    std::vector<SolidGroundTile*> structureTiles;
+>>>>>>> a6e3d36613f80f66fc031a8349f388a120cee68a
 
     //Armo un camino
     mapView.addPathTile(0, 0);
@@ -49,6 +60,7 @@ int main(int argc, char** argv) {
             case SDL_QUIT:
                 quit = true;
                 break;
+<<<<<<< HEAD
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
                     case SDLK_ESCAPE: quit = true; break;
@@ -59,6 +71,14 @@ int main(int argc, char** argv) {
                     case SDLK_UP:    renderer.updateCamera(0, -1); break;
                     case SDLK_DOWN:  renderer.updateCamera(0, 1); break;
                 }
+=======
+            case SDL_MOUSEBUTTONUP:
+                std::cout << "Estoy haciendo click" << "\n";
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+                std::cout << "Hice click en (" << x << "," << y << ")\n";
+                break;
+>>>>>>> a6e3d36613f80f66fc031a8349f388a120cee68a
         }
         renderer.clearRender();
         Uint32 ticks = SDL_GetTicks();
