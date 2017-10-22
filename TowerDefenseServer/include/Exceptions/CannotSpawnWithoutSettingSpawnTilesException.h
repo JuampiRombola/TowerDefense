@@ -2,7 +2,7 @@
 #include <iostream>
 #include <exception>
 
-class CannotSpawnWithoutSettingSpawnTiles : public std::exception
+class CannotSpawnWithoutSettingSpawnTilesException : public std::exception
 {
 	virtual const char* what() const throw()
 	{

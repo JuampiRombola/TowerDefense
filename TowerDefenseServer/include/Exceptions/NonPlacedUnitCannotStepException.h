@@ -2,7 +2,7 @@
 #include <iostream>
 #include <exception>
 
-class NonPlacedUnitCannotStep : public std::exception
+class NonPlacedUnitCannotStepException : public std::exception
 {
   virtual const char* what() const throw()
   {

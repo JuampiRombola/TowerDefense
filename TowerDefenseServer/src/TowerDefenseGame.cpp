@@ -12,12 +12,12 @@
 #include "Tower.h"
 #include "GroundTower.h"
 
-#include "CannotSpawnWithoutSettingSpawnTiles.h"
+#include "Exceptions/CannotSpawnWithoutSettingSpawnTilesException.h"
 
 
 TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs) : 
+	_endedMutex(), _commands(),
 	_clockFrequencyMs(clockFrequencyMs),
-	_endedMutex(), _unitsMutex(), _towersMutex(), _projectilesMutex(),
 	_ended(false), _steps(0), _enemyIdCounter(0), 
 	_units(), _towers(), _projectiles(),
 	_map(10, 10, "jsonmapconfigfilename") 
@@ -46,11 +46,10 @@ void TowerDefenseGame::_SpawnEnemy(){
 	PathTile* spawn = _map.GetRandomSpawnTile();
 	if (spawn != NULL){
 		EnviormentUnit* u = new DemonioVerde(++_enemyIdCounter);
-		std::lock_guard<std::mutex> lock(_unitsMutex);
 		_units.push_back(u);
 		_map.PlaceUnit(u, spawn);
 	} else 
-		throw new CannotSpawnWithoutSettingSpawnTiles();
+		throw new CannotSpawnWithoutSettingSpawnTilesException();
 
 }
 
@@ -63,12 +62,17 @@ void TowerDefenseGame::PlaceGroundTower(uint x, uint y){
 	SolidGroundTile* tile = _map.GetSolidGroundTile(x ,y);
 	if (tile != NULL && !tile->HasTower()){
 		Tower* t = new GroundTower(GROUNDTOWERCOOLDOWN, GROUNDTOWERRANGE, tile, &_map);
-		std::lock_guard<std::mutex> lock(_towersMutex);
 		_towers.push_back(t);
 		tile->PlaceTower(t);
 		std::cout << "Tower Placed\n";
 	}
 }
+
+
+void TowerDefenseGame::QueueCommand(Command& command){
+
+}
+
 
 
 
@@ -83,8 +87,6 @@ bool TowerDefenseGame::_Step(){
 		_SpawnEnemy();
 	}
 
-	std::unique_lock<std::mutex> lock1(_projectilesMutex);
-	std::unique_lock<std::mutex> lock0(_towersMutex);
 	for (auto it = _towers.begin(); it != _towers.end(); ++it){
 		Projectile* projectile = (*it)->Step();
 		if (projectile != NULL){
@@ -105,17 +107,13 @@ bool TowerDefenseGame::_Step(){
 		_projectiles.erase(it2);
 		delete *it;
 	}
-	lock0.unlock();
-	lock1.unlock();
 
-	std::unique_lock<std::mutex> lock2(_unitsMutex);
 	for (auto it = _units.begin(); it != _units.end(); ++it){
 		(*it)->Step();
 	}
-	lock2.unlock();
 
 	
-	std::lock_guard<std::mutex> lock3(_endedMutex);
+	std::lock_guard<std::mutex> lock(_endedMutex);
 	_ended = _map.GetFinishTile()->HasAnyUnit();
 	return !_ended;
 }

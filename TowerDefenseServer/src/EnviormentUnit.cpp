@@ -6,9 +6,9 @@
 #include "Map.h"
 #include "PathTile.h"
 #include "EnviormentUnit.h"
-#include "NonPlacedUnitCannotStep.h"
-#include "IncompletePathException.h"
-#include "UnitCannotMoveDiagonallyException.h"
+#include "Exceptions/NonPlacedUnitCannotStepException.h"
+#include "Exceptions/IncompletePathException.h"
+#include "Exceptions/UnitCannotMoveDiagonallyException.h"
 
 EnviormentUnit::EnviormentUnit(uint id, uint speed): 
 _id(id), _speed(speed), _movementTimer(0),
@@ -23,7 +23,7 @@ EnviormentUnit::~EnviormentUnit(){
 
 void EnviormentUnit::Step(){
 	if (_position == NULL || _map == NULL)
-		throw new NonPlacedUnitCannotStep();
+		throw new NonPlacedUnitCannotStepException();
 
 	_movementTimer ++;
 	if (_movementTimer != _speed)

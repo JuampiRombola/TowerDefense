@@ -1,16 +1,16 @@
 #include <iostream>
-#include <mutex>
 #include <algorithm>
 
 #include "Map.h"
-#include "UnitIsNotOnThisTileException.h"
-#include "UnitIsAlreadyOnThisTileException.h"
+#include "Exceptions/UnitIsNotOnThisTileException.h"
+#include "Exceptions/UnitIsAlreadyOnThisTileException.h"
+#include "Exceptions/IncompletePathException.h"
+
 #include "EnviormentUnit.h"
-#include "IncompletePathException.h"
 #include "PathTile.h"
 
 PathTile::PathTile(uint xPos, uint yPos) 
-: Tile(xPos, yPos), _unitsMutex(), _canSpawn(false), _units() {}
+: Tile(xPos, yPos), _canSpawn(false), _units() {}
 
 PathTile::~PathTile(){}
 
@@ -30,7 +30,6 @@ void PathTile::SetCanSpawn(){
 
 
 void PathTile::UnitEnter(EnviormentUnit* unit){
-	std::lock_guard<std::mutex> lock(_unitsMutex);
 	auto it = std::find(_units.begin(), _units.end(), unit);
 	if (it == _units.end())
 		_units.emplace_back(unit);
@@ -40,7 +39,6 @@ void PathTile::UnitEnter(EnviormentUnit* unit){
 
 
 void PathTile::UnitLeave(EnviormentUnit* unit){
-	std::lock_guard<std::mutex> lock(_unitsMutex);
 	auto it = std::find(_units.begin(), _units.end(), unit);
 	if (it != _units.end())
 		_units.erase(it);
@@ -49,12 +47,10 @@ void PathTile::UnitLeave(EnviormentUnit* unit){
 }
 
 bool PathTile::HasAnyUnit(){
-	std::lock_guard<std::mutex> lock(_unitsMutex);
 	return _units.begin() != _units.end();
 }
 
 std::vector<EnviormentUnit*> PathTile::GetUnits(){
-	std::lock_guard<std::mutex> lock(_unitsMutex);
 	std::vector<EnviormentUnit*> v;
 	for (auto it = _units.begin(); it != _units.end(); ++it)
 		v.push_back(*it);

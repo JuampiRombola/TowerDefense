@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "SolidGroundTile.h"
-#include "SolidGroundAlreadyHasTowerException.h"
+#include "Exceptions/SolidGroundAlreadyHasTowerException.h"
 
 SolidGroundTile::SolidGroundTile(unsigned int xPos, unsigned int yPos) : Tile(xPos, yPos) {}
 

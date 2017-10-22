@@ -2,9 +2,7 @@
 #define _MAP_
 
 #include <vector>
-#include <map>
 #include <string>
-#include <mutex>
 
 
 #include "Tile.h"
@@ -15,8 +13,6 @@
 class Map{
 private:
 	//Synchronization
-	std::mutex _spawnTilesMutex;
-	std::mutex _groundTilesMutex;
 	uint _rows;
 	uint _cols;
 

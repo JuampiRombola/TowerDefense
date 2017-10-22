@@ -2,7 +2,6 @@
 #define _PATH_TILE_
 
 #include <vector>
-#include <mutex>
 
 #include "Tile.h"
 
@@ -12,8 +11,6 @@ class PathTile;
 
 class PathTile : public Tile {
 private:
-	std::mutex _unitsMutex;
-
 	bool _canSpawn;
 	std::vector<EnviormentUnit*> _units;
 public:

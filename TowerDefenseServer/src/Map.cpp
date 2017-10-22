@@ -7,15 +7,14 @@
 #include <ctime>
 
 #include "Map.h"
-#include "IncompletePathException.h"
-#include "TileCannotSpawnException.h"
-#include "TileIsOutOfBoundsException.h"
-#include "PositionAlreadyHasTileException.h"
+#include "Exceptions/IncompletePathException.h"
+#include "Exceptions/TileCannotSpawnException.h"
+#include "Exceptions/TileIsOutOfBoundsException.h"
+#include "Exceptions/PositionAlreadyHasTileException.h"
 #include "EnviormentUnit.h"
 #include "PathTile.h"
 
 Map::Map(uint rows, uint cols, std::string mapJsonConfig):
-_spawnTilesMutex(), _groundTilesMutex(),
 _rows(rows), _cols(cols), _tiles(rows * cols), _spawnTiles(), 
 _pathTiles(cols, std::vector<PathTile*>(rows)), 
 _groundTiles(cols, std::vector<SolidGroundTile*>(rows))
@@ -138,7 +137,6 @@ void Map::PlaceUnit(EnviormentUnit* unit, PathTile* tile){
 
 
 PathTile* Map::GetRandomSpawnTile(){
-	std::lock_guard<std::mutex> lock(_spawnTilesMutex);
 	if (_spawnTiles.size() == 0)
 		return NULL;
 
@@ -148,8 +146,6 @@ PathTile* Map::GetRandomSpawnTile(){
 }
 
 SolidGroundTile* Map::GetSolidGroundTile(uint x, uint y){
-	std::lock_guard<std::mutex> lock(_groundTilesMutex);
-
 	if (x >= _cols || y >= _rows)
 		return NULL;
 
