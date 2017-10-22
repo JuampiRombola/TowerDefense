@@ -8,20 +8,30 @@
 class Renderer {
 private:
     SDL_Renderer *renderer;
-    int x; // x superior mostrado
-    int y; // y superior mostrado
     int mapWidth;
+    int mapHeight;
+    int cameraX; // x superior mostrado
+    int cameraY; // y superior mostrado
+    int paddingWidth;
+    int paddingHeight;
+    int zoom;
+    int windowWidth;
+    int windowHeight;
 
 public:
-    Renderer(Window *window, int mapWidth);
+    Renderer(Window &window, int mapWidth, int mapHeight);
     ~Renderer();
-    void copy(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *dst);
+    void copy(SDL_Texture *texture, const SDL_Rect *src, SDL_Rect *dst);
     void clearRender();
     void present();
     void updateCamera(int x, int y);
     int cartesianToIsometricX(int x, int y);
     int cartesianToIsometricY(int x, int y);
     SDL_Renderer* getRenderer();
+    void zoomIn();
+    void zoomOut();
+
+    bool isOnCamera(int x, int y);
 };
 
 

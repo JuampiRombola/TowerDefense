@@ -1,15 +1,21 @@
 #include <string>
 #include "TextureLoader.h"
+#include "ViewError.h"
+#include "SpriteNamesConfig.h"
+
+#define RESOURCESPATH "../Resources/"
+#define PNGFORMAT ".png"
 
 TextureLoader::TextureLoader(SDL_Renderer *renderer) {
     IMG_Init(IMG_INIT_PNG);
     for (int i = 0; i < TOTAL; ++i) {
-        SDL_Surface *im = IMG_Load(("../Resources/"
+        SDL_Surface *im = IMG_Load((RESOURCESPATH
                                     + std::to_string(i)
-                                    + ".png").c_str());
+                                    + PNGFORMAT).c_str());
         images.push_back(im);
-        SDL_SetColorKey(im, SDL_TRUE, SDL_MapRGB(im->format, 255, 0,255));
-        textures.push_back(SDL_CreateTextureFromSurface(renderer, im));
+        SDL_Texture *tx = SDL_CreateTextureFromSurface(renderer, im);
+        if (!tx) throw ViewError("Load textures error: %s", SDL_GetError());
+        textures.push_back(tx);
     }
 }
 

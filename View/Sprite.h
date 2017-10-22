@@ -1,0 +1,28 @@
+//
+// Created by juampi on 10/19/17.
+//
+
+#ifndef TOWERDEFENSE_SPRITE_H
+#define TOWERDEFENSE_SPRITE_H
+
+#include <SDL2/SDL.h>
+#include "Renderer.h"
+
+class Sprite {
+private:
+    SDL_Texture *texture;
+    Renderer &renderer;
+    SDL_Rect srcRect;
+    SDL_Rect dstRect;
+
+public:
+    Sprite(SDL_Texture *texture, Renderer &renderer);
+    ~Sprite();
+    void draw();
+    void setDestXY(int x, int y);
+    void setSourceRect(int x, int y, int w, int h);
+    void setDestRect(int x, int y, int w, int h);
+};
+
+
+#endif //TOWERDEFENSE_SPRITE_H

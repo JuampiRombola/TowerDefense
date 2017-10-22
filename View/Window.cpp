@@ -7,19 +7,20 @@ Window::Window(const std::string &title, int width, int height) :
                               SDL_WINDOWPOS_UNDEFINED, // x position
                               SDL_WINDOWPOS_UNDEFINED, // y position
                               width, height,
-                              SDL_WINDOW_RESIZABLE);   // Flag
+                              SDL_WINDOW_FULLSCREEN_DESKTOP);   // Flag
     if (!window) throw ViewError("Create window error: %s", SDL_GetError());
+    SDL_GetWindowSize(window, &this->width, &this->height);
 }
 
 Window::~Window() {
     SDL_DestroyWindow(window);
 }
 
-int Window::get_width() {
+int Window::getWidth() {
     return width;
 }
 
-int Window::get_height() {
+int Window::getHeight() {
     return height;
 }
 

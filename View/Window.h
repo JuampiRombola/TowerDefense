@@ -9,11 +9,12 @@ private:
     SDL_Window *window;
     int width;
     int height;
+
 public:
     Window(const std::string &title, int width, int height);
     ~Window();
-    int get_width();
-    int get_height();
+    int getWidth();
+    int getHeight();
     SDL_Window* getWindow();
 };
 
