@@ -53,6 +53,15 @@ bool PathTile::HasAnyUnit(){
 	return _units.begin() != _units.end();
 }
 
+std::vector<EnviormentUnit*> PathTile::GetUnits(){
+	std::lock_guard<std::mutex> lock(_unitsMutex);
+	std::vector<EnviormentUnit*> v;
+	for (auto it = _units.begin(); it != _units.end(); ++it)
+		v.push_back(*it);
+
+	return v;
+}
+
 bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile, Map* map){
 
 	uint fromX = tile->GetXPos();

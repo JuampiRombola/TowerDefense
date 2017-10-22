@@ -15,6 +15,7 @@ public:
 	~SolidGroundTile();
 	char GetSymbol();
 	void PlaceTower(Tower* tower);
+	bool HasTower();
 };
 
 #endif

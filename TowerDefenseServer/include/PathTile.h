@@ -25,6 +25,8 @@ public:
 
 	bool HasAnyUnit();
 
+	std::vector<EnviormentUnit*> GetUnits();
+
 	bool DrivesStraightToSpawnFrom(PathTile* tile, Map* map);
 
 	void UnitLeave(EnviormentUnit* unit);

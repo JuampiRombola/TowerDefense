@@ -4,8 +4,8 @@
 #include "Projectile.h"
 #include "PathTile.h"
 
-GroundProjectile::GroundProjectile(PathTile* target) :
- Projectile(target,10)
+GroundProjectile::GroundProjectile(SolidGroundTile* origin, PathTile* target) :
+ Projectile(origin, target, 10)
 {
 
 }

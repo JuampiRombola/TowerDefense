@@ -1,10 +1,11 @@
 #include <chrono>
+#include <iostream>	
 
 #include "Tower.h"
 
 
-Tower::Tower(unsigned int cooldown_sec, Map* map) : 
-_lastTimeStamp_ms(0), _cooldown_sec(cooldown_sec), _map(map) {
+Tower::Tower(uint cooldown_sec, uint range, SolidGroundTile* pos, Map* map) : 
+_lastTimeStamp_ms(0), _cooldown_sec(cooldown_sec), _map(map), _position(pos), _range(range) {
 
 }
 
@@ -36,3 +37,21 @@ bool Tower::_CanFire(){
 
 }
 
+
+Projectile* Tower::Step(){
+	if (_CanFire())
+		return _Fire();
+	else
+		std::cout << "still on cooldown";
+	return NULL;
+}
+
+Projectile* Tower::_Fire(){
+	std::vector<EnviormentUnit*> units = _map->GetUnitsInRadius(_range, _position);
+	if (units.size() > 0){
+		std::cout << units.size() << " UNITS IN RANGE\n" << std::flush;
+		EnviormentUnit* targetunit = *units.begin();
+		return _BuildProjectile(targetunit->GetPosition());
+	}
+	return NULL;
+}

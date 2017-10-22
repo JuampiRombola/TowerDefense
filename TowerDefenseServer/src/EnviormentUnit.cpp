@@ -10,8 +10,9 @@
 #include "IncompletePathException.h"
 #include "UnitCannotMoveDiagonallyException.h"
 
-EnviormentUnit::EnviormentUnit(unsigned int id): 
-_id(id), _position(NULL), _lastPosition(NULL), _map(NULL) {
+EnviormentUnit::EnviormentUnit(uint id, uint speed): 
+_id(id), _speed(speed), _movementTimer(0),
+_position(NULL), _lastPosition(NULL), _map(NULL) {
 
 
 }
@@ -23,6 +24,13 @@ EnviormentUnit::~EnviormentUnit(){
 void EnviormentUnit::Step(){
 	if (_position == NULL || _map == NULL)
 		throw new NonPlacedUnitCannotStep();
+
+	_movementTimer ++;
+	if (_movementTimer != _speed)
+		return;
+
+	_movementTimer = 0;
+
 	
 	int x = _position->GetXPos();
 	int y = _position->GetYPos();
@@ -90,6 +98,8 @@ void EnviormentUnit::Step(){
 	_lastPosition = _position;
 	next->UnitEnter(this);
 	_position = next;
+
+	this->PrintDebug();
 }
 
 PathTile* EnviormentUnit::GetPosition(){

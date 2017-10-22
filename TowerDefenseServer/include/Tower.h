@@ -2,21 +2,26 @@
 #define _TOWER_
 
 #include "Projectile.h"
+#include "SolidGroundTile.h"
 #include "Map.h"
+#include "PathTile.h"
 
 class Tower {
 protected:
 	unsigned long long _lastTimeStamp_ms;
-	unsigned int _cooldown_sec;
-
+	uint _cooldown_sec;
 	Map* _map;
+	SolidGroundTile* _position;
+	uint _range;
 
-	virtual Projectile* _Fire() = 0; 
+	Projectile* _Fire(); 
 	bool _CanFire(); 
+
+	virtual Projectile* _BuildProjectile(PathTile* target) = 0;
 public:
-	Tower(unsigned int cooldown, Map* map);
+	Tower(uint cooldown, uint range, SolidGroundTile* position, Map* map);
 	virtual ~Tower();
-	virtual Projectile* Step() = 0; 
+	Projectile* Step(); 
 	virtual void PrintDebug() = 0;
 };
 

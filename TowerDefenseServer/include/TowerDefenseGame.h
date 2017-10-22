@@ -9,10 +9,11 @@
 #include "EnviormentUnit.h"
 #include "Projectile.h"
 
-#define CLOCK_FREQUENCY_MS 100
 
 class TowerDefenseGame{
 private:
+	uint _clockFrequencyMs;
+
 	//Synchronization
 	std::mutex _endedMutex;
 	std::mutex _unitsMutex;
@@ -31,7 +32,7 @@ private:
 	bool _Step();
 	void _SpawnEnemy();
 public:
-	TowerDefenseGame();
+	TowerDefenseGame(uint clockFrequencyMs);
 	~TowerDefenseGame();
 	void Run();
 	bool Ended();

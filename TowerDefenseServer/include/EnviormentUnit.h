@@ -6,13 +6,16 @@ class PathTile;
 
 class EnviormentUnit{
 private:
-	unsigned int _id;
+	uint _id;
+	uint _speed;
+	uint _movementTimer;
+
 	PathTile* _position;
 	PathTile* _lastPosition;
 
 	Map* _map;
 public:
-	EnviormentUnit(unsigned int id);
+	EnviormentUnit(uint id, uint speed);
 	virtual ~EnviormentUnit();
 	void Step();
 	unsigned int GetId();

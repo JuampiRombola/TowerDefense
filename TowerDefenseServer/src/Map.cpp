@@ -15,7 +15,7 @@
 #include "PathTile.h"
 
 Map::Map(uint rows, uint cols, std::string mapJsonConfig):
-_spawnTilesMutex(),
+_spawnTilesMutex(), _groundTilesMutex(),
 _rows(rows), _cols(cols), _tiles(rows * cols), _spawnTiles(), 
 _pathTiles(cols, std::vector<PathTile*>(rows)), 
 _groundTiles(cols, std::vector<SolidGroundTile*>(rows))
@@ -74,6 +74,8 @@ _groundTiles(cols, std::vector<SolidGroundTile*>(rows))
 
 	PathTile* end = new PathTile(9,4);
 	_PlacePathTile(end);
+
+	_PlaceGroundTile(new SolidGroundTile(2,5));
 	
 	_finishTile = end;
 }
@@ -144,6 +146,42 @@ PathTile* Map::GetRandomSpawnTile(){
 	uint random_variable = (uint) std::rand() % _spawnTiles.size();
 	return _spawnTiles[random_variable];
 }
+
+SolidGroundTile* Map::GetSolidGroundTile(uint x, uint y){
+	std::lock_guard<std::mutex> lock(_groundTilesMutex);
+
+	if (x >= _cols || y >= _rows)
+		return NULL;
+
+	return _groundTiles[x][y];
+}
+
+
+std::vector<EnviormentUnit*> Map::GetUnitsInRadius(uint range, Tile* tile){
+	uint x = tile->GetXPos();
+	uint y = tile->GetYPos();
+	std::vector<EnviormentUnit*> units;
+	PathTile* othertile = NULL;
+	for (uint i = x - range; i <= x + range; ++i)
+	{
+		for (uint j = y - range; j <= y + range; ++j)
+		{
+			if (i < _cols && i > 0){
+				if (j < _rows && j > 0){
+					othertile = _pathTiles[i][j];
+				}
+			}
+			if (othertile != NULL){
+				std::vector<EnviormentUnit*> unitsInTile = othertile->GetUnits();
+				for (auto it = unitsInTile.begin(); it != unitsInTile.end(); ++it)
+					units.push_back(*it);
+			}
+		}
+	}
+	return units;
+}
+
+
 
 PathTile* Map::GetFinishTile(){
 	return _finishTile;

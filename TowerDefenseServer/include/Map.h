@@ -16,7 +16,7 @@ class Map{
 private:
 	//Synchronization
 	std::mutex _spawnTilesMutex;
-
+	std::mutex _groundTilesMutex;
 	uint _rows;
 	uint _cols;
 
@@ -35,14 +35,14 @@ private:
 public:
 	Map(uint rows, uint cols, std::string mapJsonConfig);
 	~Map();
-
-	// "Pone la unit en la tile "
-
+	
 	void PlaceUnit(EnviormentUnit* unit, PathTile* tile);
 
 	PathTile* GetPathTile(uint x, uint y);
 	PathTile* GetRandomSpawnTile();
+	SolidGroundTile* GetSolidGroundTile(uint x, uint y);
 
+	std::vector<EnviormentUnit*> GetUnitsInRadius(uint range, Tile* tile);
 
 	PathTile* GetFinishTile();
 };

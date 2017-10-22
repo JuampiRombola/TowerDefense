@@ -4,10 +4,11 @@
 #include "Tower.h"
 #include "Projectile.h"
 #include "PathTile.h"
+#include "SolidGroundTile.h"
 
 class GroundProjectile : public Projectile {
 public:
-	GroundProjectile(PathTile* target);
+	GroundProjectile(SolidGroundTile* origin, PathTile* target);
 	~GroundProjectile();
 };
 
