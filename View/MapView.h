@@ -2,32 +2,28 @@
 #define TOWERDEFENSE_MAPVIEW_H
 
 #include <SDL2/SDL.h>
+#include "Sprite.h"
 #include "Renderer.h"
 #include "TextureLoader.h"
-#include "../src/PathTile.h"
-#include "../src/StructureTile.h"
 
 class MapView {
 private:
     int width;
     int height;
-    Renderer *renderer;
-    std::vector<PathTile*> *pathTiles;
-    std::vector<StructureTile*> *structureTiles;
-    SDL_Texture *tileTexture;
-    SDL_Texture *pathTexture;
-    SDL_Texture *structureTexture;
-    SDL_Rect srcRect;
-    SDL_Rect dstRect;
+    std::vector<std::pair<int, int>> pathTiles;
+    std::vector<std::pair<int, int>> structureTiles;
+    Sprite envTile;
+    Sprite pathTile;
+    Sprite structureTile;
 
 public:
     MapView(int width, int height, int env,
-            Renderer *renderer,
-            std::vector<PathTile*> *pTiles,
-            std::vector<StructureTile*> *sTiles,
-            TextureLoader *textures);
+            Renderer &renderer, TextureLoader &textures);
     ~MapView();
     void draw(Uint32 ticks);
+    void addPathTile(int x, int y);
+    void addStructureTile(int x, int y);
+    void selectBackgroundColor(Renderer &renderer, int environment);
 };
 
 
