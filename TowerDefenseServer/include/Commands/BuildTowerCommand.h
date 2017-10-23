@@ -13,9 +13,9 @@ private:
 
 	TowerType _towerType;
 	void _BuildGroundTower(Map* map);
-	void _BuildFireTower();
-	void _BuildIceTower();
-	void _BuildAirTower();
+	void _BuildFireTower(Map* map);
+	void _BuildIceTower(Map* map);
+	void _BuildAirTower(Map* map);
 public:
 	BuildTowerCommand(TowerType type, unsigned int x, unsigned int y);
 	~BuildTowerCommand();

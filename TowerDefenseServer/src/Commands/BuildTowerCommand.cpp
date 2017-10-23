@@ -14,9 +14,9 @@ BuildTowerCommand::~BuildTowerCommand(){}
 void BuildTowerCommand::Execute(Map* map){
 	switch(_towerType){
 		case Ground: _BuildGroundTower(map);	break;
-		case Air: _BuildAirTower();			break;
-		case Ice: _BuildIceTower();			break;
-		case Fire: _BuildFireTower();		break;
+		case Air: _BuildAirTower(map);			break;
+		case Ice: _BuildIceTower(map);			break;
+		case Fire: _BuildFireTower(map);		break;
 		default: break;
 	}
 }
@@ -34,12 +34,12 @@ void BuildTowerCommand::_BuildGroundTower(Map* map){
 	}
 }
 
-void BuildTowerCommand::_BuildFireTower(){
+void BuildTowerCommand::_BuildFireTower(Map* map){
 
 }
-void BuildTowerCommand::_BuildIceTower(){
+void BuildTowerCommand::_BuildIceTower(Map* map){
 
 }
-void BuildTowerCommand::_BuildAirTower(){
+void BuildTowerCommand::_BuildAirTower(Map* map){
 
 }
