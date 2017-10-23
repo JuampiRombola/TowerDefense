@@ -1,28 +1,33 @@
 #ifndef _TOWER_
 #define _TOWER_
 
-#include "Projectile.h"
-#include "SolidGroundTile.h"
-#include "Map.h"
-#include "PathTile.h"
+#include <memory>
+
+class Projectile;
+class SolidGroundTile;
+class Map;
+class PathTile;
+class EnviormentUnit;
 
 class Tower {
 protected:
 	unsigned long long _lastTimeStamp_ms;
-	uint _cooldown_sec;
+	uint _cooldown_ms;
 	Map* _map;
-	SolidGroundTile* _position;
+	std::shared_ptr<SolidGroundTile> _position;
 	uint _range;
 
-	Projectile* _Fire(); 
+	std::shared_ptr<Projectile>  _Fire(std::shared_ptr<EnviormentUnit> target); 
 	bool _CanFire(); 
+	std::shared_ptr<EnviormentUnit> _GetTargetUnitInRange();
 
-	virtual Projectile* _BuildProjectile(PathTile* target) = 0;
+	virtual std::shared_ptr<Projectile> _BuildProjectile(std::shared_ptr<PathTile> target) = 0;
 public:
-	Tower(uint cooldown, uint range, SolidGroundTile* position, Map* map);
+	Tower(uint cooldown_ms, uint range, std::shared_ptr<SolidGroundTile> position, Map* map);
 	virtual ~Tower();
-	Projectile* Step(); 
+	std::shared_ptr<Projectile> Step(); 
 	virtual void PrintDebug() = 0;
+
 };
 
 #endif

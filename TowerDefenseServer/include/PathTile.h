@@ -2,6 +2,7 @@
 #define _PATH_TILE_
 
 #include <vector>
+#include <memory>
 
 #include "Tile.h"
 
@@ -12,7 +13,7 @@ class PathTile;
 class PathTile : public Tile {
 private:
 	bool _canSpawn;
-	std::vector<EnviormentUnit*> _units;
+	std::vector<std::shared_ptr<EnviormentUnit>> _units;
 public:
 	PathTile(uint xPos, uint yPos);
 	~PathTile();
@@ -22,12 +23,12 @@ public:
 
 	bool HasAnyUnit();
 
-	std::vector<EnviormentUnit*> GetUnits();
+	std::vector<std::shared_ptr<EnviormentUnit>> GetUnits();
 
-	bool DrivesStraightToSpawnFrom(PathTile* tile, Map* map);
+	bool DrivesStraightToSpawnFrom(std::shared_ptr<PathTile> tile, Map* map);
 
-	void UnitLeave(EnviormentUnit* unit);
-	void UnitEnter(EnviormentUnit* unit);
+	void UnitLeave(std::shared_ptr<EnviormentUnit> unit);
+	void UnitEnter(std::shared_ptr<EnviormentUnit> unit);
 };
 
 #endif

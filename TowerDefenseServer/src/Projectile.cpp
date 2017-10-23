@@ -1,18 +1,20 @@
 #include <iostream>
 #include <cmath>
+#include <memory>
 
 #include "Projectile.h"
 #include "PathTile.h"
 
-Projectile::Projectile(SolidGroundTile* origin, PathTile* target, uint speed) :
-_target(target), _speed(speed), _impacted(false), _distance(0), _distanceCovered(0)
+Projectile::Projectile(std::shared_ptr<SolidGroundTile> origin, std::shared_ptr<PathTile> target, uint speed, uint hitpoints) :
+ _speed(speed), _impacted(false), _distance(0), 
+ _distanceCovered(0), _hitPoints(hitpoints), _target(target)
 {
 	uint dx = abs(origin->GetXPos() - target->GetXPos());
 	uint dy = abs(origin->GetYPos() - target->GetYPos());
 	uint temp = (dx*dx) + (dy*dy);
 	double sq = sqrt(temp);
 	_distance = floor(sq) * 10;
-	std::cout << "PROJECTILE DISTANCE " << _distance << "\n" << std::flush;
+	std::cout << "PROJECTILE CREATED DISTANCE: " << _distance << ", SPEED: " << _speed << "\n" << std::flush;
 }
 
 Projectile::~Projectile(){}
@@ -22,11 +24,11 @@ void Projectile::Step(){
 	_distanceCovered += _speed;
 	if (_distanceCovered >= _distance && !_impacted){
 
-		std::cout << "HIT TARGET TILE\n";
-		//std::vector<EnviormentUnit*> units = _target->GetUnits();
-		//for (auto it = units.begin(); it != units.end(); ++it)
-		//	this->_Hit();
+		_OnImpact();
+
 		_impacted = true;
+
+		std::cout << "PROJECTILE LANDED\n" << std::flush;
 	}
 }
 

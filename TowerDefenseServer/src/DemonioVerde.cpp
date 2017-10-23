@@ -2,14 +2,21 @@
 
 #include "DemonioVerde.h"
 
-DemonioVerde::DemonioVerde(unsigned int id) : EnviormentUnit(id, 5) {}
+DemonioVerde::DemonioVerde(unsigned int id) : EnviormentUnit(id, 1000, 100) {}
 
-DemonioVerde::~DemonioVerde(){}
+DemonioVerde::~DemonioVerde()
+{
+	std::cout << "DemonioVerde" << GetId() << " IS DEAD!!!\n";
+}
 
 void DemonioVerde::PrintDebug(){
-	PathTile* pos = GetPosition();
-	if (pos == NULL)
+	std::shared_ptr<PathTile> pos = GetPosition();
+	if (pos.get() == nullptr)
 		std::cout << "DemonioVerde" << GetId() << " outside map\n";
 	else
-		std::cout << "DemonioVerde" << GetId() <<  "@(" << pos->GetXPos() << ", " << pos->GetYPos() << ")\n";
+		std::cout << "DemonioVerde" << GetId() <<  "@(" << pos.get()->GetXPos() << ", " << pos.get()->GetYPos() << ")\n";
+}
+
+bool DemonioVerde::Flies(){
+	return false;
 }

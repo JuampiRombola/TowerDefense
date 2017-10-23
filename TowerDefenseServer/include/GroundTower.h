@@ -1,16 +1,19 @@
 #ifndef _GROUND_TOWER_
 #define _GROUND_TOWER_
 
+#include <memory>
+
 #include "Tower.h"
-#include "SolidGroundTile.h"
-#include "GroundProjectile.h"
-#include "Map.h"
+
+class SolidGroundTile;
+class Map;
+class Projectile;
 
 class GroundTower : public Tower {
 protected:
-	Projectile* _BuildProjectile(PathTile* target);
+	std::shared_ptr<Projectile> _BuildProjectile(std::shared_ptr<PathTile> target);
 public:
-	GroundTower(uint cooldown_sec, uint range, SolidGroundTile* position, Map* map);
+	GroundTower(uint cooldown_sec, uint range, std::shared_ptr<SolidGroundTile> position, Map* map);
 	~GroundTower();
 	void PrintDebug();
 };

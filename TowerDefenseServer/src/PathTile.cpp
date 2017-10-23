@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <memory>
 
 #include "Map.h"
 #include "Exceptions/UnitIsNotOnThisTileException.h"
@@ -29,7 +30,7 @@ void PathTile::SetCanSpawn(){
 }
 
 
-void PathTile::UnitEnter(EnviormentUnit* unit){
+void PathTile::UnitEnter(std::shared_ptr<EnviormentUnit> unit){
 	auto it = std::find(_units.begin(), _units.end(), unit);
 	if (it == _units.end())
 		_units.emplace_back(unit);
@@ -38,10 +39,12 @@ void PathTile::UnitEnter(EnviormentUnit* unit){
 }
 
 
-void PathTile::UnitLeave(EnviormentUnit* unit){
+void PathTile::UnitLeave(std::shared_ptr<EnviormentUnit> unit){
+
 	auto it = std::find(_units.begin(), _units.end(), unit);
-	if (it != _units.end())
+	if (it != _units.end()){
 		_units.erase(it);
+	}
 	else
 		throw new UnitIsNotOnThisTileException();
 }
@@ -50,26 +53,22 @@ bool PathTile::HasAnyUnit(){
 	return _units.begin() != _units.end();
 }
 
-std::vector<EnviormentUnit*> PathTile::GetUnits(){
-	std::vector<EnviormentUnit*> v;
-	for (auto it = _units.begin(); it != _units.end(); ++it)
-		v.push_back(*it);
-
-	return v;
+std::vector<std::shared_ptr<EnviormentUnit>> PathTile::GetUnits(){
+	return _units;
 }
 
-bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile, Map* map){
+bool PathTile::DrivesStraightToSpawnFrom(std::shared_ptr<PathTile> tile, Map* map){
 
-	uint fromX = tile->GetXPos();
-	uint fromY = tile->GetYPos();
+	uint fromX = tile.get()->GetXPos();
+	uint fromY = tile.get()->GetYPos();
 	uint x = this->GetXPos();
 	uint y = this->GetYPos();
 
-	PathTile* front = NULL;
-	PathTile* side1 = NULL;
-	PathTile* side2 = NULL;
+	std::shared_ptr<PathTile> front;
+	std::shared_ptr<PathTile> side1;
+	std::shared_ptr<PathTile> side2;
 
-	std::vector<PathTile*> paths;
+	std::vector<std::shared_ptr<PathTile>> paths;
 
 	while (true){
 		paths.clear();
@@ -85,13 +84,13 @@ bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile, Map* map){
 			side2 = map->GetPathTile(x, y - 1);	
 		} 
 
-		if (front != NULL)
+		if (front.get() != nullptr)
 			paths.push_back(front);
 
-		if (side1 != NULL)
+		if (side1.get() != nullptr)
 			paths.push_back(side1);
 
-		if (side2 != NULL)
+		if (side2.get() != nullptr)
 			paths.push_back(side2);
 
 		if (paths.size() > 1){
@@ -99,7 +98,7 @@ bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile, Map* map){
 		} else if (paths.size() == 0){
 			throw new IncompletePathException();
 		} else if (paths.size() == 1){
-			if ((*paths.begin())->CanSpawn()){
+			if ((*paths.begin()).get()->CanSpawn()){
 				return true;
 			}
 
@@ -108,11 +107,11 @@ bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile, Map* map){
 			}
 
 
-			PathTile* p = *paths.begin();
+			std::shared_ptr<PathTile> p = *paths.begin();
 			fromX = x;
 			fromY = y;
-			x = p->GetXPos();
-			y = p->GetYPos();
+			x = p.get()->GetXPos();
+			y = p.get()->GetYPos();
 		}
 	}
 

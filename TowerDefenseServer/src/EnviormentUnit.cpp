@@ -2,18 +2,22 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <memory>
 
 #include "Map.h"
 #include "PathTile.h"
 #include "EnviormentUnit.h"
+#include "Helpers.h"
 #include "Exceptions/NonPlacedUnitCannotStepException.h"
 #include "Exceptions/IncompletePathException.h"
 #include "Exceptions/UnitCannotMoveDiagonallyException.h"
 
-EnviormentUnit::EnviormentUnit(uint id, uint speed): 
-_id(id), _speed(speed), _movementTimer(0),
-_position(NULL), _lastPosition(NULL), _map(NULL) {
-
+EnviormentUnit::EnviormentUnit(uint id, uint speed, uint healthpoints): 
+_lastTimeStamp_ms(0), _alive(true), _id(id), _speed(speed),
+ _healthPoints(healthpoints), _position(std::shared_ptr<PathTile>(nullptr)), 
+_lastPosition(std::shared_ptr<PathTile>(nullptr)), 
+_map(NULL) 
+{
 
 }
 
@@ -21,41 +25,77 @@ EnviormentUnit::~EnviormentUnit(){
 
 }
 
-void EnviormentUnit::Step(){
-	if (_position == NULL || _map == NULL)
-		throw new NonPlacedUnitCannotStepException();
+void EnviormentUnit::GetHit(uint hitpoints){
+	_healthPoints -= hitpoints;
+	std::cout << "EnviormentUnit GOT HIT for " << hitpoints 
+	<< "hp, now has " << _healthPoints << "hp\n" << std::flush;
+	if (_healthPoints <= 0)
+		_alive = false;
+}
 
-	_movementTimer ++;
-	if (_movementTimer != _speed)
+bool EnviormentUnit::IsAlive(){
+	return _alive;
+}
+
+void EnviormentUnit::Step(std::shared_ptr<EnviormentUnit> thisUnit){
+
+	if (!_CanStep())
 		return;
 
-	_movementTimer = 0;
+	std::shared_ptr<PathTile> next = _GetNextTile();
 
-	
+	_position.get()->UnitLeave(thisUnit); 
+	next.get()->UnitEnter(thisUnit);
+
+	_lastPosition = _position;
+	_position = next;
+
+	PrintDebug();
+}
+
+
+bool EnviormentUnit::_CanStep(){
+	if (_position.get() == nullptr || _map == NULL)
+		throw new NonPlacedUnitCannotStepException();
+
+	if (_lastTimeStamp_ms == 0){
+		_lastTimeStamp_ms = Helpers::MillisecondsTimeStamp();
+		return true;
+	}
+
+	if (Helpers::TimeElapsed(_lastTimeStamp_ms, _speed)){
+		_lastTimeStamp_ms = Helpers::MillisecondsTimeStamp();
+		return true;
+	}
+
+	return false;
+}
+
+std::shared_ptr<PathTile> EnviormentUnit::_GetNextTile(){
 	int x = _position->GetXPos();
 	int y = _position->GetYPos();
 
-	std::vector<PathTile*> possiblePaths;
+	std::vector<std::shared_ptr<PathTile>> possiblePaths;
 
-	if (_lastPosition == NULL){
+	if (_lastPosition.get() == nullptr){
 
-		PathTile* up = _map->GetPathTile(x, y+1);
-		PathTile* down = _map->GetPathTile(x, y-1);
-		PathTile* right = _map->GetPathTile(x+1, y);
-		PathTile* left = _map->GetPathTile(x-1, y);
-		std::vector<PathTile*> paths;
-		if (up != NULL)		possiblePaths.push_back(up);
-		if (down != NULL) 	possiblePaths.push_back(down);
-		if (right != NULL) 	possiblePaths.push_back(right);
-		if (left != NULL) 	possiblePaths.push_back(left);
+		std::shared_ptr<PathTile> up = _map->GetPathTile(x, y+1);
+		std::shared_ptr<PathTile> down = _map->GetPathTile(x, y-1);
+		std::shared_ptr<PathTile> right = _map->GetPathTile(x+1, y);
+		std::shared_ptr<PathTile> left = _map->GetPathTile(x-1, y);
+		std::vector<std::shared_ptr<PathTile>> paths;
+		if (up.get() != nullptr)	possiblePaths.push_back(up);
+		if (down.get() != nullptr) 	possiblePaths.push_back(down);
+		if (right.get() != nullptr) possiblePaths.push_back(right);
+		if (left.get() != nullptr) 	possiblePaths.push_back(left);
 
 	} else {
 		int lastX = _lastPosition->GetXPos();
 		int lastY = _lastPosition->GetYPos();
 
-		PathTile* front = NULL;
-		PathTile* side1 = NULL;
-		PathTile* side2 = NULL;
+		std::shared_ptr<PathTile> front(nullptr);
+		std::shared_ptr<PathTile> side1(nullptr);
+		std::shared_ptr<PathTile> side2(nullptr);
 
 		if (lastX == x){
 			uint dif = lastY - y;
@@ -71,17 +111,17 @@ void EnviormentUnit::Step(){
 			throw new UnitCannotMoveDiagonallyException();
 		}
 
-		if (front != NULL){
+		if (front.get() != nullptr){
 			if (front == _map->GetFinishTile() || !front->DrivesStraightToSpawnFrom(_position, _map))
 				possiblePaths.push_back(front);
 		}
 
-		if (side1 != NULL){
+		if (side1.get() != nullptr){
 			if (side1 == _map->GetFinishTile() || !side1->DrivesStraightToSpawnFrom(_position, _map))
 				possiblePaths.push_back(side1);
 		}
 
-		if (side2 != NULL){
+		if (side2.get() != nullptr){
 			if (side2 == _map->GetFinishTile() || !side2->DrivesStraightToSpawnFrom(_position, _map))
 				possiblePaths.push_back(side2);
 		}
@@ -92,21 +132,14 @@ void EnviormentUnit::Step(){
 
 	std::srand(std::time(0));
 	uint random_variable = (uint) std::rand() % possiblePaths.size();
-	PathTile* next = possiblePaths[random_variable];
-
-	_position->UnitLeave(this);
-	_lastPosition = _position;
-	next->UnitEnter(this);
-	_position = next;
-
-	this->PrintDebug();
+	return possiblePaths[random_variable];
 }
 
-PathTile* EnviormentUnit::GetPosition(){
+std::shared_ptr<PathTile> EnviormentUnit::GetPosition(){
 	return _position;
 }
 
-void EnviormentUnit::SetPosition(PathTile* pos, Map* map){
+void EnviormentUnit::SetPosition(std::shared_ptr<PathTile> pos, Map* map){
 	_position = pos;
 	_map = map;
 }

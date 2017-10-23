@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-
+#include <memory>
 
 #include "Tile.h"
 #include "PathTile.h"
@@ -16,31 +16,36 @@ private:
 	uint _rows;
 	uint _cols;
 
-	PathTile* _finishTile;
+	std::shared_ptr<PathTile> _finishTile;
 
-	std::vector<Tile*> _tiles;
+	std::vector<std::shared_ptr<Tile>> _tiles;
 
-	std::vector<PathTile*> _spawnTiles;
-	std::vector<std::vector<PathTile*>> _pathTiles;
-	std::vector<std::vector<SolidGroundTile*>> _groundTiles;
+	std::vector<std::shared_ptr<PathTile>> _spawnTiles;
+	std::vector<std::vector<std::shared_ptr<PathTile>>> _pathTiles;
+	std::vector<std::vector<std::shared_ptr<SolidGroundTile>>> _groundTiles;
 
-	void _PlaceTile(Tile* tile);
-	void _PlaceGroundTile(SolidGroundTile* tile);
-	void _PlacePathTile(PathTile* tile);
-	void _SetSpawnTile(PathTile* tile);
+	std::vector<std::shared_ptr<Projectile>> _projectiles;
+
+	void _PlaceTile(std::shared_ptr<Tile> tile);
+	void _PlaceGroundTile(std::shared_ptr<SolidGroundTile> tile);
+	void _PlacePathTile(std::shared_ptr<PathTile> tile);
+	void _SetSpawnTile(std::shared_ptr<PathTile> tile);
 public:
 	Map(uint rows, uint cols, std::string mapJsonConfig);
 	~Map();
 	
-	void PlaceUnit(EnviormentUnit* unit, PathTile* tile);
+	void RemoveUnit(std::shared_ptr<EnviormentUnit> unit);
+	void PlaceUnit(std::shared_ptr<EnviormentUnit> unit, std::shared_ptr<PathTile> tile);
 
-	PathTile* GetPathTile(uint x, uint y);
-	PathTile* GetRandomSpawnTile();
-	SolidGroundTile* GetSolidGroundTile(uint x, uint y);
+	std::shared_ptr<PathTile> GetPathTile(uint x, uint y);
+	std::shared_ptr<PathTile> GetRandomSpawnTile();
+	std::shared_ptr<SolidGroundTile> GetSolidGroundTile(uint x, uint y);
 
-	std::vector<EnviormentUnit*> GetUnitsInRadius(uint range, Tile* tile);
+	std::vector<std::shared_ptr<EnviormentUnit>> GetUnitsInRadius(uint range, std::shared_ptr<Tile> tile);
 
-	PathTile* GetFinishTile();
+	std::shared_ptr<PathTile> GetFinishTile();
+
+	void Step();
 };
 
 #endif

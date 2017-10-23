@@ -9,6 +9,7 @@ public:
 	DemonioVerde(unsigned int id);
 	~DemonioVerde();
 	void PrintDebug();
+	bool Flies();
 };
 
 #endif
