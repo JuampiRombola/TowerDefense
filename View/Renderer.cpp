@@ -37,6 +37,8 @@ void Renderer::copy(SDL_Texture *texture,
     dst->w *= zoom;
     dst->h *= zoom;
     SDL_RenderCopy(renderer, texture, src, dst);
+    dst->x = x;
+    dst->y = y;
     dst->w = dstW;
     dst->h = dstH;
 }

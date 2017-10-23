@@ -19,6 +19,7 @@ public:
     Sprite(SDL_Texture *texture, Renderer &renderer);
     ~Sprite();
     void draw();
+    void setSourceXY(int x, int y);
     void setDestXY(int x, int y);
     void setSourceRect(int x, int y, int w, int h);
     void setDestRect(int x, int y, int w, int h);

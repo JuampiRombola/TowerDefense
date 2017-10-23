@@ -13,6 +13,11 @@ void Sprite::draw() {
     renderer.copy(texture, &srcRect, &dstRect);
 }
 
+void Sprite::setSourceXY(int x, int y) {
+    srcRect.x = x;
+    srcRect.y = y;
+}
+
 void Sprite::setDestXY(int x, int y) {
     dstRect.x = x;
     dstRect.y = y;

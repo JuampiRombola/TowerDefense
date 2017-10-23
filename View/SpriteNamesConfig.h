@@ -5,6 +5,8 @@
 #define VOLCAN 3
 #define GELIDO 6
 #define DESIERTO 9
-#define TOTAL 3
+#define PORTALENTRADA 3
+#define PORTALSALIDA 4
+#define TOTAL 5
 
 #endif //TOWERDEFENSE_SPRITENAMESCONFIG_H
