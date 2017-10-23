@@ -1,22 +1,25 @@
 #ifndef _TOWER_DEFENSE_GAME_
 #define _TOWER_DEFENSE_GAME_
 
+
+#include <memory>
 #include <vector>
 #include <mutex>
 #include <queue>
 #include <iostream>
 
-#include "Map.h"
-#include "EnviormentUnit.h"
-#include "Projectile.h"
-#include "Command.h"
+#include "Map/Map.h"
+#include "EnviormentUnits/EnviormentUnit.h"
+#include "Towers/Projectile.h"
+#include "Commands/Command.h"
 
 
 class TowerDefenseGame{
 private:
 	std::mutex _endedMutex;
+	std::mutex _commandQueueMutex;
 
-	std::queue<Command> _commands;
+	std::queue<std::shared_ptr<Command>> _commands;
 
 	uint _clockFrequencyMs;
 
@@ -24,20 +27,18 @@ private:
 	unsigned int _steps;	
 	unsigned int _enemyIdCounter;
 
-	std::vector<EnviormentUnit*> _units;
-	std::vector<Tower*> _towers;
-	std::vector<Projectile*> _projectiles;
+	std::vector<std::shared_ptr<EnviormentUnit>> _units;
 
 	Map _map;
 	bool _Step();
 	void _SpawnEnemy();
+	void _ExecuteCommands();
 public:
 	TowerDefenseGame(uint clockFrequencyMs);
 	~TowerDefenseGame();
 	void Run();
 	bool Ended();
-	void PlaceGroundTower(uint x, uint y);
-	void QueueCommand(Command& command);
+	void QueueCommand(std::shared_ptr<Command> command);
 };
 
 #endif
