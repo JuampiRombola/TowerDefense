@@ -26,12 +26,13 @@ Renderer::~Renderer() {
 }
 
 void Renderer::copy(SDL_Texture *texture,
-                    const SDL_Rect *src, SDL_Rect *dst) {
+                    const SDL_Rect *src, SDL_Rect *dst,
+                    int leftBotX, int leftBotY) {
     int x = dst->x;
     int y = dst->y;
-    dst->x = cartesianToIsometricX(x, y) - cameraX;
-    dst->y = cartesianToIsometricY(x, y) - cameraY;
-    if (!isOnCamera(dst->x, dst->y)) return;
+    dst->x = cartesianToIsometricX(x, y) - leftBotX * zoom - cameraX;
+    dst->y = cartesianToIsometricY(x, y) - leftBotY * zoom - cameraY;
+    //if (!isOnCamera(dst->x, dst->y)) return;
     int dstW = dst->w;
     int dstH = dst->h;
     dst->w *= zoom;

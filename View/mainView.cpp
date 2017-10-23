@@ -3,13 +3,14 @@
 #include "TextureLoader.h"
 #include "MapView.h"
 #include "SpriteNamesConfig.h"
-#include "PortalView.h"
+#include "PortalEntradaView.h"
+#include "PortalSalidaView.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
 
-#define MAPSIZE 10
+#define MAPSIZE 7
 
 int main(int argc, char** argv) {
     bool quit = false;
@@ -44,11 +45,9 @@ int main(int argc, char** argv) {
     mapView.addStructureTile(5, 6);
 
     //Pongo un portal de entrada y uno de salida
-    PortalView portalEntrada = PortalView(PORTALENTRADA,
-                                          textureLoader, renderer);
+    PortalView portalEntrada = PortalEntradaView(textureLoader, renderer);
     portalEntrada.setXY(0, 0);
-    PortalView portalSalida = PortalView(PORTALSALIDA,
-                                         textureLoader, renderer);
+    PortalView portalSalida = PortalSalidaView(textureLoader, renderer);
     portalSalida.setXY(6, 6);
 
     while (!quit) {

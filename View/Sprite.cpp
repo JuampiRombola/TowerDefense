@@ -5,12 +5,12 @@
 #include "Sprite.h"
 
 Sprite::Sprite(SDL_Texture *texture, Renderer &renderer) :
-        texture(texture), renderer(renderer) {}
+        texture(texture), renderer(renderer), leftBotX(0), leftBotY(0) {}
 
 Sprite::~Sprite() {}
 
 void Sprite::draw() {
-    renderer.copy(texture, &srcRect, &dstRect);
+    renderer.copy(texture, &srcRect, &dstRect, leftBotX, leftBotY);
 }
 
 void Sprite::setSourceXY(int x, int y) {
@@ -35,4 +35,9 @@ void Sprite::setDestRect(int x, int y, int w, int h) {
     dstRect.y = y;
     dstRect.w = w;
     dstRect.h = h;
+}
+
+void Sprite::setLeftBotXY(int x, int y) {
+    leftBotX = x;
+    leftBotY = y;
 }

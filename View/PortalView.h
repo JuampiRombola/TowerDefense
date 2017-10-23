@@ -4,9 +4,13 @@
 #include "View.h"
 
 class PortalView : public View {
+protected:
+    int leftBotX;
+    int leftBotY;
+
 public:
     PortalView(int key, TextureLoader &textures, Renderer &renderer);
-    ~PortalView();
+    ~PortalView() override;
     void draw(Uint32 ticks) override;
 };
 
