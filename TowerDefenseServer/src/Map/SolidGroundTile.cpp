@@ -1,10 +1,10 @@
 #include <iostream>
 #include <memory>
 
-#include "Projectile.h"
-#include "SolidGroundTile.h"
+#include "Towers/Projectile.h"
+#include "Map/SolidGroundTile.h"
 #include "Exceptions/SolidGroundAlreadyHasTowerException.h"
-#include "Tower.h"
+#include "Towers/Tower.h"
 
 SolidGroundTile::SolidGroundTile(unsigned int xPos, unsigned int yPos): 
 Tile(xPos, yPos), _tower(std::shared_ptr<Tower>()) {}

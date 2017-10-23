@@ -2,8 +2,8 @@
 #include <cmath>
 #include <memory>
 
-#include "Projectile.h"
-#include "PathTile.h"
+#include "Towers/Projectile.h"
+#include "Map/PathTile.h"
 
 Projectile::Projectile(std::shared_ptr<SolidGroundTile> origin, std::shared_ptr<PathTile> target, uint speed, uint hitpoints) :
  _speed(speed), _impacted(false), _distance(0), 

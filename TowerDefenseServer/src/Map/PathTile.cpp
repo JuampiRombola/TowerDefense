@@ -1,14 +1,15 @@
 #include <iostream>
 #include <algorithm>
 #include <memory>
+#include <map>
 
-#include "Map.h"
+#include "Map/Map.h"
 #include "Exceptions/UnitIsNotOnThisTileException.h"
 #include "Exceptions/UnitIsAlreadyOnThisTileException.h"
 #include "Exceptions/IncompletePathException.h"
 
-#include "EnviormentUnit.h"
-#include "PathTile.h"
+#include "EnviormentUnits/EnviormentUnit.h"
+#include "Map/PathTile.h"
 
 PathTile::PathTile(uint xPos, uint yPos) 
 : Tile(xPos, yPos), _canSpawn(false), _units() {}

@@ -2,11 +2,11 @@
 
 #include <memory>
 
-#include "Tower.h"
-#include "Projectile.h"
-#include "GroundTower.h"
-#include "SolidGroundTile.h"
-#include "GroundProjectile.h"
+#include "Towers/Tower.h"
+#include "Towers/Projectile.h"
+#include "Towers/GroundTower.h"
+#include "Map/SolidGroundTile.h"
+#include "Towers/GroundProjectile.h"
 
 GroundTower::GroundTower(uint cooldown_sec, uint range, std::shared_ptr<SolidGroundTile> position, Map* map)
 : Tower(cooldown_sec, range, position, map) {}

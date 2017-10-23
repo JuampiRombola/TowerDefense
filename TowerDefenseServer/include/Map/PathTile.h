@@ -2,9 +2,11 @@
 #define _PATH_TILE_
 
 #include <vector>
+#include <map>
 #include <memory>
 
 #include "Tile.h"
+
 
 class Map;
 class EnviormentUnit;

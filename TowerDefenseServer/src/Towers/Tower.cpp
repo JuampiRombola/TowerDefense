@@ -1,9 +1,9 @@
 #include <iostream>	
 #include <vector>
 
-#include "Tower.h"
-#include "EnviormentUnit.h"
-#include "Map.h"
+#include "Towers/Tower.h"
+#include "EnviormentUnits/EnviormentUnit.h"
+#include "Map/Map.h"
 #include "Helpers.h"
 
 Tower::Tower(uint cooldown_ms, uint range, std::shared_ptr<SolidGroundTile> pos, Map* map) : 

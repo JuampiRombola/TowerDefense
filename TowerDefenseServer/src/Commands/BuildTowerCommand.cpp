@@ -1,9 +1,10 @@
 #include <memory>
 #include <iostream>
 
-#include "GroundTower.h"
-#include "BuildTowerCommand.h"
-#include "Tower.h"
+#include "Towers/GroundTower.h"
+#include "Map/SolidGroundTile.h"
+#include "Commands/BuildTowerCommand.h"
+#include "Towers/Tower.h"
 
 BuildTowerCommand::BuildTowerCommand(TowerType type, unsigned int x, unsigned int y):
  _xPos(x), _yPos(y), _towerType(type) {}

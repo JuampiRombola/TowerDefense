@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Command.h"
+#include "Commands/Command.h"
 
 Command::Command(){}
 

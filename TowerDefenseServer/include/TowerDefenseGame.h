@@ -8,10 +8,10 @@
 #include <queue>
 #include <iostream>
 
-#include "Map.h"
-#include "EnviormentUnit.h"
-#include "Projectile.h"
-#include "Command.h"
+#include "Map/Map.h"
+#include "EnviormentUnits/EnviormentUnit.h"
+#include "Towers/Projectile.h"
+#include "Commands/Command.h"
 
 
 class TowerDefenseGame{

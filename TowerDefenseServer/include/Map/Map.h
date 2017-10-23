@@ -5,10 +5,12 @@
 #include <string>
 #include <memory>
 
-#include "Tile.h"
-#include "PathTile.h"
-#include "SolidGroundTile.h"
-#include "EnviormentUnit.h"
+class Tile;
+class Projectile;
+class PathTile;
+class EnviormentUnit;
+
+#include "Map/SolidGroundTile.h"
 
 class Map{
 private:

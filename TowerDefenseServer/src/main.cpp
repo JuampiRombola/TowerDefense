@@ -1,7 +1,7 @@
 #include <thread> 
 #include <chrono>
 
-#include "BuildTowerCommand.h"
+#include "Commands/BuildTowerCommand.h"
 
 #include "TowerDefenseGame.h"
 

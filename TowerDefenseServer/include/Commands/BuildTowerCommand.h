@@ -1,8 +1,8 @@
 #ifndef _BUILD_TOWER_COMMAND_
 #define _BUILD_TOWER_COMMAND_
 
-#include "Command.h"
-#include "Map.h"
+#include "Commands/Command.h"
+class Map;
 
 enum TowerType { Ground, Ice, Air, Fire };
 

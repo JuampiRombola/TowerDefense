@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include "Tower.h"
-#include "Projectile.h"
-#include "PathTile.h"
-#include "SolidGroundTile.h"
+#include "Towers/Projectile.h"
+
+class PathTile;
+class SolidGroundTile;
 
 class GroundProjectile : public Projectile {
 public:

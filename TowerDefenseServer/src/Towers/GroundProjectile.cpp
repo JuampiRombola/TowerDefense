@@ -1,14 +1,14 @@
 #include <iostream>
 #include <memory>
 
-#include "GroundProjectile.h"
-#include "Projectile.h"
-#include "PathTile.h"
-#include "EnviormentUnit.h"
+#include "Towers/GroundProjectile.h"
+#include "Towers/Projectile.h"
+#include "Map/PathTile.h"
+#include "EnviormentUnits/EnviormentUnit.h"
 
 GroundProjectile::GroundProjectile
 (std::shared_ptr<SolidGroundTile> origin, std::shared_ptr<PathTile> target, uint hitpoints) :
- Projectile(origin, target, 5, hitpoints)
+ Projectile(origin, target, 50, hitpoints)
 {
 
 }

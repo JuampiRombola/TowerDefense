@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include "PathTile.h"
-#include "SolidGroundTile.h"
+#include "Map/PathTile.h"
+#include "Map/SolidGroundTile.h"
 
 class Projectile {
 private:

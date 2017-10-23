@@ -7,11 +7,16 @@
 #include <mutex>
 
 #include "TowerDefenseGame.h"
-#include "Map.h"
-#include "DemonioVerde.h"
-#include "EnviormentUnit.h"
-#include "Tower.h"
-#include "GroundTower.h"
+#include "Map/Map.h"
+#include "EnviormentUnits/DemonioVerde.h"
+#include "EnviormentUnits/Abmonible.h"
+#include "EnviormentUnits/Espectro.h"
+#include "EnviormentUnits/NoMuerto.h"
+#include "EnviormentUnits/HalconSangriento.h"
+#include "EnviormentUnits/HombreCabra.h"
+#include "EnviormentUnits/EnviormentUnit.h"
+#include "Towers/Tower.h"
+#include "Towers/GroundTower.h"
 
 
 
@@ -39,7 +44,7 @@ void TowerDefenseGame::_SpawnEnemy(){
 	// por ahora agarro uno random :P
 
 	std::shared_ptr<PathTile> spawn = _map.GetRandomSpawnTile();
-	std::shared_ptr<EnviormentUnit> unit(new DemonioVerde(++_enemyIdCounter));
+	std::shared_ptr<EnviormentUnit> unit(new Espectro(++_enemyIdCounter));
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
 }
@@ -72,7 +77,7 @@ bool TowerDefenseGame::_Step(){
 	_steps = _steps + 1;
 
 
-	if (_units.size() == 0){
+	if (_units.size() != 5){
 		_SpawnEnemy();
 	}
 

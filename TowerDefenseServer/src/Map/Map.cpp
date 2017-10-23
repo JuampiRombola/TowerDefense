@@ -7,15 +7,15 @@
 #include <memory>
 #include <ctime>
 
-#include "Map.h"
+#include "Map/Map.h"
 #include "Exceptions/IncompletePathException.h"
 #include "Exceptions/TileCannotSpawnException.h"
 #include "Exceptions/TileIsOutOfBoundsException.h"
 #include "Exceptions/PositionAlreadyHasTileException.h"
 #include "Exceptions/NoSetSpawnTilesException.h"
-#include "EnviormentUnit.h"
-#include "PathTile.h"
-#include "Projectile.h"
+#include "EnviormentUnits/EnviormentUnit.h"
+#include "Map/PathTile.h"
+#include "Towers/Projectile.h"
 
 Map::Map(uint rows, uint cols, std::string mapJsonConfig):
 _rows(rows), _cols(cols), _finishTile(std::shared_ptr<PathTile>(nullptr)),

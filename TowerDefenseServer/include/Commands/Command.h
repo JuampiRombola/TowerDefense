@@ -1,7 +1,7 @@
 #ifndef _COMMAND_
 #define _COMMAND_
 
-#include "Map.h"
+#include "Map/Map.h"
 
 
 class Command {

@@ -4,9 +4,9 @@
 #include <vector>
 #include <memory>
 
-#include "Map.h"
-#include "PathTile.h"
-#include "EnviormentUnit.h"
+#include "Map/Map.h"
+#include "Map/PathTile.h"
+#include "EnviormentUnits/EnviormentUnit.h"
 #include "Helpers.h"
 #include "Exceptions/NonPlacedUnitCannotStepException.h"
 #include "Exceptions/IncompletePathException.h"
@@ -27,7 +27,7 @@ EnviormentUnit::~EnviormentUnit(){
 
 void EnviormentUnit::GetHit(uint hitpoints){
 	_healthPoints -= hitpoints;
-	std::cout << "EnviormentUnit GOT HIT for " << hitpoints 
+	std::cout << "EnviormentUnit" << _id << " GOT HIT for " << hitpoints 
 	<< "hp, now has " << _healthPoints << "hp\n" << std::flush;
 	if (_healthPoints <= 0)
 		_alive = false;

@@ -1,8 +1,8 @@
 #ifndef _DEMONIO_VERDE_
 #define _DEMONIO_VERDE_
 
-#include "EnviormentUnit.h"
-#include "PathTile.h"
+#include "EnviormentUnits/EnviormentUnit.h"
+#include "Map/PathTile.h"
 
 class DemonioVerde : public EnviormentUnit {
 public:
