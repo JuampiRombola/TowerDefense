@@ -29,10 +29,11 @@ int mainEditor(int argc, char** argv) {
 
     Editor editor;
 
-    Buttons buttons(mouse, renderer, editor);
+    Buttons buttons(mouse, renderer, editor, textureLoader);
     buttons.addSuperficieButtons(textureLoader.getTexture(9), textureLoader
             .getTexture(6), textureLoader.getTexture(7), textureLoader
             .getTexture(8));
+    buttons.addNuevaHordaButton(textureLoader.getTexture(10));
 
     while (!quit) {
         SDL_PollEvent(&event);
@@ -45,12 +46,23 @@ int mainEditor(int argc, char** argv) {
                 SDL_GetMouseState(&mouse_x, &mouse_y);
                 mouse.toggleActive();
                 break;
+            case SDL_FINGERDOWN:
+                mouse_x = event.tfinger.x;
+                mouse_y = event.tfinger.y;
+                mouse.toggleActive();
+                break;
         }
         event.type = 0;
         renderer.clearRender();
+        buttons.cleanHordasButtons();
+        for (unsigned int horda = 0; horda < editor.getCantidadHordas();
+             ++horda) {
+            buttons.addEnemigosButton(horda);
+        }
         buttons.draw();
         renderer.present();
     }
+    editor.exportar();
     SDL_Quit();
     return 0;
 }
