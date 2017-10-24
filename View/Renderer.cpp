@@ -84,11 +84,19 @@ int Renderer::cartesianToIsometricY(int x, int y) {
 }
 
 void Renderer::zoomIn() {
-    if (zoom < 5) zoom += 1;
+    if (zoom < 5) {
+        zoom += 1;
+        cameraX += windowWidth / 2 + WIDTHFACTOR * 3;
+        cameraY += windowHeight / 2;
+    }
 }
 
 void Renderer::zoomOut() {
-    if (zoom > 1) zoom -= 1;
+    if (zoom > 1) {
+        zoom -= 1;
+        cameraX -= windowWidth / 2 + WIDTHFACTOR * 3;
+        cameraY -= windowHeight / 2;
+    }
 }
 
 bool Renderer::isOnCamera(int x, int y) {

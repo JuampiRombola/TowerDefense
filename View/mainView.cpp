@@ -10,7 +10,7 @@
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
 
-#define MAPSIZE 7
+#define MAPSIZE 10
 
 int main(int argc, char** argv) {
     bool quit = false;
