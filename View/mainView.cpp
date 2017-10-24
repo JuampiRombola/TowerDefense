@@ -5,6 +5,7 @@
 #include "SpriteNamesConfig.h"
 #include "PortalEntradaView.h"
 #include "PortalSalidaView.h"
+#include "FireTowerView.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -29,7 +30,7 @@ int main(int argc, char** argv) {
     mapView.addPathTile(1, 2);
     mapView.addPathTile(1, 3);
     mapView.addPathTile(2, 3);
-    mapView.addPathTile(3, 3);
+    mapView.addPathTile(2, 4);
     mapView.addPathTile(3, 4);
     mapView.addPathTile(3, 5);
     mapView.addPathTile(4, 5);
@@ -38,9 +39,8 @@ int main(int argc, char** argv) {
     mapView.addPathTile(6, 6);
 
     //Pongo tierra firme
-    mapView.addStructureTile(0, 1);
+    mapView.addStructureTile(1, 4);
     mapView.addStructureTile(2, 2);
-    mapView.addStructureTile(3, 2);
     mapView.addStructureTile(4, 4);
     mapView.addStructureTile(5, 6);
 
@@ -49,6 +49,14 @@ int main(int argc, char** argv) {
     portalEntrada.setXY(0, 0);
     PortalView portalSalida = PortalSalidaView(textureLoader, renderer);
     portalSalida.setXY(6, 6);
+
+    //Agrego una torre de fuego en el 1,4
+    FireTowerView fireTower1(textureLoader, renderer);
+    fireTower1.setXY(1, 4);
+
+    //Agrego una torre de fuego en el 4,4
+    FireTowerView fireTower2(textureLoader, renderer);
+    fireTower2.setXY(4, 4);
 
     while (!quit) {
         SDL_PollEvent(&event);
@@ -73,6 +81,8 @@ int main(int argc, char** argv) {
         mapView.draw(ticks);
         portalEntrada.draw(ticks);
         portalSalida.draw(ticks);
+        fireTower1.draw(ticks);
+        fireTower2.draw(ticks);
         renderer.present();
     }
     SDL_Quit();

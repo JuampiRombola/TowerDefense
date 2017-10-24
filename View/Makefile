@@ -123,6 +123,33 @@ TowerDefense/fast:
 	$(MAKE) -f CMakeFiles/TowerDefense.dir/build.make CMakeFiles/TowerDefense.dir/build
 .PHONY : TowerDefense/fast
 
+View/FireTowerView.o: View/FireTowerView.cpp.o
+
+.PHONY : View/FireTowerView.o
+
+# target to build an object file
+View/FireTowerView.cpp.o:
+	$(MAKE) -f CMakeFiles/TowerDefense.dir/build.make CMakeFiles/TowerDefense.dir/View/FireTowerView.cpp.o
+.PHONY : View/FireTowerView.cpp.o
+
+View/FireTowerView.i: View/FireTowerView.cpp.i
+
+.PHONY : View/FireTowerView.i
+
+# target to preprocess a source file
+View/FireTowerView.cpp.i:
+	$(MAKE) -f CMakeFiles/TowerDefense.dir/build.make CMakeFiles/TowerDefense.dir/View/FireTowerView.cpp.i
+.PHONY : View/FireTowerView.cpp.i
+
+View/FireTowerView.s: View/FireTowerView.cpp.s
+
+.PHONY : View/FireTowerView.s
+
+# target to generate assembly for a file
+View/FireTowerView.cpp.s:
+	$(MAKE) -f CMakeFiles/TowerDefense.dir/build.make CMakeFiles/TowerDefense.dir/View/FireTowerView.cpp.s
+.PHONY : View/FireTowerView.cpp.s
+
 View/MapView.o: View/MapView.cpp.o
 
 .PHONY : View/MapView.o
@@ -429,6 +456,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... TowerDefense"
+	@echo "... View/FireTowerView.o"
+	@echo "... View/FireTowerView.i"
+	@echo "... View/FireTowerView.s"
 	@echo "... View/MapView.o"
 	@echo "... View/MapView.i"
 	@echo "... View/MapView.s"

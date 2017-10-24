@@ -7,6 +7,7 @@
 #define DESIERTO 9
 #define PORTALENTRADA 3
 #define PORTALSALIDA 4
-#define TOTAL 5
+#define FIRE_TOWER 5
+#define TOTAL 6
 
 #endif //TOWERDEFENSE_SPRITENAMESCONFIG_H
