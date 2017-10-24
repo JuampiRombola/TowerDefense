@@ -18,5 +18,5 @@ int View::getX() {
 }
 
 int View::getY() {
-    this->y;
+    return this->y;
 }
