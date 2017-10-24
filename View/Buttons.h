@@ -11,6 +11,7 @@
 #include "NuevaHordaButton.h"
 #include "AgregarEnemigoButton.h"
 #include "EliminarEnemigoButton.h"
+#include "EliminarHordaButton.h"
 
 class Buttons {
 private:

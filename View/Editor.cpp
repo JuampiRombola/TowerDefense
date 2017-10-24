@@ -14,8 +14,8 @@ void Editor::agregarEnemigo(int horda, std::string enemigo) {
 }
 
 void Editor::eliminarEnemigo(int horda, std::string enemigo) {
-    for (std::vector<std::string>::iterator it = hordas.at(horda).begin(); it !=
-            hordas.at(horda).end(); ++it) {
+    for (std::vector<std::string>::iterator it = hordas.at(horda).begin();
+         it != hordas.at(horda).end(); ++it) {
         if (*it == enemigo)
             this->hordas.at(horda).erase(it);
     }
@@ -23,6 +23,14 @@ void Editor::eliminarEnemigo(int horda, std::string enemigo) {
 
 void Editor::agregarHorda() {
     this->hordas.emplace_back();
+}
+
+void Editor::eliminarHorda(int horda) {
+    std::vector<std::vector<std::string>>::iterator it = hordas.begin();
+    for (int i = 0; i < horda; ++i) {
+        ++it;
+    }
+    hordas.erase(it);
 }
 
 unsigned int Editor::getCantidadHordas() {

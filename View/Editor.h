@@ -15,6 +15,7 @@ public:
     void agregarEnemigo(int horda, std::string enemigo);
     void eliminarEnemigo(int horda, std::string enemigo);
     void agregarHorda();
+    void eliminarHorda(int horda);
     unsigned int getCantidadHordas();
     void exportar();
 };
