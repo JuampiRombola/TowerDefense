@@ -4,14 +4,19 @@
 
 #include "View.h"
 
-View::View(int key, TextureLoader &textures, Renderer &renderer) :
-        sprite(textures.getTexture(key), renderer) {}
+View::View(){}
+View::~View() {}
 
 void View::setXY(int x, int y) {
     this->x = x;
     this->y = y;
-    sprite.setDestXY(x, y);
 }
 
-View::~View() {
+
+int View::getX() {
+    return this->x;
+}
+
+int View::getY() {
+    this->y;
 }

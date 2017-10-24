@@ -1,14 +1,15 @@
 #include "PortalEntradaView.h"
 #include "SpriteNamesConfig.h"
 
-#define PORTALENTRADALEFTBOTX 18
-#define PORTALENTRADALEFTBOTY 100
+#define PORTALENTRADAOFFSETX 18
+#define PORTALENTRADAOFFSETY 100
 
 PortalEntradaView::PortalEntradaView(TextureLoader &textures,
                                      Renderer &renderer) :
         PortalView(PORTALENTRADA, textures, renderer) {
-    leftBotX = PORTALENTRADALEFTBOTX;
-    leftBotY = PORTALENTRADALEFTBOTY;
+    spritePortal.setOffsetXY(PORTALENTRADAOFFSETX, PORTALENTRADAOFFSETY);
+    spriteAnim.setOffsetXY(PORTALENTRADAOFFSETX,
+                           PORTALENTRADAOFFSETY + PORTALANIMOFFSET);
 }
 
 PortalEntradaView::~PortalEntradaView() {}

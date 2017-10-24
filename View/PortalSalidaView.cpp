@@ -1,14 +1,15 @@
 #include "PortalSalidaView.h"
 #include "SpriteNamesConfig.h"
 
-#define PORTALSALIDALEFTBOTX 20
-#define PORTALSALIDALEFTBOTY 75
+#define PORTALSALIDAOFFSETX 20
+#define PORTALSALIDAOFFSETY 75
 
 PortalSalidaView::PortalSalidaView(TextureLoader &textures,
                                      Renderer &renderer) :
         PortalView(PORTALSALIDA, textures, renderer) {
-    leftBotX = PORTALSALIDALEFTBOTX;
-    leftBotY = PORTALSALIDALEFTBOTY;
+    spritePortal.setOffsetXY(PORTALSALIDAOFFSETX, PORTALSALIDAOFFSETY);
+    spriteAnim.setOffsetXY(PORTALSALIDAOFFSETX,
+                           PORTALSALIDAOFFSETY + PORTALANIMOFFSET);
 }
 
 PortalSalidaView::~PortalSalidaView() {}

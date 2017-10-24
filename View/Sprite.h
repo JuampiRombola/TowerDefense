@@ -14,8 +14,8 @@ private:
     Renderer &renderer;
     SDL_Rect srcRect;
     SDL_Rect dstRect;
-    int leftBotX;
-    int leftBotY;
+    int offsetX;
+    int offsetY;
 
 public:
     Sprite(SDL_Texture *texture, Renderer &renderer);
@@ -25,7 +25,7 @@ public:
     void setDestXY(int x, int y);
     void setSourceRect(int x, int y, int w, int h);
     void setDestRect(int x, int y, int w, int h);
-    void setLeftBotXY(int x, int y);
+    void setOffsetXY(int x, int y);
 };
 
 

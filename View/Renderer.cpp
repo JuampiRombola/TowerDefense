@@ -7,6 +7,7 @@
 #define ZOOMINITIAL 1
 
 #define MOVECAMERA 10
+#define TOLERANCE 380
 
 Renderer::Renderer(Window &window, int mapWidth, int mapHeight) :
         mapWidth(mapWidth * WIDTHFACTOR * 2),
@@ -27,12 +28,16 @@ Renderer::~Renderer() {
 
 void Renderer::copy(SDL_Texture *texture,
                     const SDL_Rect *src, SDL_Rect *dst,
-                    int leftBotX, int leftBotY) {
+                    int offsetX, int offsetY) {
     int x = dst->x;
     int y = dst->y;
-    dst->x = cartesianToIsometricX(x, y) - leftBotX * zoom - cameraX;
-    dst->y = cartesianToIsometricY(x, y) - leftBotY * zoom - cameraY;
-    //if (!isOnCamera(dst->x, dst->y)) return;
+    dst->x = cartesianToIsometricX(x, y) - offsetX * zoom - cameraX;
+    dst->y = cartesianToIsometricY(x, y) - offsetY * zoom - cameraY;
+    if (!isOnCamera(dst->x, dst->y)) {
+        dst->x = x;
+        dst->y = y;
+        return;
+    }
     int dstW = dst->w;
     int dstH = dst->h;
     dst->w *= zoom;
@@ -87,6 +92,7 @@ void Renderer::zoomOut() {
 }
 
 bool Renderer::isOnCamera(int x, int y) {
-    return ((x >= -WIDTHFACTOR * 2 * zoom) && (y >= -HEIGHTFACTOR * zoom) &&
+    return ((x >= -(WIDTHFACTOR + TOLERANCE) * zoom) &&
+            (y >= -(HEIGHTFACTOR + TOLERANCE) * zoom) &&
             (x <= windowWidth) && (y <= windowHeight));
 }
