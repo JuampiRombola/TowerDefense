@@ -59,6 +59,7 @@ int main(int argc, char** argv) {
     fireTower2.setXY(4, 4);
 
     while (!quit) {
+        //t1
         SDL_PollEvent(&event);
 
         switch (event.type) {
@@ -83,7 +84,10 @@ int main(int argc, char** argv) {
         portalSalida.draw(ticks);
         fireTower1.draw(ticks);
         fireTower2.draw(ticks);
-        renderer.present();
+        renderer.present();// t2
+        //delay(S - t2 + t1 - d)
+        //t3
+        //d = t2 - t3 - (S - t2 + t1)
     }
     SDL_Quit();
 }
