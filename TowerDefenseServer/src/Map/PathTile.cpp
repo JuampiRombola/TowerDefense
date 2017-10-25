@@ -54,7 +54,7 @@ bool PathTile::HasAnyUnit(){
 	return _units.begin() != _units.end();
 }
 
-std::vector<std::shared_ptr<EnviormentUnit>> PathTile::GetUnits(){
+std::vector<std::shared_ptr<EnviormentUnit>> PathTile::GetUnits(){ //copia!!!!!
 	return _units;
 }
 

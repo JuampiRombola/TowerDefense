@@ -128,7 +128,7 @@ Map::~Map(){}
 
 std::shared_ptr<PathTile> Map::GetPathTile(uint x, uint y){
 	if (x >= _cols || y >= _rows)
-		return std::shared_ptr<PathTile>(nullptr);
+		return std::shared_ptr<PathTile>(nullptr); //lanzar exception
 	return _pathTiles[x][y];
 }
 

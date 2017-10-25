@@ -17,7 +17,7 @@ void BuildTowerCommand::Execute(Map* map){
 		case Air: _BuildAirTower(map);			break;
 		case Ice: _BuildIceTower(map);			break;
 		case Fire: _BuildFireTower(map);		break;
-		default: break;
+		default: break; //lanzar excepcion
 	}
 }
 
