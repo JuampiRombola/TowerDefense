@@ -6,13 +6,13 @@
 #include "Towers/Projectile.h"
 
 class PathTile;
-class SolidGroundTile;
+class FireTower;
 
 class FireProjectile : public Projectile {
 public:
-	FireProjectile(std::shared_ptr<SolidGroundTile> origin, std::shared_ptr<PathTile> target, uint hitpoints);
+	FireProjectile(FireTower* origin, std::shared_ptr<PathTile> target, uint hitpoints);
 	~FireProjectile();
-	void _OnImpact();
+	uint _OnImpact();
 };
 
 #endif

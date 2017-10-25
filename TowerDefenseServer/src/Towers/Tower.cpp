@@ -6,8 +6,8 @@
 #include "Map/Map.h"
 #include "Helpers.h"
 
-Tower::Tower(uint cooldown_ms, uint range, std::shared_ptr<SolidGroundTile> pos, Map* map) : 
-_lastTimeStamp_ms(0), _cooldown_ms(cooldown_ms), _map(map), _position(pos), _range(range) {
+Tower::Tower(uint cooldown_ms, uint range, uint damage, std::shared_ptr<SolidGroundTile> pos, Map* map) : 
+_lastTimeStamp_ms(0), _cooldown_ms(cooldown_ms), _map(map), _position(pos), _range(range), _experience(0), _damage(damage) {
 
 }
 
@@ -23,7 +23,8 @@ bool Tower::_CanFire(){
 		return true;
 	}
 
-	if (Helpers::TimeElapsed(_lastTimeStamp_ms, _cooldown_ms)){
+	uint delta = Helpers::MillisecondsTimeStamp() - _lastTimeStamp_ms;
+	if (delta > _cooldown_ms){
 		_lastTimeStamp_ms = Helpers::MillisecondsTimeStamp();
 		return true;
 	}
@@ -61,4 +62,17 @@ std::shared_ptr<Projectile> Tower::_Fire(std::shared_ptr<EnviormentUnit> target)
 	std::cout << "TOWER FIRE!!!\n" << std::flush;
 	_lastTimeStamp_ms = Helpers::MillisecondsTimeStamp();
 	return _BuildProjectile(target.get()->GetPosition());
+}
+
+
+void Tower::AddExperience(uint exp){
+	_experience += exp;
+}
+
+void Tower::AddDamage(uint damage){
+	_damage += damage;
+}
+
+std::shared_ptr<SolidGroundTile> Tower::GetPosition(){
+	return _position;
 }

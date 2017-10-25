@@ -77,7 +77,7 @@ bool TowerDefenseGame::_Step(){
 	_steps = _steps + 1;
 
 
-	if (_units.size() != 5){
+	if (_units.size() == 0){
 		_SpawnEnemy();
 	}
 

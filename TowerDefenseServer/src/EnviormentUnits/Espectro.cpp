@@ -2,7 +2,7 @@
 
 #include "EnviormentUnits/Espectro.h"
 
-Espectro::Espectro(unsigned int id) : EnviormentUnit(id, 1000, 100) {}
+Espectro::Espectro(unsigned int id) : EnviormentUnit(id, 5000, 100) {}
 
 Espectro::~Espectro()
 {

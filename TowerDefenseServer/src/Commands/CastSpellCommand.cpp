@@ -3,6 +3,7 @@
 
 #include "Towers/GroundTower.h"
 #include "Map/SolidGroundTile.h"
+#include "Map/PathTile.h"
 #include "Commands/CastSpellCommand.h"
 #include "Towers/Tower.h"
 
@@ -32,7 +33,10 @@ void CastSpellCommand::_CastTerraforming(Map* map){
 
 }
 void CastSpellCommand::_CastGrieta(Map* map){
-
+	std::shared_ptr<PathTile> tile = map->GetPathTile(_xPos, _yPos);
+	if (tile != std::shared_ptr<PathTile>(nullptr)){
+		tile->Crack(4);
+	}
 }
 void CastSpellCommand::_CastMeteorito(Map* map){
 

@@ -13,7 +13,7 @@ class WindTower : public Tower {
 protected:
 	std::shared_ptr<Projectile> _BuildProjectile(std::shared_ptr<PathTile> target);
 public:
-	WindTower(uint cooldown_sec, uint range, std::shared_ptr<SolidGroundTile> position, Map* map);
+	WindTower(uint cooldown_sec, uint range, uint damage, std::shared_ptr<SolidGroundTile> position, Map* map);
 	~WindTower();
 	void PrintDebug();
 };

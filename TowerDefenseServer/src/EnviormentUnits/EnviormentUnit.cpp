@@ -3,6 +3,8 @@
 #include <ctime>
 #include <vector>
 #include <memory>
+#include <cmath>
+
 
 #include "Map/Map.h"
 #include "Map/PathTile.h"
@@ -13,17 +15,42 @@
 #include "Exceptions/UnitCannotMoveDiagonallyException.h"
 
 EnviormentUnit::EnviormentUnit(uint id, uint speed, uint healthpoints): 
-_lastTimeStamp_ms(0), _alive(true), _id(id), _speed(speed),
+_lastTimeStamp_ms(0), _lastSlowBeginTimeStamp_ms(0), _alive(true), _id(id), _speed(speed),
  _healthPoints(healthpoints), _position(std::shared_ptr<PathTile>(nullptr)), 
 _lastPosition(std::shared_ptr<PathTile>(nullptr)), 
-_map(NULL) 
+_map(NULL), _isSlowed(false), _lastSlowDuration_sec(0), _activePercentSlow(1)
 {
 
 }
 
 EnviormentUnit::~EnviormentUnit(){
 
+
+
 }
+
+void EnviormentUnit::Kill(){
+	_healthPoints = 0;
+	_alive = false;
+}
+
+uint EnviormentUnit::GetHP(){
+	return _healthPoints;
+}
+
+void EnviormentUnit::PushBack(std::shared_ptr<EnviormentUnit> thisUnit){
+	if (_lastPosition == std::shared_ptr<PathTile>(nullptr))
+		return;
+
+	_position.get()->UnitLeave(thisUnit); 
+	_lastPosition.get()->UnitEnter(thisUnit);
+
+	_position = _lastPosition;
+	_lastPosition = std::shared_ptr<PathTile>(nullptr);
+	std::cout << "EnviormentUnit Pushed backed\n";
+	PrintDebug();
+}
+
 
 void EnviormentUnit::GetHit(uint hitpoints){
 	_healthPoints -= hitpoints;
@@ -36,6 +63,15 @@ void EnviormentUnit::GetHit(uint hitpoints){
 bool EnviormentUnit::IsAlive(){
 	return _alive;
 }
+
+
+void EnviormentUnit::Slow(uint slowSeconds, uint percentSlow){
+	_isSlowed = true;
+	_activePercentSlow = percentSlow;
+	_lastSlowBeginTimeStamp_ms = Helpers::MillisecondsTimeStamp();
+	_lastSlowDuration_sec = slowSeconds;
+}
+
 
 void EnviormentUnit::Step(std::shared_ptr<EnviormentUnit> thisUnit){
 
@@ -55,6 +91,9 @@ void EnviormentUnit::Step(std::shared_ptr<EnviormentUnit> thisUnit){
 
 
 bool EnviormentUnit::_CanStep(){
+	if (!IsAlive())
+		return false;
+
 	if (_position.get() == nullptr || _map == NULL)
 		throw new NonPlacedUnitCannotStepException();
 
@@ -63,15 +102,62 @@ bool EnviormentUnit::_CanStep(){
 		return true;
 	}
 
-	if (Helpers::TimeElapsed(_lastTimeStamp_ms, _speed)){
-		_lastTimeStamp_ms = Helpers::MillisecondsTimeStamp();
+	uint ts = Helpers::MillisecondsTimeStamp();
+	if (ts - _lastTimeStamp_ms >  _GetActualSpeed()){
+		_lastTimeStamp_ms = ts;
 		return true;
 	}
 
 	return false;
 }
 
+bool EnviormentUnit::IsSlowed(){
+	return _isSlowed;
+}
+
+uint EnviormentUnit::_GetActualSpeed(){
+	if (IsSlowed()){
+		unsigned long long ts = Helpers::MillisecondsTimeStamp();
+		unsigned long long delta_ms = ts - _lastSlowBeginTimeStamp_ms;
+		unsigned long long dur_ms = _lastSlowDuration_sec * 1000;
+
+		if ( delta_ms > dur_ms ){
+			_isSlowed = false;
+			return _speed;
+		}
+
+		double slowedSpeed = _speed * ((((double) _activePercentSlow ) / 100) + 1);
+		return slowedSpeed;
+	} 
+	return _speed;
+}
+
 std::shared_ptr<PathTile> EnviormentUnit::_GetNextTile(){
+	std::vector<std::weak_ptr<PathTile>> p = _position.get()->GetPossibleNextTiles(_lastPosition.get());
+
+	if (p.begin() == p.end()){
+		std::vector<std::shared_ptr<PathTile>> possiblePaths;
+		int x = _position->GetXPos();
+
+		int y = _position->GetYPos();
+		std::shared_ptr<PathTile> up = _map->GetPathTile(x, y+1);
+		std::shared_ptr<PathTile> down = _map->GetPathTile(x, y-1);
+		std::shared_ptr<PathTile> right = _map->GetPathTile(x+1, y);
+		std::shared_ptr<PathTile> left = _map->GetPathTile(x-1, y);
+		std::vector<std::shared_ptr<PathTile>> paths;
+		if (up.get() != nullptr)	possiblePaths.push_back(up);
+		if (down.get() != nullptr) 	possiblePaths.push_back(down);
+		if (right.get() != nullptr) possiblePaths.push_back(right);
+		if (left.get() != nullptr) 	possiblePaths.push_back(left);
+		std::srand(std::time(0));
+		uint random_variable = (uint) std::rand() % possiblePaths.size();
+		return possiblePaths[random_variable];
+	} 
+	else
+	{
+		return (*(p.begin())).lock();
+	}
+	/*
 	int x = _position->GetXPos();
 	int y = _position->GetYPos();
 
@@ -112,17 +198,17 @@ std::shared_ptr<PathTile> EnviormentUnit::_GetNextTile(){
 		}
 
 		if (front.get() != nullptr){
-			if (front == _map->GetFinishTile() || !front->DrivesStraightToSpawnFrom(_position, _map))
+			if (front == _map->GetFinishTile() || !front->DrivesStraightToSpawnFrom(_position.get(), _map))
 				possiblePaths.push_back(front);
 		}
 
 		if (side1.get() != nullptr){
-			if (side1 == _map->GetFinishTile() || !side1->DrivesStraightToSpawnFrom(_position, _map))
+			if (side1 == _map->GetFinishTile() || !side1->DrivesStraightToSpawnFrom(_position.get(), _map))
 				possiblePaths.push_back(side1);
 		}
 
 		if (side2.get() != nullptr){
-			if (side2 == _map->GetFinishTile() || !side2->DrivesStraightToSpawnFrom(_position, _map))
+			if (side2 == _map->GetFinishTile() || !side2->DrivesStraightToSpawnFrom(_position.get(), _map))
 				possiblePaths.push_back(side2);
 		}
 	}
@@ -132,7 +218,7 @@ std::shared_ptr<PathTile> EnviormentUnit::_GetNextTile(){
 
 	std::srand(std::time(0));
 	uint random_variable = (uint) std::rand() % possiblePaths.size();
-	return possiblePaths[random_variable];
+	return possiblePaths[random_variable];*/
 }
 
 std::shared_ptr<PathTile> EnviormentUnit::GetPosition(){
