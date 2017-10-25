@@ -14,15 +14,6 @@ public:
 		return milliseconds_since_epoch;
 	}
 
-	static bool TimeElapsed(unsigned long long lastTimeStamp, uint msToWait){
-		unsigned long long current = Helpers::MillisecondsTimeStamp();
-		unsigned long long delta = current - lastTimeStamp;
-		if (delta < msToWait)
-			return false;
-		else 
-			return true;
-	}
-
 };
 
 

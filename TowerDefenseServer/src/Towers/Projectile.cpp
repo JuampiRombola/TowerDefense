@@ -4,13 +4,15 @@
 
 #include "Towers/Projectile.h"
 #include "Map/PathTile.h"
+#include "Map/SolidGroundTile.h"
+#include "Towers/Tower.h"
 
-Projectile::Projectile(std::shared_ptr<SolidGroundTile> origin, std::shared_ptr<PathTile> target, uint speed, uint hitpoints) :
+Projectile::Projectile(Tower* origin, std::shared_ptr<PathTile> target, uint speed, uint hitpoints) :
  _speed(speed), _impacted(false), _distance(0), 
- _distanceCovered(0), _hitPoints(hitpoints), _target(target)
+ _distanceCovered(0), _origin(origin), _hitPoints(hitpoints), _target(target)
 {
-	uint dx = abs(origin->GetXPos() - target->GetXPos());
-	uint dy = abs(origin->GetYPos() - target->GetYPos());
+	uint dx = abs(origin->GetPosition().get()->GetXPos() - target->GetXPos());
+	uint dy = abs(origin->GetPosition().get()->GetYPos() - target->GetYPos());
 	uint temp = (dx*dx) + (dy*dy);
 	double sq = sqrt(temp);
 	_distance = floor(sq) * 10;
@@ -24,7 +26,9 @@ void Projectile::Step(){
 	_distanceCovered += _speed;
 	if (_distanceCovered >= _distance && !_impacted){
 
-		_OnImpact();
+		uint exp = _OnImpact();
+
+		_origin->AddExperience(exp);
 
 		_impacted = true;
 

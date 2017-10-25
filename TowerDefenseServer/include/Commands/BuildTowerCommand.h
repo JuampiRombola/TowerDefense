@@ -4,7 +4,7 @@
 #include "Commands/Command.h"
 class Map;
 
-enum TowerType { Ground, Ice, Air, Fire };
+enum TowerType { Ground, Ice, Wind, Fire };
 
 class BuildTowerCommand : public Command {
 private:
@@ -12,10 +12,10 @@ private:
 	unsigned int _yPos;
 
 	TowerType _towerType;
-	void _BuildGroundTower(Map* map);
-	void _BuildFireTower(Map* map);
-	void _BuildIceTower(Map* map);
-	void _BuildAirTower(Map* map);
+	std::shared_ptr<Tower> _BuildGroundTower(Map* map, std::shared_ptr<SolidGroundTile> tile);
+	std::shared_ptr<Tower> _BuildFireTower(Map* map, std::shared_ptr<SolidGroundTile> tile);
+	std::shared_ptr<Tower> _BuildIceTower(Map* map, std::shared_ptr<SolidGroundTile> tile);
+	std::shared_ptr<Tower> _BuildWindTower(Map* map, std::shared_ptr<SolidGroundTile> tile);
 public:
 	BuildTowerCommand(TowerType type, unsigned int x, unsigned int y);
 	~BuildTowerCommand();

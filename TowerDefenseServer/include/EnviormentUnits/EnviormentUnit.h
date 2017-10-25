@@ -8,7 +8,8 @@ class PathTile;
 
 class EnviormentUnit{
 private:
-	unsigned long long _lastTimeStamp_ms;
+	unsigned long long  _lastTimeStamp_ms;
+	unsigned long long _lastSlowBeginTimeStamp_ms;
 	bool _alive;
 	uint _id;
 	uint _speed;
@@ -19,7 +20,12 @@ private:
 
 	Map* _map;
 
+	bool _isSlowed;
+	uint _lastSlowDuration_sec;
+	uint _activePercentSlow;
+
 	std::shared_ptr<PathTile> _GetNextTile();
+	uint _GetActualSpeed();
 	bool _CanStep();
 public:
 	EnviormentUnit(uint id, uint speed, uint healthPoints);
@@ -32,6 +38,11 @@ public:
 	virtual void PrintDebug() = 0;
 	virtual bool Flies() = 0;
 	bool IsAlive();
+	uint GetHP();
+	void PushBack(std::shared_ptr<EnviormentUnit> thisUnit);
+	void Slow(uint slowSeconds, uint percentSlow);
+	bool IsSlowed();
+	void Kill();
 };
 
 #endif

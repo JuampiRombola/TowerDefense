@@ -82,6 +82,19 @@ _projectiles()
 	_PlaceGroundTile(std::shared_ptr<SolidGroundTile>(new SolidGroundTile(2,5)));
 	
 	_finishTile = end;
+
+
+	for (uint i = 0; i < _cols; i++)
+	{
+		for (uint j = 0; j < _rows; j++)
+		{
+			std::shared_ptr<PathTile> tile = GetPathTile(i, j);
+			if (tile.get() != nullptr){
+				std::cout << "Initing tile\n" << std::flush;
+				tile.get()->InitPossiblePaths(this);
+			}
+		}
+	}
 }
 
 
@@ -121,7 +134,6 @@ void Map::_PlaceTile(std::shared_ptr<Tile> tile){
 		throw new PositionAlreadyHasTileException();
 
 	_tiles.push_back(tile);
-
 }
 
 Map::~Map(){}
@@ -180,13 +192,7 @@ std::vector<std::shared_ptr<EnviormentUnit>> Map::GetUnitsInRadius(uint range, s
 	{
 		for (int j = jmin; j < jtop; j++)
 		{
-//			std::cout << "Checking tile " << i << ", " << j << "\n" << std::flush;
 			othertile = _pathTiles[i][j];
-			//if (i < (int) _cols && i >= 0){
-			//	if (j < (int)_rows && j >= 0){
-			//	}
-			//}
-			
 			if (othertile.get() != nullptr){
 				std::vector<std::shared_ptr<EnviormentUnit>> unitsInTile = othertile->GetUnits();
 				for (auto it = unitsInTile.begin(); it != unitsInTile.end(); ++it)

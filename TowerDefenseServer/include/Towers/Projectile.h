@@ -4,7 +4,9 @@
 #include <memory>
 
 #include "Map/PathTile.h"
-#include "Map/SolidGroundTile.h"
+
+class Tower;
+
 
 class Projectile {
 private:
@@ -13,12 +15,13 @@ private:
  	uint _distance;
  	uint _distanceCovered;
 protected:
+	Tower* _origin;
  	uint _hitPoints;
 	std::shared_ptr<PathTile> _target;
-	virtual void _OnImpact() = 0;
+
+	virtual uint _OnImpact() = 0;
 public:
-	Projectile(std::shared_ptr<SolidGroundTile> origin, 
-		std::shared_ptr<PathTile> target, uint speed, uint hitpoints);
+	Projectile(Tower* origin, std::shared_ptr<PathTile> target, uint speed, uint hitpoints);
 	virtual ~Projectile();
 	void Step(); 
 	void PrintDebug();
