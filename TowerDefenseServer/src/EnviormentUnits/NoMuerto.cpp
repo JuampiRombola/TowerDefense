@@ -10,11 +10,11 @@ NoMuerto::~NoMuerto()
 }
 
 void NoMuerto::PrintDebug(){
-	std::shared_ptr<PathTile> pos = GetPosition();
-	if (pos.get() == nullptr)
+	PathTile* pos = GetPosition();
+	if (pos == nullptr)
 		std::cout << "NoMuerto" << GetId() << " outside map\n";
 	else
-		std::cout << "NoMuerto" << GetId() <<  "@(" << pos.get()->GetXPos() << ", " << pos.get()->GetYPos() << ")\n";
+		std::cout << "NoMuerto" << GetId() <<  "@(" << pos->GetXPos() << ", " << pos->GetYPos() << ")\n";
 }
 
 bool NoMuerto::Flies(){

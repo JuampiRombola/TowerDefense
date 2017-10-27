@@ -10,11 +10,11 @@ HalconSangriento::~HalconSangriento()
 }
 
 void HalconSangriento::PrintDebug(){
-	std::shared_ptr<PathTile> pos = GetPosition();
-	if (pos.get() == nullptr)
+	PathTile* pos = GetPosition();
+	if (pos == nullptr)
 		std::cout << "HalconSangriento" << GetId() << " outside map\n";
 	else
-		std::cout << "HalconSangriento" << GetId() <<  "@(" << pos.get()->GetXPos() << ", " << pos.get()->GetYPos() << ")\n";
+		std::cout << "HalconSangriento" << GetId() <<  "@(" << pos->GetXPos() << ", " << pos->GetYPos() << ")\n";
 }
 
 bool HalconSangriento::Flies(){

@@ -1,5 +1,5 @@
 #include <iostream>
-#include <memory>
+
 
 #include "Towers/WindProjectile.h"
 #include "Towers/WindTower.h"
@@ -8,7 +8,7 @@
 #include "EnviormentUnits/EnviormentUnit.h"
 
 WindProjectile::WindProjectile
-(WindTower* origin, std::shared_ptr<PathTile> target, uint hitpoints) :
+(WindTower* origin, PathTile* target, uint hitpoints) :
  Projectile(origin, target, 50, hitpoints)
 {
 
@@ -19,27 +19,27 @@ WindProjectile::~WindProjectile(){}
 
 
 uint WindProjectile::_OnImpact(){
-	std::vector<std::shared_ptr<EnviormentUnit>> units = _target->GetUnits();
+	std::vector<EnviormentUnit*> units = _target->GetUnits();
 	bool hit = false;
 	uint exp = 0;
 	for (auto it = units.begin(); it != units.end() && !hit; ++it){
 		
 		hit = true;
 
-		uint currentHP = (*it).get()->GetHP();
+		uint currentHP = (*it)->GetHP();
 
 
 		uint hitPoints = _hitPoints;
-		if (!(*it).get()->Flies()){
+		if (!(*it)->Flies()){
 			hitPoints *= 5;
 		}
 
-		(*it).get()->GetHit(hitPoints);
-		(*it).get()->PushBack(*it);
+		(*it)->GetHit(hitPoints);
+		(*it)->PushBack();
 
 		exp += hitPoints;
 
-		if (!((*it).get()->IsAlive())){
+		if (!((*it)->IsAlive())){
 			exp += currentHP / 2;
 		}
 

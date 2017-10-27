@@ -11,11 +11,14 @@ private:
 	unsigned int _xPos;
 	unsigned int _yPos;
 
+	BuildTowerCommand( const BuildTowerCommand& );
+    const BuildTowerCommand& operator=( const BuildTowerCommand& );
+
 	TowerType _towerType;
-	std::shared_ptr<Tower> _BuildGroundTower(Map* map, std::shared_ptr<SolidGroundTile> tile);
-	std::shared_ptr<Tower> _BuildFireTower(Map* map, std::shared_ptr<SolidGroundTile> tile);
-	std::shared_ptr<Tower> _BuildIceTower(Map* map, std::shared_ptr<SolidGroundTile> tile);
-	std::shared_ptr<Tower> _BuildWindTower(Map* map, std::shared_ptr<SolidGroundTile> tile);
+	Tower* _BuildGroundTower(Map* map, SolidGroundTile* tile);
+	Tower* _BuildFireTower(Map* map, SolidGroundTile* tile);
+	Tower* _BuildIceTower(Map* map, SolidGroundTile* tile);
+	Tower* _BuildWindTower(Map* map, SolidGroundTile* tile);
 public:
 	BuildTowerCommand(TowerType type, unsigned int x, unsigned int y);
 	~BuildTowerCommand();

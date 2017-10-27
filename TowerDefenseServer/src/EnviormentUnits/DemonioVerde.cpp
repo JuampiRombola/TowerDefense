@@ -10,11 +10,11 @@ DemonioVerde::~DemonioVerde()
 }
 
 void DemonioVerde::PrintDebug(){
-	std::shared_ptr<PathTile> pos = GetPosition();
-	if (pos.get() == nullptr)
+	PathTile* pos = GetPosition();
+	if (pos == nullptr)
 		std::cout << "DemonioVerde" << GetId() << " outside map\n";
 	else
-		std::cout << "DemonioVerde" << GetId() <<  "@(" << pos.get()->GetXPos() << ", " << pos.get()->GetYPos() << ")\n";
+		std::cout << "DemonioVerde" << GetId() <<  "@(" << pos->GetXPos() << ", " << pos->GetYPos() << ")\n";
 }
 
 bool DemonioVerde::Flies(){

@@ -1,4 +1,4 @@
-#include <memory>
+
 #include <iostream>
 
 #include "Towers/GroundTower.h"
@@ -15,9 +15,9 @@ BuildTowerCommand::BuildTowerCommand(TowerType type, unsigned int x, unsigned in
 BuildTowerCommand::~BuildTowerCommand(){}
 
 void BuildTowerCommand::Execute(Map* map){
-	std::shared_ptr<SolidGroundTile> tile = map->GetSolidGroundTile(_xPos ,_yPos);
-	if (tile.get() != nullptr && !tile.get()->HasTower()){
-		std::shared_ptr<Tower> t;
+	SolidGroundTile* tile = map->GetSolidGroundTile(_xPos ,_yPos);
+	if (tile != NULL && !tile->HasTower()){
+		Tower* t = NULL;
 
 		switch(_towerType){
 			case Ground: 		t = _BuildGroundTower(map, tile);	break;
@@ -27,7 +27,8 @@ void BuildTowerCommand::Execute(Map* map){
 			default: break; // Lanzar excepcion
 		}
 
-		tile->PlaceTower(t);
+		if (t != NULL)
+			tile->PlaceTower(t);
 
 		std::cout << "TOWER PLACED\n" << std::flush;
 
@@ -35,24 +36,27 @@ void BuildTowerCommand::Execute(Map* map){
 
 }
 
-std::shared_ptr<Tower> BuildTowerCommand::_BuildGroundTower(Map* map, std::shared_ptr<SolidGroundTile> tile){
+Tower* BuildTowerCommand::_BuildGroundTower(Map* map, SolidGroundTile* tile){
 	uint groundTowerCooldown = 2000;
 	uint groundTowerRange = 200;
-	return std::shared_ptr<GroundTower>(new GroundTower(groundTowerCooldown, groundTowerRange, 2, tile, map));
+	return new GroundTower(groundTowerCooldown, groundTowerRange, 2, tile, map);
 }
 
-std::shared_ptr<Tower> BuildTowerCommand::_BuildFireTower(Map* map, std::shared_ptr<SolidGroundTile> tile){
+Tower* BuildTowerCommand::_BuildFireTower(Map* map, SolidGroundTile* tile){
+	uint fireTowerDamage = 10;
 	uint fireTowerCooldown = 2000;
-	uint fireTowerRange = 200;
-	return	std::shared_ptr<FireTower>(new FireTower(fireTowerCooldown, fireTowerRange, 2, tile, map));
+	uint fireTowerRange = 5;
+	uint collateralRange = 2;
+	uint collateralDamage = 5;
+	return new FireTower(fireTowerCooldown, fireTowerRange, fireTowerDamage, tile, map, collateralDamage, collateralRange);
 }
-std::shared_ptr<Tower> BuildTowerCommand::_BuildIceTower(Map* map, std::shared_ptr<SolidGroundTile> tile){
+Tower* BuildTowerCommand::_BuildIceTower(Map* map, SolidGroundTile* tile){
 	uint iceTowerCooldown = 12000;
 	uint iceTowerRange = 200;
-	return std::shared_ptr<IceTower>(new IceTower(iceTowerCooldown, iceTowerRange, 2, tile, map));
+	return new IceTower(iceTowerCooldown, iceTowerRange, 2, tile, map);
 }
-std::shared_ptr<Tower> BuildTowerCommand::_BuildWindTower(Map* map, std::shared_ptr<SolidGroundTile> tile){
-	uint windTowerCooldown = 6000;
+Tower* BuildTowerCommand::_BuildWindTower(Map* map, SolidGroundTile* tile){
+	uint windTowerCooldown = 4000;
 	uint windTowerRange = 200;
-	return std::shared_ptr<WindTower>(new WindTower(windTowerCooldown, windTowerRange, 2, tile, map));
+	return new WindTower(windTowerCooldown, windTowerRange, 2, tile, map);
 }

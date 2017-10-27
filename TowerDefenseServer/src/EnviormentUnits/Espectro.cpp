@@ -2,7 +2,7 @@
 
 #include "EnviormentUnits/Espectro.h"
 
-Espectro::Espectro(unsigned int id) : EnviormentUnit(id, 5000, 100) {}
+Espectro::Espectro(unsigned int id) : EnviormentUnit(id, 500, 100) {}
 
 Espectro::~Espectro()
 {
@@ -10,11 +10,11 @@ Espectro::~Espectro()
 }
 
 void Espectro::PrintDebug(){
-	std::shared_ptr<PathTile> pos = GetPosition();
-	if (pos.get() == nullptr)
+	PathTile* pos = GetPosition();
+	if (pos == nullptr)
 		std::cout << "Espectro" << GetId() << " outside map\n";
 	else
-		std::cout << "Espectro" << GetId() <<  "@(" << pos.get()->GetXPos() << ", " << pos.get()->GetYPos() << ")\n";
+		std::cout << "Espectro" << GetId() <<  "@(" << pos->GetXPos() << ", " << pos->GetYPos() << ")\n";
 }
 
 bool Espectro::Flies(){

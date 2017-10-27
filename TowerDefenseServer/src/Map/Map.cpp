@@ -4,7 +4,6 @@
 #include <vector>
 #include <mutex>
 #include <cstdlib>
-#include <memory>
 #include <ctime>
 
 #include "Map/Map.h"
@@ -18,68 +17,68 @@
 #include "Towers/Projectile.h"
 
 Map::Map(uint rows, uint cols, std::string mapJsonConfig):
-_rows(rows), _cols(cols), _finishTile(std::shared_ptr<PathTile>(nullptr)),
+_rows(rows), _cols(cols), _finishTile(nullptr),
  _tiles(rows * cols), _spawnTiles(), 
-_pathTiles(cols, std::vector<std::shared_ptr<PathTile>>(rows)), 
-_groundTiles(cols, std::vector<std::shared_ptr<SolidGroundTile>>(rows)),
+_pathTiles(cols, std::vector<PathTile*>(rows)), 
+_groundTiles(cols, std::vector<SolidGroundTile*>(rows)),
 _projectiles()
 
 {
 	for (uint i = 0; i < cols; i++){
 		for (uint j = 0; j < rows; j++){
-			_pathTiles[i][j] = std::shared_ptr<PathTile>(nullptr);
-			_groundTiles[i][j] = std::shared_ptr<SolidGroundTile>(nullptr);
+			_pathTiles[i][j] = NULL;
+			_groundTiles[i][j] = NULL;
 		}
 	}
 	//Armo un camino a mano
-	std::shared_ptr<PathTile> spawn1 = std::shared_ptr<PathTile>(new PathTile(0,0));
-	std::shared_ptr<PathTile> spawn2 = std::shared_ptr<PathTile>(new PathTile(0,9));
+	PathTile* spawn1 = new PathTile(0,0, this);
+	PathTile* spawn2 = new PathTile(0,9, this);
 
 	_PlacePathTile(spawn1);
 	_SetSpawnTile(spawn1);
 	_PlacePathTile(spawn2);
 	_SetSpawnTile(spawn2);
 
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(1,9)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(1,8)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(1,7)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(1,6)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(2,6)));
+	_PlacePathTile(new PathTile(1,9, this));
+	_PlacePathTile(new PathTile(1,8, this));
+	_PlacePathTile(new PathTile(1,7, this));
+	_PlacePathTile(new PathTile(1,6, this));
+	_PlacePathTile(new PathTile(2,6, this));
 
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(3,7)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(3,8)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(4,8)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(5,8)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(6,8)));
+	_PlacePathTile(new PathTile(3,7, this));
+	_PlacePathTile(new PathTile(3,8, this));
+	_PlacePathTile(new PathTile(4,8, this));
+	_PlacePathTile(new PathTile(5,8, this));
+	_PlacePathTile(new PathTile(6,8, this));
 
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(1,0)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(2,0)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(3,0)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(3,1)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(3,2)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(3,3)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(3,4)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(4,4)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(5,4)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(6,4)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(6,5)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(6,6)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(6,7)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(7,7)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(8,7)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(8,6)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(8,5)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(8,4)));
+	_PlacePathTile(new PathTile(1,0, this));
+	_PlacePathTile(new PathTile(2,0, this));
+	_PlacePathTile(new PathTile(3,0, this));
+	_PlacePathTile(new PathTile(3,1, this));
+	_PlacePathTile(new PathTile(3,2, this));
+	_PlacePathTile(new PathTile(3,3, this));
+	_PlacePathTile(new PathTile(3,4, this));
+	_PlacePathTile(new PathTile(4,4, this));
+	_PlacePathTile(new PathTile(5,4, this));
+	_PlacePathTile(new PathTile(6,4, this));
+	_PlacePathTile(new PathTile(6,5, this));
+	_PlacePathTile(new PathTile(6,6, this));
+	_PlacePathTile(new PathTile(6,7, this));
+	_PlacePathTile(new PathTile(7,7, this));
+	_PlacePathTile(new PathTile(8,7, this));
+	_PlacePathTile(new PathTile(8,6, this));
+	_PlacePathTile(new PathTile(8,5, this));
+	_PlacePathTile(new PathTile(8,4, this));
 
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(3,5)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(3,6)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(4,6)));
-	_PlacePathTile(std::shared_ptr<PathTile>(new PathTile(5,6)));
+	_PlacePathTile(new PathTile(3,5, this));
+	_PlacePathTile(new PathTile(3,6, this));
+	_PlacePathTile(new PathTile(4,6, this));
+	_PlacePathTile(new PathTile(5,6, this));
 
-	std::shared_ptr<PathTile> end = std::shared_ptr<PathTile>(new PathTile(9,4));
+	PathTile* end = new PathTile(9,4, this);
 	_PlacePathTile(end);
 
-	_PlaceGroundTile(std::shared_ptr<SolidGroundTile>(new SolidGroundTile(2,5)));
+	PlaceGroundTile(new SolidGroundTile(2,5));
 	
 	_finishTile = end;
 
@@ -88,32 +87,40 @@ _projectiles()
 	{
 		for (uint j = 0; j < _rows; j++)
 		{
-			std::shared_ptr<PathTile> tile = GetPathTile(i, j);
-			if (tile.get() != nullptr){
-				std::cout << "Initing tile\n" << std::flush;
-				tile.get()->InitPossiblePaths(this);
+			PathTile* tile = GetPathTile(i, j);
+			if (tile != nullptr){
+				tile->InitPossiblePaths();
 			}
 		}
 	}
 }
 
 
-void Map::RemoveUnit(std::shared_ptr<EnviormentUnit> unit){
-	unit.get()->GetPosition()->UnitLeave(unit);
+void Map::RemoveUnit(EnviormentUnit* unit){
+	unit->GetPosition()->UnitLeave(unit);
 }
 
 
-void Map::_PlaceGroundTile(std::shared_ptr<SolidGroundTile> tile){
+void Map::PlaceGroundTile(SolidGroundTile* tile){
+	if (_groundTiles[tile->GetXPos()][tile->GetYPos()] != NULL){
+		delete tile;
+		return;
+	}
+
 	_PlaceTile(tile);
 	_groundTiles[tile->GetXPos()][tile->GetYPos()] = tile;
 }
 
-void Map::_PlacePathTile(std::shared_ptr<PathTile> tile){
+void Map::_PlacePathTile(PathTile* tile){
+	if (_pathTiles[tile->GetXPos()][tile->GetYPos()] != NULL){
+		delete tile;
+		return;
+	}
 	_PlaceTile(tile);
 	_pathTiles[tile->GetXPos()][tile->GetYPos()] = tile;
 }
 
-void Map::_PlaceTile(std::shared_ptr<Tile> tile){
+void Map::_PlaceTile(Tile* tile){
 	if (tile->GetXPos() >= _cols || tile->GetYPos() >= _rows)
 		throw new TileIsOutOfBoundsException();
 
@@ -136,16 +143,21 @@ void Map::_PlaceTile(std::shared_ptr<Tile> tile){
 	_tiles.push_back(tile);
 }
 
-Map::~Map(){}
+Map::~Map()
+{
+	for (auto it = _tiles.begin(); it != _tiles.end(); ++it){
+		delete (*it);
+	}
+}
 
-std::shared_ptr<PathTile> Map::GetPathTile(uint x, uint y){
+PathTile* Map::GetPathTile(uint x, uint y){
 	if (x >= _cols || y >= _rows)
-		return std::shared_ptr<PathTile>(nullptr); //lanzar exception
+		return NULL;
 	return _pathTiles[x][y];
 }
 
 
-void Map::PlaceUnit(std::shared_ptr<EnviormentUnit> unit, std::shared_ptr<PathTile> tile){
+void Map::PlaceUnit(EnviormentUnit* unit, PathTile* tile){
 	if (tile->CanSpawn()){
 		tile->UnitEnter(unit);
 		unit->SetPosition(tile, this);
@@ -155,7 +167,7 @@ void Map::PlaceUnit(std::shared_ptr<EnviormentUnit> unit, std::shared_ptr<PathTi
 }
 
 
-std::shared_ptr<PathTile> Map::GetRandomSpawnTile(){
+PathTile* Map::GetRandomSpawnTile(){
 	if (_spawnTiles.size() == 0)
 		throw new NoSetSpawnTilesException();
 
@@ -164,18 +176,18 @@ std::shared_ptr<PathTile> Map::GetRandomSpawnTile(){
 	return _spawnTiles[random_variable];
 }
 
-std::shared_ptr<SolidGroundTile> Map::GetSolidGroundTile(uint x, uint y){
+SolidGroundTile* Map::GetSolidGroundTile(uint x, uint y){
 	if (x >= _cols || y >= _rows)
-		return std::shared_ptr<SolidGroundTile>(nullptr);
+		return NULL;
 	return _groundTiles[x][y];
 }
 
 
-std::vector<std::shared_ptr<EnviormentUnit>> Map::GetUnitsInRadius(uint range, std::shared_ptr<Tile> tile){
+std::vector<EnviormentUnit*> Map::GetUnitsInRadius(uint range, Tile* tile){
 	uint x = tile->GetXPos();
 	uint y = tile->GetYPos();
-	std::vector<std::shared_ptr<EnviormentUnit>> units;
-	std::shared_ptr<PathTile> othertile;
+	std::vector<EnviormentUnit*> units;
+	PathTile* othertile;
 	int imin = x - range;
 	int jmin = y - range;
 	int itop = x + range;
@@ -193,8 +205,8 @@ std::vector<std::shared_ptr<EnviormentUnit>> Map::GetUnitsInRadius(uint range, s
 		for (int j = jmin; j < jtop; j++)
 		{
 			othertile = _pathTiles[i][j];
-			if (othertile.get() != nullptr){
-				std::vector<std::shared_ptr<EnviormentUnit>> unitsInTile = othertile->GetUnits();
+			if (othertile != NULL){
+				std::vector<EnviormentUnit*> unitsInTile = othertile->GetUnits();
 				for (auto it = unitsInTile.begin(); it != unitsInTile.end(); ++it)
 					units.push_back(*it);
 			}
@@ -204,12 +216,12 @@ std::vector<std::shared_ptr<EnviormentUnit>> Map::GetUnitsInRadius(uint range, s
 	return units;
 }
 
-std::shared_ptr<PathTile> Map::GetFinishTile(){
+PathTile* Map::GetFinishTile(){
 	return _finishTile;
 }
 
 
-void Map::_SetSpawnTile(std::shared_ptr<PathTile> tile){
+void Map::_SetSpawnTile(PathTile* tile){
 	auto it = std::find(_spawnTiles.begin(), _spawnTiles.end(), tile);
 	if (it == _spawnTiles.end()){
 		_spawnTiles.push_back(tile);
@@ -221,9 +233,9 @@ void Map::_SetSpawnTile(std::shared_ptr<PathTile> tile){
 void Map::Step(){
 	for (auto it = _groundTiles.begin(); it != _groundTiles.end(); ++it){
 		for (auto it2 = (*it).begin(); it2 != (*it).end(); ++it2){
-			if ((*it2).get() != nullptr){
-				std::shared_ptr<Projectile> p = (*it2)->Step();
-				if (p.get() != nullptr)
+			if ((*it2) != nullptr){
+				Projectile* p = (*it2)->Step();
+				if (p != NULL)
 					_projectiles.push_back(p);
 			} 
 		}
@@ -232,9 +244,30 @@ void Map::Step(){
 	auto it = _projectiles.begin();
 	for (; it != _projectiles.end();){
 		(*it)->Step();
-		if ((*it)->Impacted())
+		if ((*it)->Impacted()){
+			Projectile* proj = *it;
 			_projectiles.erase(it);
+			delete proj;
+		}
 		else
 			++it;
 	}
+}
+
+std::vector<PathTile*> Map::GetTilesInRange(PathTile* tile, uint range){
+	std::vector<PathTile*> tiles;
+	int x = tile->GetXPos();
+	int y = tile->GetYPos();
+
+	for (int i = -range; i <= (int) range; ++i)
+	{
+		for (int j = -range; j <= (int) range; ++j)
+		{
+			PathTile* t = GetPathTile(i + x, j + y);
+			if (t != NULL)
+				tiles.push_back(t);
+		}
+	}
+
+	return tiles;
 }

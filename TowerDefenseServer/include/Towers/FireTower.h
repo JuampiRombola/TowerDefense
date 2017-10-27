@@ -1,7 +1,7 @@
 #ifndef _FIRE_TOWER_
 #define _FIRE_TOWER_
 
-#include <memory>
+
 
 #include "Tower.h"
 
@@ -11,9 +11,12 @@ class Projectile;
 
 class FireTower : public Tower {
 protected:
-	std::shared_ptr<Projectile> _BuildProjectile(std::shared_ptr<PathTile> target);
+	uint _collateralDamage;
+	uint _collateralRange;
+	Projectile* _BuildProjectile(PathTile* target);
 public:
-	FireTower(uint cooldown_sec, uint range, uint damage, std::shared_ptr<SolidGroundTile> position, Map* map);
+	FireTower(uint cooldown_sec, uint range, uint damage, 
+		SolidGroundTile* position, Map* map, uint collateralDamange, uint collateralRange);
 	~FireTower();
 	void PrintDebug();
 };

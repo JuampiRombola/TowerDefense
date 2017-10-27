@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-#include <memory>
+
 #include <map>
 
 #include "Map/Map.h"
@@ -12,9 +12,9 @@
 #include "Helpers.h"
 #include "Map/PathTile.h"
 
-PathTile::PathTile(uint xPos, uint yPos) 
+PathTile::PathTile(uint xPos, uint yPos, Map* map) 
 : Tile(xPos, yPos), _lastCrackTimeStamp_ms(0), _lastCrackDuration_ms(0), _isCracked(false),
- _canSpawn(false), _units(), _possibleNextPaths() {}
+ _canSpawn(false), _units(), _possibleNextPaths(), _map(map) {}
 
 
 PathTile::~PathTile(){}
@@ -28,82 +28,85 @@ void PathTile::Crack(uint seconds){
 	_isCracked = true;
 	_lastCrackTimeStamp_ms = Helpers::MillisecondsTimeStamp();
 	_lastCrackDuration_ms = seconds * 1000;
-	std::vector<std::shared_ptr<EnviormentUnit>> v = _units;
-	for (auto it = v.begin(); it != v.end(); ++it){
-		(*it).get()->Kill();
+	for (auto it = _units.begin(); it != _units.end(); ++it){
+		(*it)->Kill();
 	}
 }
 
-void PathTile::InitPossiblePaths(Map* map){
-	std::shared_ptr<PathTile> up = map->GetPathTile(GetXPos(), GetYPos() + 1);
-	std::shared_ptr<PathTile> down = map->GetPathTile(GetXPos(), GetYPos() - 1);
-	std::shared_ptr<PathTile> left = map->GetPathTile(GetXPos() - 1, GetYPos());
-	std::shared_ptr<PathTile> right = map->GetPathTile(GetXPos() + 1, GetYPos());
-	if (up != std::shared_ptr<PathTile>(nullptr)){
+Map* PathTile::GetMap(){
+	return _map;
+}
+
+void PathTile::InitPossiblePaths(){
+	PathTile* up = _map->GetPathTile(GetXPos(), GetYPos() + 1);
+	PathTile* down = _map->GetPathTile(GetXPos(), GetYPos() - 1);
+	PathTile* left = _map->GetPathTile(GetXPos() - 1, GetYPos());
+	PathTile* right = _map->GetPathTile(GetXPos() + 1, GetYPos());
+	if (up != NULL){
 		try
 		{
-			if (!up.get()->DrivesStraightToSpawnFrom(this, map)){
+			if (!up->DrivesStraightToSpawnFrom(this)){
 
-				if (down != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[down.get()].push_back(std::weak_ptr<PathTile>(up));
+				if (down != NULL)
+					_possibleNextPaths[down].push_back(up);
 
-				if (left != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[left.get()].push_back(std::weak_ptr<PathTile>(up));
+				if (left != NULL)
+					_possibleNextPaths[left].push_back(up);
 
-				if (right != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[right.get()].push_back(std::weak_ptr<PathTile>(up));
+				if (right != NULL)
+					_possibleNextPaths[right].push_back(up);
 			}
 		} catch (...) { /* */ }
 
 	}
 
-	if (down != std::shared_ptr<PathTile>(nullptr)){
+	if (down != NULL){
 		try
 		{
-			if (!down.get()->DrivesStraightToSpawnFrom(this, map)){
+			if (!down->DrivesStraightToSpawnFrom(this)){
 
-				if (up != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[up.get()].push_back(std::weak_ptr<PathTile>(down));
+				if (up != NULL)
+					_possibleNextPaths[up].push_back(down);
 
-				if (left != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[left.get()].push_back(std::weak_ptr<PathTile>(down));
+				if (left != NULL)
+					_possibleNextPaths[left].push_back(down);
 
-				if (right != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[right.get()].push_back(std::weak_ptr<PathTile>(down));
+				if (right != NULL)
+					_possibleNextPaths[right].push_back(down);
 			}
 		} catch (...) { /* */ }
 	}
 
-	if (right != std::shared_ptr<PathTile>(nullptr)){
+	if (right != NULL){
 		try
 		{
-			if (!right.get()->DrivesStraightToSpawnFrom(this, map)){
+			if (!right->DrivesStraightToSpawnFrom(this)){
 
-				if (up != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[up.get()].push_back(std::weak_ptr<PathTile>(right));
+				if (up != NULL)
+					_possibleNextPaths[up].push_back(right);
 
-				if (left != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[left.get()].push_back(std::weak_ptr<PathTile>(right));
+				if (left != NULL)
+					_possibleNextPaths[left].push_back(right);
 
-				if (down != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[down.get()].push_back(std::weak_ptr<PathTile>(right));
+				if (down != NULL)
+					_possibleNextPaths[down].push_back(right);
 			}
 		} catch (...) { /* */ }
 	}
 
-	if (left != std::shared_ptr<PathTile>(nullptr)){
+	if (left != NULL){
 		try
 		{
-			if (!left.get()->DrivesStraightToSpawnFrom(this, map)){
+			if (!left->DrivesStraightToSpawnFrom(this)){
 
-				if (up != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[up.get()].push_back(std::weak_ptr<PathTile>(left));
+				if (up != NULL)
+					_possibleNextPaths[up].push_back(left);
 
-				if (right != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[right.get()].push_back(std::weak_ptr<PathTile>(left));
+				if (right != NULL)
+					_possibleNextPaths[right].push_back(left);
 
-				if (down != std::shared_ptr<PathTile>(nullptr))
-					_possibleNextPaths[down.get()].push_back(std::weak_ptr<PathTile>(left));
+				if (down != NULL)
+					_possibleNextPaths[down].push_back(left);
 			}
 		} catch (...) { /* */ }
 	}
@@ -119,7 +122,13 @@ void PathTile::SetCanSpawn(){
 }
 
 
-void PathTile::UnitEnter(std::shared_ptr<EnviormentUnit> unit){
+void PathTile::UnitEnter(EnviormentUnit* unit){
+	auto it = std::find(_units.begin(), _units.end(), unit);
+	if (it == _units.end())
+		_units.emplace_back(unit);
+	else 
+		throw new UnitIsAlreadyOnThisTileException();
+
 	if (_isCracked){
 		unsigned long long ts_ms = Helpers::MillisecondsTimeStamp();
 		uint delta_ms = ts_ms - _lastCrackTimeStamp_ms;
@@ -127,20 +136,14 @@ void PathTile::UnitEnter(std::shared_ptr<EnviormentUnit> unit){
 			_isCracked = false;
 			_lastCrackDuration_ms = 0;
 		} else {
-			unit.get()->Kill();
-			return;
+			std::cout << "FALLED INTO CRACK\n" << std::flush;
+			unit->Kill();
 		}
 	}
-
-	auto it = std::find(_units.begin(), _units.end(), unit);
-	if (it == _units.end())
-		_units.emplace_back(unit);
-	else 
-		throw new UnitIsAlreadyOnThisTileException();
 }
 
 
-void PathTile::UnitLeave(std::shared_ptr<EnviormentUnit> unit){
+void PathTile::UnitLeave(EnviormentUnit* unit){
 
 	auto it = std::find(_units.begin(), _units.end(), unit);
 	if (it != _units.end()){
@@ -154,50 +157,50 @@ bool PathTile::HasAnyUnit(){
 	return _units.begin() != _units.end();
 }
 
-std::vector<std::shared_ptr<EnviormentUnit>> PathTile::GetUnits(){ //copia!!!!!
+std::vector<EnviormentUnit*> PathTile::GetUnits(){ //copia!!!!!
 	return _units;
 }
 
-std::vector<std::weak_ptr<PathTile>> PathTile::GetPossibleNextTiles(PathTile* from){
+std::vector<PathTile*> PathTile::GetPossibleNextTiles(PathTile* from){
 	if (from == NULL)
-		return std::vector<std::weak_ptr<PathTile>>();
+		return std::vector<PathTile*>();
 	return _possibleNextPaths[from];
 }
 
-bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile, Map* map){
+bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile){
 
 	uint fromX = tile->GetXPos();
 	uint fromY = tile->GetYPos();
 	uint x = this->GetXPos();
 	uint y = this->GetYPos();
 
-	std::shared_ptr<PathTile> front;
-	std::shared_ptr<PathTile> side1;
-	std::shared_ptr<PathTile> side2;
+	PathTile* front;
+	PathTile* side1;
+	PathTile* side2;
 
-	std::vector<std::shared_ptr<PathTile>> paths;
+	std::vector<PathTile*> paths;
 
 	while (true){
 		paths.clear();
 		if (fromX == x){
 			uint dif = fromY - y;
-			front = map->GetPathTile(x, y - dif);
-			side1 = map->GetPathTile(x + 1, y);
-			side2 = map->GetPathTile(x - 1, y);
+			front = _map->GetPathTile(x, y - dif);
+			side1 = _map->GetPathTile(x + 1, y);
+			side2 = _map->GetPathTile(x - 1, y);
 		} else if (fromY == y){
 			uint dif = fromX - x;
-			front = map->GetPathTile(x - dif, y);
-			side1 = map->GetPathTile(x, y + 1);
-			side2 = map->GetPathTile(x, y - 1);	
+			front = _map->GetPathTile(x - dif, y);
+			side1 = _map->GetPathTile(x, y + 1);
+			side2 = _map->GetPathTile(x, y - 1);	
 		} 
 
-		if (front.get() != nullptr)
+		if (front != nullptr)
 			paths.push_back(front);
 
-		if (side1.get() != nullptr)
+		if (side1 != nullptr)
 			paths.push_back(side1);
 
-		if (side2.get() != nullptr)
+		if (side2 != nullptr)
 			paths.push_back(side2);
 
 		if (paths.size() > 1){
@@ -205,20 +208,20 @@ bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile, Map* map){
 		} else if (paths.size() == 0){
 			throw new IncompletePathException();
 		} else if (paths.size() == 1){
-			if ((*paths.begin()).get()->CanSpawn()){
+			if ((*paths.begin())->CanSpawn()){
 				return true;
 			}
 
-			if ((*paths.begin()) == map->GetFinishTile()){
+			if ((*paths.begin()) == _map->GetFinishTile()){
 				return false;
 			}
 
 
-			std::shared_ptr<PathTile> p = *paths.begin();
+			PathTile* p = *(paths.begin());
 			fromX = x;
 			fromY = y;
-			x = p.get()->GetXPos();
-			y = p.get()->GetYPos();
+			x = p->GetXPos();
+			y = p->GetYPos();
 		}
 	}
 

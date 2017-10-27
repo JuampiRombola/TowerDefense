@@ -10,11 +10,11 @@ HombreCabra::~HombreCabra()
 }
 
 void HombreCabra::PrintDebug(){
-	std::shared_ptr<PathTile> pos = GetPosition();
-	if (pos.get() == nullptr)
+	PathTile* pos = GetPosition();
+	if (pos == nullptr)
 		std::cout << "HombreCabra" << GetId() << " outside map\n";
 	else
-		std::cout << "HombreCabra" << GetId() <<  "@(" << pos.get()->GetXPos() << ", " << pos.get()->GetYPos() << ")\n";
+		std::cout << "HombreCabra" << GetId() <<  "@(" << pos->GetXPos() << ", " << pos->GetYPos() << ")\n";
 }
 
 bool HombreCabra::Flies(){

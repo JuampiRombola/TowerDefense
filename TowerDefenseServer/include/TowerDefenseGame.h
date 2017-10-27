@@ -2,7 +2,7 @@
 #define _TOWER_DEFENSE_GAME_
 
 
-#include <memory>
+
 #include <vector>
 #include <mutex>
 #include <queue>
@@ -19,7 +19,7 @@ private:
 	std::mutex _endedMutex;
 	std::mutex _commandQueueMutex;
 
-	std::queue<std::shared_ptr<Command>> _commands;
+	std::queue<Command*> _commands;
 
 	uint _clockFrequencyMs;
 
@@ -27,7 +27,7 @@ private:
 	unsigned int _steps;	
 	unsigned int _enemyIdCounter;
 
-	std::vector<std::shared_ptr<EnviormentUnit>> _units;
+	std::vector<EnviormentUnit*> _units;
 
 	Map _map;
 	bool _Step();
@@ -38,7 +38,7 @@ public:
 	~TowerDefenseGame();
 	void Run();
 	bool Ended();
-	void QueueCommand(std::shared_ptr<Command> command);
+	void QueueCommand(Command* command);
 };
 
 #endif

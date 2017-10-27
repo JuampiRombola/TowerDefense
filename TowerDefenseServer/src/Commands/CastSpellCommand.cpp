@@ -1,4 +1,4 @@
-#include <memory>
+
 #include <iostream>
 
 #include "Towers/GroundTower.h"
@@ -30,12 +30,12 @@ void CastSpellCommand::Execute(Map* map){
 }
 
 void CastSpellCommand::_CastTerraforming(Map* map){
-
+	map->PlaceGroundTile(new SolidGroundTile(_xPos,_yPos));
 }
 void CastSpellCommand::_CastGrieta(Map* map){
-	std::shared_ptr<PathTile> tile = map->GetPathTile(_xPos, _yPos);
-	if (tile != std::shared_ptr<PathTile>(nullptr)){
-		tile->Crack(4);
+	PathTile* tile = map->GetPathTile(_xPos, _yPos);
+	if (tile != NULL){
+		tile->Crack(400);
 	}
 }
 void CastSpellCommand::_CastMeteorito(Map* map){

@@ -10,11 +10,11 @@ Abmonible::~Abmonible()
 }
 
 void Abmonible::PrintDebug(){
-	std::shared_ptr<PathTile> pos = GetPosition();
-	if (pos.get() == nullptr)
+	PathTile* pos = GetPosition();
+	if (pos == nullptr)
 		std::cout << "Abmonible" << GetId() << " outside map\n";
 	else
-		std::cout << "Abmonible" << GetId() <<  "@(" << pos.get()->GetXPos() << ", " << pos.get()->GetYPos() << ")\n";
+		std::cout << "Abmonible" << GetId() <<  "@(" << pos->GetXPos() << ", " << pos->GetYPos() << ")\n";
 }
 
 bool Abmonible::Flies(){

@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <iterator>
 #include <thread>
-#include <memory>
 #include <chrono>
 #include <mutex>
 
@@ -17,6 +16,7 @@
 #include "EnviormentUnits/EnviormentUnit.h"
 #include "Towers/Tower.h"
 #include "Towers/GroundTower.h"
+#include "Helpers.h"
 
 
 
@@ -32,6 +32,8 @@ TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs) :
 
 TowerDefenseGame::~TowerDefenseGame()
 {
+	for (auto it = _units.begin(); it != _units.end(); ++it)
+		delete *it;
 }
 
 
@@ -43,14 +45,14 @@ void TowerDefenseGame::_SpawnEnemy(){
 	// como lo elegimos el politica del juego
 	// por ahora agarro uno random :P
 
-	std::shared_ptr<PathTile> spawn = _map.GetRandomSpawnTile();
-	std::shared_ptr<EnviormentUnit> unit(new Espectro(++_enemyIdCounter));
+	PathTile* spawn = _map.GetRandomSpawnTile();
+	EnviormentUnit* unit = new Espectro(++_enemyIdCounter);
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
 }
 
 
-void TowerDefenseGame::QueueCommand(std::shared_ptr<Command> command){
+void TowerDefenseGame::QueueCommand(Command* command){
 	std::lock_guard<std::mutex> lock(_commandQueueMutex);
 	_commands.emplace(command);
 }
@@ -60,7 +62,7 @@ void TowerDefenseGame::QueueCommand(std::shared_ptr<Command> command){
 void TowerDefenseGame::_ExecuteCommands(){
 	std::lock_guard<std::mutex> lock(_commandQueueMutex);
 	while (!_commands.empty()){
-		_commands.front().get()->Execute(&_map);
+		_commands.front()->Execute(&_map);
 		_commands.pop();
 	}
 }
@@ -68,21 +70,27 @@ void TowerDefenseGame::_ExecuteCommands(){
 
 
 bool TowerDefenseGame::_Step(){
+	static unsigned long long ts = 0;
+	unsigned long long actualTs = Helpers::MillisecondsTimeStamp();
 
-	std::cout << "Tick\n";
 
-	this->_ExecuteCommands();
-	
+	_ExecuteCommands();
+		
+	if (ts == 0) {
+		ts = actualTs;
+	}
+
 
 	_steps = _steps + 1;
 
 
-	if (_units.size() == 0){
+	if (actualTs - ts > 100 && _units.size() != 1){
+		ts = actualTs;
 		_SpawnEnemy();
 	}
 
 	for (auto it = _units.begin(); it != _units.end(); ++it){
-		(*it)->Step(*it);
+		(*it)->Step();
 	}
 
 	_map.Step();
@@ -90,9 +98,12 @@ bool TowerDefenseGame::_Step(){
 	auto it = _units.begin();
 	if (it != _units.end()){
 		for (; it != _units.end();){
-			if (!((*it).get()->IsAlive())){
+			if (!((*it)->IsAlive())){
+				std::cout << "REMOVING DEAD UNIT\n";
 				_map.RemoveUnit(*it);
+				EnviormentUnit* unit = *it;
 				_units.erase(it);
+				delete unit;
 			} else {
 				++it;
 			}

@@ -6,7 +6,7 @@
 #include "Map/Map.h"
 #include "Helpers.h"
 
-Tower::Tower(uint cooldown_ms, uint range, uint damage, std::shared_ptr<SolidGroundTile> pos, Map* map) : 
+Tower::Tower(uint cooldown_ms, uint range, uint damage, SolidGroundTile* pos, Map* map) : 
 _lastTimeStamp_ms(0), _cooldown_ms(cooldown_ms), _map(map), _position(pos), _range(range), _experience(0), _damage(damage) {
 
 }
@@ -33,35 +33,35 @@ bool Tower::_CanFire(){
 }
 
 
-std::shared_ptr<Projectile> Tower::Step(){
+Projectile* Tower::Step(){
 	if (_CanFire()){
-		std::shared_ptr<EnviormentUnit> targetUnit = _GetTargetUnitInRange();
-		if (targetUnit.get() != nullptr){
+		EnviormentUnit* targetUnit = _GetTargetUnitInRange();
+		if (targetUnit != nullptr){
 			return _Fire(targetUnit);
 		}
 		else
-			return std::shared_ptr<Projectile>(nullptr);
+			return nullptr;
 	}
 
-	return std::shared_ptr<Projectile>(nullptr);
+	return nullptr;
 }
 
 
-std::shared_ptr<EnviormentUnit> Tower::_GetTargetUnitInRange(){
-	std::vector<std::shared_ptr<EnviormentUnit>> units = _map->GetUnitsInRadius(_range, _position);
+EnviormentUnit* Tower::_GetTargetUnitInRange(){
+	std::vector<EnviormentUnit*> units = _map->GetUnitsInRadius(_range, _position);
 	if (units.size() == 0)
-		return std::shared_ptr<EnviormentUnit>();
+		return nullptr;
 
 	//De todos los que tengo en rango agarro el primero que encuentro.
-	return *units.begin();
+	return *(units.begin());
 }
 
 
 
-std::shared_ptr<Projectile> Tower::_Fire(std::shared_ptr<EnviormentUnit> target){
+Projectile* Tower::_Fire(EnviormentUnit* target){
 	std::cout << "TOWER FIRE!!!\n" << std::flush;
 	_lastTimeStamp_ms = Helpers::MillisecondsTimeStamp();
-	return _BuildProjectile(target.get()->GetPosition());
+	return _BuildProjectile(target->GetPosition());
 }
 
 
@@ -73,6 +73,6 @@ void Tower::AddDamage(uint damage){
 	_damage += damage;
 }
 
-std::shared_ptr<SolidGroundTile> Tower::GetPosition(){
+SolidGroundTile* Tower::GetPosition(){
 	return _position;
 }

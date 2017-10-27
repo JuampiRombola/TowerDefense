@@ -1,5 +1,5 @@
 #include <iostream>
-#include <memory>
+
 
 #include "Towers/IceProjectile.h"
 #include "Towers/Projectile.h"
@@ -8,7 +8,7 @@
 #include "EnviormentUnits/EnviormentUnit.h"
 
 IceProjectile::IceProjectile
-(IceTower* origin, std::shared_ptr<PathTile> target, uint hitpoints) :
+(IceTower* origin, PathTile* target, uint hitpoints) :
  Projectile(origin, target, 50, hitpoints)
 {
 
@@ -19,16 +19,16 @@ IceProjectile::~IceProjectile(){}
 
 
 uint IceProjectile::_OnImpact(){
-	std::vector<std::shared_ptr<EnviormentUnit>> units = _target->GetUnits();
+	std::vector<EnviormentUnit*> units = _target->GetUnits();
 	bool hit = false;
 	uint exp = 0;
 	for (auto it = units.begin(); it != units.end() && !hit; ++it){
 		
 		hit = true;
 
-		uint currentHP = (*it).get()->GetHP();
+		uint currentHP = (*it)->GetHP();
 
-		EnviormentUnit* unit = (*it).get();
+		EnviormentUnit* unit = (*it);
 		unit->GetHit(_hitPoints);
 
 		int slowSeconds = 6;
@@ -37,7 +37,7 @@ uint IceProjectile::_OnImpact(){
 
 		exp = _hitPoints;
 
-		if (!((*it).get()->IsAlive())){
+		if (!((*it)->IsAlive())){
 			exp += currentHP / 2;
 		}
 

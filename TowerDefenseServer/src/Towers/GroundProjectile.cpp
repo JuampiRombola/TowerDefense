@@ -1,5 +1,5 @@
 #include <iostream>
-#include <memory>
+
 
 #include "Towers/GroundProjectile.h"
 #include "Towers/GroundTower.h"
@@ -8,7 +8,7 @@
 #include "EnviormentUnits/EnviormentUnit.h"
 
 GroundProjectile::GroundProjectile
-(GroundTower* tower, std::shared_ptr<PathTile> target, uint hitpoints) :
+(GroundTower* tower, PathTile* target, uint hitpoints) :
  Projectile(tower, target, 50, hitpoints)
 {
 
@@ -19,20 +19,20 @@ GroundProjectile::~GroundProjectile(){}
 
 
 uint GroundProjectile::_OnImpact(){
-	std::vector<std::shared_ptr<EnviormentUnit>> units = _target->GetUnits();
+	std::vector<EnviormentUnit*> units = _target->GetUnits();
 	bool hit = false;
 	uint exp = 0;
 	for (auto it = units.begin(); it != units.end() && !hit; ++it){
-		if (!(*it).get()->Flies()){
+		if (!(*it)->Flies()){
 
 
-			uint currentHP = (*it).get()->GetHP();
+			uint currentHP = (*it)->GetHP();
 
-			(*it).get()->GetHit(_hitPoints);
+			(*it)->GetHit(_hitPoints);
 
 			exp += _hitPoints;
 
-			if (!((*it).get()->IsAlive())){
+			if (!((*it)->IsAlive())){
 				exp += currentHP / 2;
 			}
 

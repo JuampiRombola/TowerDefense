@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <memory>
+
 
 #include "Towers/Tower.h"
 #include "Towers/Projectile.h"
@@ -8,8 +8,9 @@
 #include "Map/SolidGroundTile.h"
 #include "Towers/FireProjectile.h"
 
-FireTower::FireTower(uint cooldown_sec, uint range, uint damage, std::shared_ptr<SolidGroundTile> position, Map* map)
-: Tower(cooldown_sec, range, damage, position, map) {}
+FireTower::FireTower(uint cooldown_sec, uint range, uint damage, 
+	SolidGroundTile* position, Map* map, uint collateralDamage, uint collateralRange)
+: Tower(cooldown_sec, range, damage, position, map), _collateralDamage(collateralDamage), _collateralRange(collateralRange) {}
 
 FireTower::~FireTower(){}
 
@@ -19,6 +20,6 @@ void FireTower::PrintDebug(){
 
 }
 
-std::shared_ptr<Projectile> FireTower::_BuildProjectile(std::shared_ptr<PathTile> target){
-	return std::shared_ptr<Projectile>(new FireProjectile(this, target, 10));
+Projectile* FireTower::_BuildProjectile(PathTile* target){
+	return new FireProjectile(this, target, _damage, _collateralRange, _collateralDamage);
 }
