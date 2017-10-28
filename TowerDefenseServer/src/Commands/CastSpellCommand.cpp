@@ -9,7 +9,7 @@
 #include "EnviormentUnits/EnviormentUnit.h"
 #include "TowerDefenseGame.h"
 
-CastSpellCommand::CastSpellCommand(Spell spell, unsigned int x, unsigned int y):
+CastSpellCommand::CastSpellCommand(Spell spell, uint x, uint y):
  _xPos(x), _yPos(y), _unitId(-1), _spell(spell) {}
 
 CastSpellCommand::CastSpellCommand(Spell spell, uint unitId):
@@ -17,36 +17,45 @@ CastSpellCommand::CastSpellCommand(Spell spell, uint unitId):
 
 CastSpellCommand::~CastSpellCommand(){}
 
-void CastSpellCommand::Execute(Map* map, TowerDefenseGame* game){
+bool CastSpellCommand::Execute(Map* map, TowerDefenseGame* game){
 	switch(_spell){
-		case Terraforming: _CastTerraforming(map); break;
-		case Grieta: _CastGrieta(map); break;
-		case Meteorito: _CastMeteorito(map); break;
-		case MuroDeFuego: _CastMuroDeFuego(map); break;
-		case Congelacion: _CastCongelacion(map, game); break;
-		case Ventisca: _CastVentisca(map); break;
-		case Tornado: _CastTornado(map); break;
-		case Rayos: _CastRayos(map, game); break;
-		default: break;
+		case Terraforming: return _CastTerraforming(map);
+		case Grieta: return _CastGrieta(map);
+		case Meteorito: return _CastMeteorito(map);
+		case MuroDeFuego: return _CastMuroDeFuego(map);
+		case Congelacion: return _CastCongelacion(map, game);
+		case Ventisca: return _CastVentisca(map);
+		case Tornado: return _CastTornado(map);
+		case Rayos: return _CastRayos(map, game);
+		default: return false;
 	}
 }
 
-void CastSpellCommand::_CastTerraforming(Map* map){
+bool CastSpellCommand::_CastTerraforming(Map* map){
+	SolidGroundTile* tile = map->GetSolidGroundTile(_xPos, _yPos);
+	if (tile != nullptr)
+		return false;
+
 	map->PlaceGroundTile(new SolidGroundTile(_xPos,_yPos));
+	return true;
 }
-void CastSpellCommand::_CastGrieta(Map* map){
+
+bool CastSpellCommand::_CastGrieta(Map* map){
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
-	if (tile != NULL){
+	if (tile != nullptr){
 		tile->Crack(400);
+		return true;
 	}
+	return false;
 }
-void CastSpellCommand::_CastMeteorito(Map* map){
+
+bool CastSpellCommand::_CastMeteorito(Map* map){
 	uint collateralDamageRange = 2;
 	uint collateralDamage = 10;
 	uint targetDamage = 30;
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
-	if (tile != NULL){
-		std::vector<PathTile*> tiles = map->GetTilesInRange(tile, collateralDamageRange);
+	if (tile != nullptr){
+		std::vector<PathTile*> tiles = map->GetPathTilesInRange(tile, collateralDamageRange);
 		std::vector<EnviormentUnit*> unitsInTargetTile = tile->GetUnits();
 		for (auto it = unitsInTargetTile.begin(); it != unitsInTargetTile.end(); ++it){
 			(*it)->GetHit(targetDamage);
@@ -61,45 +70,62 @@ void CastSpellCommand::_CastMeteorito(Map* map){
 			}
 		}
 	}
-
-
+	return true;
 }
-void CastSpellCommand::_CastMuroDeFuego(Map* map){
+
+bool CastSpellCommand::_CastMuroDeFuego(Map* map){
 	uint fireDuration_sec = 5;
 	uint fireDamage = 10;
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
-	if (tile != NULL)
+	if (tile != nullptr){
 		tile->SetOnFire(fireDuration_sec, fireDamage);
+		return true;
+	}
+	return false;
 }
-void CastSpellCommand::_CastCongelacion(Map* map, TowerDefenseGame* game){
+
+bool CastSpellCommand::_CastCongelacion(Map* map, TowerDefenseGame* game){
 	uint freezeDurationSec = 5;
 	EnviormentUnit* unit = game->GetUnit(_unitId);
-	if (unit != NULL)
+	if (unit != nullptr){
 		unit->Freeze(freezeDurationSec);
+		return true;
+	}
+	return false;
 }
-void CastSpellCommand::_CastVentisca(Map* map){
+
+bool CastSpellCommand::_CastVentisca(Map* map){
 	uint ventiscaDamage = 5;
 	uint percentSlow = 95;
 	uint slowDuration_sec = 4;
 	uint ventiscaDuration_sec = 5;
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
-	if (tile != NULL)
+	if (tile != nullptr){
 		tile->Ventisca(ventiscaDamage, ventiscaDuration_sec, slowDuration_sec, percentSlow);
+		return true;
+	}
+	return false;
 }
-void CastSpellCommand::_CastTornado(Map* map){
+
+bool CastSpellCommand::_CastTornado(Map* map){
 	uint tornadoMaxDamage = 20;
 	uint tornadoDuration_sec = 5;
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
-	if (tile != NULL)
+	if (tile != nullptr){
 		tile->Tornado(tornadoMaxDamage, tornadoDuration_sec);
-
+		return true;
+	}
+	return false;
 }
-void CastSpellCommand::_CastRayos(Map* map, TowerDefenseGame* game){
+
+bool CastSpellCommand::_CastRayos(Map* map, TowerDefenseGame* game){
 	uint rayoMaxDamage = 50;
 	EnviormentUnit* unit = game->GetUnit(_unitId);
-	if (unit != NULL){
+	if (unit != nullptr){
 		std::srand(std::time(0));
 		uint randomDamage = (uint) std::rand() % rayoMaxDamage;
 		unit->GetHit(randomDamage);
+		return true;
 	}
+	return false;
 }

@@ -2,7 +2,7 @@
 
 #include "EnviormentUnits/Abmonible.h"
 
-Abmonible::Abmonible(unsigned int id) : EnviormentUnit(id, 1000, 100) {}
+Abmonible::Abmonible(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
 Abmonible::~Abmonible()
 {

@@ -20,11 +20,11 @@ FireProjectile::~FireProjectile(){}
 
 
 uint FireProjectile::_OnImpact(){
-	std::vector<PathTile*> tilesInRange = _target->GetMap()->GetTilesInRange(_target, _collateralRange);
+	std::vector<PathTile*> tilesInRange = _target->GetMap()->GetPathTilesInRange(_target, _collateralRange);
 	std::vector<EnviormentUnit*> unitsInTargetTile = _target->GetUnits();
 	bool hit = false;
 
-	EnviormentUnit* targetUnit = NULL;
+	EnviormentUnit* targetUnit = nullptr;
 	if (unitsInTargetTile.size() != 0){
 		targetUnit = *(unitsInTargetTile.begin());
 		targetUnit->GetHit(_hitPoints);

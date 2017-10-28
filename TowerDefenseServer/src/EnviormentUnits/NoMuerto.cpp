@@ -2,7 +2,7 @@
 
 #include "EnviormentUnits/NoMuerto.h"
 
-NoMuerto::NoMuerto(unsigned int id) : EnviormentUnit(id, 1000, 100) {}
+NoMuerto::NoMuerto(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
 NoMuerto::~NoMuerto()
 {

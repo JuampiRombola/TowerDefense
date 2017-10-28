@@ -3,6 +3,7 @@
 #include <iterator>
 #include <thread>
 #include <chrono>
+#include <cmath>
 #include <mutex>
 
 #include "TowerDefenseGame.h"
@@ -16,18 +17,16 @@
 #include "EnviormentUnits/EnviormentUnit.h"
 #include "Towers/Tower.h"
 #include "Towers/GroundTower.h"
+#include "GameConfiguration.h"
 #include "Helpers.h"
 
 
 
-TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs) : 
-	_endedMutex(), _commandQueueMutex(), _commands(),
-	_clockFrequencyMs(clockFrequencyMs),
-	_ended(false), _steps(0), _enemyIdCounter(0), 
-	_units(),
-	_map(10, 10, "jsonmapconfigfilename") 
+TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg) : 
+	_endedMutex(), _commandQueueMutex(), _commands(), _clockFrequencyMs(clockFrequencyMs), 
+	_ended(false), _steps(0), _enemyIdCounter(0), _units(), 
+	_map(10, 10, "jsonmapconfigfilename"), GameCfg(gamecfg)
 {
-
 }
 
 TowerDefenseGame::~TowerDefenseGame()
@@ -45,8 +44,13 @@ void TowerDefenseGame::_SpawnEnemy(){
 	// como lo elegimos el politica del juego
 	// por ahora agarro uno random :P
 
+	uint unitbaseStepDelay_ms = GameCfg.Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
-	EnviormentUnit* unit = new Espectro(++_enemyIdCounter);
+
+	uint hombreCabraSpeed = GameCfg.Cfg["units"]["hombre_cabra"]["speed"].as<uint>();
+	uint hombreCabraStepDelay_ms = floor(unitbaseStepDelay_ms / hombreCabraSpeed);
+	uint hombreCabraHealthPoints = GameCfg.Cfg["units"]["hombre_cabra"]["health_points"].as<uint>();
+	EnviormentUnit* unit = new HombreCabra(++_enemyIdCounter, hombreCabraStepDelay_ms, hombreCabraHealthPoints);
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
 }
@@ -62,7 +66,7 @@ EnviormentUnit* TowerDefenseGame::GetUnit(uint id){
 		if ((*it)->GetId() == id)
 			return *it;
 	}
-	return NULL;
+	return nullptr;
 }
 
 void TowerDefenseGame::_ExecuteCommands(){
@@ -117,7 +121,10 @@ bool TowerDefenseGame::_Step(){
 	}
 
 	std::lock_guard<std::mutex> lock(_endedMutex);
-	_ended = _map.GetFinishTile()->HasAnyUnit();
+	std::vector<PathTile*> endTiles = _map.GetFinishTiles();
+	for (auto it = endTiles.begin(); it != endTiles.end() && !_ended; ++it){
+		_ended = (*it)->HasAnyUnit();
+	}
 	return !_ended;
 }
 

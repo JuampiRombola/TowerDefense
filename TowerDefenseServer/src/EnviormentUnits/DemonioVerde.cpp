@@ -2,7 +2,7 @@
 
 #include "EnviormentUnits/DemonioVerde.h"
 
-DemonioVerde::DemonioVerde(unsigned int id) : EnviormentUnit(id, 1000, 100) {}
+DemonioVerde::DemonioVerde(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
 DemonioVerde::~DemonioVerde()
 {

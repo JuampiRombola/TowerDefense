@@ -17,8 +17,8 @@
 #include "Towers/Projectile.h"
 
 Map::Map(uint rows, uint cols, std::string mapJsonConfig):
-_rows(rows), _cols(cols), _finishTile(nullptr),
- _tiles(rows * cols), _spawnTiles(), 
+_rows(rows), _cols(cols),
+ _tiles(rows * cols), _spawnTiles(), _endTiles(),
 _pathTiles(cols, std::vector<PathTile*>(rows)), 
 _groundTiles(cols, std::vector<SolidGroundTile*>(rows)),
 _projectiles()
@@ -26,8 +26,8 @@ _projectiles()
 {
 	for (uint i = 0; i < cols; i++){
 		for (uint j = 0; j < rows; j++){
-			_pathTiles[i][j] = NULL;
-			_groundTiles[i][j] = NULL;
+			_pathTiles[i][j] = nullptr;
+			_groundTiles[i][j] = nullptr;
 		}
 	}
 	//Armo un camino a mano
@@ -77,10 +77,11 @@ _projectiles()
 
 	PathTile* end = new PathTile(9,4, this);
 	_PlacePathTile(end);
+	_SetFinishTile(end);
+
 
 	PlaceGroundTile(new SolidGroundTile(2,5));
 	
-	_finishTile = end;
 
 
 	for (uint i = 0; i < _cols; i++)
@@ -102,7 +103,7 @@ void Map::RemoveUnit(EnviormentUnit* unit){
 
 
 void Map::PlaceGroundTile(SolidGroundTile* tile){
-	if (_groundTiles[tile->GetXPos()][tile->GetYPos()] != NULL){
+	if (_groundTiles[tile->GetXPos()][tile->GetYPos()] != nullptr){
 		delete tile;
 		return;
 	}
@@ -112,7 +113,7 @@ void Map::PlaceGroundTile(SolidGroundTile* tile){
 }
 
 void Map::_PlacePathTile(PathTile* tile){
-	if (_pathTiles[tile->GetXPos()][tile->GetYPos()] != NULL){
+	if (_pathTiles[tile->GetXPos()][tile->GetYPos()] != nullptr){
 		delete tile;
 		return;
 	}
@@ -127,7 +128,7 @@ void Map::_PlaceTile(Tile* tile){
 	bool found = false;
 	for (auto it = _tiles.begin(); it != _tiles.end(); ++it){
 
-		if (*it == NULL)
+		if (*it == nullptr)
 			continue;
 
 		if (tile->GetXPos() == (*it)->GetXPos()){
@@ -152,7 +153,7 @@ Map::~Map()
 
 PathTile* Map::GetPathTile(uint x, uint y){
 	if (x >= _cols || y >= _rows)
-		return NULL;
+		return nullptr;
 	return _pathTiles[x][y];
 }
 
@@ -178,15 +179,26 @@ PathTile* Map::GetRandomSpawnTile(){
 
 SolidGroundTile* Map::GetSolidGroundTile(uint x, uint y){
 	if (x >= _cols || y >= _rows)
-		return NULL;
+		return nullptr;
 	return _groundTiles[x][y];
 }
 
 
 std::vector<EnviormentUnit*> Map::GetUnitsInRadius(uint range, Tile* tile){
-	uint x = tile->GetXPos();
-	uint y = tile->GetYPos();
+	//uint x = tile->GetXPos();
+	//uint y = tile->GetYPos();
 	std::vector<EnviormentUnit*> units;
+
+	std::vector<PathTile*> tilesInRange = GetPathTilesInRange(tile, range);
+
+	for (auto it = tilesInRange.begin(); it != tilesInRange.end(); ++it){
+		std::vector<EnviormentUnit*> unitsInTile = (*it)->GetUnits();
+		for (auto unitIt = unitsInTile.begin(); unitIt != unitsInTile.end(); ++unitIt){
+			units.push_back(*unitIt);
+		} 
+	}
+
+	/*
 	PathTile* othertile;
 	int imin = x - range;
 	int jmin = y - range;
@@ -205,19 +217,19 @@ std::vector<EnviormentUnit*> Map::GetUnitsInRadius(uint range, Tile* tile){
 		for (int j = jmin; j < jtop; j++)
 		{
 			othertile = _pathTiles[i][j];
-			if (othertile != NULL){
+			if (othertile != nullptr){
 				std::vector<EnviormentUnit*> unitsInTile = othertile->GetUnits();
 				for (auto it = unitsInTile.begin(); it != unitsInTile.end(); ++it)
 					units.push_back(*it);
 			}
 		}
 	}
-
+*/
 	return units;
 }
 
-PathTile* Map::GetFinishTile(){
-	return _finishTile;
+std::vector<PathTile*> Map::GetFinishTiles(){
+	return _endTiles;
 }
 
 
@@ -229,13 +241,19 @@ void Map::_SetSpawnTile(PathTile* tile){
 	} 
 }
 
+void Map::_SetFinishTile(PathTile* tile){
+	auto it = std::find(_endTiles.begin(), _endTiles.end(), tile);
+	if (it == _endTiles.end()){
+		_endTiles.push_back(tile);
+	} 
+}
 
 void Map::Step(){
 	for (auto it = _groundTiles.begin(); it != _groundTiles.end(); ++it){
 		for (auto it2 = (*it).begin(); it2 != (*it).end(); ++it2){
 			if ((*it2) != nullptr){
 				Projectile* p = (*it2)->Step();
-				if (p != NULL)
+				if (p != nullptr)
 					_projectiles.push_back(p);
 			} 
 		}
@@ -254,17 +272,16 @@ void Map::Step(){
 	}
 }
 
-std::vector<PathTile*> Map::GetTilesInRange(PathTile* tile, uint range){
+std::vector<PathTile*> Map::GetPathTilesInRange(Tile* tile, uint range){
 	std::vector<PathTile*> tiles;
 	int x = tile->GetXPos();
 	int y = tile->GetYPos();
-
-	for (int i = -range; i <= (int) range; ++i)
+	for (int i = -range; i <= (int) range; i++)
 	{
-		for (int j = -range; j <= (int) range; ++j)
+		for (int j = -range; j <= (int) range; j++)
 		{
 			PathTile* t = GetPathTile(i + x, j + y);
-			if (t != NULL)
+			if (t != nullptr)
 				tiles.push_back(t);
 		}
 	}

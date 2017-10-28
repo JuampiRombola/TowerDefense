@@ -12,8 +12,8 @@ SOURCES += $(shell find src/Towers -type f -name *.$(SRCEXT))
 
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 CFLAGS := -std=c++11 -g -Wall -Werror -pedantic -pedantic-errors -O3 -ggdb -DDEBUG -fno-inline
-LIB := -pthread -lm
-INC := -I include
+LIB := -pthread -lm -lyaml-cpp
+INC := -L/usr/local/lib -Iinclude
 
 $(TARGET): $(OBJECTS)
 	@echo "Linking..."
@@ -22,7 +22,7 @@ $(TARGET): $(OBJECTS)
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIRS)
 	@mkdir -p $(BUILDDIR)
-	@echo "$(CC)-o $@ "; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
+	@echo "$(CC)-o $@ "; $(CC) $(CFLAGS) $(INC) -c -o $@ $< 
 
 clean:
 	@echo " Cleaning..."; 

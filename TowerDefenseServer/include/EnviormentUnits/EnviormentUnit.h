@@ -33,7 +33,7 @@ public:
 	EnviormentUnit(uint id, uint stepDelay_ms, int healthPoints);
 	virtual ~EnviormentUnit();
 	void Step();
-	unsigned int GetId();
+	uint GetId();
 	PathTile* GetPosition();
 	void SetPosition(PathTile* pos, Map* map);
 	void GetHit(uint hitPoints);

@@ -7,7 +7,8 @@
 #include "Helpers.h"
 
 Tower::Tower(uint cooldown_ms, uint range, uint damage, SolidGroundTile* pos, Map* map) : 
-_lastTimeStamp_ms(0), _cooldown_ms(cooldown_ms), _map(map), _position(pos), _range(range), _experience(0), _damage(damage) {
+_lastTimeStamp_ms(0), _cooldown_ms(cooldown_ms), _map(map), _position(pos), _range(range), _experience(0), _damage(damage),
+_upgradeLevel(1) {
 
 }
 
@@ -18,29 +19,20 @@ Tower::~Tower(){
 
 
 bool Tower::_CanFire(){
-	if (_lastTimeStamp_ms == 0){
-		_lastTimeStamp_ms = Helpers::MillisecondsTimeStamp();
+	if (_lastTimeStamp_ms == 0)
 		return true;
-	}
 
 	uint delta = Helpers::MillisecondsTimeStamp() - _lastTimeStamp_ms;
-	if (delta > _cooldown_ms){
-		_lastTimeStamp_ms = Helpers::MillisecondsTimeStamp();
-		return true;
-	}
 
-	return false;
+	return (delta > _cooldown_ms);
 }
 
 
 Projectile* Tower::Step(){
 	if (_CanFire()){
 		EnviormentUnit* targetUnit = _GetTargetUnitInRange();
-		if (targetUnit != nullptr){
+		if (targetUnit != nullptr)
 			return _Fire(targetUnit);
-		}
-		else
-			return nullptr;
 	}
 
 	return nullptr;

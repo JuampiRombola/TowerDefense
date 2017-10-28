@@ -1,24 +1,24 @@
 #include <iostream>
 
 
-#include "Towers/IceProjectile.h"
+#include "Towers/WaterProjectile.h"
 #include "Towers/Projectile.h"
-#include "Towers/IceTower.h"
+#include "Towers/WaterTower.h"
 #include "Map/PathTile.h"
 #include "EnviormentUnits/EnviormentUnit.h"
 
-IceProjectile::IceProjectile
-(IceTower* origin, PathTile* target, uint hitpoints) :
+WaterProjectile::WaterProjectile
+(WaterTower* origin, PathTile* target, uint hitpoints) :
  Projectile(origin, target, 50, hitpoints)
 {
 
 }
 
-IceProjectile::~IceProjectile(){}
+WaterProjectile::~WaterProjectile(){}
 
 
 
-uint IceProjectile::_OnImpact(){
+uint WaterProjectile::_OnImpact(){
 	std::vector<EnviormentUnit*> units = _target->GetUnits();
 	bool hit = false;
 	uint exp = 0;
@@ -44,7 +44,7 @@ uint IceProjectile::_OnImpact(){
 	}
 
 	if (!hit) {		
-		std::cout << "Wind Projectile missed!!\n" << std::flush;
+		std::cout << "Air Projectile missed!!\n" << std::flush;
 		return 0;
 	}	
 

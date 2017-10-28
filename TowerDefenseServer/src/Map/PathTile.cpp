@@ -82,70 +82,77 @@ void PathTile::InitPossiblePaths(){
 	PathTile* left = _map->GetPathTile(GetXPos() - 1, GetYPos());
 	PathTile* right = _map->GetPathTile(GetXPos() + 1, GetYPos());
 	
-	if (up != NULL){
+	int a = 0;
+	if (GetXPos() == 8 && GetYPos() == 4){
+		a++;
+	}
+	if (a);
+
+
+	if (up != nullptr){
 		try
 		{
 			if (!up->DrivesStraightToSpawnFrom(this)){
 
-				if (down != NULL)
+				if (down != nullptr)
 					_possibleNextPaths[down].push_back(up);
 
-				if (left != NULL)
+				if (left != nullptr)
 					_possibleNextPaths[left].push_back(up);
 
-				if (right != NULL)
+				if (right != nullptr)
 					_possibleNextPaths[right].push_back(up);
 			}
 		} catch (std::exception& e) { /* */ }
 
 	}
 
-	if (down != NULL){
+	if (down != nullptr){
 		try
 		{
 			if (!down->DrivesStraightToSpawnFrom(this)){
 
-				if (up != NULL)
+				if (up != nullptr)
 					_possibleNextPaths[up].push_back(down);
 
-				if (left != NULL)
+				if (left != nullptr)
 					_possibleNextPaths[left].push_back(down);
 
-				if (right != NULL)
+				if (right != nullptr)
 					_possibleNextPaths[right].push_back(down);
 			}
 		} catch (std::exception& e) { /* */ }
 	}
 
-	if (right != NULL){
+	if (right != nullptr){
 		try
 		{
 			if (!right->DrivesStraightToSpawnFrom(this)){
 
-				if (up != NULL)
+				if (up != nullptr)
 					_possibleNextPaths[up].push_back(right);
 
-				if (left != NULL)
+				if (left != nullptr)
 					_possibleNextPaths[left].push_back(right);
 
-				if (down != NULL)
+				if (down != nullptr)
 					_possibleNextPaths[down].push_back(right);
 			}
 		} catch (std::exception& e) { /* */ }
 	}
 
-	if (left != NULL){
+	if (left != nullptr){
 		try
 		{
 			if (!left->DrivesStraightToSpawnFrom(this)){
 
-				if (up != NULL)
+				if (up != nullptr)
 					_possibleNextPaths[up].push_back(left);
 
-				if (right != NULL)
+				if (right != nullptr)
 					_possibleNextPaths[right].push_back(left);
 
-				if (down != NULL)
+				if (down != nullptr)
 					_possibleNextPaths[down].push_back(left);
 			}
 		} catch (std::exception& e) { /* */ }
@@ -241,7 +248,7 @@ std::vector<EnviormentUnit*> PathTile::GetUnits(){ //copia!!!!!
 }
 
 std::vector<PathTile*> PathTile::GetPossibleNextTiles(PathTile* from){
-	if (from == NULL)
+	if (from == nullptr)
 		return std::vector<PathTile*>();
 	return _possibleNextPaths[from];
 }
@@ -257,6 +264,7 @@ bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile){
 	PathTile* side1;
 	PathTile* side2;
 
+	std::vector<PathTile*> endTiles = _map->GetFinishTiles();
 	std::vector<PathTile*> paths;
 
 	while (true){
@@ -291,9 +299,9 @@ bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile){
 				return true;
 			}
 
-			if ((*paths.begin()) == _map->GetFinishTile()){
+			auto it = std::find(endTiles.begin(), endTiles.end(), *(paths.begin()));
+			if (it != endTiles.end())
 				return false;
-			}
 
 
 			PathTile* p = *(paths.begin());

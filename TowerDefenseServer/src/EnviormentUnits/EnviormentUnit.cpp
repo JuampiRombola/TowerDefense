@@ -16,8 +16,8 @@
 EnviormentUnit::EnviormentUnit(uint id, uint stepDelay_ms, int healthpoints): 
 _lastTimeStamp_ms(0), _lastSlowBeginTimeStamp_ms(0), _lastFreezeTimeStamp_ms(0),
  _alive(true), _id(id), _stepDelay(stepDelay_ms),
- _healthPoints(healthpoints), _position(NULL), _lastPosition(NULL), 
-_map(NULL), _isSlowed(false), _isFrozen(false), _lastFreezeDuration_sec(0),
+ _healthPoints(healthpoints), _position(nullptr), _lastPosition(nullptr), 
+_map(nullptr), _isSlowed(false), _isFrozen(false), _lastFreezeDuration_sec(0),
  _lastSlowDuration_sec(0), _activePercentSlow(1)
 {
 
@@ -36,14 +36,14 @@ uint EnviormentUnit::GetHP(){
 }
 
 void EnviormentUnit::PushBack(){
-	if (_lastPosition == NULL)
+	if (_lastPosition == nullptr)
 		return;
 
 	_position->UnitLeave(this); 
 	_lastPosition->UnitEnter(this);
 
 	_position = _lastPosition;
-	_lastPosition = NULL;
+	_lastPosition = nullptr;
 	std::cout << "EnviormentUnit Pushed backed\n";
 	PrintDebug();
 }
@@ -83,7 +83,7 @@ void EnviormentUnit::Step(){
 
 	PathTile* next = _GetNextTile();
 
-	if (next == NULL){
+	if (next == nullptr){
 		throw IncompletePathException();
 		return;
 	}
@@ -102,7 +102,7 @@ bool EnviormentUnit::_CanStep(){
 	if (!IsAlive())
 		return false;
 
-	if (_position == nullptr || _map == NULL)
+	if (_position == nullptr || _map == nullptr)
 		throw NonPlacedUnitCannotStepException();
 
 	uint ts = Helpers::MillisecondsTimeStamp();
@@ -166,15 +166,15 @@ PathTile* EnviormentUnit::_GetNextTile(){
 		PathTile* down = _map->GetPathTile(x, y-1);
 		PathTile* right = _map->GetPathTile(x+1, y);
 		PathTile* left = _map->GetPathTile(x-1, y);
-		if (up != NULL)	possiblePaths.push_back(up);
-		if (down != NULL) possiblePaths.push_back(down);
-		if (right != NULL) possiblePaths.push_back(right);
-		if (left != NULL) possiblePaths.push_back(left);
+		if (up != nullptr)	possiblePaths.push_back(up);
+		if (down != nullptr) possiblePaths.push_back(down);
+		if (right != nullptr) possiblePaths.push_back(right);
+		if (left != nullptr) possiblePaths.push_back(left);
 		std::srand(std::time(0));
 		uint random_variable = (uint) std::rand() % possiblePaths.size();
 		if (possiblePaths.size() > 0)
 			return possiblePaths[random_variable];
-		return NULL;
+		return nullptr;
 	} 
 	else
 	{
@@ -192,7 +192,7 @@ void EnviormentUnit::SetPosition(PathTile* pos, Map* map){
 	_position = pos;
 	_map = map;
 }
-unsigned int EnviormentUnit::GetId(){
+uint EnviormentUnit::GetId(){
 	return _id;
 }
 

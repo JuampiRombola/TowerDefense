@@ -2,7 +2,7 @@
 
 #include "EnviormentUnits/HalconSangriento.h"
 
-HalconSangriento::HalconSangriento(unsigned int id) : EnviormentUnit(id, 1000, 100) {}
+HalconSangriento::HalconSangriento(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
 HalconSangriento::~HalconSangriento()
 {

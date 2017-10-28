@@ -12,6 +12,7 @@
 #include "EnviormentUnits/EnviormentUnit.h"
 #include "Towers/Projectile.h"
 #include "Commands/Command.h"
+#include "GameConfiguration.h"
 
 
 class TowerDefenseGame{
@@ -24,8 +25,8 @@ private:
 	uint _clockFrequencyMs;
 
 	bool _ended;
-	unsigned int _steps;	
-	unsigned int _enemyIdCounter;
+	uint _steps;	
+	uint _enemyIdCounter;
 
 	std::vector<EnviormentUnit*> _units;
 
@@ -34,12 +35,13 @@ private:
 	void _SpawnEnemy();
 	void _ExecuteCommands();
 public:
-	TowerDefenseGame(uint clockFrequencyMs);
+	TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg);
 	~TowerDefenseGame();
 	void Run();
 	bool Ended();
 	void QueueCommand(Command* command);
 	EnviormentUnit* GetUnit(uint id);
+	GameConfiguration& GameCfg;
 };
 
 #endif

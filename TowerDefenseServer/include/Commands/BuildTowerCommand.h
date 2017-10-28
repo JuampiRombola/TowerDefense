@@ -2,30 +2,29 @@
 #define _BUILD_TOWER_COMMAND_
 
 #include "Commands/Command.h"
+#include "yaml-cpp/yaml.h"
+
 class Map;
 class TowerDefenseGame;
 class Tower;
 class SolidGroundTile;
 
-enum TowerType { Ground, Ice, Wind, Fire };
+enum TowerType { Ground, Water, Air, Fire };
 
 class BuildTowerCommand : public Command {
 private:
-	unsigned int _xPos;
-	unsigned int _yPos;
-
-	BuildTowerCommand( const BuildTowerCommand& );
-    const BuildTowerCommand& operator=( const BuildTowerCommand& );
+	uint _xPos;
+	uint _yPos;
 
 	TowerType _towerType;
-	Tower* _BuildGroundTower(Map* map, SolidGroundTile* tile);
-	Tower* _BuildFireTower(Map* map, SolidGroundTile* tile);
-	Tower* _BuildIceTower(Map* map, SolidGroundTile* tile);
-	Tower* _BuildWindTower(Map* map, SolidGroundTile* tile);
+	Tower* _BuildGroundTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
+	Tower* _BuildFireTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
+	Tower* _BuildWaterTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
+	Tower* _BuildAirTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
 public:
-	BuildTowerCommand(TowerType type, unsigned int x, unsigned int y);
+	BuildTowerCommand(TowerType type, uint x, uint y);
 	~BuildTowerCommand();
-	void Execute(Map* map, TowerDefenseGame* game);
+	bool Execute(Map* map, TowerDefenseGame* game);
 	TowerType GetTowerType();
 };
 

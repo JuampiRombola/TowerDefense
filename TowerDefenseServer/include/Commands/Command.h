@@ -8,7 +8,7 @@ class Command {
 public:
 	Command();
 	virtual ~Command();
-	virtual void Execute(Map* map, TowerDefenseGame* game) = 0;
+	virtual bool Execute(Map* map, TowerDefenseGame* game) = 0;
 };
 
 #endif

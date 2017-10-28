@@ -6,6 +6,8 @@ class SolidGroundTile;
 class Map;
 class PathTile;
 class EnviormentUnit;
+#include "Commands/UpgradeTowerCommand.h"
+#include "yaml-cpp/yaml.h"
 
 class Tower {
 protected:
@@ -14,8 +16,9 @@ protected:
 	Map* _map;
 	SolidGroundTile* _position;
 	uint _range;
-	uint _experience;
+	double _experience;
 	uint _damage;
+	uint _upgradeLevel;
 
 	Projectile*  _Fire(EnviormentUnit* target); 
 	bool _CanFire(); 
@@ -27,6 +30,7 @@ public:
 	virtual ~Tower();
 	Projectile* Step(); 
 	virtual void PrintDebug() = 0;
+	virtual bool Upgrade(const YAML::Node& cfg, UpgradeType type) = 0;
 	void AddExperience(uint exp);
 	void AddDamage(uint damage);
 	SolidGroundTile* GetPosition();

@@ -6,7 +6,7 @@
 
 class HalconSangriento : public EnviormentUnit {
 public:
-	HalconSangriento(unsigned int id);
+	HalconSangriento(uint id, uint stepDelay, uint healthPoints);
 	~HalconSangriento();
 	void PrintDebug();
 	bool Flies();

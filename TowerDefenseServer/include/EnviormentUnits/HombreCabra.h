@@ -6,7 +6,7 @@
 
 class HombreCabra : public EnviormentUnit {
 public:
-	HombreCabra(unsigned int id);
+	HombreCabra(uint id, uint stepDelay, uint healthPoints);
 	~HombreCabra();
 	void PrintDebug();
 	bool Flies();

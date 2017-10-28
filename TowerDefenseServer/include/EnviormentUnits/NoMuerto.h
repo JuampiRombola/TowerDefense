@@ -6,7 +6,7 @@
 
 class NoMuerto : public EnviormentUnit {
 public:
-	NoMuerto(unsigned int id);
+	NoMuerto(uint id, uint stepDelay, uint healthPoints);
 	~NoMuerto();
 	void PrintDebug();
 	bool Flies();

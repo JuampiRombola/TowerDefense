@@ -2,7 +2,7 @@
 
 #include "EnviormentUnits/HombreCabra.h"
 
-HombreCabra::HombreCabra(unsigned int id) : EnviormentUnit(id, 1000, 100) {}
+HombreCabra::HombreCabra(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
 HombreCabra::~HombreCabra()
 {

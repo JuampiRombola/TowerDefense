@@ -1,24 +1,25 @@
+
 #include <iostream>
 
 
-#include "Towers/WindProjectile.h"
-#include "Towers/WindTower.h"
+#include "Towers/AirProjectile.h"
+#include "Towers/AirTower.h"
 #include "Towers/Projectile.h"
 #include "Map/PathTile.h"
 #include "EnviormentUnits/EnviormentUnit.h"
 
-WindProjectile::WindProjectile
-(WindTower* origin, PathTile* target, uint hitpoints) :
- Projectile(origin, target, 50, hitpoints)
+AirProjectile::AirProjectile
+(AirTower* origin, PathTile* target, uint flyingHitpoint, uint nonflyingHitpoints) :
+ Projectile(origin, target, 50, flyingHitpoint), _nonFlyingHitPoints(nonflyingHitpoints)
 {
 
 }
 
-WindProjectile::~WindProjectile(){}
+AirProjectile::~AirProjectile(){}
 
 
 
-uint WindProjectile::_OnImpact(){
+uint AirProjectile::_OnImpact(){
 	std::vector<EnviormentUnit*> units = _target->GetUnits();
 	bool hit = false;
 	uint exp = 0;
@@ -31,7 +32,7 @@ uint WindProjectile::_OnImpact(){
 
 		uint hitPoints = _hitPoints;
 		if (!(*it)->Flies()){
-			hitPoints *= 5;
+			hitPoints = _nonFlyingHitPoints;
 		}
 
 		(*it)->GetHit(hitPoints);
@@ -46,7 +47,7 @@ uint WindProjectile::_OnImpact(){
 	}
 
 	if (!hit) {		
-		std::cout << "Wind Projectile missed!!\n" << std::flush;
+		std::cout << "Air Projectile missed!!\n" << std::flush;
 		return 0;
 	}	
 

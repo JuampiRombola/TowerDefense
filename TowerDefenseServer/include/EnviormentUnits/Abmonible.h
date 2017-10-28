@@ -6,7 +6,7 @@
 
 class Abmonible : public EnviormentUnit {
 public:
-	Abmonible(unsigned int id);
+	Abmonible(uint id, uint stepDelay, uint healthPoints);
 	~Abmonible();
 	void PrintDebug();
 	bool Flies();

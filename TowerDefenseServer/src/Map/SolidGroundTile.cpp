@@ -6,12 +6,12 @@
 #include "Exceptions/SolidGroundAlreadyHasTowerException.h"
 #include "Towers/Tower.h"
 
-SolidGroundTile::SolidGroundTile(unsigned int xPos, unsigned int yPos): 
-Tile(xPos, yPos), _tower(NULL) {}
+SolidGroundTile::SolidGroundTile(uint xPos, uint yPos): 
+Tile(xPos, yPos), _tower(nullptr) {}
 
 SolidGroundTile::~SolidGroundTile()
 {
-	if (_tower != NULL)
+	if (_tower != nullptr)
 		delete _tower;
 }
 
@@ -20,13 +20,17 @@ char SolidGroundTile::GetSymbol(){
 }
 
 void SolidGroundTile::PlaceTower(Tower* t){
-	if (t == NULL)
+	if (t == nullptr)
 		return;
 
-	if (_tower == NULL)
+	if (_tower == nullptr)
 		_tower = t;
 	else
 		throw SolidGroundAlreadyHasTowerException();
+}
+
+Tower* SolidGroundTile::GetTower(){
+	return _tower;
 }
 
 bool SolidGroundTile::HasTower(){
@@ -37,5 +41,5 @@ Projectile* SolidGroundTile::Step(){
 	if (_tower != nullptr){
 		return _tower->Step();
 	}
-	return NULL;
+	return nullptr;
 }

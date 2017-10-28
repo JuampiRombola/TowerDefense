@@ -6,7 +6,7 @@
 
 class DemonioVerde : public EnviormentUnit {
 public:
-	DemonioVerde(unsigned int id);
+	DemonioVerde(uint id, uint stepDelay, uint healthPoints);
 	~DemonioVerde();
 	void PrintDebug();
 	bool Flies();

@@ -6,7 +6,7 @@
 
 class Espectro : public EnviormentUnit {
 public:
-	Espectro(unsigned int id);
+	Espectro(uint id, uint stepDelay, uint healthPoints);
 	~Espectro();
 	void PrintDebug();
 	bool Flies();

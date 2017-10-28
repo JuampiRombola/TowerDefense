@@ -2,7 +2,7 @@
 
 #include "EnviormentUnits/Espectro.h"
 
-Espectro::Espectro(unsigned int id) : EnviormentUnit(id, 500, 100) {}
+Espectro::Espectro(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
 Espectro::~Espectro()
 {

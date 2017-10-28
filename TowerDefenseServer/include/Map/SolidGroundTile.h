@@ -12,10 +12,11 @@ private:
 	Tower* _tower;
 
 public:
-	SolidGroundTile(unsigned int xPos, unsigned int yPos);
+	SolidGroundTile(uint xPos, uint yPos);
 	~SolidGroundTile();
 	char GetSymbol();
 	void PlaceTower(Tower* tower);
+	Tower* GetTower();
 	bool HasTower();
 	Projectile* Step();
 };

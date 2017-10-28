@@ -9,24 +9,24 @@ enum Spell { Terraforming, Grieta, Meteorito, MuroDeFuego, Congelacion, Ventisca
 
 class CastSpellCommand : public Command {
 private:
-	unsigned int _xPos;
-	unsigned int _yPos;
-	unsigned int _unitId;
+	uint _xPos;
+	uint _yPos;
+	uint _unitId;
 	Spell _spell;
-	void _CastTerraforming(Map* map);
-	void _CastGrieta(Map* map);
-	void _CastMeteorito(Map* map);
-	void _CastMuroDeFuego(Map* map);
-	void _CastCongelacion(Map* map, TowerDefenseGame* game);
-	void _CastVentisca(Map* map);
-	void _CastTornado(Map* map);
-	void _CastRayos(Map* map, TowerDefenseGame* game);
+	bool _CastTerraforming(Map* map);
+	bool _CastGrieta(Map* map);
+	bool _CastMeteorito(Map* map);
+	bool _CastMuroDeFuego(Map* map);
+	bool _CastCongelacion(Map* map, TowerDefenseGame* game);
+	bool _CastVentisca(Map* map);
+	bool _CastTornado(Map* map);
+	bool _CastRayos(Map* map, TowerDefenseGame* game);
 
 public:
-	CastSpellCommand(Spell spell, unsigned int x, unsigned int y);
+	CastSpellCommand(Spell spell, uint x, uint y);
 	CastSpellCommand(Spell spell, uint unitId);
 	~CastSpellCommand();
-	void Execute(Map* map, TowerDefenseGame* game);
+	bool Execute(Map* map, TowerDefenseGame* game);
 	Spell GetSpellType();
 };
 
