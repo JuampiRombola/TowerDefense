@@ -57,12 +57,18 @@ void TowerDefenseGame::QueueCommand(Command* command){
 	_commands.emplace(command);
 }
 
-
+EnviormentUnit* TowerDefenseGame::GetUnit(uint id){
+	for(auto it = _units.begin(); it != _units.end(); ++it){
+		if ((*it)->GetId() == id)
+			return *it;
+	}
+	return NULL;
+}
 
 void TowerDefenseGame::_ExecuteCommands(){
 	std::lock_guard<std::mutex> lock(_commandQueueMutex);
 	while (!_commands.empty()){
-		_commands.front()->Execute(&_map);
+		_commands.front()->Execute(&_map, this);
 		_commands.pop();
 	}
 }

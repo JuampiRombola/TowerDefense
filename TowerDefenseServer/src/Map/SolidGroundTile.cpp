@@ -26,7 +26,7 @@ void SolidGroundTile::PlaceTower(Tower* t){
 	if (_tower == NULL)
 		_tower = t;
 	else
-		throw new SolidGroundAlreadyHasTowerException();
+		throw SolidGroundAlreadyHasTowerException();
 }
 
 bool SolidGroundTile::HasTower(){

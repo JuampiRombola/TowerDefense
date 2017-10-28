@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-
+#include <ctime>
 #include <map>
 
 #include "Map/Map.h"
@@ -13,8 +13,12 @@
 #include "Map/PathTile.h"
 
 PathTile::PathTile(uint xPos, uint yPos, Map* map) 
-: Tile(xPos, yPos), _lastCrackTimeStamp_ms(0), _lastCrackDuration_ms(0), _isCracked(false),
- _canSpawn(false), _units(), _possibleNextPaths(), _map(map) {}
+: Tile(xPos, yPos), _lastCrackTimeStamp_ms(0), _lastFireTimeStamp_ms(0), _lastVentiscaTimeStamp_ms(0),
+_lastTornadoTimeStamp_ms(0), _lastCrackDuration_ms(0), _lastFireDuration_ms(0), _lastVentiscaDuration_ms(0), 
+ _lastFireDamage(0), _lastVentiscaDamage(0), 
+ _lastVentiscaSlowPercent(0), _lastVentiscaSlowDuration_ms(0), _lastTornadoDuration_ms(0), _lastTornadoMaxDamage(0), 
+_isCracked(false), _isOnFire(false), _hasVentisca(false), _hasTornado(false), _canSpawn(false), _units(), 
+_possibleNextPaths(), _map(map) {}
 
 
 PathTile::~PathTile(){}
@@ -33,6 +37,41 @@ void PathTile::Crack(uint seconds){
 	}
 }
 
+void PathTile::SetOnFire(uint seconds, uint fireDamage){
+	_isOnFire = true;
+	_lastFireTimeStamp_ms = Helpers::MillisecondsTimeStamp();
+	_lastFireDuration_ms = seconds * 1000;
+	_lastFireDamage = fireDamage;
+	for (auto it = _units.begin(); it != _units.end(); ++it){
+		(*it)->GetHit(_lastFireDamage);
+	}
+}
+
+void PathTile::Ventisca(uint ventiscaDamage, uint ventiscaDuration_sec, uint slowDuration_sec, uint percentSlow){
+	_hasVentisca = true;
+	_lastVentiscaDamage = ventiscaDamage;
+	_lastVentiscaSlowPercent = percentSlow;
+	_lastVentiscaSlowDuration_ms = slowDuration_sec * 1000;
+	_lastVentiscaDuration_ms = ventiscaDuration_sec * 1000;
+	_lastVentiscaTimeStamp_ms = Helpers::MillisecondsTimeStamp();
+	for (auto it = _units.begin(); it != _units.end(); ++it){
+		(*it)->GetHit(_lastVentiscaDamage);
+		(*it)->Slow(_lastVentiscaDuration_ms / 1000, _lastVentiscaSlowPercent);
+	}
+}
+
+void PathTile::Tornado(uint tornadoMaxDamage, uint tornadoDuration_sec){
+	_hasTornado = true;
+	_lastTornadoMaxDamage = tornadoMaxDamage;
+	_lastTornadoDuration_ms = tornadoDuration_sec * 1000;
+	_lastTornadoTimeStamp_ms = Helpers::MillisecondsTimeStamp();
+	for (auto it = _units.begin(); it != _units.end(); ++it){
+		std::srand(std::time(0));
+		uint randomDamage = (uint) std::rand() % _lastTornadoMaxDamage;
+		(*it)->GetHit(randomDamage);
+	}
+}
+
 Map* PathTile::GetMap(){
 	return _map;
 }
@@ -42,6 +81,7 @@ void PathTile::InitPossiblePaths(){
 	PathTile* down = _map->GetPathTile(GetXPos(), GetYPos() - 1);
 	PathTile* left = _map->GetPathTile(GetXPos() - 1, GetYPos());
 	PathTile* right = _map->GetPathTile(GetXPos() + 1, GetYPos());
+	
 	if (up != NULL){
 		try
 		{
@@ -56,7 +96,7 @@ void PathTile::InitPossiblePaths(){
 				if (right != NULL)
 					_possibleNextPaths[right].push_back(up);
 			}
-		} catch (...) { /* */ }
+		} catch (std::exception& e) { /* */ }
 
 	}
 
@@ -74,7 +114,7 @@ void PathTile::InitPossiblePaths(){
 				if (right != NULL)
 					_possibleNextPaths[right].push_back(down);
 			}
-		} catch (...) { /* */ }
+		} catch (std::exception& e) { /* */ }
 	}
 
 	if (right != NULL){
@@ -91,7 +131,7 @@ void PathTile::InitPossiblePaths(){
 				if (down != NULL)
 					_possibleNextPaths[down].push_back(right);
 			}
-		} catch (...) { /* */ }
+		} catch (std::exception& e) { /* */ }
 	}
 
 	if (left != NULL){
@@ -108,7 +148,7 @@ void PathTile::InitPossiblePaths(){
 				if (down != NULL)
 					_possibleNextPaths[down].push_back(left);
 			}
-		} catch (...) { /* */ }
+		} catch (std::exception& e) { /* */ }
 	}
 }
 
@@ -127,10 +167,10 @@ void PathTile::UnitEnter(EnviormentUnit* unit){
 	if (it == _units.end())
 		_units.emplace_back(unit);
 	else 
-		throw new UnitIsAlreadyOnThisTileException();
+		throw UnitIsAlreadyOnThisTileException();
 
+	unsigned long long ts_ms = Helpers::MillisecondsTimeStamp();
 	if (_isCracked){
-		unsigned long long ts_ms = Helpers::MillisecondsTimeStamp();
 		uint delta_ms = ts_ms - _lastCrackTimeStamp_ms;
 		if (delta_ms > _lastCrackDuration_ms){
 			_isCracked = false;
@@ -138,6 +178,45 @@ void PathTile::UnitEnter(EnviormentUnit* unit){
 		} else {
 			std::cout << "FALLED INTO CRACK\n" << std::flush;
 			unit->Kill();
+			return;
+		}
+	}
+
+	if (_isOnFire){
+		uint delta_ms = ts_ms - _lastFireTimeStamp_ms;
+		if (delta_ms > _lastFireDuration_ms){
+			_isOnFire = false;
+			_lastFireDuration_ms = 0;
+		} else {
+			std::cout << "UNIT GOT BURNT!!\n" << std::flush;
+			unit->GetHit(_lastFireDamage);
+		}
+	}
+
+	if (_hasVentisca){
+		uint delta_ms = ts_ms - _lastVentiscaTimeStamp_ms;
+		if (delta_ms > _lastVentiscaDuration_ms){
+			_hasVentisca = false;
+			_lastVentiscaDuration_ms = 0;
+			_lastVentiscaSlowPercent = 0;
+			_lastVentiscaSlowPercent = 0;
+			_lastVentiscaDamage = 0;
+		} else {
+			unit->GetHit(_lastVentiscaDamage);
+			unit->Slow(_lastVentiscaSlowDuration_ms / 1000, _lastVentiscaSlowPercent); 
+		}
+	}
+
+	if (_hasTornado){
+		uint delta_ms = ts_ms - _lastTornadoTimeStamp_ms;
+		if (delta_ms > _lastTornadoDuration_ms){
+			_hasTornado = false;
+			_lastTornadoDuration_ms = 0;
+			_lastTornadoMaxDamage = 0;
+		} else {
+			std::srand(std::time(0));
+			uint randomDamage = (uint) std::rand() % _lastTornadoMaxDamage;
+			unit->GetHit(randomDamage); 
 		}
 	}
 }
@@ -150,7 +229,7 @@ void PathTile::UnitLeave(EnviormentUnit* unit){
 		_units.erase(it);
 	}
 	else
-		throw new UnitIsNotOnThisTileException();
+		throw UnitIsNotOnThisTileException();
 }
 
 bool PathTile::HasAnyUnit(){
@@ -206,7 +285,7 @@ bool PathTile::DrivesStraightToSpawnFrom(PathTile* tile){
 		if (paths.size() > 1){
 			return false;
 		} else if (paths.size() == 0){
-			throw new IncompletePathException();
+			throw IncompletePathException();
 		} else if (paths.size() == 1){
 			if ((*paths.begin())->CanSpawn()){
 				return true;

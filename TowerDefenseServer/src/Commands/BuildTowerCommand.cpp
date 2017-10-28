@@ -8,13 +8,14 @@
 #include "Map/SolidGroundTile.h"
 #include "Commands/BuildTowerCommand.h"
 #include "Towers/Tower.h"
+#include "TowerDefenseGame.h"
 
 BuildTowerCommand::BuildTowerCommand(TowerType type, unsigned int x, unsigned int y):
  _xPos(x), _yPos(y), _towerType(type) {}
 
 BuildTowerCommand::~BuildTowerCommand(){}
 
-void BuildTowerCommand::Execute(Map* map){
+void BuildTowerCommand::Execute(Map* map, TowerDefenseGame* game){
 	SolidGroundTile* tile = map->GetSolidGroundTile(_xPos ,_yPos);
 	if (tile != NULL && !tile->HasTower()){
 		Tower* t = NULL;

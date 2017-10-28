@@ -14,10 +14,11 @@
 #include "Exceptions/UnitCannotMoveDiagonallyException.h"
 
 EnviormentUnit::EnviormentUnit(uint id, uint stepDelay_ms, int healthpoints): 
-_lastTimeStamp_ms(0), _lastSlowBeginTimeStamp_ms(0), _alive(true), _id(id), _stepDelay(stepDelay_ms),
- _healthPoints(healthpoints), _position(NULL), 
-_lastPosition(NULL), 
-_map(NULL), _isSlowed(false), _lastSlowDuration_sec(0), _activePercentSlow(1)
+_lastTimeStamp_ms(0), _lastSlowBeginTimeStamp_ms(0), _lastFreezeTimeStamp_ms(0),
+ _alive(true), _id(id), _stepDelay(stepDelay_ms),
+ _healthPoints(healthpoints), _position(NULL), _lastPosition(NULL), 
+_map(NULL), _isSlowed(false), _isFrozen(false), _lastFreezeDuration_sec(0),
+ _lastSlowDuration_sec(0), _activePercentSlow(1)
 {
 
 }
@@ -48,6 +49,13 @@ void EnviormentUnit::PushBack(){
 }
 
 
+void EnviormentUnit::Freeze(uint seconds){
+	_isFrozen = true;
+	_lastFreezeTimeStamp_ms = Helpers::MillisecondsTimeStamp();
+	_lastFreezeDuration_sec = seconds;
+	std::cout << "EnviormentUnit frozen for " << seconds << "\n";
+}
+
 void EnviormentUnit::GetHit(uint hitpoints){
 	_healthPoints -= hitpoints;
 	std::cout << "EnviormentUnit" << _id << " GOT HIT for " << hitpoints 
@@ -76,7 +84,7 @@ void EnviormentUnit::Step(){
 	PathTile* next = _GetNextTile();
 
 	if (next == NULL){
-		std::cout << " GOT NO NEXT TILE ! \n";
+		throw IncompletePathException();
 		return;
 	}
 
@@ -95,14 +103,26 @@ bool EnviormentUnit::_CanStep(){
 		return false;
 
 	if (_position == nullptr || _map == NULL)
-		throw new NonPlacedUnitCannotStepException();
+		throw NonPlacedUnitCannotStepException();
+
+	uint ts = Helpers::MillisecondsTimeStamp();
+
+	if (_isFrozen){
+		uint delta = ts - _lastFreezeTimeStamp_ms;
+		if (delta > _lastFreezeDuration_sec * 1000){
+			_isFrozen = false;
+			_lastFreezeDuration_sec = 0;
+			_lastFreezeTimeStamp_ms = 0;
+		} else {
+			return false;
+		}
+	}
 
 	if (_lastTimeStamp_ms == 0){
 		_lastTimeStamp_ms = Helpers::MillisecondsTimeStamp();
 		return true;
 	}
 
-	uint ts = Helpers::MillisecondsTimeStamp();
 	uint delta = ts - _lastTimeStamp_ms;
 	uint actualDelay = _GetActualStepDelay();
 

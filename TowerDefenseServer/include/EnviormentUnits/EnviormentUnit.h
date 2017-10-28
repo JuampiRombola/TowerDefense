@@ -9,6 +9,7 @@ class EnviormentUnit{
 private:
 	unsigned long long  _lastTimeStamp_ms;
 	unsigned long long _lastSlowBeginTimeStamp_ms;
+	unsigned long long _lastFreezeTimeStamp_ms;
 	bool _alive;
 	uint _id;
 	uint _stepDelay;
@@ -20,6 +21,8 @@ private:
 	Map* _map;
 
 	bool _isSlowed;
+	bool _isFrozen;
+	uint _lastFreezeDuration_sec;
 	uint _lastSlowDuration_sec;
 	uint _activePercentSlow;
 
@@ -42,6 +45,7 @@ public:
 	void Slow(uint slowSeconds, uint percentSlow);
 	bool IsSlowed();
 	void Kill();
+	void Freeze(uint seconds);
 };
 
 #endif

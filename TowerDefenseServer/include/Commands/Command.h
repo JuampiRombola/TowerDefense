@@ -1,14 +1,14 @@
 #ifndef _COMMAND_
 #define _COMMAND_
 
-#include "Map/Map.h"
-
+class Map;
+class TowerDefenseGame;
 
 class Command {
 public:
 	Command();
 	virtual ~Command();
-	virtual void Execute(Map* map) = 0;
+	virtual void Execute(Map* map, TowerDefenseGame* game) = 0;
 };
 
 #endif

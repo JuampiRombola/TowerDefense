@@ -15,8 +15,22 @@ class PathTile;
 class PathTile : public Tile {
 private:
 	unsigned long long _lastCrackTimeStamp_ms;
+	unsigned long long _lastFireTimeStamp_ms;
+	unsigned long long _lastVentiscaTimeStamp_ms;
+	unsigned long long _lastTornadoTimeStamp_ms;
 	uint _lastCrackDuration_ms;
+	uint _lastFireDuration_ms;
+	uint _lastVentiscaDuration_ms;
+	uint _lastFireDamage;
+	uint _lastVentiscaDamage;
+	uint _lastVentiscaSlowPercent;
+	uint _lastVentiscaSlowDuration_ms;
+	uint _lastTornadoDuration_ms;
+	uint _lastTornadoMaxDamage;
 	bool _isCracked;
+	bool _isOnFire;
+	bool _hasVentisca;
+	bool _hasTornado;
 	bool _canSpawn;
 	std::vector<EnviormentUnit*> _units;
 	std::map<PathTile*, std::vector<PathTile*>> _possibleNextPaths;
@@ -36,7 +50,10 @@ public:
 	void UnitLeave(EnviormentUnit* unit);
 	void UnitEnter(EnviormentUnit* unit);
 	void Crack(uint seconds);
+	void SetOnFire(uint seconds, uint fireDamage);
 	Map* GetMap();
+	void Ventisca(uint ventiscaDamage, uint ventiscaDuration_sec, uint slowDuration_sec, uint percentSlow);
+	void Tornado(uint tornadoMaxDamage, uint tornadoDuration_sec);
 };
 
 #endif

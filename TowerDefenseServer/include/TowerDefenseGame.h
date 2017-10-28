@@ -39,6 +39,7 @@ public:
 	void Run();
 	bool Ended();
 	void QueueCommand(Command* command);
+	EnviormentUnit* GetUnit(uint id);
 };
 
 #endif

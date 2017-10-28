@@ -32,14 +32,14 @@ _projectiles()
 	}
 	//Armo un camino a mano
 	PathTile* spawn1 = new PathTile(0,0, this);
-	PathTile* spawn2 = new PathTile(0,9, this);
+	//PathTile* spawn2 = new PathTile(0,9, this);
 
 	_PlacePathTile(spawn1);
 	_SetSpawnTile(spawn1);
-	_PlacePathTile(spawn2);
-	_SetSpawnTile(spawn2);
+	//_PlacePathTile(spawn2);
+	//_SetSpawnTile(spawn2);
 
-	_PlacePathTile(new PathTile(1,9, this));
+	/*_PlacePathTile(new PathTile(1,9, this));
 	_PlacePathTile(new PathTile(1,8, this));
 	_PlacePathTile(new PathTile(1,7, this));
 	_PlacePathTile(new PathTile(1,6, this));
@@ -49,7 +49,7 @@ _projectiles()
 	_PlacePathTile(new PathTile(3,8, this));
 	_PlacePathTile(new PathTile(4,8, this));
 	_PlacePathTile(new PathTile(5,8, this));
-	_PlacePathTile(new PathTile(6,8, this));
+	_PlacePathTile(new PathTile(6,8, this));*/
 
 	_PlacePathTile(new PathTile(1,0, this));
 	_PlacePathTile(new PathTile(2,0, this));
@@ -70,10 +70,10 @@ _projectiles()
 	_PlacePathTile(new PathTile(8,5, this));
 	_PlacePathTile(new PathTile(8,4, this));
 
-	_PlacePathTile(new PathTile(3,5, this));
+	/*_PlacePathTile(new PathTile(3,5, this));
 	_PlacePathTile(new PathTile(3,6, this));
 	_PlacePathTile(new PathTile(4,6, this));
-	_PlacePathTile(new PathTile(5,6, this));
+	_PlacePathTile(new PathTile(5,6, this));*/
 
 	PathTile* end = new PathTile(9,4, this);
 	_PlacePathTile(end);
@@ -122,7 +122,7 @@ void Map::_PlacePathTile(PathTile* tile){
 
 void Map::_PlaceTile(Tile* tile){
 	if (tile->GetXPos() >= _cols || tile->GetYPos() >= _rows)
-		throw new TileIsOutOfBoundsException();
+		throw TileIsOutOfBoundsException();
 
 	bool found = false;
 	for (auto it = _tiles.begin(); it != _tiles.end(); ++it){
@@ -138,7 +138,7 @@ void Map::_PlaceTile(Tile* tile){
 	}
 
 	if (found)
-		throw new PositionAlreadyHasTileException();
+		throw PositionAlreadyHasTileException();
 
 	_tiles.push_back(tile);
 }
@@ -162,14 +162,14 @@ void Map::PlaceUnit(EnviormentUnit* unit, PathTile* tile){
 		tile->UnitEnter(unit);
 		unit->SetPosition(tile, this);
 	} else {
-		throw new TileCannotSpawnException();
+		throw TileCannotSpawnException();
 	}
 }
 
 
 PathTile* Map::GetRandomSpawnTile(){
 	if (_spawnTiles.size() == 0)
-		throw new NoSetSpawnTilesException();
+		throw NoSetSpawnTilesException();
 
 	std::srand(std::time(0));
 	uint random_variable = (uint) std::rand() % _spawnTiles.size();

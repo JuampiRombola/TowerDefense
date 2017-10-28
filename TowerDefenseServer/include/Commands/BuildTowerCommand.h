@@ -3,6 +3,9 @@
 
 #include "Commands/Command.h"
 class Map;
+class TowerDefenseGame;
+class Tower;
+class SolidGroundTile;
 
 enum TowerType { Ground, Ice, Wind, Fire };
 
@@ -22,7 +25,7 @@ private:
 public:
 	BuildTowerCommand(TowerType type, unsigned int x, unsigned int y);
 	~BuildTowerCommand();
-	void Execute(Map* map);
+	void Execute(Map* map, TowerDefenseGame* game);
 	TowerType GetTowerType();
 };
 

@@ -17,14 +17,20 @@ int main(int argc, char** argv)
 	TowerDefenseGame game(freq);
 	std::thread gameClock(&TowerDefenseGame::Run, &game);
 
-		std::this_thread::sleep_for (std::chrono::milliseconds(1000));
+		std::this_thread::sleep_for (std::chrono::milliseconds(2500));
 
-	CastSpellCommand spell(Grieta, 6, 7);
+	CastSpellCommand spell(Rayos, 1);
+	CastSpellCommand spell1(Rayos, 1);
+	CastSpellCommand spell2(Rayos, 1);
+	CastSpellCommand spell3(Rayos, 1);
 	BuildTowerCommand tower(Ice, 2, 5);
 	
 	if (!game.Ended()){
 		game.QueueCommand(&spell);
-		//game.QueueCommand(&tower);
+		game.QueueCommand(&spell1);
+		game.QueueCommand(&spell2);
+		game.QueueCommand(&spell3);
+		game.QueueCommand(&tower);
 	}
 
 	gameClock.join();
