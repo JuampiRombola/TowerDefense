@@ -1,10 +1,10 @@
 #ifndef TOWERDEFENSE_FIRETOWERVIEW_H
 #define TOWERDEFENSE_FIRETOWERVIEW_H
 
-#include "View.h"
-#include "Sprite.h"
-#include "TextureLoader.h"
-#include "Renderer.h"
+#include "../Common/View.h"
+#include "../Common/Sprite.h"
+#include "../Common/TextureLoader.h"
+#include "../Common/Renderer.h"
 
 class FireTowerView : public View{
 private:

@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_TEXTINPUT_H
 #define TOWERDEFENSE_TEXTINPUT_H
 
-#include "Button.h"
+#include "../Editor/Button.h"
 
 class TextInput : public Button {
 private:

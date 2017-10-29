@@ -4,30 +4,30 @@ project(TowerDefense)
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES_V
-        Resources/0.png Resources/1.png Resources/2.png View/Window.cpp
-        View/Window.h View/ViewError.cpp View/ViewError.h View/Renderer.cpp
-        View/Renderer.h View/TextureLoader.cpp View/TextureLoader.h
-        View/MapView.cpp View/MapView.h View/mainView.cpp View/Sprite.cpp
-        View/Sprite.h View/SpriteNamesConfig.h View/View.cpp View/View.h
-        View/PortalView.cpp View/PortalView.h View/PortalEntradaView.cpp
-        View/PortalEntradaView.h View/PortalSalidaView.cpp
-        View/PortalSalidaView.h View/FireTowerView.cpp View/FireTowerView.h)
+        Resources/0.png Resources/1.png Resources/2.png View/Common/Window.cpp
+        View/Common/Window.h View/Common/ViewError.cpp View/Common/ViewError.h View/Common/Renderer.cpp
+        View/Common/Renderer.h View/Common/TextureLoader.cpp View/Common/TextureLoader.h
+        View/Model/MapView.cpp View/Model/MapView.h View/mainView.cpp View/Common/Sprite.cpp
+        View/Common/Sprite.h View/Common/SpriteNamesConfig.h View/Common/View.cpp View/Common/View.h
+        View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
+        View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
+        View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h)
 
 set(SOURCE_FILES_E
         Resources/0.png Resources/1.png Resources/2.png Resources/100.png
         Resources/101.png Resources/102.png Resources/103.png Resources/104.png
         Resources/105.png Resources/106.png Resources/107.png
-        Resources/108.png View/Window.cpp View/Window.h View/ViewError.cpp
-        View/ViewError.h View/Renderer.cpp
-        View/Renderer.h View/TextureLoader.cpp View/TextureLoader.h
-        View/MapView.cpp View/MapView.h View/mainEditor.cpp View/Sprite.cpp
-        View/Sprite.h View/SpriteNamesConfig.h View/View.cpp View/View.h
-        View/PortalView.cpp View/PortalView.h View/PortalEntradaView.cpp
-        View/PortalEntradaView.h View/PortalSalidaView.cpp
-        View/PortalSalidaView.h View/FireTowerView.cpp View/FireTowerView.h
-        View/MousePosition.cpp View/MousePosition.h View/Editor.cpp
-        View/Editor.h View/KeyboardInput.cpp View/KeyboardInput.h
-        View/Button.cpp View/Button.h View/AgregarEnemigoButton.cpp View/AgregarEnemigoButton.h View/EliminarEnemigoButton.cpp View/EliminarEnemigoButton.h View/EliminarHordaButton.cpp View/EliminarHordaButton.h View/NuevaHordaButton.cpp View/NuevaHordaButton.h View/SuperficieButton.cpp View/SuperficieButton.h View/ToggleButton.cpp View/ToggleButton.h View/Buttons.cpp View/Buttons.h View/TextInput.cpp View/TextInput.h)
+        Resources/108.png View/Common/Window.cpp View/Common/Window.h View/Common/ViewError.cpp
+        View/Common/ViewError.h View/Common/Renderer.cpp
+        View/Common/Renderer.h View/Common/TextureLoader.cpp View/Common/TextureLoader.h
+        View/Model/MapView.cpp View/Model/MapView.h View/mainEditor.cpp View/Common/Sprite.cpp
+        View/Common/Sprite.h View/Common/SpriteNamesConfig.h View/Common/View.cpp View/Common/View.h
+        View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
+        View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
+        View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h
+        View/Common/MousePosition.cpp View/Common/MousePosition.h View/Editor/Editor.cpp
+        View/Editor/Editor.h View/Common/KeyboardInput.cpp View/Common/KeyboardInput.h
+        View/Editor/Button.cpp View/Editor/Button.h View/Editor/AgregarEnemigoButton.cpp View/Editor/AgregarEnemigoButton.h View/Editor/EliminarEnemigoButton.cpp View/Editor/EliminarEnemigoButton.h View/Editor/EliminarHordaButton.cpp View/Editor/EliminarHordaButton.h View/Editor/NuevaHordaButton.cpp View/Editor/NuevaHordaButton.h View/Editor/SuperficieButton.cpp View/Editor/SuperficieButton.h View/Editor/ToggleButton.cpp View/Editor/ToggleButton.h View/Editor/Buttons.cpp View/Editor/Buttons.h View/Common/TextInput.cpp View/Common/TextInput.h)
 
 add_executable(TowerDefenseView ${SOURCE_FILES_V})
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})

@@ -1,5 +1,5 @@
 #include "PortalEntradaView.h"
-#include "SpriteNamesConfig.h"
+#include "../Common/SpriteNamesConfig.h"
 
 #define PORTALENTRADAOFFSETX 18
 #define PORTALENTRADAOFFSETY 100

@@ -1,5 +1,5 @@
 #include "FireTowerView.h"
-#include "SpriteNamesConfig.h"
+#include "../Common/SpriteNamesConfig.h"
 
 #define FTOWER_W 64
 #define FTOWER_H 104

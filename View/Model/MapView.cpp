@@ -1,5 +1,5 @@
 #include "MapView.h"
-#include "SpriteNamesConfig.h"
+#include "../Common/SpriteNamesConfig.h"
 
 #define PATHTILE 1
 #define STRUCTURETILE 2

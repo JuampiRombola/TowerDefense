@@ -2,8 +2,8 @@
 #define TOWERDEFENSE_BUTTON_H
 
 #include <SDL2/SDL.h>
-#include "MousePosition.h"
-#include "Renderer.h"
+#include "../Common/MousePosition.h"
+#include "../Common/Renderer.h"
 
 class Button {
 private:

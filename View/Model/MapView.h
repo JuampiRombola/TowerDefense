@@ -2,9 +2,9 @@
 #define TOWERDEFENSE_MAPVIEW_H
 
 #include <SDL2/SDL.h>
-#include "Sprite.h"
-#include "Renderer.h"
-#include "TextureLoader.h"
+#include "../Common/Sprite.h"
+#include "../Common/Renderer.h"
+#include "../Common/TextureLoader.h"
 
 class MapView {
 private:

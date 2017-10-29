@@ -1,12 +1,12 @@
 #include <iostream>
-#include "Window.h"
-#include "Renderer.h"
-#include "TextureLoader.h"
-#include "MapView.h"
-#include "MousePosition.h"
-#include "Editor.h"
-#include "KeyboardInput.h"
-#include "Buttons.h"
+#include "Common/Window.h"
+#include "Common/Renderer.h"
+#include "Common/TextureLoader.h"
+#include "Model/MapView.h"
+#include "Common/MousePosition.h"
+#include "Editor/Editor.h"
+#include "Common/KeyboardInput.h"
+#include "Editor/Buttons.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640

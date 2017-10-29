@@ -4,17 +4,17 @@
 #include <list>
 #include <SDL2/SDL.h>
 #include "Button.h"
-#include "TextInput.h"
-#include "MousePosition.h"
-#include "KeyboardInput.h"
-#include "Renderer.h"
-#include "TextureLoader.h"
+#include "../Common/TextInput.h"
+#include "../Common/MousePosition.h"
+#include "../Common/KeyboardInput.h"
+#include "../Common/Renderer.h"
+#include "../Common/TextureLoader.h"
 #include "SuperficieButton.h"
 #include "NuevaHordaButton.h"
 #include "AgregarEnemigoButton.h"
 #include "EliminarEnemigoButton.h"
 #include "EliminarHordaButton.h"
-#include "SpriteNamesConfig.h"
+#include "../Common/SpriteNamesConfig.h"
 
 class Buttons {
 private:

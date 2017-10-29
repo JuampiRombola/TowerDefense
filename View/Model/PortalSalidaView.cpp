@@ -1,5 +1,5 @@
 #include "PortalSalidaView.h"
-#include "SpriteNamesConfig.h"
+#include "../Common/SpriteNamesConfig.h"
 
 #define PORTALSALIDAOFFSETX 20
 #define PORTALSALIDAOFFSETY 75
