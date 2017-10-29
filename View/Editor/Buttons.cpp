@@ -74,21 +74,21 @@ void Buttons::cleanHordasButtons() {
 
 void Buttons::addEnemigosButton(int horda) {
     Button *button = new AgregarEnemigoButton(++nextId, horda, "abmonible",
-                                              textureLoader.getTexture(11),
+                                              textureLoader.getTexture(ABMONIBLE_SUMA),
                                               mousePosition, renderer, editor);
     hordasButtons.push_back(button);
 
     Button *deleteAbmonible = new EliminarEnemigoButton(++nextId, horda,
                                                         "abmonible",
                                                         textureLoader.getTexture(
-                                                                12),
+                                                                ABMONIBLE_RESTA),
                                                         mousePosition, renderer,
                                                         editor);
     hordasButtons.push_back(deleteAbmonible);
 
     Button *eliminarHordaButton = new EliminarHordaButton(++nextId, horda,
                                                           textureLoader.getTexture(
-                                                                  13),
+                                                                  ELIMINAR_HORDA_BTN),
                                                           mousePosition,
                                                           renderer, editor);
     hordasButtons.push_back(eliminarHordaButton);

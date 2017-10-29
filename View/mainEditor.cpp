@@ -22,6 +22,8 @@ int main(int argc, char** argv) {
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer());
 
+    MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
+
     int mouse_x = -1, mouse_y = -1;
     MousePosition mouse(mouse_x, mouse_y);
 
@@ -67,6 +69,7 @@ int main(int argc, char** argv) {
              ++horda) {
             buttons.addEnemigosButton(horda);
         }
+        mapView.draw(0);
         buttons.draw();
         renderer.present();
     }

@@ -3,7 +3,7 @@
 #define HEIGHTFACTOR 80
 #define WIDTHFACTOR 80
 
-#define PADDING 150
+#define PADDING 400
 #define ZOOMINITIAL 1
 
 #define MOVECAMERA 10
