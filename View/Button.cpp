@@ -4,7 +4,8 @@ Button::Button(int id, int posX, int posY, int width, int height,
                SDL_Texture *texture, MousePosition &mousePosition,
                Renderer &renderer) : id(id),
                                      mousePosition(mousePosition),
-                                     button({posX, posY, width, height}),
+                                     button(SDL_Rect{posX, posY, width,
+                                                     height}),
                                      renderer(renderer), texture(texture) {}
 
 Button::~Button() = default;

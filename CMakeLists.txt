@@ -14,8 +14,11 @@ set(SOURCE_FILES_V
         View/PortalSalidaView.h View/FireTowerView.cpp View/FireTowerView.h)
 
 set(SOURCE_FILES_E
-        Resources/0.png Resources/1.png Resources/2.png View/Window.cpp
-        View/Window.h View/ViewError.cpp View/ViewError.h View/Renderer.cpp
+        Resources/0.png Resources/1.png Resources/2.png Resources/100.png
+        Resources/101.png Resources/102.png Resources/103.png Resources/104.png
+        Resources/105.png Resources/106.png Resources/107.png
+        Resources/108.png View/Window.cpp View/Window.h View/ViewError.cpp
+        View/ViewError.h View/Renderer.cpp
         View/Renderer.h View/TextureLoader.cpp View/TextureLoader.h
         View/MapView.cpp View/MapView.h View/mainEditor.cpp View/Sprite.cpp
         View/Sprite.h View/SpriteNamesConfig.h View/View.cpp View/View.h

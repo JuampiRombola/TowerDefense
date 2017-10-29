@@ -30,10 +30,8 @@ int main(int argc, char** argv) {
     KeyboardInput keyboardInput(editor.getNombre());
 
     Buttons buttons(mouse, renderer, editor, textureLoader, keyboardInput);
-    buttons.addSuperficieButtons(textureLoader.getTexture(9), textureLoader
-            .getTexture(6), textureLoader.getTexture(7), textureLoader
-            .getTexture(8));
-    buttons.addNuevaHordaButton(textureLoader.getTexture(10));
+    buttons.addSuperficieButtons();
+    buttons.addNuevaHordaButton();
 
     while (!quit) {
         SDL_PollEvent(&event);

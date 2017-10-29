@@ -14,6 +14,7 @@
 #include "AgregarEnemigoButton.h"
 #include "EliminarEnemigoButton.h"
 #include "EliminarHordaButton.h"
+#include "SpriteNamesConfig.h"
 
 class Buttons {
 private:
@@ -30,9 +31,8 @@ public:
             TextureLoader &textureLoader, KeyboardInput &keyboardInput);
     ~Buttons();
     void draw();
-    void addSuperficieButtons(SDL_Texture* pradera, SDL_Texture* lava,
-                              SDL_Texture* desierto, SDL_Texture* glaciar);
-    void addNuevaHordaButton(SDL_Texture *texture);
+    void addSuperficieButtons();
+    void addNuevaHordaButton();
     void cleanHordasButtons();
     void addEnemigosButton(int horda);
 };

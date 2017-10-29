@@ -24,35 +24,41 @@ void Buttons::draw() {
     }
 }
 
-void Buttons::addSuperficieButtons(SDL_Texture *pradera, SDL_Texture *lava,
-                                   SDL_Texture *desierto,
-                                   SDL_Texture *glaciar) {
+void Buttons::addSuperficieButtons() {
     Button *praderaButton = new SuperficieButton(++nextId, 0, "pradera",
-                                                 pradera, mousePosition,
+                                                 textureLoader.getTexture(PRADERA_EDITOR),
+                                                 mousePosition,
                                                  renderer, editor);
     buttons.push_back(praderaButton);
 
-    Button *lavaButton = new SuperficieButton(++nextId, 1, "lava", lava,
+    Button *lavaButton = new SuperficieButton(++nextId, 1, "lava",
+                                              textureLoader.getTexture(VOLCAN_EDITOR),
                                               mousePosition, renderer, editor);
     buttons.push_back(lavaButton);
 
     Button *desiertoButton = new SuperficieButton(++nextId, 2, "desierto",
-                                                  desierto, mousePosition,
+                                                  textureLoader.getTexture
+                                                          (DESIERTO_EDITOR),
+                                                  mousePosition,
                                                   renderer, editor);
     buttons.push_back(desiertoButton);
 
     Button *glaciarButton = new SuperficieButton(++nextId, 3, "glaciar",
-                                                 glaciar, mousePosition,
+                                                 textureLoader.getTexture
+                                                         (GELIDO_EDITOR),
+                                                 mousePosition,
                                                  renderer, editor);
     buttons.push_back(glaciarButton);
 
     Button *text = new TextInput(++nextId, 100, 50, 500, 0, textureLoader
-            .getTexture(14), mousePosition, renderer);
+            .getTexture(FONT), mousePosition, renderer);
     buttons.push_back(text);
 }
 
-void Buttons::addNuevaHordaButton(SDL_Texture *texture) {
-    Button *button = new NuevaHordaButton(++nextId, texture, mousePosition,
+void Buttons::addNuevaHordaButton() {
+    Button *button = new NuevaHordaButton(++nextId, textureLoader.getTexture
+                                                  (AGREGAR_HORDA_BTN),
+                                          mousePosition,
                                           renderer, editor);
     buttons.push_back(button);
 }
