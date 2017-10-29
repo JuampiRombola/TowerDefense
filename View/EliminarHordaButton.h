@@ -12,7 +12,7 @@ private:
     void click();
 
 public:
-    EliminarHordaButton(int horda, SDL_Texture *texture,
+    EliminarHordaButton(int id, int horda, SDL_Texture *texture,
                         MousePosition &mousePosition, Renderer &renderer,
                         Editor &editor);
     ~EliminarHordaButton();

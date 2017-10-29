@@ -10,7 +10,7 @@ private:
     void toggleTexture();
     void draw();
 public:
-    ToggleButton(int posX, int posY, int width, int height, SDL_Texture
+    ToggleButton(int id, int posX, int posY, int width, int height, SDL_Texture
             *activeTexture, SDL_Texture* inactiveTexture, MousePosition
             &mousePosition, Renderer& renderer);
     ~ToggleButton();

@@ -12,7 +12,7 @@ private:
     Editor &editor;
     void click();
 public:
-    SuperficieButton(int number, const std::string& superficie, SDL_Texture
+    SuperficieButton(int id, int number, const std::string& superficie, SDL_Texture
                     *texture, MousePosition &mousePosition, Renderer &renderer,
                      Editor& editor);
     ~SuperficieButton();

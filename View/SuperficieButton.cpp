@@ -1,11 +1,11 @@
 #include "SuperficieButton.h"
 #include <iostream>
 
-SuperficieButton::SuperficieButton(int number, const std::string&
+SuperficieButton::SuperficieButton(int id, int number, const std::string&
                                    superficie, SDL_Texture *texture,
                                    MousePosition &mousePosition,
                                    Renderer &renderer, Editor &editor) :
-        Button(number*100, 0, 100, 100, texture, mousePosition, renderer),
+        Button(id, number*100, 0, 100, 100, texture, mousePosition, renderer),
         number(number), superficie(superficie), editor(editor) {}
 
 SuperficieButton::~SuperficieButton() = default;

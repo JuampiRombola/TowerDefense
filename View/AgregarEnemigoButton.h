@@ -9,11 +9,14 @@ private:
     int horda;
     std::string enemigo;
     Editor &editor;
+
     void click();
+
 public:
-    AgregarEnemigoButton(int horda, const std::string& enemigo, SDL_Texture
-                    *texture, MousePosition &mousePosition, Renderer &renderer,
-                    Editor& editor);
+    AgregarEnemigoButton(int id, int horda, const std::string &enemigo,
+                         SDL_Texture *texture, MousePosition &mousePosition,
+                         Renderer &renderer, Editor &editor);
+
     ~AgregarEnemigoButton();
 };
 

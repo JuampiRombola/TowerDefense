@@ -54,11 +54,11 @@ int mainEditor(int argc, char** argv) {
         }
         event.type = 0;
         renderer.clearRender();
-        buttons.cleanHordasButtons();
+        /*buttons.cleanHordasButtons();
         for (unsigned int horda = 0; horda < editor.getCantidadHordas();
              ++horda) {
             buttons.addEnemigosButton(horda);
-        }
+        }*/
         buttons.draw();
         renderer.present();
     }

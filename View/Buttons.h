@@ -4,6 +4,7 @@
 #include <list>
 #include <SDL2/SDL.h>
 #include "Button.h"
+#include "TextInput.h"
 #include "MousePosition.h"
 #include "Renderer.h"
 #include "TextureLoader.h"
@@ -21,6 +22,7 @@ private:
     Renderer &renderer;
     Editor& editor;
     TextureLoader &textureLoader;
+    int nextId;
 public:
     Buttons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
             TextureLoader &textureLoader);
