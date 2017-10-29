@@ -28,7 +28,8 @@ public:
     void copy(SDL_Texture *texture,
               const SDL_Rect *src, SDL_Rect *dst,
               int offsetX, int offsetY);
-
+    void copyEuclidean(SDL_Texture *texture, SDL_Rect *src, SDL_Rect *dst);
+    void copyEuclidean(SDL_Texture *texture, SDL_Rect *dst);
     void clearRender();
     void present();
     void updateCamera(int x, int y);

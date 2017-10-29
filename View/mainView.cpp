@@ -11,7 +11,7 @@
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
 
-#define MAPSIZE 10
+#define MAPSIZE 100
 
 int main(int argc, char** argv) {
     bool quit = false;
@@ -69,8 +69,8 @@ int main(int argc, char** argv) {
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
                     case SDLK_ESCAPE: quit = true; break;
-                    case SDLK_i: renderer.zoomIn(); break;
-                    case SDLK_o: renderer.zoomOut(); break;
+                    case SDLK_PLUS: renderer.zoomIn(); break;
+                    case SDLK_MINUS: renderer.zoomOut(); break;
                     case SDLK_LEFT:  renderer.updateCamera(-1, 0); break;
                     case SDLK_RIGHT: renderer.updateCamera(1, 0); break;
                     case SDLK_UP:    renderer.updateCamera(0, -1); break;
