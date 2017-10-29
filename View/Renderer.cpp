@@ -49,6 +49,15 @@ void Renderer::copy(SDL_Texture *texture,
     dst->h = dstH;
 }
 
+void Renderer::copyEuclidean(SDL_Texture *texture, SDL_Rect *src, SDL_Rect
+*dst) {
+    SDL_RenderCopy(renderer, texture, src, dst);
+}
+
+void Renderer::copyEuclidean(SDL_Texture *texture, SDL_Rect *dst) {
+    SDL_RenderCopy(renderer, texture, NULL, dst);
+}
+
 void Renderer::clearRender() {
     SDL_RenderClear(renderer);
 }
