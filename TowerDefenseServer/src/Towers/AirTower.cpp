@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 
+#include "Commands/BuildTowerCommand.h"
 #include "Towers/Tower.h"
 #include "Towers/Projectile.h"
 #include "Towers/AirTower.h"
@@ -8,6 +9,7 @@
 #include "Towers/AirProjectile.h"
 #include "yaml-cpp/yaml.h"
 #include "Commands/UpgradeTowerCommand.h"
+#include "ViewModels/TowerVM.h"
 
 
 AirTower::AirTower(uint cooldown_sec, uint range, uint damage, uint nonflyingDamage, SolidGroundTile* position, Map* map)
@@ -65,4 +67,14 @@ bool AirTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
 			return false; 
 	}
 	return false;
+}
+
+TowerVM AirTower::GetViewModel(){
+	TowerVM vm;
+	vm.type = Air;
+	vm.xPos = _position->GetXPos();
+	vm.yPos = _position->GetYPos();
+	vm.experience = _experience;
+	vm.level = _upgradeLevel;
+	return vm;
 }

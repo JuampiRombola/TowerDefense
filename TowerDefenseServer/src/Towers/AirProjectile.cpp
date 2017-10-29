@@ -17,10 +17,10 @@ AirProjectile::AirProjectile
 
 AirProjectile::~AirProjectile(){}
 
-uint AirProjectile::_OnImpact(){
+double AirProjectile::_OnImpact(){
 	std::vector<EnviormentUnit*> units = _target->GetUnits();
 	bool hit = false;
-	uint exp = 0;
+	double exp = 0;
 	for (auto it = units.begin(); it != units.end() && !hit; ++it){
 		
 		hit = true;

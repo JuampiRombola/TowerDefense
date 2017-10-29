@@ -264,3 +264,18 @@ std::vector<PathTile*> Map::GetPathTilesInRange(Tile* tile, uint range){
 std::vector<Projectile*> Map::GetProjectiles(){
 	return _projectiles;
 }
+
+std::vector<Tower*> Map::GetTowers(){
+	std::vector<Tower*> towers;
+	for (uint i = 0; i < _cols; i++){
+		for (uint j = 0; j < _rows; j++){
+			SolidGroundTile* tile = GetSolidGroundTile(i, j);
+			if (tile != nullptr){
+				Tower* t = tile->GetTower();
+				if (t != nullptr)
+					towers.push_back(t);
+			}
+		}
+	}
+	return towers;
+}

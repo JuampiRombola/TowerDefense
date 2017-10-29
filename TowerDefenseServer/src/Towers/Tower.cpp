@@ -57,7 +57,7 @@ Projectile* Tower::_Fire(EnviormentUnit* target){
 }
 
 
-void Tower::AddExperience(uint exp){
+void Tower::AddExperience(double exp){
 	_experience += exp;
 }
 

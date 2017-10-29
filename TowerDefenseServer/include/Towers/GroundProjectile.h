@@ -9,7 +9,7 @@ class ProjectileVM;
 
 class GroundProjectile : public Projectile {
 protected:
-	uint _OnImpact();
+	double _OnImpact();
 public:
 	GroundProjectile(GroundTower* tower, PathTile* target, uint hitpoints);
 	~GroundProjectile();

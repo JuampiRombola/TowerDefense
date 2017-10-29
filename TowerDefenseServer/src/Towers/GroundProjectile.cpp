@@ -19,10 +19,10 @@ GroundProjectile::~GroundProjectile(){}
 
 
 
-uint GroundProjectile::_OnImpact(){
+double GroundProjectile::_OnImpact(){
 	std::vector<EnviormentUnit*> units = _target->GetUnits();
 	bool hit = false;
-	uint exp = 0;
+	double exp = 0;
 	for (auto it = units.begin(); it != units.end() && !hit; ++it){
 		if (!(*it)->Flies()){
 

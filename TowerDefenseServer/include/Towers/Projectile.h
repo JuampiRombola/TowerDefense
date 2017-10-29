@@ -19,7 +19,7 @@ protected:
  	uint _hitPoints;
 	PathTile* _target;
 
-	virtual uint _OnImpact() = 0;
+	virtual double _OnImpact() = 0;
 public:
 	Projectile(Tower* origin, PathTile* target, uint speed, uint hitpoints);
 	virtual ~Projectile();

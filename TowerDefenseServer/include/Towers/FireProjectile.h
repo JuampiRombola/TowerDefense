@@ -12,7 +12,7 @@ private:
 	uint _collateralRange;
 	uint _collateralDamage;
 protected:
-	uint _OnImpact();
+	double _OnImpact();
 public:
 	FireProjectile(FireTower* origin, PathTile* target, 
 		uint hitpoints, uint collateralRange, uint collateralDamage);

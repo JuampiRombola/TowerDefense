@@ -6,6 +6,7 @@ class SolidGroundTile;
 class Map;
 class PathTile;
 class EnviormentUnit;
+class TowerVM;
 #include "Commands/UpgradeTowerCommand.h"
 #include "yaml-cpp/yaml.h"
 
@@ -31,9 +32,11 @@ public:
 	Projectile* Step(); 
 	virtual void PrintDebug() = 0;
 	virtual bool Upgrade(const YAML::Node& cfg, UpgradeType type) = 0;
-	void AddExperience(uint exp);
+	void AddExperience(double exp);
 	void AddDamage(uint damage);
 	SolidGroundTile* GetPosition();
+
+	virtual TowerVM GetViewModel() = 0;
 
 };
 

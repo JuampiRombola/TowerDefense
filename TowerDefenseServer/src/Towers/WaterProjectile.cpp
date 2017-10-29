@@ -9,8 +9,8 @@
 #include "ViewModels/ProjectileVM.h"
 
 WaterProjectile::WaterProjectile
-(WaterTower* origin, PathTile* target, uint hitpoints) :
- Projectile(origin, target, 50, hitpoints)
+(WaterTower* origin, PathTile* target, uint hitpoints, uint slowDuration_sec, uint slowPercent) :
+ Projectile(origin, target, 50, hitpoints), _slowDuration_sec(slowDuration_sec), _slowPercent(slowPercent)
 {
 
 }
@@ -19,10 +19,10 @@ WaterProjectile::~WaterProjectile(){}
 
 
 
-uint WaterProjectile::_OnImpact(){
+double WaterProjectile::_OnImpact(){
 	std::vector<EnviormentUnit*> units = _target->GetUnits();
 	bool hit = false;
-	uint exp = 0;
+	double exp = 0;
 	for (auto it = units.begin(); it != units.end() && !hit; ++it){
 		
 		hit = true;
@@ -32,9 +32,9 @@ uint WaterProjectile::_OnImpact(){
 		EnviormentUnit* unit = (*it);
 		unit->GetHit(_hitPoints);
 
-		int slowSeconds = 6;
-		int percentSlow = 185;
-		unit->Slow( slowSeconds, percentSlow);
+		int slowSeconds = _slowDuration_sec;
+		int percentSlow = _slowPercent;
+		unit->Slow( slowSeconds, percentSlow );
 
 		exp = _hitPoints;
 

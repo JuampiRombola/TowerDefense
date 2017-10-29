@@ -44,6 +44,7 @@ public:
 	void PlaceGroundTile(SolidGroundTile* tile);
 	void Step();
 	std::vector<Projectile*> GetProjectiles();
+	std::vector<Tower*> GetTowers();
 };
 
 #endif

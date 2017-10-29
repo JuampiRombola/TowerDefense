@@ -10,10 +10,13 @@ class WaterTower;
 class ProjectileVM;
 
 class WaterProjectile : public Projectile {
+private:
+	uint _slowDuration_sec;
+	uint _slowPercent;
 protected:
-	uint _OnImpact();
+	double _OnImpact();
 public:
-	WaterProjectile(WaterTower* origin, PathTile* target, uint hitpoints);
+	WaterProjectile(WaterTower* origin, PathTile* target, uint hitpoints, uint slowDuration_sec, uint slowPercent);
 	~WaterProjectile();
 	ProjectileVM GetViewModel();
 };

@@ -8,6 +8,7 @@
 class SolidGroundTile;
 class Map;
 class Projectile;
+class TowerVM;
 
 class FireTower : public Tower {
 protected:
@@ -20,6 +21,7 @@ public:
 	~FireTower();
 	void PrintDebug();
 	bool Upgrade(const YAML::Node& cfg, UpgradeType type);
+	TowerVM GetViewModel();
 };
 
 #endif

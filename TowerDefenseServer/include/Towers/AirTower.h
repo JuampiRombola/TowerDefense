@@ -7,6 +7,7 @@
 
 class SolidGroundTile;
 class Map;
+class TowerVM;
 class Projectile;
 
 class AirTower : public Tower {
@@ -19,6 +20,7 @@ public:
 	~AirTower();
 	void PrintDebug();
 	bool Upgrade(const YAML::Node& cfg, UpgradeType type);
+	TowerVM GetViewModel();
 };
 
 #endif

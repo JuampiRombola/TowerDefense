@@ -66,7 +66,9 @@ Tower* BuildTowerCommand::_BuildWaterTower(Map* map, SolidGroundTile* tile, cons
 	uint cooldown_sec = cfg["towers"]["water"]["cooldown_sec"].as<uint>();
 	uint range = cfg["towers"]["water"]["range"].as<uint>();
 	uint damage = cfg["towers"]["water"]["damage"].as<uint>();
-	return new WaterTower(cooldown_sec * 1000, range, damage, tile, map);
+	uint slowPercent = cfg["towers"]["water"]["slow_percent"].as<uint>();
+	uint slowDuration_sec = cfg["towers"]["water"]["slow_duration_sec"].as<uint>();
+	return new WaterTower(cooldown_sec * 1000, range, damage, slowPercent, slowDuration_sec, tile, map);
 }
 
 Tower* BuildTowerCommand::_BuildAirTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg){

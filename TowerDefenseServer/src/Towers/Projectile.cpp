@@ -25,7 +25,7 @@ void Projectile::Step(){
 	_distanceCovered += _speed;
 	if (_distanceCovered >= _distance && !_impacted){
 
-		uint exp = _OnImpact();
+		double exp = _OnImpact();
 
 		_origin->AddExperience(exp);
 

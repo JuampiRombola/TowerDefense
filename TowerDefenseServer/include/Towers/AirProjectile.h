@@ -12,7 +12,7 @@ class AirProjectile : public Projectile {
 private:
 	uint _nonFlyingHitPoints;
 protected:
-	uint _OnImpact();
+	double _OnImpact();
 public:
 	AirProjectile(AirTower* origin, PathTile* target, uint flyinghitpoints, uint nonflyingHitpoints);
 	~AirProjectile();

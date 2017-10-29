@@ -9,10 +9,12 @@
 #include "ViewModels/CommandVM.h"
 #include "ViewModels/UnitVM.h"
 #include "ViewModels/ProjectileVM.h"
+#include "ViewModels/TowerVM.h"
 
 void PrintProjectilesVms(std::vector<ProjectileVM>& projsVMs);
 void PrintUnitVms(std::vector<UnitVM>& vms);
 void PrintCommandVM(CommandVM& cvm);
+void PrintTowerVms(std::vector<TowerVM>& towers);
 
 int main(int argc, char** argv)
 {
@@ -46,12 +48,36 @@ int main(int argc, char** argv)
 	PrintUnitVms(unitVms);
 	std::vector<ProjectileVM> projsVMs = game.GetProjectileViewModels();
 	PrintProjectilesVms(projsVMs);
+	std::vector<TowerVM> towersVM = game.GetTowerViewModels();
+	PrintTowerVms(towersVM);
 
 
 	gameClock.join();
 	return 0;
 }
 
+void PrintTowerVms(std::vector<TowerVM>& towers){
+	for (auto it = towers.begin(); it != towers.end(); ++it){
+		TowerVM vm = *it;
+		std::cout << "Hay una torre de " << std::flush;
+		switch(vm.type){
+			case Air:
+				std::cout << "aire" << std::flush;
+				break;
+			case Ground:
+				std::cout << "ground" << std::flush;
+				break;
+			case Fire:
+				std::cout << "fire" << std::flush;
+				break;
+			case Water:
+				std::cout << "water" << std::flush;
+				break;
+		}
+		std::cout << " en (" << vm.xPos << ", " << vm.yPos << ") de level " << vm.level 
+		<< " con " << vm.experience << " xp\n" << std::flush;
+	}
+}
 
 
 void PrintProjectilesVms(std::vector<ProjectileVM>& projs){

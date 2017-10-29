@@ -189,7 +189,11 @@ std::vector<ProjectileVM> TowerDefenseGame::GetProjectileViewModels(){
 }
 
 std::vector<TowerVM> TowerDefenseGame::GetTowerViewModels(){
+	std::lock_guard<std::mutex> lock(_gameStateMutex);
 	std::vector<TowerVM> t;
-	//falta implementacion..
+	std::vector<Tower*> towers = _map.GetTowers();
+	for (auto it = towers.begin(); it != towers.end(); ++it){
+		t.push_back((*it)->GetViewModel());
+	}
 	return t;
 }

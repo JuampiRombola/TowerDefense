@@ -10,15 +10,20 @@
 class SolidGroundTile;
 class Map;
 class Projectile;
+class TowerVM;
 
 class WaterTower : public Tower {
 protected:
+	uint _slowPercent;
+	uint _slowDuration_sec;
 	Projectile* _BuildProjectile(PathTile* target);
 public:
-	WaterTower(uint cooldown_sec, uint range, uint damage, SolidGroundTile* position, Map* map);
+	WaterTower(uint cooldown_sec, uint range, uint damage, uint slowPercent, uint slowDuration_sec,
+	 SolidGroundTile* position, Map* map);
 	~WaterTower();
 	void PrintDebug();
 	bool Upgrade(const YAML::Node& cfg, UpgradeType type);
+	TowerVM GetViewModel();
 };
 
 #endif

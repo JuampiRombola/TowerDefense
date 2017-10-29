@@ -21,14 +21,23 @@ FireProjectile::~FireProjectile(){}
 
 
 
-uint FireProjectile::_OnImpact(){
+double FireProjectile::_OnImpact(){
 	std::vector<PathTile*> tilesInRange = _target->GetMap()->GetPathTilesInRange(_target, _collateralRange);
 	std::vector<EnviormentUnit*> unitsInTargetTile = _target->GetUnits();
 	bool hit = false;
+	double exp = 0;
 
 	EnviormentUnit* targetUnit = nullptr;
 	if (unitsInTargetTile.size() != 0){
 		targetUnit = *(unitsInTargetTile.begin());
+
+		uint currentHP = targetUnit->GetHP();
+		exp += _hitPoints;
+
+		if (!(targetUnit->IsAlive())){
+			exp += currentHP / 2;
+		}
+
 		targetUnit->GetHit(_hitPoints);
 		hit = true;
 		std::cout << "Fire Projectile target tile hit!!\n" << std::flush;
@@ -39,7 +48,13 @@ uint FireProjectile::_OnImpact(){
 			// No le doy bola al target porque ya le pegue, 
 			// ahora le pego a los demas del target tile
 			std::cout << "Fire Projectile collateral hit IN SAME TILE!!\n" << std::flush;
+			uint currentHP = (*it)->GetHP();
 			(*it)->GetHit(_collateralDamage);
+			exp += _collateralDamage;
+			if (!((*it)->IsAlive())){
+				exp += currentHP / 2;
+			}
+
 		}
 	}
 
@@ -48,7 +63,12 @@ uint FireProjectile::_OnImpact(){
 			// No le doy bola al target tile porque ya les pegue
 			std::vector<EnviormentUnit*> unitsInTile = (*it)->GetUnits();
 			for (auto it2 = unitsInTile.begin(); it2 != unitsInTile.end(); ++it2){
+				uint currentHP = (*it2)->GetHP();
 				(*it2)->GetHit(_collateralDamage);
+				exp += _collateralDamage;
+				if (!((*it2)->IsAlive())){
+					exp += currentHP / 2;
+				}
 				std::cout << "Fire Projectile collateral hit!!\n" << std::flush;
 			}
 		}
@@ -57,7 +77,7 @@ uint FireProjectile::_OnImpact(){
 	if (!hit)
 		std::cout << "Fire Projectile did not hit anything on target tile!!\n" << std::flush;
 
-	return 0;
+	return exp;
 }
 
 ProjectileVM FireProjectile::GetViewModel(){
