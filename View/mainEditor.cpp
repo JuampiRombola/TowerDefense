@@ -8,6 +8,7 @@
 #include "../src/SolidGroundTile.h"
 #include "Buttons.h"
 #include "Editor.h"
+#include "KeyboardInput.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -29,7 +30,9 @@ int mainEditor(int argc, char** argv) {
 
     Editor editor;
 
-    Buttons buttons(mouse, renderer, editor, textureLoader);
+    KeyboardInput keyboardInput(editor.getNombre());
+
+    Buttons buttons(mouse, renderer, editor, textureLoader, keyboardInput);
     buttons.addSuperficieButtons(textureLoader.getTexture(9), textureLoader
             .getTexture(6), textureLoader.getTexture(7), textureLoader
             .getTexture(8));

@@ -6,6 +6,7 @@
 #include "Button.h"
 #include "TextInput.h"
 #include "MousePosition.h"
+#include "KeyboardInput.h"
 #include "Renderer.h"
 #include "TextureLoader.h"
 #include "SuperficieButton.h"
@@ -22,10 +23,11 @@ private:
     Renderer &renderer;
     Editor& editor;
     TextureLoader &textureLoader;
+    KeyboardInput &keyboardInput;
     int nextId;
 public:
     Buttons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
-            TextureLoader &textureLoader);
+            TextureLoader &textureLoader, KeyboardInput &keyboardInput);
     ~Buttons();
     void draw();
     void addSuperficieButtons(SDL_Texture* pradera, SDL_Texture* lava,

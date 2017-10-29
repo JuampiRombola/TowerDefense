@@ -8,6 +8,7 @@ class Editor {
 private:
     std::string superficie;
     std::vector<std::vector<std::string>> hordas;
+    std::string nombre;
 public:
     Editor();
     ~Editor();
@@ -17,6 +18,7 @@ public:
     void agregarHorda();
     void eliminarHorda(int horda);
     unsigned int getCantidadHordas();
+    std::string& getNombre();
     void exportar();
 };
 

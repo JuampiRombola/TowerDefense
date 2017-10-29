@@ -1,9 +1,10 @@
 #include "Buttons.h"
 
 Buttons::Buttons(MousePosition &mousePosition, Renderer &renderer,
-                 Editor &editor, TextureLoader &textureLoader) : mousePosition(
+                 Editor &editor, TextureLoader &textureLoader, KeyboardInput
+                 &keyboardInput) : mousePosition(
         mousePosition), renderer(renderer), editor(editor), textureLoader(
-        textureLoader), nextId(0) {}
+        textureLoader), keyboardInput(keyboardInput), nextId(0) {}
 
 Buttons::~Buttons() {
     for (Button *button : buttons) {

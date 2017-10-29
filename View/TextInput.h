@@ -17,6 +17,8 @@ public:
 
     void draw();
 
+    std::string &getInput();
+
     ~TextInput();
 };
 

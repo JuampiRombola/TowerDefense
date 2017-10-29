@@ -37,7 +37,12 @@ unsigned int Editor::getCantidadHordas() {
     return this->hordas.size();
 }
 
+std::string& Editor::getNombre() {
+    return this->nombre;
+}
+
 void Editor::exportar() {
+    std::cout << "Nombre: " << nombre << "\n";
     std::cout << "Superficie: " << superficie << "\n";
     for (unsigned int i = 0; i < hordas.size(); ++i) {
         std::cout << "Horda " << (i + 1) << "\n";
