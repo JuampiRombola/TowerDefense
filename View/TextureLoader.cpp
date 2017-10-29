@@ -15,7 +15,7 @@ TextureLoader::TextureLoader(SDL_Renderer *renderer) {
         images.push_back(im);
         SDL_Texture *tx = SDL_CreateTextureFromSurface(renderer, im);
         if (!tx) throw ViewError("Load textures error: %s", SDL_GetError());
-        textures.push_back(tx);
+        textures[i] = tx;
     }
 
     for (int i = 100; i < TOTAL_EDITOR; ++i) {
@@ -25,15 +25,15 @@ TextureLoader::TextureLoader(SDL_Renderer *renderer) {
         images.push_back(im);
         SDL_Texture *tx = SDL_CreateTextureFromSurface(renderer, im);
         if (!tx) throw ViewError("Load textures error: %s", SDL_GetError());
-        textures.push_back(tx);
+        textures[i] = tx;
     }
 }
 
 TextureLoader::~TextureLoader() {
-    for (int i = 0; i < TOTAL; ++i) {
-        SDL_DestroyTexture(textures[i]);
+    for (auto &item : textures)
+        SDL_DestroyTexture(item.second);
+    for (int i = 0; i < images.size(); ++i)
         SDL_FreeSurface(images[i]);
-    }
     IMG_Quit();
 }
 
