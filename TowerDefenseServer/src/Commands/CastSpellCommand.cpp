@@ -8,6 +8,7 @@
 #include "Towers/Tower.h"
 #include "EnviormentUnits/EnviormentUnit.h"
 #include "TowerDefenseGame.h"
+#include "ViewModels/CommandVM.h"
 
 CastSpellCommand::CastSpellCommand(Spell spell, uint x, uint y):
  _xPos(x), _yPos(y), _unitId(-1), _spell(spell) {}
@@ -128,4 +129,19 @@ bool CastSpellCommand::_CastRayos(Map* map, TowerDefenseGame* game){
 		return true;
 	}
 	return false;
+}
+
+CommandVM CastSpellCommand::GetViewModel(){
+	CommandVM vm;
+	vm.type = CastSpell;
+	vm.spellType = _spell;
+
+	if (_unitId == -1){
+		vm.xPos = _xPos;
+		vm.yPos = _yPos;
+	} else {
+		vm.unitId = _unitId;
+	}
+	return vm;
+
 }

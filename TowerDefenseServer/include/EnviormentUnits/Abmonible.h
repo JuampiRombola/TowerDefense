@@ -2,7 +2,8 @@
 #define _ABMONIBLE_
 
 #include "EnviormentUnits/EnviormentUnit.h"
-#include "Map/PathTile.h"
+
+class UnitVM;
 
 class Abmonible : public EnviormentUnit {
 public:
@@ -10,6 +11,7 @@ public:
 	~Abmonible();
 	void PrintDebug();
 	bool Flies();
+	UnitVM GetViewModel();
 };
 
 #endif

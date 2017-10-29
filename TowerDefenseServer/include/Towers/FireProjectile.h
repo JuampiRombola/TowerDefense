@@ -5,16 +5,19 @@
 
 class PathTile;
 class FireTower;
+class ProjectileVM;
 
 class FireProjectile : public Projectile {
 private:
 	uint _collateralRange;
 	uint _collateralDamage;
+protected:
+	uint _OnImpact();
 public:
 	FireProjectile(FireTower* origin, PathTile* target, 
 		uint hitpoints, uint collateralRange, uint collateralDamage);
 	~FireProjectile();
-	uint _OnImpact();
+	ProjectileVM GetViewModel();
 };
 
 #endif

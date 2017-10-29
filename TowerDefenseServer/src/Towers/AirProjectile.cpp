@@ -1,12 +1,12 @@
-
 #include <iostream>
-
 
 #include "Towers/AirProjectile.h"
 #include "Towers/AirTower.h"
 #include "Towers/Projectile.h"
 #include "Map/PathTile.h"
 #include "EnviormentUnits/EnviormentUnit.h"
+#include "ViewModels/ProjectileVM.h"
+#include "Map/SolidGroundTile.h"
 
 AirProjectile::AirProjectile
 (AirTower* origin, PathTile* target, uint flyingHitpoint, uint nonflyingHitpoints) :
@@ -16,8 +16,6 @@ AirProjectile::AirProjectile
 }
 
 AirProjectile::~AirProjectile(){}
-
-
 
 uint AirProjectile::_OnImpact(){
 	std::vector<EnviormentUnit*> units = _target->GetUnits();
@@ -52,4 +50,16 @@ uint AirProjectile::_OnImpact(){
 	}	
 
 	return exp;;
+}
+
+ProjectileVM AirProjectile::GetViewModel(){
+	ProjectileVM vm;
+	vm.type = pAir;
+	vm.distanceToCover = _distance;
+	vm.distanceCovered = _distanceCovered;
+	vm.fromXpos = _origin->GetPosition()->GetXPos();
+	vm.fromYpos = _origin->GetPosition()->GetYPos();
+	vm.toXpos = _target->GetXPos();
+	vm.toYpos = _target->GetYPos();
+	return vm;
 }

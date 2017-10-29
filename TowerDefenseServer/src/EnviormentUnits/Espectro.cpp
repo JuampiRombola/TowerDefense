@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "EnviormentUnits/Espectro.h"
+#include "Map/PathTile.h"
+#include "ViewModels/UnitVM.h"
 
 Espectro::Espectro(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
@@ -19,4 +21,15 @@ void Espectro::PrintDebug(){
 
 bool Espectro::Flies(){
 	return true;
+}
+
+UnitVM Espectro::GetViewModel(){
+	UnitVM vm;
+	vm.unitType = uEspectro;
+	vm.healthPoints = _healthPoints;
+	vm.xPos = _position->GetXPos();
+	vm.yPos = _position->GetYPos();
+	vm.stepDelay_ms = _GetActualStepDelay();
+	vm.id = _id;
+	return vm;
 }

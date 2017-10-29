@@ -35,8 +35,11 @@ bool AirTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
 				if (_experience >= expRequired){
 					_experience -= expRequired;
 					_range += rangeIncrease;
+					_upgradeLevel++;
+					std::cout << "AirTower range Upgraded\n" << std::flush;
 					return true;
 				}
+				std::cout << "AirTower needs more xp to Upgrade range\n" << std::flush;
 			}
 		break;
 		case Damage:
@@ -51,6 +54,7 @@ bool AirTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
 					_experience -= expRequired;
 					_nonFlyingDamage += nonFlyingDamageDamageIncrease;
 					_damage += flyingTargetDamageIncrease;
+					_upgradeLevel++;
 					return true;
 				}		
 			}

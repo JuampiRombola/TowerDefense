@@ -7,12 +7,15 @@
 
 class PathTile;
 class WaterTower;
+class ProjectileVM;
 
 class WaterProjectile : public Projectile {
+protected:
+	uint _OnImpact();
 public:
 	WaterProjectile(WaterTower* origin, PathTile* target, uint hitpoints);
 	~WaterProjectile();
-	uint _OnImpact();
+	ProjectileVM GetViewModel();
 };
 
 #endif

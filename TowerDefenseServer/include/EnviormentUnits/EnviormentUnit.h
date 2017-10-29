@@ -1,12 +1,12 @@
 #ifndef __ENVIORMENT_UNIT__
 #define __ENVIORMENT_UNIT__
 
-
+struct UnitVM;
 class Map;
 class PathTile;
 
 class EnviormentUnit{
-private:
+protected:
 	unsigned long long  _lastTimeStamp_ms;
 	unsigned long long _lastSlowBeginTimeStamp_ms;
 	unsigned long long _lastFreezeTimeStamp_ms;
@@ -46,6 +46,7 @@ public:
 	bool IsSlowed();
 	void Kill();
 	void Freeze(uint seconds);
+	virtual UnitVM GetViewModel() = 0;
 };
 
 #endif

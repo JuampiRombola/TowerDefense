@@ -3,40 +3,128 @@
 
 #include "Commands/BuildTowerCommand.h"
 #include "Commands/CastSpellCommand.h"
+#include "Commands/UpgradeTowerCommand.h"
 #include "TowerDefenseGame.h"
 #include "GameConfiguration.h"
+#include "ViewModels/CommandVM.h"
+#include "ViewModels/UnitVM.h"
+#include "ViewModels/ProjectileVM.h"
 
+void PrintProjectilesVms(std::vector<ProjectileVM>& projsVMs);
+void PrintUnitVms(std::vector<UnitVM>& vms);
+void PrintCommandVM(CommandVM& cvm);
 
 int main(int argc, char** argv)
 {
 	std::string s("/home/tino/Dropbox/taller1/net_towerdefense/TowerDefenseServer/config.yaml");
 	GameConfiguration cfg(s);
 
-	uint freq = 0;
-	if (argc == 2)
-		freq = atoi(*(argv + 1));
-
-
-	TowerDefenseGame game(freq, cfg);
+	uint clockDelaymilliseconds = 0;
+	TowerDefenseGame game(clockDelaymilliseconds, cfg);
 	std::thread gameClock(&TowerDefenseGame::Run, &game);
 
-	//std::this_thread::sleep_for (std::chrono::milliseconds(100));
+	std::this_thread::sleep_for (std::chrono::milliseconds(1500));
 
-	/*CastSpellCommand spell(Rayos, 1);
-	CastSpellCommand spell1(Rayos, 1);
-	CastSpellCommand spell2(Rayos, 1);
-	CastSpellCommand spell3(Rayos, 1);*/
-	BuildTowerCommand tower(Ground, 2, 5);
+	CastSpellCommand spell(Rayos, 1);
+	BuildTowerCommand tower(Water, 2, 5);
+	UpgradeTowerCommand upgrade(2, 5, Range);
 	
-	if (!game.Ended()){
-		//game.QueueCommand(&spell);
-		//game.QueueCommand(&spell1);
-		//game.QueueCommand(&spell2);
-		//game.QueueCommand(&spell3);
-		game.QueueCommand(&tower);
+	game.QueueCommand(&spell);
+	game.QueueCommand(&tower);
+	game.QueueCommand(&upgrade);
+
+
+	std::this_thread::sleep_for (std::chrono::milliseconds(1500));
+
+	Command* executed = game.GetExecutedCommand();
+	if (executed != nullptr){
+		CommandVM vm = executed->GetViewModel();
+		PrintCommandVM(vm);
 	}
+
+	std::vector<UnitVM> unitVms = game.GetUnitViewModels();
+	PrintUnitVms(unitVms);
+	std::vector<ProjectileVM> projsVMs = game.GetProjectileViewModels();
+	PrintProjectilesVms(projsVMs);
+
 
 	gameClock.join();
 	return 0;
 }
 
+
+
+void PrintProjectilesVms(std::vector<ProjectileVM>& projs){
+	//imprimir projectiles.
+
+
+}
+void PrintUnitVms(std::vector<UnitVM>& vms){
+	for (auto it = vms.begin(); it != vms.end(); ++it){
+		UnitVM vm = *it;
+
+		switch (vm.unitType){
+			case uAbmonible:
+				std::cout << "Hay un Abmonible " << std::flush;
+				break;
+			case uDemonioVerde:
+				std::cout << "Hay un DemonioVerde " << std::flush;
+				break;
+			case uEspectro:
+				std::cout << "Hay un Espectro " << std::flush;
+				break;
+			case uHalconSangriento:
+				std::cout << "Hay un HalconSangriento " << std::flush;
+				break;
+			case uHombreCabra:
+				std::cout << "Hay un HombreCabra " << std::flush;
+				break;
+			case uNoMuerto:
+				std::cout << "Hay un NoMuerto " << std::flush;
+				break;
+		}
+
+		std::cout << "Id: " << vm.id << ", con " << std::flush;
+		std::cout << vm.healthPoints << "HP, en (" << std::flush;
+		std::cout << vm.xPos << ", " << vm.yPos << ") que esta avanzando de tile cada " << std::flush;
+		std::cout << vm.stepDelay_ms << " milisegundos\n" << std::flush;
+	}
+}
+
+void PrintCommandVM(CommandVM& cvm){
+	switch(cvm.type){
+		case BuildTower:
+			std::cout << "SE CONSTRUYO UNA TORRE ";
+			switch(cvm.towerType){
+				case Air:
+					std::cout << "DE AIRE ";break;
+				case Fire:
+					std::cout << "DE FUEGO ";break;
+				case Water:
+					std::cout << "DE AGUA ";break;
+				case Ground:
+					std::cout << "DE TIERRA ";break;
+			}
+			std::cout << "EN (" << cvm.xPos << ", " << cvm.yPos << ")\n" << std::flush;
+			break;
+		case UpgradeTower:
+			std::cout << "SE UPGRADEO ";
+			switch(cvm.upgradeType){
+				case Range:
+					std::cout << "EL RANGO "; break;
+				case Damage:
+					std::cout << "EL DANIO "; break;
+				case CollateralRange:
+					std::cout << "EL RANGO COLLATERAL "; break;
+				case Slow:
+					std::cout << "EL EFECTO DE SLOW "; break;
+			}
+			std::cout << "DE LA TORRE QUE ESTA EN (" << cvm.xPos << ", " << cvm.yPos << ")\n" << std::flush;
+			break;
+		case CastSpell:
+			std::cout << "SE TIRO UN SPELL, dependiendo del spell (si es por target o posicion)";
+			std::cout << " si esta seteado el unitId o las coordenadas\n";
+			//falta hacer todo el switch 
+			break;
+	}
+}

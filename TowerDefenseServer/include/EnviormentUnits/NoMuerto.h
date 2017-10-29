@@ -2,7 +2,7 @@
 #define _NO_MUERTO_
 
 #include "EnviormentUnits/EnviormentUnit.h"
-#include "Map/PathTile.h"
+struct UnitVM;
 
 class NoMuerto : public EnviormentUnit {
 public:
@@ -10,6 +10,7 @@ public:
 	~NoMuerto();
 	void PrintDebug();
 	bool Flies();
+	UnitVM GetViewModel();
 };
 
 #endif

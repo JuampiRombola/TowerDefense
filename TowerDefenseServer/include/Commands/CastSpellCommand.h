@@ -9,9 +9,9 @@ enum Spell { Terraforming, Grieta, Meteorito, MuroDeFuego, Congelacion, Ventisca
 
 class CastSpellCommand : public Command {
 private:
-	uint _xPos;
-	uint _yPos;
-	uint _unitId;
+	int _xPos;
+	int _yPos;
+	int _unitId;
 	Spell _spell;
 	bool _CastTerraforming(Map* map);
 	bool _CastGrieta(Map* map);
@@ -28,6 +28,7 @@ public:
 	~CastSpellCommand();
 	bool Execute(Map* map, TowerDefenseGame* game);
 	Spell GetSpellType();
+	CommandVM GetViewModel();
 };
 
 #endif

@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "EnviormentUnits/DemonioVerde.h"
+#include "Map/PathTile.h"
+#include "ViewModels/UnitVM.h"
 
 DemonioVerde::DemonioVerde(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
@@ -19,4 +21,15 @@ void DemonioVerde::PrintDebug(){
 
 bool DemonioVerde::Flies(){
 	return false;
+}
+
+UnitVM DemonioVerde::GetViewModel(){
+	UnitVM vm;
+	vm.unitType = uDemonioVerde;
+	vm.healthPoints = _healthPoints;
+	vm.xPos = _position->GetXPos();
+	vm.yPos = _position->GetYPos();
+	vm.stepDelay_ms = _GetActualStepDelay();
+	vm.id = _id;
+	return vm;
 }

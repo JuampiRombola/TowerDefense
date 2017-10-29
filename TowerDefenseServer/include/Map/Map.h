@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-
+#include <mutex>
 
 class Tile;
 class Projectile;
@@ -43,6 +43,7 @@ public:
 	std::vector<PathTile*> GetPathTilesInRange(Tile* tile, uint range);
 	void PlaceGroundTile(SolidGroundTile* tile);
 	void Step();
+	std::vector<Projectile*> GetProjectiles();
 };
 
 #endif

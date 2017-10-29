@@ -1,11 +1,12 @@
 #include <iostream>
 
-
+#include "Map/SolidGroundTile.h"
 #include "Towers/WaterProjectile.h"
 #include "Towers/Projectile.h"
 #include "Towers/WaterTower.h"
 #include "Map/PathTile.h"
 #include "EnviormentUnits/EnviormentUnit.h"
+#include "ViewModels/ProjectileVM.h"
 
 WaterProjectile::WaterProjectile
 (WaterTower* origin, PathTile* target, uint hitpoints) :
@@ -50,3 +51,16 @@ uint WaterProjectile::_OnImpact(){
 
 	return exp;;
 }
+
+ProjectileVM WaterProjectile::GetViewModel(){
+	ProjectileVM vm;
+	vm.type = pWater;
+	vm.distanceToCover = _distance;
+	vm.distanceCovered = _distanceCovered;
+	vm.fromXpos = _origin->GetPosition()->GetXPos();
+	vm.fromYpos = _origin->GetPosition()->GetYPos();
+	vm.toXpos = _target->GetXPos();
+	vm.toYpos = _target->GetYPos();
+	return vm;
+}
+

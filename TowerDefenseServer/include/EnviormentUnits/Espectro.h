@@ -2,7 +2,8 @@
 #define _ESPECTRO_
 
 #include "EnviormentUnits/EnviormentUnit.h"
-#include "Map/PathTile.h"
+struct UnitVM;
+
 
 class Espectro : public EnviormentUnit {
 public:
@@ -10,6 +11,7 @@ public:
 	~Espectro();
 	void PrintDebug();
 	bool Flies();
+	UnitVM GetViewModel();
 };
 
 #endif

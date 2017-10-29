@@ -26,6 +26,7 @@ public:
 	~BuildTowerCommand();
 	bool Execute(Map* map, TowerDefenseGame* game);
 	TowerType GetTowerType();
+	CommandVM GetViewModel();
 };
 
 #endif

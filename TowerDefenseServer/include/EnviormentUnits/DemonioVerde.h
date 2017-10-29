@@ -2,7 +2,8 @@
 #define _DEMONIO_VERDE_
 
 #include "EnviormentUnits/EnviormentUnit.h"
-#include "Map/PathTile.h"
+struct UnitVM;
+
 
 class DemonioVerde : public EnviormentUnit {
 public:
@@ -10,6 +11,7 @@ public:
 	~DemonioVerde();
 	void PrintDebug();
 	bool Flies();
+	UnitVM GetViewModel();
 };
 
 #endif

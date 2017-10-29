@@ -9,6 +9,7 @@
 #include "Towers/Tower.h"
 #include "TowerDefenseGame.h"
 #include "yaml-cpp/yaml.h"
+#include "ViewModels/CommandVM.h"
 
 
 BuildTowerCommand::BuildTowerCommand(TowerType type, uint x, uint y):
@@ -76,3 +77,11 @@ Tower* BuildTowerCommand::_BuildAirTower(Map* map, SolidGroundTile* tile, const 
 	return new AirTower(cooldown_sec * 1000, range, flyingTargetDamage, nonFlyingTargetDamage, tile, map);
 }
 
+CommandVM BuildTowerCommand::GetViewModel(){
+	CommandVM vm;
+	vm.type = BuildTower;
+	vm.towerType = _towerType;
+	vm.xPos = _xPos;
+	vm.yPos = _yPos;
+	return vm;
+}

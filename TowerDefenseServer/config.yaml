@@ -90,7 +90,7 @@ units:
   flies: true
  hombre_cabra:
   health_points: 99
-  speed: 100
+  speed: 10
   flies: false
  espectro:
   health_points: 100

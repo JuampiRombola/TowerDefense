@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "EnviormentUnits/HalconSangriento.h"
+#include "Map/PathTile.h"
+#include "ViewModels/UnitVM.h"
 
 HalconSangriento::HalconSangriento(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
@@ -19,4 +21,15 @@ void HalconSangriento::PrintDebug(){
 
 bool HalconSangriento::Flies(){
 	return true;
+}
+
+UnitVM HalconSangriento::GetViewModel(){
+	UnitVM vm;
+	vm.unitType = uHalconSangriento;
+	vm.healthPoints = _healthPoints;
+	vm.xPos = _position->GetXPos();
+	vm.yPos = _position->GetYPos();
+	vm.stepDelay_ms = _GetActualStepDelay();
+	vm.id = _id;
+	return vm;
 }

@@ -2,7 +2,7 @@
 #define _HOMBRE_CABRA_
 
 #include "EnviormentUnits/EnviormentUnit.h"
-#include "Map/PathTile.h"
+struct UnitVM;
 
 class HombreCabra : public EnviormentUnit {
 public:
@@ -10,6 +10,7 @@ public:
 	~HombreCabra();
 	void PrintDebug();
 	bool Flies();
+	UnitVM GetViewModel();
 };
 
 #endif

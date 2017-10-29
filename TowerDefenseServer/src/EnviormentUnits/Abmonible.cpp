@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "EnviormentUnits/Abmonible.h"
+#include "Map/PathTile.h"
+#include "ViewModels/UnitVM.h"
 
 Abmonible::Abmonible(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
@@ -19,4 +21,15 @@ void Abmonible::PrintDebug(){
 
 bool Abmonible::Flies(){
 	return false;
+}
+
+UnitVM Abmonible::GetViewModel(){
+	UnitVM vm;
+	vm.unitType = uAbmonible;
+	vm.healthPoints = _healthPoints;
+	vm.xPos = _position->GetXPos();
+	vm.yPos = _position->GetYPos();
+	vm.stepDelay_ms = _GetActualStepDelay();
+	vm.id = _id;
+	return vm;
 }

@@ -5,6 +5,8 @@
 #include "Towers/Projectile.h"
 #include "Towers/FireTower.h"
 #include "EnviormentUnits/EnviormentUnit.h"
+#include "ViewModels/ProjectileVM.h"
+#include "Map/SolidGroundTile.h"
 
 FireProjectile::FireProjectile
 (FireTower* origin, PathTile* target, uint hitpoints, 
@@ -56,4 +58,16 @@ uint FireProjectile::_OnImpact(){
 		std::cout << "Fire Projectile did not hit anything on target tile!!\n" << std::flush;
 
 	return 0;
+}
+
+ProjectileVM FireProjectile::GetViewModel(){
+	ProjectileVM vm;
+	vm.type = pFire;
+	vm.distanceToCover = _distance;
+	vm.distanceCovered = _distanceCovered;
+	vm.fromXpos = _origin->GetPosition()->GetXPos();
+	vm.fromYpos = _origin->GetPosition()->GetYPos();
+	vm.toXpos = _target->GetXPos();
+	vm.toYpos = _target->GetYPos();
+	return vm;
 }

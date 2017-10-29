@@ -5,16 +5,16 @@
 
 #include "Map/PathTile.h"
 
+struct ProjectileVM;
 class Tower;
 
 
 class Projectile {
-private:
+protected:
 	uint _speed;
 	bool _impacted;
  	uint _distance;
  	uint _distanceCovered;
-protected:
 	Tower* _origin;
  	uint _hitPoints;
 	PathTile* _target;
@@ -26,6 +26,7 @@ public:
 	void Step(); 
 	void PrintDebug();
 	bool Impacted();
+	virtual ProjectileVM GetViewModel() = 0;
 	
 };
 

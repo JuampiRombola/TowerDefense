@@ -185,8 +185,7 @@ SolidGroundTile* Map::GetSolidGroundTile(uint x, uint y){
 
 
 std::vector<EnviormentUnit*> Map::GetUnitsInRadius(uint range, Tile* tile){
-	//uint x = tile->GetXPos();
-	//uint y = tile->GetYPos();
+
 	std::vector<EnviormentUnit*> units;
 
 	std::vector<PathTile*> tilesInRange = GetPathTilesInRange(tile, range);
@@ -198,33 +197,6 @@ std::vector<EnviormentUnit*> Map::GetUnitsInRadius(uint range, Tile* tile){
 		} 
 	}
 
-	/*
-	PathTile* othertile;
-	int imin = x - range;
-	int jmin = y - range;
-	int itop = x + range;
-	int jtop = y + range;
-
-	if (imin < 0) imin = 0;
-	if (jmin < 0) jmin = 0;
-
-	if (itop >= (int) _cols) itop = _cols;
-	if (jtop >= (int) _rows) jtop = _rows;
-
-
-	for (int i = imin; i < itop; i++)
-	{
-		for (int j = jmin; j < jtop; j++)
-		{
-			othertile = _pathTiles[i][j];
-			if (othertile != nullptr){
-				std::vector<EnviormentUnit*> unitsInTile = othertile->GetUnits();
-				for (auto it = unitsInTile.begin(); it != unitsInTile.end(); ++it)
-					units.push_back(*it);
-			}
-		}
-	}
-*/
 	return units;
 }
 
@@ -287,4 +259,8 @@ std::vector<PathTile*> Map::GetPathTilesInRange(Tile* tile, uint range){
 	}
 
 	return tiles;
+}
+
+std::vector<Projectile*> Map::GetProjectiles(){
+	return _projectiles;
 }

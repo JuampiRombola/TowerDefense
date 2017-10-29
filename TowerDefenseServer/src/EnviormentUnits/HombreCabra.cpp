@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "EnviormentUnits/HombreCabra.h"
+#include "Map/PathTile.h"
+#include "ViewModels/UnitVM.h"
 
 HombreCabra::HombreCabra(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 
@@ -19,4 +21,15 @@ void HombreCabra::PrintDebug(){
 
 bool HombreCabra::Flies(){
 	return false;
+}
+
+UnitVM HombreCabra::GetViewModel(){
+	UnitVM vm;
+	vm.unitType = uHombreCabra;
+	vm.healthPoints = _healthPoints;
+	vm.xPos = _position->GetXPos();
+	vm.yPos = _position->GetYPos();
+	vm.stepDelay_ms = _GetActualStepDelay();
+	vm.id = _id;
+	return vm;
 }

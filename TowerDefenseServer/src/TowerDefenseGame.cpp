@@ -23,7 +23,9 @@
 
 
 TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg) : 
-	_endedMutex(), _commandQueueMutex(), _commands(), _clockFrequencyMs(clockFrequencyMs), 
+	_endedMutex(), _commandQueueMutex(), _commands(),_executedCommandQueueMutex(), 
+	_executedCommands(), _gameStateMutex(),
+	 _clockFrequencyMs(clockFrequencyMs), 
 	_ended(false), _steps(0), _enemyIdCounter(0), _units(), 
 	_map(10, 10, "jsonmapconfigfilename"), GameCfg(gamecfg)
 {
@@ -58,7 +60,17 @@ void TowerDefenseGame::_SpawnEnemy(){
 
 void TowerDefenseGame::QueueCommand(Command* command){
 	std::lock_guard<std::mutex> lock(_commandQueueMutex);
-	_commands.emplace(command);
+	_commands.push(command);
+}
+
+Command* TowerDefenseGame::GetExecutedCommand(){
+	std::lock_guard<std::mutex> lock(_executedCommandQueueMutex);
+	if (_executedCommands.size() == 0)
+		return nullptr;
+	
+	Command* c = _executedCommands.front();
+	_executedCommands.pop();
+	return c;
 }
 
 EnviormentUnit* TowerDefenseGame::GetUnit(uint id){
@@ -72,8 +84,12 @@ EnviormentUnit* TowerDefenseGame::GetUnit(uint id){
 void TowerDefenseGame::_ExecuteCommands(){
 	std::lock_guard<std::mutex> lock(_commandQueueMutex);
 	while (!_commands.empty()){
-		_commands.front()->Execute(&_map, this);
+		Command* c =_commands.front();
 		_commands.pop();
+		if (c->Execute(&_map, this)){
+			std::lock_guard<std::mutex> lock(_executedCommandQueueMutex);
+			_executedCommands.push(c);
+		}
 	}
 }
 
@@ -83,7 +99,7 @@ bool TowerDefenseGame::_Step(){
 	static unsigned long long ts = 0;
 	unsigned long long actualTs = Helpers::MillisecondsTimeStamp();
 
-
+	std::lock_guard<std::mutex> gamelock(_gameStateMutex);
 	_ExecuteCommands();
 		
 	if (ts == 0) {
@@ -120,11 +136,14 @@ bool TowerDefenseGame::_Step(){
 		}
 	}
 
-	std::lock_guard<std::mutex> lock(_endedMutex);
-	std::vector<PathTile*> endTiles = _map.GetFinishTiles();
-	for (auto it = endTiles.begin(); it != endTiles.end() && !_ended; ++it){
-		_ended = (*it)->HasAnyUnit();
+	{
+		std::lock_guard<std::mutex> lock(_endedMutex);
+		std::vector<PathTile*> endTiles = _map.GetFinishTiles();
+		for (auto it = endTiles.begin(); it != endTiles.end() && !_ended; ++it){
+			_ended = (*it)->HasAnyUnit();
+		}
 	}
+
 	return !_ended;
 }
 
@@ -147,4 +166,30 @@ void TowerDefenseGame::Run()
 	//
 
 	std::cout << "GAME OVER! \n";
+}
+
+std::vector<UnitVM> TowerDefenseGame::GetUnitViewModels(){
+	std::lock_guard<std::mutex> lock(_gameStateMutex);
+	std::vector<UnitVM> uVms;
+	for (auto it = _units.begin(); it != _units.end(); ++it){
+		uVms.push_back((*it)->GetViewModel());
+	}
+	return uVms;
+}
+
+
+std::vector<ProjectileVM> TowerDefenseGame::GetProjectileViewModels(){
+	std::lock_guard<std::mutex> lock(_gameStateMutex);
+	std::vector<Projectile*> projs = _map.GetProjectiles();
+	std::vector<ProjectileVM> pVms;
+	for (auto it = projs.begin(); it != projs.end(); ++it){
+		pVms.push_back((*it)->GetViewModel());
+	}
+	return pVms;
+}
+
+std::vector<TowerVM> TowerDefenseGame::GetTowerViewModels(){
+	std::vector<TowerVM> t;
+	//falta implementacion..
+	return t;
 }

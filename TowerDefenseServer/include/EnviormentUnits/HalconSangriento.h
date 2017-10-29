@@ -2,7 +2,6 @@
 #define _HALCON_SANGRIENTO_
 
 #include "EnviormentUnits/EnviormentUnit.h"
-#include "Map/PathTile.h"
 
 class HalconSangriento : public EnviormentUnit {
 public:
@@ -10,6 +9,7 @@ public:
 	~HalconSangriento();
 	void PrintDebug();
 	bool Flies();
+	UnitVM GetViewModel();
 };
 
 #endif

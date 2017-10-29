@@ -5,6 +5,7 @@
 #include "yaml-cpp/yaml.h"
 
 class Map;
+class TowerDefenseGame;
 
 enum UpgradeType { Range, Damage, CollateralRange, Slow };
 
@@ -16,7 +17,8 @@ private:
 public:
 	UpgradeTowerCommand(uint x, uint y, UpgradeType type);
 	~UpgradeTowerCommand();
-	bool Execute(Map* map, const YAML::Node& cfg);
+	bool Execute(Map* map, TowerDefenseGame* game);
+	CommandVM GetViewModel();
 };
 
 #endif
