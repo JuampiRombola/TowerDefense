@@ -4,16 +4,14 @@
 #include <SDL2/SDL.h>
 #include "../Common/MousePosition.h"
 #include "../Common/Renderer.h"
+#include "../Common/Image.h"
 
-class Button {
+class Button : public Image {
 private:
     int id;
     MousePosition &mousePosition;
     virtual void click() = 0;
 protected:
-    SDL_Rect button;
-    Renderer &renderer;
-    SDL_Texture *texture;
     bool isClicked();
 public:
     Button(int id, int posX, int posY, int width, int height,

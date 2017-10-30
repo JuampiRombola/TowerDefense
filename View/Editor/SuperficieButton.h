@@ -8,11 +8,11 @@
 class SuperficieButton : public Button {
 private:
     int number;
-    const std::string superficie;
+    const int superficie;
     Editor &editor;
     void click();
 public:
-    SuperficieButton(int id, int number, const std::string& superficie, SDL_Texture
+    SuperficieButton(int id, int number, const int superficie, SDL_Texture
     *texture, MousePosition &mousePosition, Renderer &renderer,
                      Editor& editor);
     ~SuperficieButton();

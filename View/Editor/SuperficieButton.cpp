@@ -1,7 +1,7 @@
 #include "SuperficieButton.h"
 
-SuperficieButton::SuperficieButton(int id, int number, const std::string&
-superficie, SDL_Texture *texture,
+SuperficieButton::SuperficieButton(int id, int number, const int
+                                   superficie, SDL_Texture *texture,
                                    MousePosition &mousePosition,
                                    Renderer &renderer, Editor &editor) :
         Button(id, number*100, 0, 100, 100, texture, mousePosition, renderer),

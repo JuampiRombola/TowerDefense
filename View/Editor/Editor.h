@@ -3,16 +3,19 @@
 
 #include <string>
 #include <vector>
+#include "../Model/MapView.h"
+#include "../Common/SpriteNamesConfig.h"
 
 class Editor {
 private:
     std::string superficie;
     std::vector<std::vector<std::string>> hordas;
     std::string nombre;
+    MapView& map;
 public:
-    Editor();
+    Editor(MapView& map);
     ~Editor();
-    void setSuperficie(const std::string &superficie);
+    void setSuperficie(const int superficie);
     void agregarEnemigo(int horda, std::string enemigo);
     void eliminarEnemigo(int horda, std::string enemigo);
     void agregarHorda();

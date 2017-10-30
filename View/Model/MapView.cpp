@@ -9,7 +9,8 @@ MapView::MapView(int width, int height, int env,
         width(width), height(height),
         envTile(textures.getTexture(env), renderer),
         pathTile(textures.getTexture(env + PATHTILE), renderer),
-        structureTile(textures.getTexture(env + STRUCTURETILE), renderer) {
+        structureTile(textures.getTexture(env + STRUCTURETILE), renderer),
+        textures(textures), renderer(renderer) {
     selectBackgroundColor(renderer, env);
     envTile.setSourceRect(0, 0, 128, 96);
     envTile.setDestRect(0, 0, 160, 120);
@@ -55,4 +56,9 @@ void MapView::selectBackgroundColor(Renderer &renderer, int environment) {
         SDL_SetRenderDrawColor(renderer.getRenderer(), 52, 73, 94, 255);
     if (environment == DESIERTO)
         SDL_SetRenderDrawColor(renderer.getRenderer(), 52, 73, 94, 255);
+}
+
+void MapView::setEnvTile(int env) {
+    envTile.setTexture(textures.getTexture(env));
+    selectBackgroundColor(renderer, env);
 }

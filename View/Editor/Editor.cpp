@@ -1,12 +1,13 @@
 #include "Editor.h"
 #include <iostream>
 
-Editor::Editor() = default;
+Editor::Editor(MapView& map) : map(map) {};
 
 Editor::~Editor() = default;
 
-void Editor::setSuperficie(const std::string &superficie) {
+void Editor::setSuperficie(const int superficie) {
     this->superficie = superficie;
+    map.setEnvTile(superficie);
 }
 
 void Editor::agregarEnemigo(int horda, std::string enemigo) {

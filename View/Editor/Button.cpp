@@ -4,9 +4,9 @@ Button::Button(int id, int posX, int posY, int width, int height,
                SDL_Texture *texture, MousePosition &mousePosition,
                Renderer &renderer) : id(id),
                                      mousePosition(mousePosition),
-                                     button(SDL_Rect{posX, posY, width,
-                                                     height}),
-                                     renderer(renderer), texture(texture) {}
+                                     Image(posX, posY, width,
+                                                     height, texture,
+                                           renderer) {}
 
 Button::~Button() = default;
 
@@ -15,7 +15,7 @@ void Button::draw() {
         this->click();
         mousePosition.toggleActive();
     }
-    renderer.copyEuclidean(texture, &button);
+    Image::draw();
 }
 
 bool Button::isClicked() {

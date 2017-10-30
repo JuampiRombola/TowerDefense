@@ -25,25 +25,25 @@ void Buttons::draw() {
 }
 
 void Buttons::addSuperficieButtons() {
-    Button *praderaButton = new SuperficieButton(++nextId, 0, "pradera",
+    Button *praderaButton = new SuperficieButton(++nextId, 0, PRADERA_EDITOR,
                                                  textureLoader.getTexture(PRADERA_EDITOR),
                                                  mousePosition,
                                                  renderer, editor);
     buttons.push_back(praderaButton);
 
-    Button *lavaButton = new SuperficieButton(++nextId, 1, "lava",
+    Button *lavaButton = new SuperficieButton(++nextId, 1, VOLCAN_EDITOR,
                                               textureLoader.getTexture(VOLCAN_EDITOR),
                                               mousePosition, renderer, editor);
     buttons.push_back(lavaButton);
 
-    Button *desiertoButton = new SuperficieButton(++nextId, 2, "desierto",
+    Button *desiertoButton = new SuperficieButton(++nextId, 2, DESIERTO_EDITOR,
                                                   textureLoader.getTexture
                                                           (DESIERTO_EDITOR),
                                                   mousePosition,
                                                   renderer, editor);
     buttons.push_back(desiertoButton);
 
-    Button *glaciarButton = new SuperficieButton(++nextId, 3, "glaciar",
+    Button *glaciarButton = new SuperficieButton(++nextId, 3, GELIDO_EDITOR,
                                                  textureLoader.getTexture
                                                          (GELIDO_EDITOR),
                                                  mousePosition,

@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     int mouse_x = -1, mouse_y = -1;
     MousePosition mouse(mouse_x, mouse_y);
 
-    Editor editor;
+    Editor editor(mapView);
 
     KeyboardInput keyboardInput(editor.getNombre());
 

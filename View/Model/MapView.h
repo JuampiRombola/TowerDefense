@@ -15,6 +15,8 @@ private:
     Sprite envTile;
     Sprite pathTile;
     Sprite structureTile;
+    TextureLoader& textures;
+    Renderer& renderer;
 
 public:
     MapView(int width, int height, int env,
@@ -24,6 +26,7 @@ public:
     void addPathTile(int x, int y);
     void addStructureTile(int x, int y);
     void selectBackgroundColor(Renderer &renderer, int environment);
+    void setEnvTile(int env);
 };
 
 

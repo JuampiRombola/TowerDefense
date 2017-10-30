@@ -15,6 +15,7 @@
 #include "EliminarEnemigoButton.h"
 #include "EliminarHordaButton.h"
 #include "../Common/SpriteNamesConfig.h"
+#include "../Common/SpriteNamesConfig.h"
 
 class Buttons {
 private:
