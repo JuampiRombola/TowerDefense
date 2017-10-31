@@ -27,7 +27,7 @@ set(SOURCE_FILES_E
         View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h
         View/Common/MousePosition.cpp View/Common/MousePosition.h View/Editor/Editor.cpp
         View/Editor/Editor.h View/Common/KeyboardInput.cpp View/Common/KeyboardInput.h
-        View/Editor/Button.cpp View/Editor/Button.h View/Editor/AgregarEnemigoButton.cpp View/Editor/AgregarEnemigoButton.h View/Editor/EliminarEnemigoButton.cpp View/Editor/EliminarEnemigoButton.h View/Editor/EliminarHordaButton.cpp View/Editor/EliminarHordaButton.h View/Editor/NuevaHordaButton.cpp View/Editor/NuevaHordaButton.h View/Editor/SuperficieButton.cpp View/Editor/SuperficieButton.h View/Editor/ToggleButton.cpp View/Editor/ToggleButton.h View/Editor/Buttons.cpp View/Editor/Buttons.h View/Common/TextInput.cpp View/Common/TextInput.h View/Common/Image.cpp View/Common/Image.h)
+        View/Editor/Button.cpp View/Editor/Button.h View/Editor/AgregarEnemigoButton.cpp View/Editor/AgregarEnemigoButton.h View/Editor/EliminarEnemigoButton.cpp View/Editor/EliminarEnemigoButton.h View/Editor/EliminarHordaButton.cpp View/Editor/EliminarHordaButton.h View/Editor/NuevaHordaButton.cpp View/Editor/NuevaHordaButton.h View/Editor/SuperficieButton.cpp View/Editor/SuperficieButton.h View/Editor/ToggleButton.cpp View/Editor/ToggleButton.h View/Editor/Buttons.cpp View/Editor/Buttons.h View/Common/Text.cpp View/Common/Text.h View/Common/Image.cpp View/Common/Image.h View/Editor/DoNothingButton.cpp View/Editor/DoNothingButton.h View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h)
 
 add_executable(TowerDefenseView ${SOURCE_FILES_V})
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})

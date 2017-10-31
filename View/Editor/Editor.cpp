@@ -38,6 +38,20 @@ unsigned int Editor::getCantidadHordas() {
     return this->hordas.size();
 }
 
+unsigned int Editor::getCantidadEnemigosEnHorda(std::string enemigo,
+                                                int horda) {
+    if (horda >= getCantidadHordas())
+        return 0;
+    unsigned int total = 0;
+    // enemigo2 es un nombre horrible. Pero se que va a terminar siendo un
+    // map y este ciclo va a desaparecer. Así que whatever.
+    for (auto& enemigo2 : hordas.at(horda)) {
+        if (enemigo == enemigo2)
+            ++total;
+    }
+    return total;
+}
+
 std::string& Editor::getNombre() {
     return this->nombre;
 }

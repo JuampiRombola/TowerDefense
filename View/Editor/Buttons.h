@@ -4,7 +4,7 @@
 #include <list>
 #include <SDL2/SDL.h>
 #include "Button.h"
-#include "../Common/TextInput.h"
+#include "../Common/Text.h"
 #include "../Common/MousePosition.h"
 #include "../Common/KeyboardInput.h"
 #include "../Common/Renderer.h"
@@ -16,11 +16,14 @@
 #include "EliminarHordaButton.h"
 #include "../Common/SpriteNamesConfig.h"
 #include "../Common/SpriteNamesConfig.h"
+#include "DoNothingButton.h"
+#include "ContadorEnemigosInput.h"
 
 class Buttons {
 private:
     std::list<Button*> buttons;
     std::list<Button*> hordasButtons;
+    std::list<Image*> images;
     MousePosition &mousePosition;
     Renderer &renderer;
     Editor& editor;
