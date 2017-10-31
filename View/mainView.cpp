@@ -12,7 +12,7 @@
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
 
-#define MAPSIZE 10
+#define MAPSIZE 7
 
 int main(int argc, char** argv) {
     bool quit = false;
@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer());
 
-    MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
+    MapView mapView(MAPSIZE, MAPSIZE, DESIERTO, renderer, textureLoader);
 
     //Armo un camino
     mapView.addPathTile(0, 0);

@@ -3,6 +3,16 @@
 
 #define PATHTILE 1
 
+#define SPRITE_TILE_W 128
+#define SPRITE_TILE_H 64
+#define SPRITE_TILE_DEEP_H 96
+#define STRUCTURE_TILE_W 511
+#define STRUCTURE_TILE_H 256
+
+#define TILE_WIDTH 160
+#define TILE_HEIGHT 80
+#define TILE_HEIGHT_DEEP 120
+
 MapView::MapView(int width, int height, int env,
                  Renderer &renderer, TextureLoader &textures) :
         width(width), height(height),
@@ -11,12 +21,12 @@ MapView::MapView(int width, int height, int env,
         structureTile(textures.getTexture(TIERRAFIRME), renderer),
         textures(textures), renderer(renderer) {
     selectBackgroundColor(renderer, env);
-    envTile.setSourceRect(0, 0, 128, 96);
-    envTile.setDestRect(0, 0, 160, 120);
-    pathTile.setSourceRect(0, 0, 128, 64);
-    pathTile.setDestRect(0, 0, 160, 80);
-    structureTile.setSourceRect(0, 0, 511, 256);
-    structureTile.setDestRect(0, 0, 160, 80);
+    envTile.setSourceRect(0, 0, SPRITE_TILE_W, SPRITE_TILE_DEEP_H);
+    envTile.setDestRect(0, 0, TILE_WIDTH, TILE_HEIGHT_DEEP);
+    pathTile.setSourceRect(0, 0, SPRITE_TILE_W, SPRITE_TILE_H);
+    pathTile.setDestRect(0, 0, TILE_WIDTH, TILE_HEIGHT);
+    structureTile.setSourceRect(0, 0, STRUCTURE_TILE_W, STRUCTURE_TILE_H);
+    structureTile.setDestRect(0, 0, TILE_WIDTH, TILE_HEIGHT);
 }
 
 MapView::~MapView() {}
