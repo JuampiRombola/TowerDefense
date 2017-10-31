@@ -8,7 +8,8 @@
 #define PORTALENTRADA 3
 #define PORTALSALIDA 4
 #define FIRE_TOWER 5
-#define TOTAL 6
+#define ABOMINABLE 6
+#define TOTAL 7
 
 #define VOLCAN_EDITOR 100
 #define DESIERTO_EDITOR 101

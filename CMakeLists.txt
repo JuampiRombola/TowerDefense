@@ -11,7 +11,8 @@ set(SOURCE_FILES_V
         View/Common/Sprite.h View/Common/SpriteNamesConfig.h View/Common/View.cpp View/Common/View.h
         View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
         View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
-        View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h)
+        View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h
+        View/Model/UnitView.cpp View/Model/UnitView.h)
 
 set(SOURCE_FILES_E
         Resources/0.png Resources/1.png Resources/2.png Resources/100.png
