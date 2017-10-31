@@ -3,7 +3,7 @@
 
 #include "../../include/ViewModels/TowerVM.h"
 #include "../../include/Commands/BuildTowerCommand.h"
-#include "../../include/yaml-cpp/yaml.h"
+#include <yaml-cpp/yaml.h>
 #include "../../include/Towers/Tower.h"
 #include "../../include/Towers/Projectile.h"
 #include "../../include/Towers/WaterTower.h"

@@ -1,7 +1,7 @@
 #ifndef _FIRE_PROJECTILE_
 #define _FIRE_PROJECTILE_
 
-#include "Towers/Projectile.h"
+#include "../Towers/Projectile.h"
 
 class PathTile;
 class FireTower;

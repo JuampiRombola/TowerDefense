@@ -1,7 +1,7 @@
 #ifndef _AIR_TOWER_
 #define _AIR_TOWER_
 
-#include "Commands/UpgradeTowerCommand.h"
+#include "../Commands/UpgradeTowerCommand.h"
 #include "yaml-cpp/yaml.h"
 #include "Tower.h"
 

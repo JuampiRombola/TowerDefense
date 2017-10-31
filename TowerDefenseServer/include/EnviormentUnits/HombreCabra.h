@@ -1,7 +1,7 @@
 #ifndef _HOMBRE_CABRA_
 #define _HOMBRE_CABRA_
 
-#include "EnviormentUnits/EnviormentUnit.h"
+#include "../EnviormentUnits/EnviormentUnit.h"
 struct UnitVM;
 
 class HombreCabra : public EnviormentUnit {

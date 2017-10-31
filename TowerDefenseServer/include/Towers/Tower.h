@@ -7,7 +7,7 @@ class Map;
 class PathTile;
 class EnviormentUnit;
 class TowerVM;
-#include "Commands/UpgradeTowerCommand.h"
+#include "../Commands/UpgradeTowerCommand.h"
 #include "yaml-cpp/yaml.h"
 
 class Tower {

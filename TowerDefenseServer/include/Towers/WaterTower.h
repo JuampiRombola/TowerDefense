@@ -4,7 +4,7 @@
 
 #include "yaml-cpp/yaml.h"
 #include "Tower.h"
-#include "Commands/UpgradeTowerCommand.h"
+#include "../Commands/UpgradeTowerCommand.h"
 
 
 class SolidGroundTile;

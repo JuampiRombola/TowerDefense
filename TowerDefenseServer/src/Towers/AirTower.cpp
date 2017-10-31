@@ -7,7 +7,7 @@
 #include "../../include/Towers/AirTower.h"
 #include "../../include/Map/SolidGroundTile.h"
 #include "../../include/Towers/AirProjectile.h"
-#include "../../include/yaml-cpp/yaml.h"
+#include <yaml-cpp/yaml.h>
 #include "../../include/Commands/UpgradeTowerCommand.h"
 #include "../../include/ViewModels/TowerVM.h"
 

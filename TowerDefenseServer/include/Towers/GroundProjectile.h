@@ -1,7 +1,7 @@
 #ifndef _GROUND_PROJECTILE_
 #define _GROUND_PROJECTILE_
 
-#include "Towers/Projectile.h"
+#include "../Towers/Projectile.h"
 
 class PathTile;
 class GroundTower;

@@ -1,7 +1,7 @@
 #ifndef _ESPECTRO_
 #define _ESPECTRO_
 
-#include "EnviormentUnits/EnviormentUnit.h"
+#include "../EnviormentUnits/EnviormentUnit.h"
 struct UnitVM;
 
 

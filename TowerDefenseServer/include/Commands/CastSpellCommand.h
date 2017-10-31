@@ -1,7 +1,7 @@
 #ifndef _CAST_SPELL_COMMAND_
 #define _CAST_SPELL_COMMAND_
 
-#include "Commands/Command.h"
+#include "../Commands/Command.h"
 class Map;
 class TowerDefenseGame;
 

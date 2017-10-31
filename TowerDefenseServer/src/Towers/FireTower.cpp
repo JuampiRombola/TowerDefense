@@ -6,7 +6,7 @@
 #include "../../include/Towers/FireTower.h"
 #include "../../include/Map/SolidGroundTile.h"
 #include "../../include/Towers/FireProjectile.h"
-#include "../../include/yaml-cpp/yaml.h"
+#include <yaml-cpp/yaml.h>
 #include "../../include/Commands/UpgradeTowerCommand.h"
 #include "../../include/ViewModels/TowerVM.h"
 #include "../../include/Commands/BuildTowerCommand.h"

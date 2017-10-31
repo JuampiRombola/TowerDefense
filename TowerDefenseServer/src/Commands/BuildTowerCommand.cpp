@@ -8,7 +8,7 @@
 #include "../../include/Commands/BuildTowerCommand.h"
 #include "../../include/Towers/Tower.h"
 #include "../../include/TowerDefenseGame.h"
-#include "../../include/yaml-cpp/yaml.h"
+#include <yaml-cpp/yaml.h>
 #include "../../include/ViewModels/CommandVM.h"
 
 

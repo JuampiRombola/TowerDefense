@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 
-#include "../../include/GameConfiguration.h"
-#include "../../include/yaml-cpp/yaml.h"
+#include "../include/GameConfiguration.h"
+#include "../include/yaml-cpp/yaml.h"
 
 GameConfiguration::GameConfiguration(std::string& cfgpath) : Cfg(std::move(YAML::LoadFile(cfgpath)))
 {

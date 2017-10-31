@@ -3,8 +3,8 @@
 #include "../../include/Commands/UpgradeTowerCommand.h"
 #include "../../include/TowerDefenseGame.h"
 #include "../../include/Towers/Tower.h"
-#include <Map/Map.h>
-#include "../../include/yaml-cpp/yaml.h"
+#include "../../include/Map/Map.h"
+#include <yaml-cpp/yaml.h>
 #include "../../include/ViewModels/CommandVM.h"
 
 

@@ -10,7 +10,7 @@ class Projectile;
 class PathTile;
 class EnviormentUnit;
 
-#include "Map/SolidGroundTile.h"
+#include "../Map/SolidGroundTile.h"
 
 class Map{
 private:

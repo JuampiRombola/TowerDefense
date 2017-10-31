@@ -1,9 +1,9 @@
 #ifndef _COMMANDVM_
 #define _COMMANDVM_
 
-#include "Commands/BuildTowerCommand.h"
-#include "Commands/CastSpellCommand.h"
-#include "Commands/UpgradeTowerCommand.h"
+#include "../Commands/BuildTowerCommand.h"
+#include "../Commands/CastSpellCommand.h"
+#include "../Commands/UpgradeTowerCommand.h"
 
 enum CommandType { BuildTower, UpgradeTower, CastSpell }; 
 

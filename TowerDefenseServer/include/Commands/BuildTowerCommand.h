@@ -1,7 +1,7 @@
 #ifndef _BUILD_TOWER_COMMAND_
 #define _BUILD_TOWER_COMMAND_
 
-#include "Commands/Command.h"
+#include "../Commands/Command.h"
 #include "yaml-cpp/yaml.h"
 
 class Map;

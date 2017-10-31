@@ -6,19 +6,19 @@
 #include <cmath>
 #include <mutex>
 
-#include "../../include/TowerDefenseGame.h"
-#include "../../include/Map/Map.h"
-#include "../../include/EnviormentUnits/DemonioVerde.h"
-#include "../../include/EnviormentUnits/Abmonible.h"
-#include "../../include/EnviormentUnits/Espectro.h"
-#include "../../include/EnviormentUnits/NoMuerto.h"
-#include "../../include/EnviormentUnits/HalconSangriento.h"
-#include "../../include/EnviormentUnits/HombreCabra.h"
-#include "../../include/EnviormentUnits/EnviormentUnit.h"
-#include "../../include/Towers/Tower.h"
-#include "../../include/Towers/GroundTower.h"
-#include "../../include/GameConfiguration.h"
-#include "../../include/Helpers.h"
+#include "../include/TowerDefenseGame.h"
+#include "../include/Map/Map.h"
+#include "../include/EnviormentUnits/DemonioVerde.h"
+#include "../include/EnviormentUnits/Abmonible.h"
+#include "../include/EnviormentUnits/Espectro.h"
+#include "../include/EnviormentUnits/NoMuerto.h"
+#include "../include/EnviormentUnits/HalconSangriento.h"
+#include "../include/EnviormentUnits/HombreCabra.h"
+#include "../include/EnviormentUnits/EnviormentUnit.h"
+#include "../include/Towers/Tower.h"
+#include "../include/Towers/GroundTower.h"
+#include "../include/GameConfiguration.h"
+#include "../include/Helpers.h"
 
 
 

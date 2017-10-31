@@ -1,7 +1,7 @@
 #ifndef _NO_MUERTO_
 #define _NO_MUERTO_
 
-#include "EnviormentUnits/EnviormentUnit.h"
+#include "../EnviormentUnits/EnviormentUnit.h"
 struct UnitVM;
 
 class NoMuerto : public EnviormentUnit {

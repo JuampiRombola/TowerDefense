@@ -1,15 +1,15 @@
 #include <thread> 
 #include <chrono>
 
-#include "../../include/Commands/BuildTowerCommand.h"
-#include "../../include/Commands/CastSpellCommand.h"
-#include "../../include/Commands/UpgradeTowerCommand.h"
-#include "../../include/TowerDefenseGame.h"
-#include "../../include/GameConfiguration.h"
-#include "../../include/ViewModels/CommandVM.h"
-#include "../../include/ViewModels/UnitVM.h"
-#include "../../include/ViewModels/ProjectileVM.h"
-#include "../../include/ViewModels/TowerVM.h"
+#include "../include/Commands/BuildTowerCommand.h"
+#include "../include/Commands/CastSpellCommand.h"
+#include "../include/Commands/UpgradeTowerCommand.h"
+#include "../include/TowerDefenseGame.h"
+#include "../include/GameConfiguration.h"
+#include "../include/ViewModels/CommandVM.h"
+#include "../include/ViewModels/UnitVM.h"
+#include "../include/ViewModels/ProjectileVM.h"
+#include "../include/ViewModels/TowerVM.h"
 
 void PrintProjectilesVms(std::vector<ProjectileVM>& projsVMs);
 void PrintUnitVms(std::vector<UnitVM>& vms);
@@ -18,7 +18,7 @@ void PrintTowerVms(std::vector<TowerVM>& towers);
 
 int main(int argc, char** argv)
 {
-	std::string s("/home/tino/Dropbox/taller1/net_towerdefense/TowerDefenseServer/config.yaml");
+	std::string s("TowerDefenseServer/config.yaml");
 	GameConfiguration cfg(s);
 
 	uint clockDelaymilliseconds = 0;

@@ -1,7 +1,7 @@
 #ifndef _TOWERVM_
 #define _TOWERVM_
 
-#include "Commands/BuildTowerCommand.h"
+#include "../Commands/BuildTowerCommand.h"
 
 struct TowerVM {
 	TowerType type;
