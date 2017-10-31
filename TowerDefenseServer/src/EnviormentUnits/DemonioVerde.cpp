@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "EnviormentUnits/DemonioVerde.h"
-#include "Map/PathTile.h"
-#include "ViewModels/UnitVM.h"
+#include "../../include/EnviormentUnits/DemonioVerde.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/ViewModels/UnitVM.h"
 
 DemonioVerde::DemonioVerde(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 

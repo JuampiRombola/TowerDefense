@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "EnviormentUnits/Espectro.h"
-#include "Map/PathTile.h"
-#include "ViewModels/UnitVM.h"
+#include "../../include/EnviormentUnits/Espectro.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/ViewModels/UnitVM.h"
 
 Espectro::Espectro(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 

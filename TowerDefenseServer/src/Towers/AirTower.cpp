@@ -1,15 +1,15 @@
 #include <iostream>
 #include <cmath>
 
-#include "Commands/BuildTowerCommand.h"
-#include "Towers/Tower.h"
-#include "Towers/Projectile.h"
-#include "Towers/AirTower.h"
-#include "Map/SolidGroundTile.h"
-#include "Towers/AirProjectile.h"
-#include "yaml-cpp/yaml.h"
-#include "Commands/UpgradeTowerCommand.h"
-#include "ViewModels/TowerVM.h"
+#include "../../include/Commands/BuildTowerCommand.h"
+#include "../../include/Towers/Tower.h"
+#include "../../include/Towers/Projectile.h"
+#include "../../include/Towers/AirTower.h"
+#include "../../include/Map/SolidGroundTile.h"
+#include "../../include/Towers/AirProjectile.h"
+#include "../../include/yaml-cpp/yaml.h"
+#include "../../include/Commands/UpgradeTowerCommand.h"
+#include "../../include/ViewModels/TowerVM.h"
 
 
 AirTower::AirTower(uint cooldown_sec, uint range, uint damage, uint nonflyingDamage, SolidGroundTile* position, Map* map)

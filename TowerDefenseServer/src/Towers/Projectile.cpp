@@ -1,10 +1,10 @@
 #include <iostream>
 #include <cmath>
 
-#include "Towers/Projectile.h"
-#include "Map/PathTile.h"
-#include "Map/SolidGroundTile.h"
-#include "Towers/Tower.h"
+#include "../../include/Towers/Projectile.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/Map/SolidGroundTile.h"
+#include "../../include/Towers/Tower.h"
 
 Projectile::Projectile(Tower* origin, PathTile* target, uint speed, uint hitpoints) :
  _speed(speed), _impacted(false), _distance(0), 

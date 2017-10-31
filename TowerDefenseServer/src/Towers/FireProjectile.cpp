@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "Map/Map.h"
-#include "Towers/FireProjectile.h"
-#include "Towers/Projectile.h"
-#include "Towers/FireTower.h"
-#include "EnviormentUnits/EnviormentUnit.h"
-#include "ViewModels/ProjectileVM.h"
-#include "Map/SolidGroundTile.h"
+#include "../../include/Map/Map.h"
+#include "../../include/Towers/FireProjectile.h"
+#include "../../include/Towers/Projectile.h"
+#include "../../include/Towers/FireTower.h"
+#include "../../include/EnviormentUnits/EnviormentUnit.h"
+#include "../../include/ViewModels/ProjectileVM.h"
+#include "../../include/Map/SolidGroundTile.h"
 
 FireProjectile::FireProjectile
 (FireTower* origin, PathTile* target, uint hitpoints, 

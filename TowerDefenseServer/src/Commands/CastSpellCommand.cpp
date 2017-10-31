@@ -1,14 +1,14 @@
 #include <ctime>
 #include <iostream>
 
-#include "Towers/GroundTower.h"
-#include "Map/SolidGroundTile.h"
-#include "Map/PathTile.h"
-#include "Commands/CastSpellCommand.h"
-#include "Towers/Tower.h"
-#include "EnviormentUnits/EnviormentUnit.h"
-#include "TowerDefenseGame.h"
-#include "ViewModels/CommandVM.h"
+#include "../../include/Towers/GroundTower.h"
+#include "../../include/Map/SolidGroundTile.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/Commands/CastSpellCommand.h"
+#include "../../include/Towers/Tower.h"
+#include "../../include/EnviormentUnits/EnviormentUnit.h"
+#include "../../include/TowerDefenseGame.h"
+#include "../../include/ViewModels/CommandVM.h"
 
 CastSpellCommand::CastSpellCommand(Spell spell, uint x, uint y):
  _xPos(x), _yPos(y), _unitId(-1), _spell(spell) {}

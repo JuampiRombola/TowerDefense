@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "Map/SolidGroundTile.h"
-#include "Towers/GroundProjectile.h"
-#include "Towers/GroundTower.h"
-#include "Towers/Projectile.h"
-#include "Map/PathTile.h"
-#include "EnviormentUnits/EnviormentUnit.h"
-#include "ViewModels/ProjectileVM.h"
+#include "../../include/Map/SolidGroundTile.h"
+#include "../../include/Towers/GroundProjectile.h"
+#include "../../include/Towers/GroundTower.h"
+#include "../../include/Towers/Projectile.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/EnviormentUnits/EnviormentUnit.h"
+#include "../../include/ViewModels/ProjectileVM.h"
 
 GroundProjectile::GroundProjectile
 (GroundTower* tower, PathTile* target, uint hitpoints) :

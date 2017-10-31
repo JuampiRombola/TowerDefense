@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "EnviormentUnits/HombreCabra.h"
-#include "Map/PathTile.h"
-#include "ViewModels/UnitVM.h"
+#include "../../include/EnviormentUnits/HombreCabra.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/ViewModels/UnitVM.h"
 
 HombreCabra::HombreCabra(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 

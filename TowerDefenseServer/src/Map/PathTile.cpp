@@ -3,14 +3,14 @@
 #include <ctime>
 #include <map>
 
-#include "Map/Map.h"
-#include "Exceptions/UnitIsNotOnThisTileException.h"
-#include "Exceptions/UnitIsAlreadyOnThisTileException.h"
-#include "Exceptions/IncompletePathException.h"
+#include "../../include/Map/Map.h"
+#include "../../include/Exceptions/UnitIsNotOnThisTileException.h"
+#include "../../include/Exceptions/UnitIsAlreadyOnThisTileException.h"
+#include "../../include/Exceptions/IncompletePathException.h"
 
-#include "EnviormentUnits/EnviormentUnit.h"
-#include "Helpers.h"
-#include "Map/PathTile.h"
+#include "../../include/EnviormentUnits/EnviormentUnit.h"
+#include "../../include/Helpers.h"
+#include "../../include/Map/PathTile.h"
 
 PathTile::PathTile(uint xPos, uint yPos, Map* map) 
 : Tile(xPos, yPos), _lastCrackTimeStamp_ms(0), _lastFireTimeStamp_ms(0), _lastVentiscaTimeStamp_ms(0),

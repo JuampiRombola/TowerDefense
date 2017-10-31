@@ -1,15 +1,15 @@
 #include <thread> 
 #include <chrono>
 
-#include "Commands/BuildTowerCommand.h"
-#include "Commands/CastSpellCommand.h"
-#include "Commands/UpgradeTowerCommand.h"
-#include "TowerDefenseGame.h"
-#include "GameConfiguration.h"
-#include "ViewModels/CommandVM.h"
-#include "ViewModels/UnitVM.h"
-#include "ViewModels/ProjectileVM.h"
-#include "ViewModels/TowerVM.h"
+#include "../../include/Commands/BuildTowerCommand.h"
+#include "../../include/Commands/CastSpellCommand.h"
+#include "../../include/Commands/UpgradeTowerCommand.h"
+#include "../../include/TowerDefenseGame.h"
+#include "../../include/GameConfiguration.h"
+#include "../../include/ViewModels/CommandVM.h"
+#include "../../include/ViewModels/UnitVM.h"
+#include "../../include/ViewModels/ProjectileVM.h"
+#include "../../include/ViewModels/TowerVM.h"
 
 void PrintProjectilesVms(std::vector<ProjectileVM>& projsVMs);
 void PrintUnitVms(std::vector<UnitVM>& vms);

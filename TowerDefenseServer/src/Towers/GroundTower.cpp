@@ -1,15 +1,15 @@
 #include <iostream>
 #include <cmath>
 
-#include "Towers/Tower.h"
-#include "Towers/Projectile.h"
-#include "Towers/GroundTower.h"
-#include "Map/SolidGroundTile.h"
-#include "Towers/GroundProjectile.h"
-#include "yaml-cpp/yaml.h"
-#include "Commands/UpgradeTowerCommand.h"
-#include "Commands/BuildTowerCommand.h"
-#include "ViewModels/TowerVM.h"
+#include "../../include/Towers/Tower.h"
+#include "../../include/Towers/Projectile.h"
+#include "../../include/Towers/GroundTower.h"
+#include "../../include/Map/SolidGroundTile.h"
+#include "../../include/Towers/GroundProjectile.h"
+#include "../../include/yaml-cpp/yaml.h"
+#include "../../include/Commands/UpgradeTowerCommand.h"
+#include "../../include/Commands/BuildTowerCommand.h"
+#include "../../include/ViewModels/TowerVM.h"
 
 
 GroundTower::GroundTower(uint cooldown_sec, uint range, uint damage, SolidGroundTile* position, Map* map)

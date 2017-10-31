@@ -1,15 +1,15 @@
 #include <iostream>
 
-#include "Towers/GroundTower.h"
-#include "Towers/WaterTower.h"
-#include "Towers/AirTower.h"
-#include "Towers/FireTower.h"
-#include "Map/SolidGroundTile.h"
-#include "Commands/BuildTowerCommand.h"
-#include "Towers/Tower.h"
-#include "TowerDefenseGame.h"
-#include "yaml-cpp/yaml.h"
-#include "ViewModels/CommandVM.h"
+#include "../../include/Towers/GroundTower.h"
+#include "../../include/Towers/WaterTower.h"
+#include "../../include/Towers/AirTower.h"
+#include "../../include/Towers/FireTower.h"
+#include "../../include/Map/SolidGroundTile.h"
+#include "../../include/Commands/BuildTowerCommand.h"
+#include "../../include/Towers/Tower.h"
+#include "../../include/TowerDefenseGame.h"
+#include "../../include/yaml-cpp/yaml.h"
+#include "../../include/ViewModels/CommandVM.h"
 
 
 BuildTowerCommand::BuildTowerCommand(TowerType type, uint x, uint y):

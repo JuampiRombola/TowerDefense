@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "EnviormentUnits/NoMuerto.h"
-#include "Map/PathTile.h"
-#include "ViewModels/UnitVM.h"
+#include "../../include/EnviormentUnits/NoMuerto.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/ViewModels/UnitVM.h"
 
 NoMuerto::NoMuerto(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 

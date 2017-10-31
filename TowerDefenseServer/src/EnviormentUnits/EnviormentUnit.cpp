@@ -5,13 +5,13 @@
 #include <cmath>
 
 
-#include "Map/Map.h"
-#include "Map/PathTile.h"
-#include "EnviormentUnits/EnviormentUnit.h"
-#include "Helpers.h"
-#include "Exceptions/NonPlacedUnitCannotStepException.h"
-#include "Exceptions/IncompletePathException.h"
-#include "Exceptions/UnitCannotMoveDiagonallyException.h"
+#include "../../include/Map/Map.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/EnviormentUnits/EnviormentUnit.h"
+#include "../../include/Helpers.h"
+#include "../../include/Exceptions/NonPlacedUnitCannotStepException.h"
+#include "../../include/Exceptions/IncompletePathException.h"
+#include "../../include/Exceptions/UnitCannotMoveDiagonallyException.h"
 
 EnviormentUnit::EnviormentUnit(uint id, uint stepDelay_ms, int healthpoints): 
 _lastTimeStamp_ms(0), _lastSlowBeginTimeStamp_ms(0), _lastFreezeTimeStamp_ms(0),

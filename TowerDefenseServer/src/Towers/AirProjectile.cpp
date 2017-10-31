@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "Towers/AirProjectile.h"
-#include "Towers/AirTower.h"
-#include "Towers/Projectile.h"
-#include "Map/PathTile.h"
-#include "EnviormentUnits/EnviormentUnit.h"
-#include "ViewModels/ProjectileVM.h"
-#include "Map/SolidGroundTile.h"
+#include "../../include/Towers/AirProjectile.h"
+#include "../../include/Towers/AirTower.h"
+#include "../../include/Towers/Projectile.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/EnviormentUnits/EnviormentUnit.h"
+#include "../../include/ViewModels/ProjectileVM.h"
+#include "../../include/Map/SolidGroundTile.h"
 
 AirProjectile::AirProjectile
 (AirTower* origin, PathTile* target, uint flyingHitpoint, uint nonflyingHitpoints) :

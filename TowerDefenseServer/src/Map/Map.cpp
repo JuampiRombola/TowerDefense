@@ -6,15 +6,15 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "Map/Map.h"
-#include "Exceptions/IncompletePathException.h"
-#include "Exceptions/TileCannotSpawnException.h"
-#include "Exceptions/TileIsOutOfBoundsException.h"
-#include "Exceptions/PositionAlreadyHasTileException.h"
-#include "Exceptions/NoSetSpawnTilesException.h"
-#include "EnviormentUnits/EnviormentUnit.h"
-#include "Map/PathTile.h"
-#include "Towers/Projectile.h"
+#include "../../include/Map/Map.h"
+#include "../../include/Exceptions/IncompletePathException.h"
+#include "../../include/Exceptions/TileCannotSpawnException.h"
+#include "../../include/Exceptions/TileIsOutOfBoundsException.h"
+#include "../../include/Exceptions/PositionAlreadyHasTileException.h"
+#include "../../include/Exceptions/NoSetSpawnTilesException.h"
+#include "../../include/EnviormentUnits/EnviormentUnit.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/Towers/Projectile.h"
 
 Map::Map(uint rows, uint cols, std::string mapJsonConfig):
 _rows(rows), _cols(cols),

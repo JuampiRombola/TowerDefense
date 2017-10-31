@@ -1,10 +1,10 @@
 #include <iostream>
 
 
-#include "Towers/Projectile.h"
-#include "Map/SolidGroundTile.h"
-#include "Exceptions/SolidGroundAlreadyHasTowerException.h"
-#include "Towers/Tower.h"
+#include "../../include/Towers/Projectile.h"
+#include "../../include/Map/SolidGroundTile.h"
+#include "../../include/Exceptions/SolidGroundAlreadyHasTowerException.h"
+#include "../../include/Towers/Tower.h"
 
 SolidGroundTile::SolidGroundTile(uint xPos, uint yPos): 
 Tile(xPos, yPos), _tower(nullptr) {}

@@ -1,10 +1,10 @@
 #include <iostream>	
 #include <vector>
 
-#include "Towers/Tower.h"
-#include "EnviormentUnits/EnviormentUnit.h"
-#include "Map/Map.h"
-#include "Helpers.h"
+#include "../../include/Towers/Tower.h"
+#include "../../include/EnviormentUnits/EnviormentUnit.h"
+#include "../../include/Map/Map.h"
+#include "../../include/Helpers.h"
 
 Tower::Tower(uint cooldown_ms, uint range, uint damage, SolidGroundTile* pos, Map* map) : 
 _lastTimeStamp_ms(0), _cooldown_ms(cooldown_ms), _map(map), _position(pos), _range(range), _experience(0), _damage(damage),

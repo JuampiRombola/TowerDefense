@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "EnviormentUnits/HalconSangriento.h"
-#include "Map/PathTile.h"
-#include "ViewModels/UnitVM.h"
+#include "../../include/EnviormentUnits/HalconSangriento.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/ViewModels/UnitVM.h"
 
 HalconSangriento::HalconSangriento(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
 

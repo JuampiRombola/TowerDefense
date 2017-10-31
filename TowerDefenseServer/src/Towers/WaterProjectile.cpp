@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "Map/SolidGroundTile.h"
-#include "Towers/WaterProjectile.h"
-#include "Towers/Projectile.h"
-#include "Towers/WaterTower.h"
-#include "Map/PathTile.h"
-#include "EnviormentUnits/EnviormentUnit.h"
-#include "ViewModels/ProjectileVM.h"
+#include "../../include/Map/SolidGroundTile.h"
+#include "../../include/Towers/WaterProjectile.h"
+#include "../../include/Towers/Projectile.h"
+#include "../../include/Towers/WaterTower.h"
+#include "../../include/Map/PathTile.h"
+#include "../../include/EnviormentUnits/EnviormentUnit.h"
+#include "../../include/ViewModels/ProjectileVM.h"
 
 WaterProjectile::WaterProjectile
 (WaterTower* origin, PathTile* target, uint hitpoints, uint slowDuration_sec, uint slowPercent) :

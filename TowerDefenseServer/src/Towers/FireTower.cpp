@@ -1,15 +1,15 @@
 #include <iostream>
 #include <cmath>
 
-#include "Towers/Tower.h"
-#include "Towers/Projectile.h"
-#include "Towers/FireTower.h"
-#include "Map/SolidGroundTile.h"
-#include "Towers/FireProjectile.h"
-#include "yaml-cpp/yaml.h"
-#include "Commands/UpgradeTowerCommand.h"
-#include "ViewModels/TowerVM.h"
-#include "Commands/BuildTowerCommand.h"
+#include "../../include/Towers/Tower.h"
+#include "../../include/Towers/Projectile.h"
+#include "../../include/Towers/FireTower.h"
+#include "../../include/Map/SolidGroundTile.h"
+#include "../../include/Towers/FireProjectile.h"
+#include "../../include/yaml-cpp/yaml.h"
+#include "../../include/Commands/UpgradeTowerCommand.h"
+#include "../../include/ViewModels/TowerVM.h"
+#include "../../include/Commands/BuildTowerCommand.h"
 
 FireTower::FireTower(uint cooldown_ms, uint range, uint damage, 
 	SolidGroundTile* position, Map* map, uint collateralDamage, uint collateralRange)

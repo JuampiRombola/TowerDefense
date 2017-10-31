@@ -1,15 +1,15 @@
 #include <iostream>
 #include <cmath>
 
-#include "ViewModels/TowerVM.h"
-#include "Commands/BuildTowerCommand.h"
-#include "yaml-cpp/yaml.h"
-#include "Towers/Tower.h"
-#include "Towers/Projectile.h"
-#include "Towers/WaterTower.h"
-#include "Map/SolidGroundTile.h"
-#include "Towers/WaterProjectile.h"
-#include "Commands/UpgradeTowerCommand.h"
+#include "../../include/ViewModels/TowerVM.h"
+#include "../../include/Commands/BuildTowerCommand.h"
+#include "../../include/yaml-cpp/yaml.h"
+#include "../../include/Towers/Tower.h"
+#include "../../include/Towers/Projectile.h"
+#include "../../include/Towers/WaterTower.h"
+#include "../../include/Map/SolidGroundTile.h"
+#include "../../include/Towers/WaterProjectile.h"
+#include "../../include/Commands/UpgradeTowerCommand.h"
 
 
 WaterTower::WaterTower(uint cooldown_sec, uint range, uint damage, uint slowPercent, uint slowDuration_sec, SolidGroundTile* position, Map* map)

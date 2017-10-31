@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "Commands/UpgradeTowerCommand.h"
-#include "TowerDefenseGame.h"
-#include "Towers/Tower.h"
+#include "../../include/Commands/UpgradeTowerCommand.h"
+#include "../../include/TowerDefenseGame.h"
+#include "../../include/Towers/Tower.h"
 #include <Map/Map.h>
-#include "yaml-cpp/yaml.h"
-#include "ViewModels/CommandVM.h"
+#include "../../include/yaml-cpp/yaml.h"
+#include "../../include/ViewModels/CommandVM.h"
 
 
 UpgradeTowerCommand::UpgradeTowerCommand(uint x, uint y, UpgradeType type):

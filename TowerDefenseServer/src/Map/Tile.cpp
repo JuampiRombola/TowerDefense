@@ -2,7 +2,7 @@
 #include <iostream>
 #include <iterator>
 
-#include "Map/Tile.h"
+#include "../../include/Map/Tile.h"
 
 Tile::Tile(uint xPos, uint yPos) : _xPos(xPos), _yPos(yPos) 
 {
