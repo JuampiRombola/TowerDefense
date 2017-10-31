@@ -35,27 +35,27 @@ void Buttons::draw() {
 }
 
 void Buttons::addSuperficieButtons() {
-    Button *praderaButton = new SuperficieButton(++nextId, 0, PRADERA_EDITOR,
-                                                 textureLoader.getTexture(PRADERA_EDITOR),
+    Button *praderaButton = new SuperficieButton(++nextId, 0, PRADERA,
+                                                 textureLoader.getTexture(PRADERA),
                                                  mousePosition,
                                                  renderer, editor);
     buttons.push_back(praderaButton);
 
-    Button *lavaButton = new SuperficieButton(++nextId, 1, VOLCAN_EDITOR,
-                                              textureLoader.getTexture(VOLCAN_EDITOR),
+    Button *lavaButton = new SuperficieButton(++nextId, 1, VOLCAN,
+                                              textureLoader.getTexture(VOLCAN),
                                               mousePosition, renderer, editor);
     buttons.push_back(lavaButton);
 
-    Button *desiertoButton = new SuperficieButton(++nextId, 2, DESIERTO_EDITOR,
+    Button *desiertoButton = new SuperficieButton(++nextId, 2, DESIERTO,
                                                   textureLoader.getTexture
-                                                          (DESIERTO_EDITOR),
+                                                          (DESIERTO),
                                                   mousePosition,
                                                   renderer, editor);
     buttons.push_back(desiertoButton);
 
-    Button *glaciarButton = new SuperficieButton(++nextId, 3, GELIDO_EDITOR,
+    Button *glaciarButton = new SuperficieButton(++nextId, 3, GELIDO,
                                                  textureLoader.getTexture
-                                                         (GELIDO_EDITOR),
+                                                         (GELIDO),
                                                  mousePosition,
                                                  renderer, editor);
     buttons.push_back(glaciarButton);

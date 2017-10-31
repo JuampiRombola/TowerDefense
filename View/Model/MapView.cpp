@@ -2,14 +2,13 @@
 #include "../Common/SpriteNamesConfig.h"
 
 #define PATHTILE 1
-#define STRUCTURETILE 2
 
 MapView::MapView(int width, int height, int env,
                  Renderer &renderer, TextureLoader &textures) :
         width(width), height(height),
         envTile(textures.getTexture(env), renderer),
         pathTile(textures.getTexture(env + PATHTILE), renderer),
-        structureTile(textures.getTexture(env + STRUCTURETILE), renderer),
+        structureTile(textures.getTexture(TIERRAFIRME), renderer),
         textures(textures), renderer(renderer) {
     selectBackgroundColor(renderer, env);
     envTile.setSourceRect(0, 0, 128, 96);

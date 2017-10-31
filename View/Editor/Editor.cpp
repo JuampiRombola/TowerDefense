@@ -1,7 +1,7 @@
 #include "Editor.h"
 #include <iostream>
 
-Editor::Editor(MapView& map) : superficie(PRADERA_EDITOR), map(map) {};
+Editor::Editor(MapView& map) : superficie(PRADERA), map(map) {};
 
 Editor::~Editor() = default;
 
