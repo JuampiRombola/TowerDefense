@@ -15,14 +15,11 @@
 #define UNIT_WALKING_N 12
 #define UNIT_DYING_N 18
 
-UnitView::UnitView(int key, TextureLoader &textures, Renderer &renderer,
-                   std::vector<std::pair<int, int>> *path) :
+UnitView::UnitView(int key, TextureLoader &textures, Renderer &renderer) :
         spriteWalking(textures.getTexture(key), renderer),
-        spriteDying(textures.getTexture(key), renderer), path(path) {
+        spriteDying(textures.getTexture(key), renderer){
     spriteWalking.setSourceRect(WALKING_W_POS, WALKING_H_POS, WALKING_W, WALKING_H);
-    int i = (*path)[currentIndex].first;
-    int j = (*path)[currentIndex].second;
-    spriteWalking.setDestRect(i, j, WALKING_W, WALKING_H);
+    spriteWalking.setDestRect(x, y, WALKING_W, WALKING_H);
     spriteWalking.setOffsetXY(WALKING_OFFSET_X, WALKING_OFFSET_Y);
 }
 
@@ -40,6 +37,6 @@ void UnitView::draw(Uint32 ticks) {
     spriteWalking.draw();
 }
 
-void UnitView::move() {
-
+void UnitView::move(int x, int y, int nextX, int nextY) {
+    this->setXY(x, y);
 }

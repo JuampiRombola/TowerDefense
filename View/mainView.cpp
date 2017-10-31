@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer());
 
-    MapView mapView(MAPSIZE, MAPSIZE, DESIERTO, renderer, textureLoader);
+    MapView mapView(MAPSIZE, MAPSIZE, GELIDO, renderer, textureLoader);
 
     //Armo un camino
     mapView.addPathTile(0, 0);
@@ -59,9 +59,9 @@ int main(int argc, char** argv) {
     FireTowerView fireTower2(textureLoader, renderer);
     fireTower2.setXY(4, 4);
 
-    //Creo una unidad en el 1,0
-    //UnitView unit(ABOMINABLE, textureLoader, renderer);
-    //unit.setXY(2, 2);
+    //Creo una unidad en el 0,0
+    UnitView unit(ABOMINABLE, textureLoader, renderer);
+    unit.move(0, 0, 1, 0);
 
     Uint32 t1;
     Uint32 t2;
@@ -70,7 +70,6 @@ int main(int argc, char** argv) {
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
 
-    SDL_PollEvent(&event);
     while (!quit) {
         t1 = SDL_GetTicks();
 
@@ -107,15 +106,19 @@ int main(int argc, char** argv) {
             }
         }
         renderer.clearRender();
+
         Uint32 ticks = SDL_GetTicks();
         mapView.draw(ticks);
         portalEntrada.draw(ticks);
         portalSalida.draw(ticks);
-        //unit.draw(ticks);
+
+        if ((ticks % 100) == 0)
+            unit.move(1, 0, 1, 1);
+        unit.draw(ticks);
         fireTower1.draw(ticks);
         fireTower2.draw(ticks);
-        renderer.present();
 
+        renderer.present();
 
         t2 = SDL_GetTicks();
         elapsedTime = t2 - t1 + delta;

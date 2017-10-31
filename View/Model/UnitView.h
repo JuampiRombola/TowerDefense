@@ -12,7 +12,6 @@ private:
     enum State {WALKING, DYING};
     int currentDirection;
     int currentState;
-    int currentIndex;
     Sprite spriteWalking;
     Sprite spriteDying;
     std::vector<std::pair<int, int>> *path;
@@ -20,11 +19,10 @@ private:
     //std::pair<int, int> dyingWH;
 
 public:
-    UnitView(int key, TextureLoader &textures, Renderer &renderer,
-             std::vector<std::pair<int, int>> *path);
+    UnitView(int key, TextureLoader &textures, Renderer &renderer);
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
-    void move();
+    void move(int x, int y, int nextX, int nextY);
 };
 
 
