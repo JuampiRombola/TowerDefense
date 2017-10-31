@@ -18,7 +18,7 @@ void PrintTowerVms(std::vector<TowerVM>& towers);
 
 int main(int argc, char** argv)
 {
-	std::string s("TowerDefenseServer/config.yaml");
+	std::string s("../TowerDefenseServer/config.yaml");
 	GameConfiguration cfg(s);
 
 	uint clockDelaymilliseconds = 0;
