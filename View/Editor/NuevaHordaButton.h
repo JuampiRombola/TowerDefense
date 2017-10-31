@@ -14,7 +14,6 @@ public:
     NuevaHordaButton(int id, SDL_Texture *texture, MousePosition &mousePosition,
                      Renderer &renderer, Editor &editor);
 
-    ~NuevaHordaButton();
 };
 
 

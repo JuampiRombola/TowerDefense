@@ -10,5 +10,3 @@ EliminarHordaButton::EliminarHordaButton(int id, int horda, SDL_Texture *texture
 void EliminarHordaButton::click() {
     editor.eliminarHorda(horda);
 }
-
-EliminarHordaButton::~EliminarHordaButton() = default;

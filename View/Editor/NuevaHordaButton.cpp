@@ -10,4 +10,3 @@ void NuevaHordaButton::click() {
     editor.agregarHorda();
 }
 
-NuevaHordaButton::~NuevaHordaButton() = default;

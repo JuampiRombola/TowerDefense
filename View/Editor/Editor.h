@@ -8,14 +8,14 @@
 
 class Editor {
 private:
-    std::string superficie;
     std::vector<std::vector<std::string>> hordas;
+    int superficie;
     std::string nombre;
     MapView& map;
 public:
-    Editor(MapView& map);
+    explicit Editor(MapView& map);
     ~Editor();
-    void setSuperficie(const int superficie);
+    void setSuperficie(int superficie);
     void agregarEnemigo(int horda, std::string enemigo);
     void eliminarEnemigo(int horda, std::string enemigo);
     void agregarHorda();

@@ -8,10 +8,10 @@
 
 class Button : public Image {
 private:
-    int id;
     MousePosition &mousePosition;
     virtual void click() = 0;
 protected:
+    int id;
     bool isClicked();
 public:
     Button(int id, int posX, int posY, int width, int height,

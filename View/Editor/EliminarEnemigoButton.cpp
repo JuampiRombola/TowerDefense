@@ -11,5 +11,3 @@ EliminarEnemigoButton::EliminarEnemigoButton(int id, int horda,
 void EliminarEnemigoButton::click() {
     editor.eliminarEnemigo(horda, enemigo);
 }
-
-EliminarEnemigoButton::~EliminarEnemigoButton() = default;

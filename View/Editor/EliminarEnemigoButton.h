@@ -17,7 +17,6 @@ public:
                           SDL_Texture *texture, MousePosition &mousePosition,
                           Renderer &renderer, Editor &editor);
 
-    ~EliminarEnemigoButton();
 };
 
 

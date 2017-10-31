@@ -15,7 +15,6 @@ public:
     EliminarHordaButton(int id, int horda, SDL_Texture *texture,
                         MousePosition &mousePosition, Renderer &renderer,
                         Editor &editor);
-    ~EliminarHordaButton();
 };
 
 #endif //TOWERDEFENSE_ELIMINARHORDABUTTON_H

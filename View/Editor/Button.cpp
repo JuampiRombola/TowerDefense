@@ -2,11 +2,9 @@
 
 Button::Button(int id, int posX, int posY, int width, int height,
                SDL_Texture *texture, MousePosition &mousePosition,
-               Renderer &renderer) : id(id),
-                                     mousePosition(mousePosition),
-                                     Image(posX, posY, width,
-                                                     height, texture,
-                                           renderer) {}
+               Renderer &renderer) : mousePosition(mousePosition),
+                                     Image(posX, posY, width, height, texture,
+                                           renderer), id(id) {}
 
 Button::~Button() = default;
 
