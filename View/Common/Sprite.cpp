@@ -45,3 +45,11 @@ void Sprite::setOffsetXY(int x, int y) {
 void Sprite::setTexture(SDL_Texture *newTexture) {
     this->texture = newTexture;
 }
+
+int Sprite::getOffsetX() {
+    return offsetX;
+}
+
+int Sprite::getOffsetY() {
+    return offsetY;
+}

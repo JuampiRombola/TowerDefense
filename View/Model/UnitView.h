@@ -8,21 +8,33 @@
 
 class UnitView : public View {
 private:
+    Sprite spriteWalking;
+    Sprite spriteDying;
     enum Direction {S, SO, O, NO, N, NE, E, SE};
     enum State {WALKING, DYING};
     int currentDirection;
     int currentState;
-    Sprite spriteWalking;
-    Sprite spriteDying;
-    std::vector<std::pair<int, int>> *path;
-    //std::pair<int, int> walkingWH;
-    //std::pair<int, int> dyingWH;
+    int nextX;
+    int nextY;
+    int directionX;
+    int directionY;
+    Uint32 initTime;
+    Uint32 timePerPixel;
+    int currentDisplacement;
+    int accumulatedDisplacement;
+    bool isFirstStep;
 
 public:
     UnitView(int key, TextureLoader &textures, Renderer &renderer);
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
-    void move(int x, int y, int nextX, int nextY);
+    void move(int x, int y, int nextX, int nextY, Uint32 t);
+
+private:
+    void setNumberOfPixelsToMove(Uint32 currentTime);
+    void setOffsetXY();
+    void calculateNewDirection();
+    void setCurrentDirection();
 };
 
 

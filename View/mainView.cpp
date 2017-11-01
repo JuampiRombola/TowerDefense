@@ -61,7 +61,9 @@ int main(int argc, char** argv) {
 
     //Creo una unidad en el 0,0
     UnitView unit(ABOMINABLE, textureLoader, renderer);
-    unit.move(0, 0, 1, 0);
+    //unit.move(0, 0, 1, 0, 5000);
+    //unit.move(1, 0, 1, 1, 5000);
+    unit.move(0, 0, 1, 0, 5000);
 
     Uint32 t1;
     Uint32 t2;
@@ -112,8 +114,8 @@ int main(int argc, char** argv) {
         portalEntrada.draw(ticks);
         portalSalida.draw(ticks);
 
-        if ((ticks % 100) == 0)
-            unit.move(1, 0, 1, 1);
+        //if ((ticks % 100) == 0)
+            //unit.move(1, 0, 1, 1, 5000);
         unit.draw(ticks);
         fireTower1.draw(ticks);
         fireTower2.draw(ticks);

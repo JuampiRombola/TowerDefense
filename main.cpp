@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
 
     //Creo una unidad en el 0,0
     UnitView unit(ABOMINABLE, textureLoader, renderer);
-    unit.move(0, 0, 1, 0);
+    unit.move(0, 0, 1, 0, 5000);
 
     Uint32 t1;
     Uint32 t2;
@@ -127,11 +127,9 @@ int main(int argc, char** argv) {
         std::vector<UnitVM> unitVms = game.GetUnitViewModels();
         if (unitVms.begin() != unitVms.end()){
             UnitVM vm = *unitVms.begin();
-            unit.move(vm.xPos, vm.yPos, 0, 0);
+            unit.move(vm.xPos, vm.yPos, 0, 0, 5000);
         }
-
-//        if ((ticks % 100) == 0)
-//            unit.move(1, 0, 1, 1)
+        
 
         unit.draw(ticks);
         fireTower1.draw(ticks);
@@ -148,6 +146,7 @@ int main(int argc, char** argv) {
         } else
             delta = elapsedTime - s;
     }
+
     gameClock.join();
     SDL_Quit();
 }
