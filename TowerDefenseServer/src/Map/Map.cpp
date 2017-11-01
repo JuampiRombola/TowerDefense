@@ -49,39 +49,49 @@ _projectiles()
 	_PlacePathTile(new PathTile(3,8, this));
 	_PlacePathTile(new PathTile(4,8, this));
 	_PlacePathTile(new PathTile(5,8, this));
-	_PlacePathTile(new PathTile(6,8, this));*/
+	_PlacePathTile(new PathTile(6,8, this));
+
+
+	     mapView.addPathTile(0, 0);
+    mapView.addPathTile(1, 0);
+    mapView.addPathTile(1, 1);
+    mapView.addPathTile(1, 2);
+    mapView.addPathTile(1, 3);
+    mapView.addPathTile(2, 3);
+    mapView.addPathTile(2, 4);
+    mapView.addPathTile(3, 4);
+    mapView.addPathTile(3, 5);
+    mapView.addPathTile(4, 5);
+    mapView.addPathTile(5, 5);
+    mapView.addPathTile(6, 5);
+    mapView.addPathTile(6, 6);
+
+	 */
 
 	_PlacePathTile(new PathTile(1,0, this));
-	_PlacePathTile(new PathTile(2,0, this));
-	_PlacePathTile(new PathTile(3,0, this));
-	_PlacePathTile(new PathTile(3,1, this));
-	_PlacePathTile(new PathTile(3,2, this));
-	_PlacePathTile(new PathTile(3,3, this));
+	_PlacePathTile(new PathTile(1,1, this));
+	_PlacePathTile(new PathTile(1,2, this));
+	_PlacePathTile(new PathTile(1,3, this));
+	_PlacePathTile(new PathTile(2,3, this));
+	_PlacePathTile(new PathTile(2,4, this));
 	_PlacePathTile(new PathTile(3,4, this));
-	_PlacePathTile(new PathTile(4,4, this));
-	_PlacePathTile(new PathTile(5,4, this));
-	_PlacePathTile(new PathTile(6,4, this));
+	_PlacePathTile(new PathTile(3,5, this));
+	_PlacePathTile(new PathTile(4,5, this));
+	_PlacePathTile(new PathTile(5,5, this));
 	_PlacePathTile(new PathTile(6,5, this));
-	_PlacePathTile(new PathTile(6,6, this));
-	_PlacePathTile(new PathTile(6,7, this));
-	_PlacePathTile(new PathTile(7,7, this));
-	_PlacePathTile(new PathTile(8,7, this));
-	_PlacePathTile(new PathTile(8,6, this));
-	_PlacePathTile(new PathTile(8,5, this));
-	_PlacePathTile(new PathTile(8,4, this));
 
 	/*_PlacePathTile(new PathTile(3,5, this));
 	_PlacePathTile(new PathTile(3,6, this));
 	_PlacePathTile(new PathTile(4,6, this));
 	_PlacePathTile(new PathTile(5,6, this));*/
 
-	PathTile* end = new PathTile(9,4, this);
+	PathTile* end = new PathTile(6,6, this);
 	_PlacePathTile(end);
 	_SetFinishTile(end);
 
 
-	PlaceGroundTile(new SolidGroundTile(2,5));
-	
+	//PlaceGroundTile(new SolidGroundTile(2,5));
+
 
 
 	for (uint i = 0; i < _cols; i++)

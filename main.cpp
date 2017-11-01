@@ -1,12 +1,15 @@
-#include "Common/Window.h"
-#include "Common/Renderer.h"
-#include "Common/TextureLoader.h"
-#include "Model/MapView.h"
-#include "Common/SpriteNamesConfig.h"
-#include "Model/PortalEntradaView.h"
-#include "Model/PortalSalidaView.h"
-#include "Model/FireTowerView.h"
-#include "Model/UnitView.h"
+#include <thread>
+#include "View/Common/Window.h"
+#include "View/Common/Renderer.h"
+#include "View/Common/TextureLoader.h"
+#include "View/Model/MapView.h"
+#include "View/Common/SpriteNamesConfig.h"
+#include "View/Model/PortalEntradaView.h"
+#include "View/Model/PortalSalidaView.h"
+#include "View/Model/FireTowerView.h"
+#include "View/Model/UnitView.h"
+#include "TowerDefenseServer/include/GameConfiguration.h"
+#include "TowerDefenseServer/include/TowerDefenseGame.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -15,6 +18,14 @@
 #define MAPSIZE 7
 
 int main(int argc, char** argv) {
+
+    std::string ss("../TowerDefenseServer/config.yaml");
+    GameConfiguration cfg(ss);
+    uint clockDelaymilliseconds = 100;
+    TowerDefenseGame game(clockDelaymilliseconds, cfg);
+    std::thread gameClock(&TowerDefenseGame::Run, &game);
+
+
     bool quit = false;
     SDL_Event event{};
     SDL_Init(SDL_INIT_VIDEO);
@@ -22,7 +33,7 @@ int main(int argc, char** argv) {
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer());
 
-    MapView mapView(MAPSIZE, MAPSIZE, GELIDO, renderer, textureLoader);
+    MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
 
     //Armo un camino
     mapView.addPathTile(0, 0);
@@ -112,8 +123,16 @@ int main(int argc, char** argv) {
         portalEntrada.draw(ticks);
         portalSalida.draw(ticks);
 
-        if ((ticks % 100) == 0)
-            unit.move(1, 0, 1, 1);
+
+        std::vector<UnitVM> unitVms = game.GetUnitViewModels();
+        if (unitVms.begin() != unitVms.end()){
+            UnitVM vm = *unitVms.begin();
+            unit.move(vm.xPos, vm.yPos, 0, 0);
+        }
+
+//        if ((ticks % 100) == 0)
+//            unit.move(1, 0, 1, 1)
+
         unit.draw(ticks);
         fireTower1.draw(ticks);
         fireTower2.draw(ticks);
@@ -129,5 +148,6 @@ int main(int argc, char** argv) {
         } else
             delta = elapsedTime - s;
     }
+    gameClock.join();
     SDL_Quit();
 }

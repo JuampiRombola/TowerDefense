@@ -1,4 +1,4 @@
-unit_base_step_delay_ms: 2000
+unit_base_step_delay_ms: 5000
 towers:
  ground:
   range: 1

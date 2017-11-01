@@ -157,6 +157,9 @@ bool TowerDefenseGame::Ended(){
 
 void TowerDefenseGame::Run()
 {
+
+	std::this_thread::sleep_for (std::chrono::milliseconds(5000));
+
 	while(_Step()) 
 		std::this_thread::sleep_for (std::chrono::milliseconds(_clockFrequencyMs));
 

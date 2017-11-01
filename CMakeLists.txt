@@ -59,7 +59,6 @@ set(SOURCE_FILES_M
         TowerDefenseServer/include/Helpers.h
         TowerDefenseServer/include/TowerDefenseGame.h
         TowerDefenseServer/src/GameConfiguration.cpp
-        TowerDefenseServer/src/main.cpp
         TowerDefenseServer/src/TowerDefenseGame.cpp
         TowerDefenseServer/src/Towers/AirProjectile.cpp
         TowerDefenseServer/src/Towers/AirTower.cpp
@@ -80,7 +79,7 @@ set(SOURCE_FILES_V
         View/Common/Window.cpp
         View/Common/Window.h View/Common/ViewError.cpp View/Common/ViewError.h View/Common/Renderer.cpp
         View/Common/Renderer.h View/Common/TextureLoader.cpp View/Common/TextureLoader.h
-        View/Model/MapView.cpp View/Model/MapView.h View/mainView.cpp View/Common/Sprite.cpp
+        View/Model/MapView.cpp View/Model/MapView.h View/Common/Sprite.cpp
         View/Common/Sprite.h View/Common/SpriteNamesConfig.h View/Common/View.cpp View/Common/View.h
         View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
         View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
@@ -108,9 +107,10 @@ set(SOURCE_FILES_E
         View/Common/Image.h View/Editor/DoNothingButton.cpp View/Editor/DoNothingButton.h
         View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h)
 
-add_executable(TowerDefenseView ${SOURCE_FILES_V})
+add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})
-add_executable(TowerDefenseModel ${SOURCE_FILES_M})
+add_executable(TowerDefenseModel ${SOURCE_FILES_M}  TowerDefenseServer/src/main.cpp)
+add_executable(TowerDefense ${SOURCE_FILES_M} ${SOURCE_FILES_V} main.cpp)
 
 INCLUDE(FindPkgConfig)
 #pkg_search_module(SDL2 REQUIRED)
@@ -121,3 +121,4 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
 target_link_libraries(TowerDefenseView ${SDL2IMAGE_LIBRARIES})
 target_link_libraries(TowerDefenseEditor ${SDL2IMAGE_LIBRARIES})
 target_link_libraries(TowerDefenseModel yaml-cpp)
+target_link_libraries(TowerDefense yaml-cpp ${SDL2IMAGE_LIBRARIES})
