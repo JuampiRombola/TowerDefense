@@ -2,14 +2,14 @@
 #define TOWERDEFENSE_FIRETOWERVIEW_H
 
 #include "../Common/View.h"
-#include "../Common/Sprite.h"
 #include "../Common/TextureLoader.h"
 #include "../Common/Renderer.h"
+#include "../Common/AnimatedSprite.h"
 
 class FireTowerView : public View{
 private:
-    Sprite spriteTower;
-    Sprite spriteFire;
+    AnimatedSprite spriteTower;
+    AnimatedSprite spriteFire;
 
 public:
     FireTowerView(TextureLoader &textures, Renderer &renderer);

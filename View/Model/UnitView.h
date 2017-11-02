@@ -3,13 +3,13 @@
 
 
 #include "../Common/View.h"
-#include "../Common/Sprite.h"
 #include "../Common/TextureLoader.h"
+#include "../Common/AnimatedSprite.h"
 
 class UnitView : public View {
 private:
-    Sprite spriteWalking;
-    Sprite spriteDying;
+    AnimatedSprite spriteWalking;
+    AnimatedSprite spriteDying;
     enum Direction {S, SO, O, NO, N, NE, E, SE};
     enum State {WALKING, DYING};
     int currentDirection;

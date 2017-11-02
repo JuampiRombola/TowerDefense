@@ -13,8 +13,9 @@
 #define PORTALENTRADA 9
 #define PORTALSALIDA 10
 #define FIRE_TOWER 11
-#define ABOMINABLE 12
-#define TOTAL 13
+#define DISPARO_FUEGO 12
+#define ABOMINABLE 13
+#define TOTAL 14
 
 #define AGREGAR_HORDA_BTN 100
 #define ENEMIGO_SUMA 101

@@ -84,7 +84,7 @@ set(SOURCE_FILES_V
         View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
         View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
         View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h
-        View/Model/UnitView.cpp View/Model/UnitView.h)
+        View/Model/UnitView.cpp View/Model/UnitView.h View/Model/Shot.cpp View/Model/Shot.h View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h)
 
 set(SOURCE_FILES_E
         View/Common/Window.cpp View/Common/Window.h View/Common/ViewError.cpp
@@ -105,7 +105,7 @@ set(SOURCE_FILES_E
         View/Editor/ToggleButton.cpp View/Editor/ToggleButton.h View/Editor/Buttons.cpp
         View/Editor/Buttons.h View/Common/Text.cpp View/Common/Text.h View/Common/Image.cpp
         View/Common/Image.h View/Editor/DoNothingButton.cpp View/Editor/DoNothingButton.h
-        View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h)
+        View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h)
 
 add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})

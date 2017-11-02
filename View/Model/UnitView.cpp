@@ -1,31 +1,43 @@
 #include "UnitView.h"
 
-#define WALKING_W_POS 1765
-#define WALKING_H_POS 3537
-
 #define WALKING_W 106
 #define WALKING_H 119
-
+#define WALKING_START_X 1765
+#define WALKING_START_Y 3537
+#define WALKING_COLUMNS 12
+#define WALKING_ROWS 1
 #define WALKING_OFFSET_X 10
 #define WALKING_OFFSET_Y 78
 
 #define DYING_W 0
 #define DYING_H 0
-
-#define UNIT_WALKING_N 12
-#define UNIT_DYING_N 18
+#define DYING_START_X 0
+#define DYING_START_Y 0
+#define DYING_COLUMNS 18
+#define DYING_ROWS 1
+#define DYING_OFFSET_X 0
+#define DYING_OFFSET_Y 0
 
 #define PIXELS 40
 
 UnitView::UnitView(int key, TextureLoader &textures, Renderer &renderer) :
-        spriteWalking(textures.getTexture(key), renderer),
-        spriteDying(textures.getTexture(key), renderer) {
+        spriteWalking(textures.getTexture(key), renderer,
+                      WALKING_W, WALKING_H,
+                      WALKING_START_X, WALKING_START_Y,
+                      WALKING_COLUMNS, WALKING_ROWS),
+        spriteDying(textures.getTexture(key), renderer,
+                    DYING_W, DYING_H,
+                    DYING_START_X, DYING_START_Y,
+                    DYING_COLUMNS, DYING_ROWS) {
     currentDirection = SE;
     this->setCurrentDirection();
     currentState = WALKING;
-    spriteWalking.setSourceRect(WALKING_W_POS, WALKING_H_POS, WALKING_W, WALKING_H);
+
     spriteWalking.setDestRect(x, y, WALKING_W, WALKING_H);
     spriteWalking.setOffsetXY(WALKING_OFFSET_X, WALKING_OFFSET_Y);
+
+    spriteDying.setDestRect(x, y, DYING_W, DYING_H);
+    spriteDying.setOffsetXY(DYING_OFFSET_X, DYING_OFFSET_Y);
 }
 
 void UnitView::setXY(int x, int y) {
@@ -41,21 +53,24 @@ void UnitView::setXY(int x, int y) {
 }
 
 void UnitView::draw(Uint32 ticks) {
-    Uint32 spriteN;
     if (currentState == WALKING) {
         if (accumulatedDisplacement < PIXELS) {
             this->setNumberOfPixelsToMove(ticks);
             this->setOffsetXY();
         }
-        spriteN = (ticks / timePerPixel) % UNIT_WALKING_N;
-        spriteWalking.setSourceXY(spriteN * WALKING_W + WALKING_W_POS,
-                                  WALKING_H_POS + currentDirection * WALKING_H);
-        spriteWalking.draw();
+        spriteWalking.setStartXStartY(WALKING_START_X,
+                                      WALKING_START_Y
+                                      + currentDirection * WALKING_H);
+        spriteWalking.setTimePerSprite(timePerPixel);
+        spriteWalking.nextAndDraw(ticks);
     } else {
-        spriteN = (ticks / timePerPixel) % UNIT_DYING_N;
-        spriteWalking.setSourceXY(spriteN * DYING_W + WALKING_W_POS,
-                                  WALKING_H_POS + currentDirection * DYING_H);
-        spriteWalking.draw();
+        if (spriteDying.getCurrentSprite() != DYING_COLUMNS) {
+            spriteDying.setStartXStartY(DYING_START_X,
+                                        DYING_START_Y
+                                        + currentDirection * DYING_H);
+            spriteDying.setTimePerSprite(timePerPixel);
+            spriteDying.nextAndDraw(ticks);
+        }
     }
 }
 
