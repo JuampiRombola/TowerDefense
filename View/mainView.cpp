@@ -61,8 +61,6 @@ int main(int argc, char** argv) {
 
     //Creo una unidad en el 0,0
     UnitView unit(ABOMINABLE, textureLoader, renderer);
-    //unit.move(0, 0, 1, 0, 5000);
-    //unit.move(1, 0, 1, 1, 5000);
     unit.move(0, 0, 1, 0, 5000);
 
     Uint32 t1;
@@ -88,6 +86,8 @@ int main(int argc, char** argv) {
                             renderer.zoomIn(); break;
                         case SDLK_o:
                             renderer.zoomOut(); break;
+                        case SDLK_d:
+                            unit.enableDying(); break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:

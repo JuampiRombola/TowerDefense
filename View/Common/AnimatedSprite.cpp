@@ -44,5 +44,5 @@ void AnimatedSprite::setStartXStartY(int sx, int sy) {
 }
 
 int AnimatedSprite::getCurrentSprite() {
-    return (++i * ++j);
+    return ((i + 1) * (j + 1));
 }

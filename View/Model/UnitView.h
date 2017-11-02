@@ -29,6 +29,7 @@ public:
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
     void move(int x, int y, int nextX, int nextY, Uint32 t);
+    void enableDying();
 
 private:
     void setNumberOfPixelsToMove(Uint32 currentTime);
