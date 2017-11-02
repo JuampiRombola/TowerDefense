@@ -47,12 +47,12 @@ void UnitView::draw(Uint32 ticks) {
             this->setNumberOfPixelsToMove(ticks);
             this->setOffsetXY();
         }
-        spriteN = (ticks / 150) % UNIT_WALKING_N;
+        spriteN = (ticks / timePerPixel) % UNIT_WALKING_N;
         spriteWalking.setSourceXY(spriteN * WALKING_W + WALKING_W_POS,
                                   WALKING_H_POS + currentDirection * WALKING_H);
         spriteWalking.draw();
     } else {
-        spriteN = (ticks / 150) % UNIT_DYING_N;
+        spriteN = (ticks / timePerPixel) % UNIT_DYING_N;
         spriteWalking.setSourceXY(spriteN * DYING_W + WALKING_W_POS,
                                   WALKING_H_POS + currentDirection * DYING_H);
         spriteWalking.draw();
