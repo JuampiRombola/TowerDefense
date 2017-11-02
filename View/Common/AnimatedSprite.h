@@ -27,6 +27,7 @@ public:
     void setTimePerSprite(Uint32 t);
     void setStartXStartY(int sx, int sy);
     int getCurrentSprite();
+    void reset();
 };
 
 

@@ -7,6 +7,7 @@
 #include "Model/PortalSalidaView.h"
 #include "Model/FireTowerView.h"
 #include "Model/UnitView.h"
+#include "Model/ShotView.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -41,6 +42,7 @@ int main(int argc, char** argv) {
 
     //Pongo tierra firme
     mapView.addStructureTile(1, 4);
+    mapView.addStructureTile(2, 0);
     mapView.addStructureTile(2, 2);
     mapView.addStructureTile(4, 4);
     mapView.addStructureTile(5, 6);
@@ -51,13 +53,16 @@ int main(int argc, char** argv) {
     PortalView portalSalida = PortalSalidaView(textureLoader, renderer);
     portalSalida.setXY(6, 6);
 
-    //Agrego una torre de fuego en el 1,4
+    //Agrego una torre de fuego en el 2,0
     FireTowerView fireTower1(textureLoader, renderer);
-    fireTower1.setXY(1, 4);
+    fireTower1.setXY(2, 0);
 
     //Agrego una torre de fuego en el 4,4
     FireTowerView fireTower2(textureLoader, renderer);
     fireTower2.setXY(4, 4);
+
+    //Agrego un disparo de fuego
+    ShotView fireShot = ShotView(DISPARO_FUEGO, textureLoader, renderer);
 
     //Creo una unidad en el 0,0
     UnitView unit(ABOMINABLE, textureLoader, renderer);
@@ -88,6 +93,8 @@ int main(int argc, char** argv) {
                             renderer.zoomOut(); break;
                         case SDLK_d:
                             unit.enableDying(); break;
+                        case SDLK_s:
+                            fireShot.shoot(2, 0, 0, 0, 1000); break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
@@ -111,6 +118,7 @@ int main(int argc, char** argv) {
         unit.draw(ticks);
         fireTower1.draw(ticks);
         fireTower2.draw(ticks);
+        fireShot.draw(ticks);
 
         renderer.present();
 
