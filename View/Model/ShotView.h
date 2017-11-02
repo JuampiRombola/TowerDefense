@@ -7,13 +7,13 @@
 #include "../Common/TextureLoader.h"
 #include "../Common/Renderer.h"
 
-class Shot : public View {
+class ShotView : public View {
 private:
     //Sprite spriteShot;
-    //Sprite spriteExplotion;
+    //Sprite spriteExplosion;
 
 public:
-    Shot(int key, TextureLoader &textures, Renderer &renderer);
+    ShotView(int key, TextureLoader &textures, Renderer &renderer);
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
 };
