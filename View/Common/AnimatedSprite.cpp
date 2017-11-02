@@ -25,8 +25,7 @@ void AnimatedSprite::next(Uint32 ticks) {
 
     if (totalColumns >= 2)
         ++i = i % totalColumns;
-
-    printf("%d\n", (i * width));
+    
     this->setSourceXY(i * width + startX, j * height + startY);
 }
 
