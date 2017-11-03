@@ -27,6 +27,8 @@ public:
     void addStructureTile(int x, int y);
     void selectBackgroundColor(Renderer &renderer, int environment);
     void setEnvTile(int env);
+    int getTileXFromPixel(int x, int y);
+    int getTileYFromPixel(int x, int y);
 };
 
 

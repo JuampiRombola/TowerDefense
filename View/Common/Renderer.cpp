@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Renderer.h"
 
 #define HEIGHTFACTOR 80
@@ -112,4 +113,14 @@ bool Renderer::isOnCamera(int x, int y) {
     return ((x >= -(WIDTHFACTOR + TOLERANCE) * zoom) &&
             (y >= -(HEIGHTFACTOR + TOLERANCE) * zoom) &&
             (x <= windowWidth) && (y <= windowHeight));
+}
+
+int Renderer::pixelToCartesianX(int x, int y) {
+    return ((x/zoom + cameraX - paddingWidth) / WIDTHFACTOR +
+            (y/zoom + cameraY - paddingHeight) / (HEIGHTFACTOR / 2)) / 2;
+}
+
+int Renderer::pixelToCartesianY(int x, int y) {
+    return ((y/zoom + cameraY - paddingHeight) / (HEIGHTFACTOR / 2) - (x/zoom +
+            cameraX - paddingWidth) / WIDTHFACTOR) / 2;
 }

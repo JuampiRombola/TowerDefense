@@ -12,7 +12,7 @@
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
 
-#define MAPSIZE 10
+#define MAPSIZE 2
 
 int main(int argc, char** argv) {
     bool quit = false;
@@ -23,6 +23,8 @@ int main(int argc, char** argv) {
     TextureLoader textureLoader(renderer.getRenderer());
 
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
+    mapView.addStructureTile(0, 0);
+    mapView.addPathTile(1, 1);
 
     int mouse_x = -1, mouse_y = -1;
     MousePosition mouse(mouse_x, mouse_y);
@@ -35,6 +37,9 @@ int main(int argc, char** argv) {
     buttons.addSuperficieButtons();
     buttons.addNuevaHordaButton();
 
+    int tileX = 0;
+    int tileY = 0;
+
     while (!quit) {
         SDL_PollEvent(&event);
 
@@ -45,6 +50,10 @@ int main(int argc, char** argv) {
             case SDL_MOUSEBUTTONDOWN:
                 SDL_GetMouseState(&mouse_x, &mouse_y);
                 mouse.toggleActive();
+                tileX = mapView.getTileXFromPixel(mouse_x, mouse_y);
+                tileY = mapView.getTileYFromPixel(mouse_x, mouse_y);
+                std::cout << "Hice click en el tile (" << tileX << "," << tileY
+                      << ")\n";
                 break;
             case SDL_FINGERDOWN:
                 mouse_x = static_cast<int>(event.tfinger.x);

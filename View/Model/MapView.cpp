@@ -1,3 +1,4 @@
+#include <cmath>
 #include "MapView.h"
 #include "../Common/SpriteNamesConfig.h"
 
@@ -70,4 +71,12 @@ void MapView::selectBackgroundColor(Renderer &renderer, int environment) {
 void MapView::setEnvTile(int env) {
     envTile.setTexture(textures.getTexture(env));
     selectBackgroundColor(renderer, env);
+}
+
+int MapView::getTileXFromPixel(int x, int y) {
+    return static_cast<int>(std::floor(renderer.pixelToCartesianX(x, y)));
+}
+
+int MapView::getTileYFromPixel(int x, int y) {
+    return static_cast<int>(std::floor(renderer.pixelToCartesianY(x, y)));
 }
