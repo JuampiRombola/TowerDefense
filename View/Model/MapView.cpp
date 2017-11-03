@@ -80,3 +80,7 @@ int MapView::getTileXFromPixel(int x, int y) {
 int MapView::getTileYFromPixel(int x, int y) {
     return static_cast<int>(std::floor(renderer.pixelToCartesianY(x, y)));
 }
+
+bool MapView::isValidTile(int x, int y) {
+    return (x >= 0 && x < width) && (y >= 0 && y < height);
+}

@@ -11,5 +11,3 @@ AgregarEnemigoButton::AgregarEnemigoButton(int id, int horda,
 void AgregarEnemigoButton::click() {
     editor.agregarEnemigo(horda, enemigo);
 }
-
-AgregarEnemigoButton::~AgregarEnemigoButton() = default;

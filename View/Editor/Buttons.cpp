@@ -1,4 +1,5 @@
 #include "Buttons.h"
+#include "AgregarCaminoButton.h"
 
 Buttons::Buttons(MousePosition &mousePosition, Renderer &renderer,
                  Editor &editor, TextureLoader &textureLoader, KeyboardInput
@@ -60,9 +61,10 @@ void Buttons::addSuperficieButtons() {
                                                  renderer, editor);
     buttons.push_back(glaciarButton);
 
-    Image *text = new Text(100, 50, 500, 0, textureLoader
-            .getTexture(FONT), renderer);
-    images.push_back(text);
+    Button *pathTileButton = new AgregarCaminoButton(++nextId, textureLoader
+            .getTexture(VOLCAN_PATH), mousePosition, renderer, editor);
+    buttons.push_back(pathTileButton);
+
 }
 
 void Buttons::addNuevaHordaButton() {

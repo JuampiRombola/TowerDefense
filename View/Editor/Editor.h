@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 #include "../Model/MapView.h"
 #include "../Common/SpriteNamesConfig.h"
 
@@ -12,6 +13,7 @@ private:
     int superficie;
     std::string nombre;
     MapView& map;
+    std::function<void(int, int)> mapFunction;
 public:
     explicit Editor(MapView& map);
     ~Editor();
@@ -24,6 +26,8 @@ public:
     unsigned int getCantidadEnemigosEnHorda(std::string enemigo, int horda);
     std::string& getNombre();
     void exportar();
+    void waitForPathTile();
+    void applyTileFunction(int x, int y);
 };
 
 #endif //TOWERDEFENSE_EDITOR_H

@@ -16,8 +16,6 @@ public:
     AgregarEnemigoButton(int id, int horda, const std::string &enemigo,
                          SDL_Texture *texture, MousePosition &mousePosition,
                          Renderer &renderer, Editor &editor);
-
-    ~AgregarEnemigoButton();
 };
 
 #endif //TOWERDEFENSE_AGREGARENEMIGOBUTTON_H

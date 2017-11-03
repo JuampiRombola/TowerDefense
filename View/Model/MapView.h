@@ -29,6 +29,7 @@ public:
     void setEnvTile(int env);
     int getTileXFromPixel(int x, int y);
     int getTileYFromPixel(int x, int y);
+    bool isValidTile(int x, int y);
 };
 
 

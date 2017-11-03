@@ -105,7 +105,7 @@ set(SOURCE_FILES_E
         View/Editor/ToggleButton.cpp View/Editor/ToggleButton.h View/Editor/Buttons.cpp
         View/Editor/Buttons.h View/Common/Text.cpp View/Common/Text.h View/Common/Image.cpp
         View/Common/Image.h View/Editor/DoNothingButton.cpp View/Editor/DoNothingButton.h
-        View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h)
+        View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Editor/AgregarCaminoButton.cpp View/Editor/AgregarCaminoButton.h)
 
 add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})

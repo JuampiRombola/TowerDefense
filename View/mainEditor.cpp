@@ -12,7 +12,7 @@
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
 
-#define MAPSIZE 2
+#define MAPSIZE 7
 
 int main(int argc, char** argv) {
     bool quit = false;
@@ -23,8 +23,6 @@ int main(int argc, char** argv) {
     TextureLoader textureLoader(renderer.getRenderer());
 
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
-    mapView.addStructureTile(0, 0);
-    mapView.addPathTile(1, 1);
 
     int mouse_x = -1, mouse_y = -1;
     MousePosition mouse(mouse_x, mouse_y);
@@ -52,8 +50,7 @@ int main(int argc, char** argv) {
                 mouse.toggleActive();
                 tileX = mapView.getTileXFromPixel(mouse_x, mouse_y);
                 tileY = mapView.getTileYFromPixel(mouse_x, mouse_y);
-                std::cout << "Hice click en el tile (" << tileX << "," << tileY
-                      << ")\n";
+                editor.applyTileFunction(tileX, tileY);
                 break;
             case SDL_FINGERDOWN:
                 mouse_x = static_cast<int>(event.tfinger.x);
