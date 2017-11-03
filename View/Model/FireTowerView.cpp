@@ -19,11 +19,11 @@
 #define FTOWER_ROWS 1
 
 FireTowerView::FireTowerView(TextureLoader &textures, Renderer &renderer) :
-        spriteTower(textures.getTexture(FIRE_TOWER), renderer,
+        spriteTower(textures.getTexture(TORRE_FUEGO), renderer,
                     FTOWER_W, FTOWER_H,
                     FTOWER_START_X, FTOWER_START_Y,
                     FTOWER_COLUMNS, FTOWER_ROWS),
-        spriteFire(textures.getTexture(FIRE_TOWER), renderer,
+        spriteFire(textures.getTexture(TORRE_FUEGO), renderer,
                    FIRE_W, FIRE_H,
                    FIRE_START_X, FIRE_START_Y,
                    FTOWER_COLUMNS, FTOWER_ROWS) {

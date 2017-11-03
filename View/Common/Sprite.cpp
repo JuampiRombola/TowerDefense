@@ -53,3 +53,7 @@ int Sprite::getOffsetX() {
 int Sprite::getOffsetY() {
     return offsetY;
 }
+
+void Sprite::setAlphaMod(Uint8 alpha) {
+    SDL_SetTextureAlphaMod(texture, alpha);
+}

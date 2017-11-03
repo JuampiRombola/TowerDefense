@@ -84,7 +84,7 @@ set(SOURCE_FILES_V
         View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
         View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
         View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h
-        View/Model/UnitView.cpp View/Model/UnitView.h View/Model/ShotView.cpp View/Model/ShotView.h View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h)
+        View/Model/UnitView.cpp View/Model/UnitView.h View/Model/ShotView.cpp View/Model/ShotView.h View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Model/SpellView.cpp View/Model/SpellView.h)
 
 set(SOURCE_FILES_E
         View/Common/Window.cpp View/Common/Window.h View/Common/ViewError.cpp

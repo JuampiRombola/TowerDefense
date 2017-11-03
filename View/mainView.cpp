@@ -8,6 +8,7 @@
 #include "Model/FireTowerView.h"
 #include "Model/UnitView.h"
 #include "Model/ShotView.h"
+#include "Model/SpellView.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -64,6 +65,9 @@ int main(int argc, char** argv) {
     //Agrego un disparo de fuego
     ShotView fireShot = ShotView(DISPARO_FUEGO, textureLoader, renderer);
 
+    //Agrego un muro de fuego
+    SpellView fireWall = SpellView(FIREWALL, textureLoader, renderer);
+
     //Creo una unidad en el 0,0
     UnitView unit(ABOMINABLE, textureLoader, renderer);
     unit.move(0, 0, 1, 0, 5000);
@@ -95,6 +99,8 @@ int main(int argc, char** argv) {
                             unit.enableDying(); break;
                         case SDLK_s:
                             fireShot.shoot(2, 0, 0, 0, 1000); break;
+                        case SDLK_a:
+                            fireWall.cast(0, 0, 5000); break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
@@ -118,6 +124,7 @@ int main(int argc, char** argv) {
         unit.draw(ticks);
         fireTower1.draw(ticks);
         fireTower2.draw(ticks);
+        fireWall.draw(ticks);
         fireShot.draw(ticks);
 
         renderer.present();
