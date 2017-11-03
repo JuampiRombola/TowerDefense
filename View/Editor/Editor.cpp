@@ -1,6 +1,5 @@
 #include "Editor.h"
 #include <iostream>
-#include <functional>
 
 Editor::Editor(MapView& map) : superficie(PRADERA), map(map) {};
 
@@ -73,7 +72,16 @@ void Editor::waitForPathTile() {
     mapFunction = std::bind (&MapView::addPathTile, &map, _1, _2);
 }
 
+void Editor::waitForStructureTile() {
+    using namespace std::placeholders;
+    mapFunction = std::bind (&MapView::addStructureTile, &map, _1, _2);
+}
+
 void Editor::applyTileFunction(int x, int y) {
     if (mapFunction && map.isValidTile(x, y))
         mapFunction(x, y);
+}
+
+void Editor::unbindWaitingFunction() {
+    mapFunction = std::function<void(int, int)>();
 }

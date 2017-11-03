@@ -1,5 +1,6 @@
 #include "Buttons.h"
 #include "AgregarCaminoButton.h"
+#include "AgregarTierraFirmeButton.h"
 
 Buttons::Buttons(MousePosition &mousePosition, Renderer &renderer,
                  Editor &editor, TextureLoader &textureLoader, KeyboardInput
@@ -62,8 +63,13 @@ void Buttons::addSuperficieButtons() {
     buttons.push_back(glaciarButton);
 
     Button *pathTileButton = new AgregarCaminoButton(++nextId, textureLoader
-            .getTexture(VOLCAN_PATH), mousePosition, renderer, editor);
+            .getTexture(PRADERA_PATH), mousePosition, renderer, editor);
     buttons.push_back(pathTileButton);
+
+    Button *structureTileButton = new AgregarTierraFirmeButton(++nextId,
+            textureLoader.getTexture(TIERRAFIRME), mousePosition, renderer,
+            editor);
+    buttons.push_back(structureTileButton);
 
 }
 

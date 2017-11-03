@@ -27,7 +27,9 @@ public:
     std::string& getNombre();
     void exportar();
     void waitForPathTile();
+    void waitForStructureTile();
     void applyTileFunction(int x, int y);
+    void unbindWaitingFunction();
 };
 
 #endif //TOWERDEFENSE_EDITOR_H
