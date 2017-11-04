@@ -63,11 +63,11 @@ void Buttons::addSuperficieButtons() {
     buttons.push_back(glaciarButton);
 
     Button *pathTileButton = new AgregarCaminoButton(++nextId, textureLoader
-            .getTexture(PRADERA_PATH), mousePosition, renderer, editor);
+            .getTexture(PATH_TILE_EDITOR), mousePosition, renderer, editor);
     buttons.push_back(pathTileButton);
 
     Button *structureTileButton = new AgregarTierraFirmeButton(++nextId,
-            textureLoader.getTexture(TIERRAFIRME), mousePosition, renderer,
+            textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition, renderer,
             editor);
     buttons.push_back(structureTileButton);
 
