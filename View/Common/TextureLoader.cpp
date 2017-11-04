@@ -50,4 +50,6 @@ const YAML::Node TextureLoader::getConfig(int key) {
 std::string TextureLoader::intToStringKey(int key) {
     if (key == ABOMINABLE)
         return "ABOMINABLE";
+    if (key == HALCONSANGRIENTO)
+        return "HALCONSANGRIENTO";
 }

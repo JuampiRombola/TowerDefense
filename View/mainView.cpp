@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer());
 
-    MapView mapView(MAPSIZE, MAPSIZE, GELIDO, renderer, textureLoader);
+    MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
 
     //Armo un camino
     mapView.addPathTile(0, 0);
@@ -71,8 +71,8 @@ int main(int argc, char** argv) {
     SpellView fireWall = SpellView(FIREWALL, textureLoader, renderer);
 
     //Creo una unidad en el 0,0
-    UnitView unit(ABOMINABLE, textureLoader, renderer);
-    unit.move(0, 0, 1, 0, 5000);
+    UnitView unit(HALCONSANGRIENTO, textureLoader, renderer);
+    unit.move(0, 0, 1, 0, 3000);
 
     Uint32 t1;
     Uint32 t2;
@@ -103,6 +103,14 @@ int main(int argc, char** argv) {
                             fireShot.shoot(2, 0, 0, 0, 1000); break;
                         case SDLK_a:
                             fireWall.cast(0, 0, 5000); break;
+                        case SDLK_z:
+                            unit.move(1, 0, 1, 1, 3000);; break;
+                        case SDLK_x:
+                            unit.move(1, 1, 0, 1, 3000);; break;
+                        case SDLK_c:
+                            unit.move(0, 1, 0, 0, 3000);; break;
+                        case SDLK_v:
+                            unit.move(0, 0, 1, 0, 3000);; break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
