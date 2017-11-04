@@ -117,7 +117,7 @@ bool Renderer::isOnCamera(int x, int y) {
 }
 
 int Renderer::pixelToCartesianX(int x, int y) {
-    double result = (((x-WIDTHFACTOR)/zoom + cameraX - paddingWidth)
+    double result = ((x/zoom + cameraX - paddingWidth - WIDTHFACTOR)
                      / static_cast<double>(WIDTHFACTOR) +
                     (y/zoom + cameraY - paddingHeight)
                      / static_cast<double>(HEIGHTFACTOR / 2)) / 2;
@@ -128,7 +128,7 @@ int Renderer::pixelToCartesianX(int x, int y) {
 int Renderer::pixelToCartesianY(int x, int y) {
     double result = ((y / zoom + cameraY - paddingHeight)
                      / static_cast<double>(HEIGHTFACTOR / 2) -
-                     ((x-WIDTHFACTOR)/zoom +cameraX - paddingWidth)
+                     (x/zoom +cameraX - paddingWidth - WIDTHFACTOR)
                      / static_cast<double>(WIDTHFACTOR)) / 2;
     if (result < 0) return -1;
     return static_cast<int>(result);

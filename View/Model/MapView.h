@@ -5,6 +5,7 @@
 #include "../Common/Sprite.h"
 #include "../Common/Renderer.h"
 #include "../Common/TextureLoader.h"
+#include "../Common/AnimatedSprite.h"
 
 class MapView {
 private:
@@ -14,7 +15,7 @@ private:
     std::vector<std::pair<int, int>> structureTiles;
     Sprite envTile;
     Sprite pathTile;
-    Sprite structureTile;
+    AnimatedSprite structureTile;
     TextureLoader& textures;
     Renderer& renderer;
 
