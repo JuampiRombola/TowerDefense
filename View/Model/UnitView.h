@@ -8,6 +8,7 @@
 
 class UnitView : public View {
 private:
+    const YAML::Node cfg;
     AnimatedSprite spriteWalking;
     AnimatedSprite spriteDying;
     enum Direction {S, SO, O, NO, N, NE, E, SE};

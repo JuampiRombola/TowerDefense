@@ -3,10 +3,12 @@
 #include "ViewError.h"
 #include "SpriteNamesConfig.h"
 
+#define CONFIG_PATH "../View/spritesConfig.yaml"
 #define RESOURCESPATH "../Resources/"
 #define PNGFORMAT ".png"
 
-TextureLoader::TextureLoader(SDL_Renderer *renderer) {
+TextureLoader::TextureLoader(SDL_Renderer *renderer) :
+        cfg(YAML::LoadFile(CONFIG_PATH)) {
     IMG_Init(IMG_INIT_PNG);
     for (int i = 0; i < TOTAL; ++i) {
         SDL_Surface *im = IMG_Load((RESOURCESPATH
@@ -39,4 +41,13 @@ TextureLoader::~TextureLoader() {
 
 SDL_Texture *TextureLoader::getTexture(int pos) {
     return textures[pos];
+}
+
+const YAML::Node TextureLoader::getConfig(int key) {
+    return cfg[this->intToStringKey(key)];
+}
+
+std::string TextureLoader::intToStringKey(int key) {
+    if (key == ABOMINABLE)
+        return "ABOMINABLE";
 }

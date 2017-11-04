@@ -11,8 +11,10 @@
 #include "Model/SpellView.h"
 
 #define TITLE "Tower Defense"
+
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
+#define FPS 40
 
 #define MAPSIZE 7
 
@@ -74,7 +76,7 @@ int main(int argc, char** argv) {
 
     Uint32 t1;
     Uint32 t2;
-    Uint32 s = 1000 / 30;
+    Uint32 s = 1000 / FPS;
     Uint32 delta = 0;
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
