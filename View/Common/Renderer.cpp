@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "Renderer.h"
 
 #define HEIGHTFACTOR 80
@@ -72,13 +73,13 @@ void Renderer::updateCamera(int x, int y) {
 
     this->cameraX += (x * factor);
     if (cameraX < 0) cameraX = 0;
-    if (cameraX > (mapWidth * zoom - windowWidth + 2 * PADDING * zoom))
-        cameraX = mapWidth * zoom - windowWidth + 2 * PADDING;
+    if (cameraX > (2 * (zoom * mapWidth + PADDING) - windowWidth))
+        cameraX = 2 * (zoom * mapWidth + PADDING) - windowWidth;
 
     this->cameraY += (y * factor);
     if (cameraY < 0) cameraY = 0;
-    if (cameraY > (mapHeight * zoom - windowHeight + 2 * PADDING))
-        cameraY = mapHeight * zoom - windowHeight + 2 * PADDING;
+    if (cameraY > (2 * (zoom * mapHeight + PADDING) - windowHeight))
+        cameraY = 2 * (zoom * mapHeight + PADDING) - windowHeight;
 }
 
 SDL_Renderer *Renderer::getRenderer() {
@@ -116,11 +117,19 @@ bool Renderer::isOnCamera(int x, int y) {
 }
 
 int Renderer::pixelToCartesianX(int x, int y) {
-    return ((x/zoom + cameraX - paddingWidth) / WIDTHFACTOR +
-            (y/zoom + cameraY - paddingHeight) / (HEIGHTFACTOR / 2)) / 2;
+    double result = (((x-WIDTHFACTOR)/zoom + cameraX - paddingWidth)
+                     / static_cast<double>(WIDTHFACTOR) +
+                    (y/zoom + cameraY - paddingHeight)
+                     / static_cast<double>(HEIGHTFACTOR / 2)) / 2;
+    if (result < 0) return -1;
+    return static_cast<int>(result);
 }
 
 int Renderer::pixelToCartesianY(int x, int y) {
-    return ((y/zoom + cameraY - paddingHeight) / (HEIGHTFACTOR / 2) - (x/zoom +
-            cameraX - paddingWidth) / WIDTHFACTOR) / 2;
+    double result = ((y / zoom + cameraY - paddingHeight)
+                     / static_cast<double>(HEIGHTFACTOR / 2) -
+                     ((x-WIDTHFACTOR)/zoom +cameraX - paddingWidth)
+                     / static_cast<double>(WIDTHFACTOR)) / 2;
+    if (result < 0) return -1;
+    return static_cast<int>(result);
 }
