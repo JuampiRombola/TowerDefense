@@ -1,9 +1,16 @@
 #include "Editor.h"
 #include <iostream>
 
-Editor::Editor(MapView& map) : superficie(PRADERA), map(map) {};
+Editor::Editor(MapView &map, TextureLoader &textureLoader,
+               Renderer &renderer) : superficie(PRADERA), map(map),
+                                     textureLoader(textureLoader), renderer
+                                                           (renderer) {
+};
 
-Editor::~Editor() = default;
+Editor::~Editor() {
+    for (auto& portal : portales)
+        delete portal;
+}
 
 void Editor::setSuperficie(const int superficie) {
     this->superficie = superficie;
@@ -69,12 +76,22 @@ void Editor::exportar() {
 
 void Editor::waitForPathTile() {
     using namespace std::placeholders;
-    mapFunction = std::bind (&MapView::addPathTile, &map, _1, _2);
+    mapFunction = std::bind(&MapView::addPathTile, &map, _1, _2);
 }
 
 void Editor::waitForStructureTile() {
     using namespace std::placeholders;
-    mapFunction = std::bind (&MapView::addStructureTile, &map, _1, _2);
+    mapFunction = std::bind(&MapView::addStructureTile, &map, _1, _2);
+}
+
+void Editor::waitForSpawnPortalTile() {
+    using namespace std::placeholders;
+    mapFunction = std::bind(&Editor::addSpawnTile, this, _1, _2);
+}
+
+void Editor::waitForExitPortalTile() {
+    using namespace std::placeholders;
+    mapFunction = std::bind(&Editor::addExitTile, this, _1, _2);
 }
 
 void Editor::applyTileFunction(int x, int y) {
@@ -84,4 +101,25 @@ void Editor::applyTileFunction(int x, int y) {
 
 void Editor::unbindWaitingFunction() {
     mapFunction = std::function<void(int, int)>();
+}
+
+void Editor::addSpawnTile(int x, int y) {
+    PortalView * portal = new PortalEntradaView(textureLoader, renderer);
+    portal->setXY(x, y);
+    portales.push_back(portal);
+    unbindWaitingFunction();
+}
+
+void Editor::addExitTile(int x, int y) {
+    PortalView * portal = new PortalSalidaView(textureLoader, renderer);
+    portal->setXY(x, y);
+    portales.push_back(portal);
+    unbindWaitingFunction();
+}
+
+void Editor::draw() {
+    Uint32 ticks = SDL_GetTicks();
+    map.draw(ticks);
+    for (auto& portal : portales)
+        portal->draw(ticks);
 }

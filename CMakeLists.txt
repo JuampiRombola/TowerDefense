@@ -110,7 +110,7 @@ set(SOURCE_FILES_E
         View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h
         View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Editor/AgregarCaminoButton.cpp
         View/Editor/AgregarCaminoButton.h View/Editor/AgregarTierraFirmeButton.cpp
-        View/Editor/AgregarTierraFirmeButton.h)
+        View/Editor/AgregarTierraFirmeButton.h View/Editor/AgregarPortalEntradaButton.cpp View/Editor/AgregarPortalEntradaButton.h View/Editor/AgregarPortalSalidaButton.cpp View/Editor/AgregarPortalSalidaButton.h)
 
 add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})

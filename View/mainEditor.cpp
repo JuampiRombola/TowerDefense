@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     int mouse_x = -1, mouse_y = -1;
     MousePosition mouse(mouse_x, mouse_y);
 
-    Editor editor(mapView);
+    Editor editor(mapView, textureLoader, renderer);
 
     KeyboardInput keyboardInput(editor.getNombre());
 
@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
              ++horda) {
             buttons.addEnemigosButton(horda);
         }
-        mapView.draw(0);
+        editor.draw();
         buttons.draw();
         renderer.present();
     }

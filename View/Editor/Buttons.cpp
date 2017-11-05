@@ -1,6 +1,8 @@
 #include "Buttons.h"
 #include "AgregarCaminoButton.h"
 #include "AgregarTierraFirmeButton.h"
+#include "AgregarPortalEntradaButton.h"
+#include "AgregarPortalSalidaButton.h"
 
 Buttons::Buttons(MousePosition &mousePosition, Renderer &renderer,
                  Editor &editor, TextureLoader &textureLoader, KeyboardInput
@@ -70,6 +72,16 @@ void Buttons::addSuperficieButtons() {
             textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition, renderer,
             editor);
     buttons.push_back(structureTileButton);
+
+    Button *spawnTileButton = new AgregarPortalEntradaButton(++nextId,
+            textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition,
+            renderer, editor);
+    buttons.push_back(spawnTileButton);
+
+    Button *exitTileButton = new AgregarPortalSalidaButton(++nextId,
+                                                          textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition,
+                                                          renderer, editor);
+    buttons.push_back(exitTileButton);
 
 }
 
