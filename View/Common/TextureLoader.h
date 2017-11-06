@@ -15,7 +15,7 @@ private:
     const YAML::Node cfg;
 
 public:
-    explicit TextureLoader(SDL_Renderer *renderer);
+    TextureLoader(SDL_Renderer *renderer, int mode);
     ~TextureLoader();
     SDL_Texture *getTexture(int pos);
     const YAML::Node getConfig(int key);

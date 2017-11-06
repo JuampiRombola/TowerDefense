@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_VIDEO);
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
-    TextureLoader textureLoader(renderer.getRenderer());
+    TextureLoader textureLoader(renderer.getRenderer(), 0);
 
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
 

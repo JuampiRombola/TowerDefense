@@ -69,18 +69,18 @@ void Buttons::addSuperficieButtons() {
     buttons.push_back(pathTileButton);
 
     Button *structureTileButton = new AgregarTierraFirmeButton(++nextId,
-            textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition, renderer,
-            editor);
+            textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition,
+            renderer, editor);
     buttons.push_back(structureTileButton);
 
     Button *spawnTileButton = new AgregarPortalEntradaButton(++nextId,
-            textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition,
+            textureLoader.getTexture(PORTAL_ENTRADA_EDITOR), mousePosition,
             renderer, editor);
     buttons.push_back(spawnTileButton);
 
     Button *exitTileButton = new AgregarPortalSalidaButton(++nextId,
-                                                          textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition,
-                                                          renderer, editor);
+            textureLoader.getTexture(PORTAL_SALIDA_EDITOR), mousePosition,
+            renderer, editor);
     buttons.push_back(exitTileButton);
 
 }

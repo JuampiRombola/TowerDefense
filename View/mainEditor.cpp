@@ -11,6 +11,7 @@
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
+#define EDITOR_MODE 1
 
 #define MAPSIZE 7
 
@@ -20,7 +21,7 @@ int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_VIDEO);
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
-    TextureLoader textureLoader(renderer.getRenderer());
+    TextureLoader textureLoader(renderer.getRenderer(), EDITOR_MODE);
 
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
 
