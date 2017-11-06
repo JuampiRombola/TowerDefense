@@ -1,55 +1,43 @@
 #include "ShotView.h"
 
-#define SHOT_FIRE_W 129
-#define SHOT_FIRE_H 129
-#define SHOT_FIRE_START_X 0
-#define SHOT_FIRE_START_Y 0
-#define SHOT_FIRE_COLUMNS 16
-#define SHOT_FIRE_ROWS 1
-#define SHOT_FIRE_OFFSET_X 46
-#define SHOT_FIRE_OFFSET_Y 200
-
-#define EXPLOSION_FIRE_W 129
-#define EXPLOSION_FIRE_H 89
-#define EXPLOSION_FIRE_START_X 0
-#define EXPLOSION_FIRE_START_Y 169
-#define EXPLOSION_FIRE_COLUMNS 5
-#define EXPLOSION_FIRE_ROWS 1
-#define EXPLOSION_FIRE_OFFSET_X 0
-#define EXPLOSION_FIRE_OFFSET_Y 0
-#define EXPLOSION_FIRE_TPS 100
-
-#define SHOT_OFFSET_X 50
-#define SHOT_OFFSET_Y 70
-
-#define H_FACTOR 40
-
 ShotView::ShotView(int key, TextureLoader &textures, Renderer &renderer) :
+        cfg(textures.getConfig(key)),
         renderer(renderer),
         spriteShot(textures.getTexture(key), renderer,
-                      SHOT_FIRE_W, SHOT_FIRE_H,
-                      SHOT_FIRE_START_X, SHOT_FIRE_START_Y,
-                      SHOT_FIRE_COLUMNS, SHOT_FIRE_ROWS),
+                   cfg["SHOT_W"].as<int>(),
+                   cfg["SHOT_H"].as<int>(),
+                   cfg["SHOT_START_X"].as<int>(),
+                   cfg["SHOT_START_Y"].as<int>(),
+                   cfg["SHOT_COLUMNS"].as<int>(),
+                   cfg["SHOT_ROWS"].as<int>()),
         spriteExplosion(textures.getTexture(key), renderer,
-                    EXPLOSION_FIRE_W, EXPLOSION_FIRE_H,
-                    EXPLOSION_FIRE_START_X, EXPLOSION_FIRE_START_Y,
-                    EXPLOSION_FIRE_COLUMNS, EXPLOSION_FIRE_ROWS),
+                        cfg["EXPLOSION_W"].as<int>(),
+                        cfg["EXPLOSION_H"].as<int>(),
+                        cfg["EXPLOSION_START_X"].as<int>(),
+                        cfg["EXPLOSION_START_Y"].as<int>(),
+                        cfg["EXPLOSION_COLUMNS"].as<int>(),
+                        cfg["EXPLOSION_ROWS"].as<int>()),
         traveledDistanceX(0), traveledDistanceY(0) {
     currentState = DISABLE;
-    spriteShot.setDestRect(x, y, SHOT_FIRE_W * 2, SHOT_FIRE_H * 2);
-    spriteShot.setOffsetXY(SHOT_FIRE_OFFSET_X, SHOT_FIRE_OFFSET_Y);
+    spriteShot.setDestRect(x, y,
+                           cfg["SHOT_DST_W"].as<int>(),
+                           cfg["SHOT_DST_H"].as<int>());
+    spriteShot.setOffsetXY(cfg["SHOT_OFFSET_X"].as<int>(),
+                           cfg["SHOT_OFFSET_Y"].as<int>());
 
-    spriteExplosion.setDestRect(x, y, EXPLOSION_FIRE_W * 2,
-                                EXPLOSION_FIRE_H * 2);
-    spriteExplosion.setOffsetXY(EXPLOSION_FIRE_OFFSET_X,
-                                EXPLOSION_FIRE_OFFSET_Y);
-    spriteExplosion.setTimePerSprite(EXPLOSION_FIRE_TPS);
+    spriteExplosion.setDestRect(x, y,
+                                cfg["EXPLOSION_DST_W"].as<int>(),
+                                cfg["EXPLOSION_DST_H"].as<int>());
+    spriteExplosion.setOffsetXY(cfg["EXPLOSION_OFFSET_X"].as<int>(),
+                                cfg["EXPLOSION_OFFSET_Y"].as<int>());
+    spriteExplosion.setTimePerSprite(cfg["EXPLOSION_TPS"].as<uint>());
 }
 
 void ShotView::draw(Uint32 ticks) {
     if (currentState == DISABLE) return;
     if (currentState == EXPLOSION) {
-        if (spriteExplosion.getCurrentSprite() != EXPLOSION_FIRE_COLUMNS) {
+        if (spriteExplosion.getCurrentSprite() !=
+                cfg["EXPLOSION_COLUMNS"].as<int>()) {
             spriteExplosion.nextAndDraw(ticks);
         } else {
             currentState = DISABLE;
@@ -67,9 +55,10 @@ void ShotView::setXY(int x, int y) {
     View::setXY(x, y);
     spriteShot.setDestXY(x, y);
     spriteExplosion.setDestXY(x, y);
-    spriteShot.setOffsetXY(SHOT_FIRE_OFFSET_X, SHOT_FIRE_OFFSET_Y);
-    spriteExplosion.setOffsetXY(EXPLOSION_FIRE_OFFSET_X,
-                                EXPLOSION_FIRE_OFFSET_Y);
+    spriteShot.setOffsetXY(cfg["SHOT_OFFSET_X"].as<int>(),
+                           cfg["SHOT_OFFSET_Y"].as<int>());
+    spriteExplosion.setOffsetXY(cfg["EXPLOSION_OFFSET_X"].as<int>(),
+                                cfg["EXPLOSION_OFFSET_Y"].as<int>());
 }
 
 void ShotView::shoot(int fromX, int fromY, int toX, int toY, Uint32 t) {
@@ -81,9 +70,11 @@ void ShotView::shoot(int fromX, int fromY, int toX, int toY, Uint32 t) {
     int cx = renderer.cartesianToIsometricX(fromX, fromY);
     int cy = renderer.cartesianToIsometricY(fromX, fromY);
     int dstX = renderer.cartesianToIsometricX(toX, toY);
-    int dstY = renderer.cartesianToIsometricY(toX, toY) - H_FACTOR;
-    totalDistanceX = dstX - cx + SHOT_FIRE_OFFSET_X - SHOT_OFFSET_X;
-    totalDistanceY = dstY - cy + SHOT_FIRE_OFFSET_Y - SHOT_OFFSET_Y;
+    int dstY = renderer.cartesianToIsometricY(toX, toY);
+    totalDistanceX = dstX - cx +
+            cfg["SHOT_OFFSET_X"].as<int>() - cfg["SHOT_FLIGHT_X"].as<int>();
+    totalDistanceY = dstY - cy +
+            cfg["SHOT_OFFSET_Y"].as<int>() - cfg["SHOT_FLIGHT_Y"].as<int>();
     requiredTime = t;
 }
 
@@ -110,7 +101,9 @@ void ShotView::setDistanceToMove(Uint32 ticks) {
 
 void ShotView::enableExplosion() {
     currentState = EXPLOSION;
-    int offsetX = spriteShot.getOffsetX() + EXPLOSION_FIRE_OFFSET_X;
-    int offsetY = spriteShot.getOffsetY() + EXPLOSION_FIRE_OFFSET_Y;
+    int offsetX = spriteShot.getOffsetX() +
+            cfg["EXPLOSION_OFFSET_X"].as<int>();
+    int offsetY = spriteShot.getOffsetY() +
+            cfg["EXPLOSION_OFFSET_Y"].as<int>();
     spriteExplosion.setOffsetXY(offsetX, offsetY);
 }

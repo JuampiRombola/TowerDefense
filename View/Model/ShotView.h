@@ -9,6 +9,7 @@
 
 class ShotView : public View {
 private:
+    const YAML::Node cfg;
     enum State {DISABLE, SHOOT, EXPLOSION};
     Renderer &renderer;
     AnimatedSprite spriteShot;
