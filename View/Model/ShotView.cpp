@@ -22,6 +22,8 @@
 #define SHOT_OFFSET_X 50
 #define SHOT_OFFSET_Y 70
 
+#define H_FACTOR 40
+
 ShotView::ShotView(int key, TextureLoader &textures, Renderer &renderer) :
         renderer(renderer),
         spriteShot(textures.getTexture(key), renderer,
@@ -79,7 +81,7 @@ void ShotView::shoot(int fromX, int fromY, int toX, int toY, Uint32 t) {
     int cx = renderer.cartesianToIsometricX(fromX, fromY);
     int cy = renderer.cartesianToIsometricY(fromX, fromY);
     int dstX = renderer.cartesianToIsometricX(toX, toY);
-    int dstY = renderer.cartesianToIsometricY(toX, toY);
+    int dstY = renderer.cartesianToIsometricY(toX, toY) - H_FACTOR;
     totalDistanceX = dstX - cx + SHOT_FIRE_OFFSET_X - SHOT_OFFSET_X;
     totalDistanceY = dstY - cy + SHOT_FIRE_OFFSET_Y - SHOT_OFFSET_Y;
     requiredTime = t;

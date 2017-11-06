@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_VIDEO);
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
-    TextureLoader textureLoader(renderer.getRenderer());
+    TextureLoader textureLoader(renderer.getRenderer(), 0);
 
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
 
@@ -88,31 +88,23 @@ int main(int argc, char** argv) {
 
             switch (event.type) {
                 case SDL_QUIT:
-                    quit = true;
-                    break;
+                    quit = true; break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
                         case SDLK_ESCAPE:
-                            quit = true;
-                            break;
+                            quit = true; break;
                         case SDLK_i:
-                            renderer.zoomIn();
-                            break;
+                            renderer.zoomIn(); break;
                         case SDLK_o:
-                            renderer.zoomOut();
-                            break;
+                            renderer.zoomOut(); break;
                         case SDLK_LEFT:
-                            renderer.updateCamera(-1, 0);
-                            break;
+                            renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
-                            renderer.updateCamera(1, 0);
-                            break;
+                            renderer.updateCamera(1, 0); break;
                         case SDLK_UP:
-                            renderer.updateCamera(0, -1);
-                            break;
+                            renderer.updateCamera(0, -1); break;
                         case SDLK_DOWN:
-                            renderer.updateCamera(0, 1);
-                            break;
+                            renderer.updateCamera(0, 1); break;
                     }
             }
         }

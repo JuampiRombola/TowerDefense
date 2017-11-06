@@ -62,4 +62,12 @@ std::string TextureLoader::intToStringKey(int key) {
         return "ABOMINABLE";
     if (key == HALCONSANGRIENTO)
         return "HALCONSANGRIENTO";
+    if (key == DEMONIOVERDE)
+        return "DEMONIOVERDE";
+    if (key == ESPECTRO)
+        return "ESPECTRO";
+    if (key == HOMBRECABRA)
+        return "HOMBRECABRA";
+    if (key == NOMUERTO)
+        return "NOMUERTO";
 }

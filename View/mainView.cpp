@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
     SpellView fireWall = SpellView(FIREWALL, textureLoader, renderer);
 
     //Creo una unidad en el 0,0
-    UnitView unit(HALCONSANGRIENTO, textureLoader, renderer);
+    UnitView unit(HOMBRECABRA, textureLoader, renderer);
     unit.move(0, 0, 1, 0, 3000);
 
     Uint32 t1;
