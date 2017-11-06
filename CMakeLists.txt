@@ -83,7 +83,7 @@ set(SOURCE_FILES_V
         View/Common/Sprite.h View/Common/SpriteNamesConfig.h View/Common/View.cpp View/Common/View.h
         View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
         View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
-        View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h
+        View/Model/PortalSalidaView.h View/Model/TowerView.cpp View/Model/TowerView.h
         View/Model/UnitView.cpp View/Model/UnitView.h View/Model/ShotView.cpp View/Model/ShotView.h
         View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Model/SpellView.cpp
         View/Model/SpellView.h)
@@ -96,7 +96,7 @@ set(SOURCE_FILES_E
         View/Common/Sprite.h View/Common/SpriteNamesConfig.h View/Common/View.cpp View/Common/View.h
         View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
         View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
-        View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h
+        View/Model/PortalSalidaView.h View/Model/TowerView.cpp View/Model/TowerView.h
         View/Common/MousePosition.cpp View/Common/MousePosition.h View/Editor/Editor.cpp
         View/Editor/Editor.h View/Common/KeyboardInput.cpp View/Common/KeyboardInput.h
         View/Editor/Button.cpp View/Editor/Button.h View/Editor/AgregarEnemigoButton.cpp
@@ -110,7 +110,9 @@ set(SOURCE_FILES_E
         View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h
         View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Editor/AgregarCaminoButton.cpp
         View/Editor/AgregarCaminoButton.h View/Editor/AgregarTierraFirmeButton.cpp
-        View/Editor/AgregarTierraFirmeButton.h View/Editor/AgregarPortalEntradaButton.cpp View/Editor/AgregarPortalEntradaButton.h View/Editor/AgregarPortalSalidaButton.cpp View/Editor/AgregarPortalSalidaButton.h)
+        View/Editor/AgregarTierraFirmeButton.h View/Editor/AgregarPortalEntradaButton.cpp
+        View/Editor/AgregarPortalEntradaButton.h View/Editor/AgregarPortalSalidaButton.cpp
+        View/Editor/AgregarPortalSalidaButton.h)
 
 add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})

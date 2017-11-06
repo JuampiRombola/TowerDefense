@@ -6,7 +6,7 @@
 #include "View/Common/SpriteNamesConfig.h"
 #include "View/Model/PortalEntradaView.h"
 #include "View/Model/PortalSalidaView.h"
-#include "View/Model/FireTowerView.h"
+#include "View/Model/TowerView.h"
 #include "View/Model/UnitView.h"
 #include "TowerDefenseServer/include/GameConfiguration.h"
 #include "TowerDefenseServer/include/TowerDefenseGame.h"
@@ -63,11 +63,11 @@ int main(int argc, char** argv) {
     portalSalida.setXY(6, 6);
 
     //Agrego una torre de fuego en el 1,4
-    FireTowerView fireTower1(textureLoader, renderer);
+    TowerView fireTower1(TORRE_FUEGO, textureLoader, renderer);
     fireTower1.setXY(1, 4);
 
     //Agrego una torre de fuego en el 4,4
-    FireTowerView fireTower2(textureLoader, renderer);
+    TowerView fireTower2(TORRE_FUEGO, textureLoader, renderer);
     fireTower2.setXY(4, 4);
 
     //Creo una unidad en el 0,0

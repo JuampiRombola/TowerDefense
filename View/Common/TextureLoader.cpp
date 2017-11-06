@@ -78,4 +78,12 @@ std::string TextureLoader::intToStringKey(int key) {
         return "DISPARO_AGUA";
     if (key == DISPARO_AIRE)
         return "DISPARO_AIRE";
+    if (key == TORRE_FUEGO)
+        return "TORRE_FUEGO";
+    if (key == TORRE_TIERRA)
+        return "TORRE_TIERRA";
+    if (key == TORRE_AGUA)
+        return "TORRE_AGUA";
+    if (key == TORRE_AIRE)
+        return "TORRE_AIRE";
 }

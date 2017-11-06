@@ -6,14 +6,14 @@
 #include "../Common/Renderer.h"
 #include "../Common/AnimatedSprite.h"
 
-class FireTowerView : public View{
+class TowerView : public View{
 private:
+    const YAML::Node cfg;
     AnimatedSprite spriteTower;
     AnimatedSprite spriteFire;
 
 public:
-    FireTowerView(TextureLoader &textures, Renderer &renderer);
-    ~FireTowerView() override;
+    TowerView(int key, TextureLoader &textures, Renderer &renderer);
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
 };

@@ -5,7 +5,7 @@
 #include "Common/SpriteNamesConfig.h"
 #include "Model/PortalEntradaView.h"
 #include "Model/PortalSalidaView.h"
-#include "Model/FireTowerView.h"
+#include "Model/TowerView.h"
 #include "Model/UnitView.h"
 #include "Model/ShotView.h"
 #include "Model/SpellView.h"
@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
 
-    MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
+    MapView mapView(MAPSIZE, MAPSIZE, DESIERTO, renderer, textureLoader);
 
     //Armo un camino
     mapView.addPathTile(0, 0);
@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
     mapView.addStructureTile(2, 0);
     mapView.addStructureTile(2, 2);
     mapView.addStructureTile(4, 4);
-    mapView.addStructureTile(5, 6);
+    mapView.addStructureTile(4, 6);
 
     //Pongo un portal de entrada y uno de salida
     PortalView portalEntrada = PortalEntradaView(textureLoader, renderer);
@@ -56,22 +56,30 @@ int main(int argc, char** argv) {
     PortalView portalSalida = PortalSalidaView(textureLoader, renderer);
     portalSalida.setXY(6, 6);
 
-    //Agrego una torre de fuego en el 2,0
-    FireTowerView fireTower1(textureLoader, renderer);
-    fireTower1.setXY(2, 0);
+    //Agrego una torre de aire en el 2,0
+    TowerView tower1(TORRE_AIRE, textureLoader, renderer);
+    tower1.setXY(2, 0);
 
-    //Agrego una torre de fuego en el 4,4
-    FireTowerView fireTower2(textureLoader, renderer);
-    fireTower2.setXY(4, 4);
+    //Agrego una torre de agua en el 4,4
+    TowerView tower2(TORRE_AGUA, textureLoader, renderer);
+    tower2.setXY(4, 4);
 
-    //Agrego un disparo de fuego
-    ShotView fireShot = ShotView(DISPARO_FUEGO, textureLoader, renderer);
+    //Agrego una torre de fuego en el 1,4
+    TowerView tower3(TORRE_FUEGO, textureLoader, renderer);
+    tower3.setXY(1, 4);
+
+    //Agrego una torre de tierra en el 5,5
+    TowerView tower4(TORRE_TIERRA, textureLoader, renderer);
+    tower4.setXY(4, 6);
+
+    //Agrego un disparo
+    ShotView shot = ShotView(DISPARO_AIRE, textureLoader, renderer);
 
     //Agrego un muro de fuego
     SpellView fireWall = SpellView(FIREWALL, textureLoader, renderer);
 
     //Creo una unidad en el 0,0
-    UnitView unit(HOMBRECABRA, textureLoader, renderer);
+    UnitView unit(HALCONSANGRIENTO, textureLoader, renderer);
     unit.move(0, 0, 1, 0, 3000);
 
     Uint32 t1;
@@ -100,9 +108,9 @@ int main(int argc, char** argv) {
                         case SDLK_d:
                             unit.enableDying(); break;
                         case SDLK_s:
-                            fireShot.shoot(2, 0, 0, 0, 1000); break;
+                            shot.shoot(2, 0, 0, 0, 500); break;
                         case SDLK_a:
-                            fireWall.cast(0, 0, 5000); break;
+                            fireWall.cast(1, 1, 5000); break;
                         case SDLK_z:
                             unit.move(1, 0, 1, 1, 3000);; break;
                         case SDLK_x:
@@ -132,10 +140,12 @@ int main(int argc, char** argv) {
         //if ((ticks % 100) == 0)
             //unit.move(1, 0, 1, 1, 5000);
         unit.draw(ticks);
-        fireTower1.draw(ticks);
-        fireTower2.draw(ticks);
+        tower1.draw(ticks);
+        tower2.draw(ticks);
+        tower3.draw(ticks);
+        tower4.draw(ticks);
         fireWall.draw(ticks);
-        fireShot.draw(ticks);
+        shot.draw(ticks);
 
         renderer.present();
 
