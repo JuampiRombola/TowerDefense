@@ -16,29 +16,25 @@
 #include "EliminarHordaButton.h"
 #include "../Common/SpriteNamesConfig.h"
 #include "../Common/SpriteNamesConfig.h"
-#include "DoNothingButton.h"
 #include "ContadorEnemigosInput.h"
+#include "EnemigoImage.h"
 
 class Buttons {
 private:
-    std::list<Button*> buttons;
-    std::list<Button*> hordasButtons;
     std::list<Image*> images;
     MousePosition &mousePosition;
     Renderer &renderer;
     Editor& editor;
     TextureLoader &textureLoader;
     KeyboardInput &keyboardInput;
-    int nextId;
 public:
     Buttons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
             TextureLoader &textureLoader, KeyboardInput &keyboardInput);
     ~Buttons();
     void draw();
-    void addSuperficieButtons();
-    void addNuevaHordaButton();
-    void cleanHordasButtons();
+    void addInitialButtons();
     void addEnemigosButton(int horda);
+    bool isAnyClicked();
 };
 
 

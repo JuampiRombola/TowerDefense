@@ -13,9 +13,13 @@ private:
     void click();
 
 public:
-    AgregarEnemigoButton(int id, int horda, const std::string &enemigo,
-                         SDL_Texture *texture, MousePosition &mousePosition,
-                         Renderer &renderer, Editor &editor);
+    AgregarEnemigoButton(int horda,
+                             const std::string &enemigo,
+                             SDL_Texture *texture,
+                             MousePosition &mousePosition,
+                             Renderer &renderer,
+                             Editor &editor);
+    void draw(int number);
 };
 
 #endif //TOWERDEFENSE_AGREGARENEMIGOBUTTON_H

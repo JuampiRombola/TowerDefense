@@ -1,10 +1,12 @@
 #include "AgregarCaminoButton.h"
 
-AgregarCaminoButton::AgregarCaminoButton(int id, SDL_Texture *texture,
+AgregarCaminoButton::AgregarCaminoButton(SDL_Texture *texture,
                                          MousePosition &mousePosition,
-                                         Renderer &renderer, Editor &editor)
-        : Button(id, 0, 100, 100, 100, texture, mousePosition, renderer),
-          editor(editor) {}
+                                         Renderer &renderer,
+                                         Editor &editor)
+        : Button(AGREGAR_CAMINO_BUTTON_X, AGREGAR_CAMINO_BUTTON_Y,
+                 AGREGAR_CAMINO_BUTTON_WIDTH, AGREGAR_CAMINO_BUTTON_HEIGHT,
+                 texture, mousePosition, renderer), editor(editor) {}
 
 void AgregarCaminoButton::click() {
     editor.waitForPathTile();

@@ -104,15 +104,15 @@ set(SOURCE_FILES_E
         View/Editor/EliminarEnemigoButton.h View/Editor/EliminarHordaButton.cpp
         View/Editor/EliminarHordaButton.h View/Editor/NuevaHordaButton.cpp
         View/Editor/NuevaHordaButton.h View/Editor/SuperficieButton.cpp View/Editor/SuperficieButton.h
-        View/Editor/ToggleButton.cpp View/Editor/ToggleButton.h View/Editor/Buttons.cpp
+        View/Editor/Buttons.cpp
         View/Editor/Buttons.h View/Common/Text.cpp View/Common/Text.h View/Common/Image.cpp
-        View/Common/Image.h View/Editor/DoNothingButton.cpp View/Editor/DoNothingButton.h
+        View/Common/Image.h
         View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h
         View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Editor/AgregarCaminoButton.cpp
         View/Editor/AgregarCaminoButton.h View/Editor/AgregarTierraFirmeButton.cpp
         View/Editor/AgregarTierraFirmeButton.h View/Editor/AgregarPortalEntradaButton.cpp
         View/Editor/AgregarPortalEntradaButton.h View/Editor/AgregarPortalSalidaButton.cpp
-        View/Editor/AgregarPortalSalidaButton.h)
+        View/Editor/AgregarPortalSalidaButton.h View/Editor/Horda.cpp View/Editor/Horda.h View/Editor/EnemigoImage.cpp View/Editor/EnemigoImage.h View/Editor/EditorConstants.h)
 
 add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})

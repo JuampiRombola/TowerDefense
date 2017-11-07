@@ -1,0 +1,16 @@
+#ifndef TOWERDEFENSE_ENEMIGOIMAGE_H
+#define TOWERDEFENSE_ENEMIGOIMAGE_H
+
+
+#include "../Common/Image.h"
+
+class EnemigoImage : public Image {
+private:
+    int horda;
+public:
+    EnemigoImage(int horda, SDL_Texture *texture, Renderer &renderer);
+    virtual void draw(int number);
+};
+
+
+#endif //TOWERDEFENSE_ENEMIGOIMAGE_H

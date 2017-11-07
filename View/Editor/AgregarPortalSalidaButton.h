@@ -10,9 +10,9 @@ class AgregarPortalSalidaButton : public Button {
 private:
     Editor &editor;
 public:
-    AgregarPortalSalidaButton(int id, SDL_Texture *texture,
-                              MousePosition &mousePosition, Renderer &renderer,
-                              Editor &editor);
+    AgregarPortalSalidaButton(SDL_Texture *texture,
+                                  MousePosition &mousePosition, Renderer &renderer,
+                                  Editor &editor);
 
     void click();
 };

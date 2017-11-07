@@ -33,8 +33,7 @@ int main(int argc, char** argv) {
     KeyboardInput keyboardInput(editor.getNombre());
 
     Buttons buttons(mouse, renderer, editor, textureLoader, keyboardInput);
-    buttons.addSuperficieButtons();
-    buttons.addNuevaHordaButton();
+    buttons.addInitialButtons();
 
     int tileX = 0;
     int tileY = 0;
@@ -48,15 +47,12 @@ int main(int argc, char** argv) {
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 SDL_GetMouseState(&mouse_x, &mouse_y);
-                mouse.toggleActive();
-                tileX = mapView.getTileXFromPixel(mouse_x, mouse_y);
-                tileY = mapView.getTileYFromPixel(mouse_x, mouse_y);
-                editor.applyTileFunction(tileX, tileY);
+                mouse.activate();
                 break;
             case SDL_FINGERDOWN:
                 mouse_x = static_cast<int>(event.tfinger.x);
                 mouse_y = static_cast<int>(event.tfinger.y);
-                mouse.toggleActive();
+                mouse.activate();
                 break;
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
@@ -69,13 +65,15 @@ int main(int argc, char** argv) {
                     case SDLK_DOWN:  renderer.updateCamera(0, 1); break;
                 }
         }
+        if (mouse.isActive()) {
+            if (!buttons.isAnyClicked()) {
+                tileX = mapView.getTileXFromPixel(mouse_x, mouse_y);
+                tileY = mapView.getTileYFromPixel(mouse_x, mouse_y);
+                editor.applyTileFunction(tileX, tileY);
+            }
+        }
         event.type = 0;
         renderer.clearRender();
-        buttons.cleanHordasButtons();
-        for (unsigned int horda = 0; horda < editor.getCantidadHordas();
-             ++horda) {
-            buttons.addEnemigosButton(horda);
-        }
         editor.draw();
         buttons.draw();
         renderer.present();

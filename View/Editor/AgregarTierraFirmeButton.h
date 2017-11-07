@@ -9,8 +9,10 @@ class AgregarTierraFirmeButton : public Button {
 private:
     Editor &editor;
 public:
-    AgregarTierraFirmeButton(int id, SDL_Texture *texture, MousePosition &mousePosition,
-                        Renderer &renderer, Editor &editor);
+    AgregarTierraFirmeButton(SDL_Texture *texture,
+                                 MousePosition &mousePosition,
+                                 Renderer &renderer,
+                                 Editor &editor);
     void click();
 };
 

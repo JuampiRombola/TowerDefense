@@ -8,9 +8,10 @@ class AgregarPortalEntradaButton : public Button {
 private:
     Editor& editor;
 public:
-    AgregarPortalEntradaButton(int id, SDL_Texture *texture, MousePosition
-    &mousePosition,
-            Renderer &renderer, Editor &editor);
+    AgregarPortalEntradaButton(SDL_Texture *texture,
+                                   MousePosition &mousePosition,
+                                   Renderer &renderer,
+                                   Editor &editor);
     void click();
 };
 

@@ -8,127 +8,99 @@ Buttons::Buttons(MousePosition &mousePosition, Renderer &renderer,
                  Editor &editor, TextureLoader &textureLoader, KeyboardInput
                  &keyboardInput) : mousePosition(
         mousePosition), renderer(renderer), editor(editor), textureLoader(
-        textureLoader), keyboardInput(keyboardInput), nextId(0) {}
+        textureLoader), keyboardInput(keyboardInput) {}
 
 
-// QUE ASCOOOOOOOOOO
 Buttons::~Buttons() {
-    for (Button *button : buttons) {
-        delete button;
-    }
-    for (Button *button : hordasButtons) {
-        delete button;
-    }
-    for (Image *image : images) {
+    for (Image *image : images)
         delete image;
-    }
 }
 
-// QUE ASCOOOOOOOOOO X2 (Bah, toda la clase es horrible)
 void Buttons::draw() {
-    for (Button *button : buttons) {
-        button->draw();
-    }
-    for (Button *button : hordasButtons) {
-        button->draw();
-    }
-    // Será este el que tiene que quedar? Help Martín
+    int i = 0;
     for (Image *image : images) {
-        image->draw();
+        image->draw(i);
+        i++;
     }
 }
 
-void Buttons::addSuperficieButtons() {
-    Button *praderaButton = new SuperficieButton(++nextId, 0, PRADERA,
-                                                 textureLoader.getTexture(PRADERA),
-                                                 mousePosition,
-                                                 renderer, editor);
-    buttons.push_back(praderaButton);
+void Buttons::addInitialButtons() {
+    using namespace std::placeholders; //Esto lo uso en el botón de crear horda
+    Image *praderaButton = new SuperficieButton(PRADERA, textureLoader.getTexture(
+            PRADERA), mousePosition, renderer, editor);
+    images.push_back(praderaButton);
 
-    Button *lavaButton = new SuperficieButton(++nextId, 1, VOLCAN,
-                                              textureLoader.getTexture(VOLCAN),
-                                              mousePosition, renderer, editor);
-    buttons.push_back(lavaButton);
+    Image *lavaButton = new SuperficieButton(VOLCAN,
+                                             textureLoader.getTexture(VOLCAN),
+                                             mousePosition, renderer, editor);
+    images.push_back(lavaButton);
 
-    Button *desiertoButton = new SuperficieButton(++nextId, 2, DESIERTO,
-                                                  textureLoader.getTexture
-                                                          (DESIERTO),
-                                                  mousePosition,
-                                                  renderer, editor);
-    buttons.push_back(desiertoButton);
+    Image *desiertoButton = new SuperficieButton(DESIERTO, textureLoader.getTexture(
+            DESIERTO), mousePosition, renderer, editor);
+    images.push_back(desiertoButton);
 
-    Button *glaciarButton = new SuperficieButton(++nextId, 3, GELIDO,
-                                                 textureLoader.getTexture
-                                                         (GELIDO),
-                                                 mousePosition,
-                                                 renderer, editor);
-    buttons.push_back(glaciarButton);
+    Image *glaciarButton = new SuperficieButton(GELIDO, textureLoader.getTexture(
+            GELIDO), mousePosition, renderer, editor);
+    images.push_back(glaciarButton);
 
-    Button *pathTileButton = new AgregarCaminoButton(++nextId, textureLoader
-            .getTexture(PATH_TILE_EDITOR), mousePosition, renderer, editor);
-    buttons.push_back(pathTileButton);
+    Image *pathTileButton = new AgregarCaminoButton(
+            textureLoader.getTexture(PATH_TILE_EDITOR), mousePosition, renderer,
+            editor);
+    images.push_back(pathTileButton);
 
-    Button *structureTileButton = new AgregarTierraFirmeButton(++nextId,
+    Image *structureTileButton = new AgregarTierraFirmeButton(
             textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition,
             renderer, editor);
-    buttons.push_back(structureTileButton);
+    images.push_back(structureTileButton);
 
-    Button *spawnTileButton = new AgregarPortalEntradaButton(++nextId,
+    Image *spawnTileButton = new AgregarPortalEntradaButton(
             textureLoader.getTexture(PORTAL_ENTRADA_EDITOR), mousePosition,
             renderer, editor);
-    buttons.push_back(spawnTileButton);
+    images.push_back(spawnTileButton);
 
-    Button *exitTileButton = new AgregarPortalSalidaButton(++nextId,
+    Image *exitTileButton = new AgregarPortalSalidaButton(
             textureLoader.getTexture(PORTAL_SALIDA_EDITOR), mousePosition,
             renderer, editor);
-    buttons.push_back(exitTileButton);
+    images.push_back(exitTileButton);
 
-}
-
-void Buttons::addNuevaHordaButton() {
-    Button *button = new NuevaHordaButton(++nextId, textureLoader.getTexture
-                                                  (AGREGAR_HORDA_BTN),
-                                          mousePosition,
-                                          renderer, editor);
-    buttons.push_back(button);
-}
-
-void Buttons::cleanHordasButtons() {
-    if (hordasButtons.empty())
-        return;
-    for (Button *button : hordasButtons) {
-        delete button;
-    }
-    hordasButtons = std::list<Button *>();
+    Image *button = new NuevaHordaButton(
+            textureLoader.getTexture(AGREGAR_HORDA_BTN), mousePosition,
+            renderer, editor, std::bind(&Buttons::addEnemigosButton, this, _1));
+    images.push_back(button);
 }
 
 void Buttons::addEnemigosButton(int horda) {
-    Button *enemigoImg = new DoNothingButton(++nextId, horda, textureLoader
-            .getTexture(ABMONIBLE_EDITOR), mousePosition, renderer);
-    hordasButtons.push_back(enemigoImg);
+    Image *enemigoImg = new EnemigoImage(horda, textureLoader.getTexture(
+            ABMONIBLE_EDITOR), renderer);
+    images.push_back(enemigoImg);
 
-    Button *button = new AgregarEnemigoButton(++nextId, horda, "abmonible",
-                                              textureLoader.getTexture(ENEMIGO_SUMA),
-                                              mousePosition, renderer, editor);
-    hordasButtons.push_back(button);
+    Image *deleteAbmonible = new EliminarEnemigoButton(horda, ABMONIBLE_KEY,
+                                                       textureLoader.getTexture(
+                                                               ENEMIGO_RESTA),
+                                                       mousePosition, renderer,
+                                                       editor);
+    images.push_back(deleteAbmonible);
 
-    Image *cantidad = new ContadorEnemigosInput(horda, "abmonible",
+    Image *agregarAbmonible = new AgregarEnemigoButton(horda, ABMONIBLE_KEY,
+                                              textureLoader
+            .getTexture(
+            ENEMIGO_SUMA), mousePosition, renderer, editor);
+    images.push_back(agregarAbmonible);
+
+    /*Image *cantidad = new ContadorEnemigosInput(horda, ABMONIBLE_KEY,
                                                 textureLoader.getTexture(FONT),
                                                 renderer, editor);
     images.push_back(cantidad);
 
-    Button *deleteAbmonible = new EliminarEnemigoButton(++nextId, horda,
-                                                        "abmonible",
-                                                        textureLoader.getTexture(
-                                                                ENEMIGO_RESTA),
-                                                        mousePosition, renderer,
-                                                        editor);
-    hordasButtons.push_back(deleteAbmonible);
+    Image *eliminarHordaButton = new EliminarHordaButton(horda, textureLoader.getTexture(
+            ELIMINAR_HORDA_BTN), mousePosition, renderer, editor);
+    images.push_back(eliminarHordaButton);*/
+}
 
-    Button *eliminarHordaButton = new EliminarHordaButton(++nextId, horda,
-                                                          textureLoader.getTexture(
-                                                                  ELIMINAR_HORDA_BTN),
-                                                          mousePosition,
-                                                          renderer, editor);
-    hordasButtons.push_back(eliminarHordaButton);
+bool Buttons::isAnyClicked() {
+    for (auto& image : images) {
+        if (image->isClicked())
+            return true;
+    }
+    return false;
 }

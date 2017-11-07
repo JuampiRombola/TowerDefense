@@ -9,5 +9,5 @@ ContadorEnemigosInput::ContadorEnemigosInput(int horda, std::string enemigo, SDL
 void ContadorEnemigosInput::draw() {
     this->text = std::to_string(editor.getCantidadEnemigosEnHorda(enemigo,
                                                                   horda));
-    Text::draw();
+    Text::draw(0);
 }
