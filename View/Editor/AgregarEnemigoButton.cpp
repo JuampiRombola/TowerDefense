@@ -16,7 +16,7 @@ void AgregarEnemigoButton::click() {
 void AgregarEnemigoButton::draw(int number) {
     button.x = HORDA_MODIFY_QUANTITY_SIZE;
     button.y = HORDA_MODIFY_QUANTITY_PADDING +
-               (number - TOTAL_MAIN_BUTTONS - HORDA_TOTAL_ENEMIES) *
+               (number - TOTAL_MAIN_BUTTONS - HORDA_TOTAL_ENEMIES - 1) *
                HORDA_TOTAL_HEIGHT / (HORDA_TOTAL_BUTTONS);
     Button::draw(number);
 

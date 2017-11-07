@@ -2,6 +2,7 @@
 
 Horda::Horda(int id) : id(id) {
     cantidadEnemigos[ABMONIBLE_KEY] = 0;
+    cantidadEnemigos[ESPECTRO_KEY] = 0;
 }
 
 int Horda::getId() {
@@ -13,7 +14,7 @@ void Horda::agregarEnemigo(std::string enemigo) {
 }
 
 void Horda::eliminarEnemigo(std::string enemigo) {
-    cantidadEnemigos[enemigo] += 1;
+    cantidadEnemigos[enemigo] -= 1;
     if (cantidadEnemigos[enemigo] < 0)
         cantidadEnemigos[enemigo] = 0;
 }

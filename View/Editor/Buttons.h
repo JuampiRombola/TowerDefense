@@ -27,6 +27,7 @@ private:
     Editor& editor;
     TextureLoader &textureLoader;
     KeyboardInput &keyboardInput;
+    void addEnemigoButton(int horda, std::string enemigoKey, int texture);
 public:
     Buttons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
             TextureLoader &textureLoader, KeyboardInput &keyboardInput);

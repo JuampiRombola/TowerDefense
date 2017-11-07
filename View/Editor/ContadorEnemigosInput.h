@@ -14,7 +14,7 @@ public:
     ContadorEnemigosInput(int horda, std::string enemigo, SDL_Texture *texture,
                           Renderer &renderer, Editor &editor);
 
-    void draw();
+    void draw(int number);
 
 };
 

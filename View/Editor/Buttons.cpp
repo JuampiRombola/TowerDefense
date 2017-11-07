@@ -70,31 +70,37 @@ void Buttons::addInitialButtons() {
 }
 
 void Buttons::addEnemigosButton(int horda) {
+    addEnemigoButton(horda, ABMONIBLE_KEY, ABMONIBLE_EDITOR);
+    //addEnemigoButton(horda, ESPECTRO_KEY, ABMONIBLE_EDITOR);
+    /*Image *eliminarHordaButton = new EliminarHordaButton(horda,
+                                                          textureLoader.getTexture(
+            ELIMINAR_HORDA_BTN), mousePosition, renderer, editor);
+    images.push_back(eliminarHordaButton);*/
+}
+
+void Buttons::addEnemigoButton(int horda, std::string enemigoKey,
+                               int texture) {
     Image *enemigoImg = new EnemigoImage(horda, textureLoader.getTexture(
-            ABMONIBLE_EDITOR), renderer);
+            texture), renderer);
     images.push_back(enemigoImg);
 
-    Image *deleteAbmonible = new EliminarEnemigoButton(horda, ABMONIBLE_KEY,
+    Image *deleteAbmonible = new EliminarEnemigoButton(horda, enemigoKey,
                                                        textureLoader.getTexture(
                                                                ENEMIGO_RESTA),
                                                        mousePosition, renderer,
                                                        editor);
     images.push_back(deleteAbmonible);
 
-    Image *agregarAbmonible = new AgregarEnemigoButton(horda, ABMONIBLE_KEY,
-                                              textureLoader
-            .getTexture(
-            ENEMIGO_SUMA), mousePosition, renderer, editor);
+    Image *agregarAbmonible = new AgregarEnemigoButton(horda, enemigoKey,
+                                                       textureLoader
+                                                               .getTexture(
+                                                                       ENEMIGO_SUMA), mousePosition, renderer, editor);
     images.push_back(agregarAbmonible);
 
-    /*Image *cantidad = new ContadorEnemigosInput(horda, ABMONIBLE_KEY,
+    Image *cantidad = new ContadorEnemigosInput(horda, enemigoKey,
                                                 textureLoader.getTexture(FONT),
                                                 renderer, editor);
     images.push_back(cantidad);
-
-    Image *eliminarHordaButton = new EliminarHordaButton(horda, textureLoader.getTexture(
-            ELIMINAR_HORDA_BTN), mousePosition, renderer, editor);
-    images.push_back(eliminarHordaButton);*/
 }
 
 bool Buttons::isAnyClicked() {
