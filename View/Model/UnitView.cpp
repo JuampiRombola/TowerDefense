@@ -1,38 +1,43 @@
 #include "UnitView.h"
 
-#define WALKING_W_POS 1765
-#define WALKING_H_POS 3537
-
-#define WALKING_W 106
-#define WALKING_H 119
-
-#define WALKING_OFFSET_X 10
-#define WALKING_OFFSET_Y 78
-
-#define DYING_W 0
-#define DYING_H 0
-
-#define UNIT_WALKING_N 12
-#define UNIT_DYING_N 18
-
 #define PIXELS 40
 
 UnitView::UnitView(int key, TextureLoader &textures, Renderer &renderer) :
-        spriteWalking(textures.getTexture(key), renderer),
-        spriteDying(textures.getTexture(key), renderer) {
+        cfg(textures.getConfig(key)),
+        spriteWalking(textures.getTexture(key), renderer,
+                      cfg["WALKING_W"].as<int>(),
+                      cfg["WALKING_H"].as<int>(),
+                      cfg["WALKING_START_X"].as<int>(),
+                      cfg["WALKING_START_Y"].as<int>(),
+                      cfg["WALKING_COLUMNS"].as<int>(),
+                      cfg["WALKING_ROWS"].as<int>()),
+        spriteDying(textures.getTexture(key), renderer,
+                    cfg["DYING_W"].as<int>(),
+                    cfg["DYING_H"].as<int>(),
+                    cfg["DYING_START_X"].as<int>(),
+                    cfg["DYING_START_Y"].as<int>(),
+                    cfg["DYING_COLUMNS"].as<int>(),
+                    cfg["DYING_ROWS"].as<int>()) {
     currentDirection = SE;
     this->setCurrentDirection();
     currentState = WALKING;
-    spriteWalking.setSourceRect(WALKING_W_POS, WALKING_H_POS, WALKING_W, WALKING_H);
-    spriteWalking.setDestRect(x, y, WALKING_W, WALKING_H);
-    spriteWalking.setOffsetXY(WALKING_OFFSET_X, WALKING_OFFSET_Y);
+
+    spriteWalking.setDestRect(x, y,
+                              cfg["WALKING_W"].as<int>(),
+                              cfg["WALKING_H"].as<int>());
+    spriteWalking.setOffsetXY(cfg["WALKING_OFFSET_X"].as<int>(),
+                              cfg["WALKING_OFFSET_Y"].as<int>());
+
+    spriteDying.setDestRect(x, y,
+                            cfg["DYING_W"].as<int>(),
+                            cfg["DYING_H"].as<int>());
 }
 
 void UnitView::setXY(int x, int y) {
     View::setXY(x, y);
     spriteWalking.setDestXY(x, y);
-    int offsetX = WALKING_OFFSET_X;
-    int offsetY = WALKING_OFFSET_Y;
+    int offsetX = cfg["WALKING_OFFSET_X"].as<int>();
+    int offsetY = cfg["WALKING_OFFSET_Y"].as<int>();
     if (currentDirection == SO || currentDirection == NO)
         offsetX -= PIXELS * 2;
     if (currentDirection == NE || currentDirection == NO)
@@ -41,21 +46,20 @@ void UnitView::setXY(int x, int y) {
 }
 
 void UnitView::draw(Uint32 ticks) {
-    Uint32 spriteN;
     if (currentState == WALKING) {
         if (accumulatedDisplacement < PIXELS) {
             this->setNumberOfPixelsToMove(ticks);
             this->setOffsetXY();
         }
-        spriteN = (ticks / 150) % UNIT_WALKING_N;
-        spriteWalking.setSourceXY(spriteN * WALKING_W + WALKING_W_POS,
-                                  WALKING_H_POS + currentDirection * WALKING_H);
-        spriteWalking.draw();
+        spriteWalking.setStartXStartY(cfg["WALKING_START_X"].as<int>(),
+                                      cfg["WALKING_START_Y"].as<int>()
+                                      + currentDirection *
+                                        cfg["WALKING_H"].as<int>());
+        spriteWalking.setTimePerSprite(timePerPixel);
+        spriteWalking.nextAndDraw(ticks);
     } else {
-        spriteN = (ticks / 150) % UNIT_DYING_N;
-        spriteWalking.setSourceXY(spriteN * DYING_W + WALKING_W_POS,
-                                  WALKING_H_POS + currentDirection * DYING_H);
-        spriteWalking.draw();
+        if (spriteDying.getCurrentSprite() != cfg["DYING_COLUMNS"].as<int>())
+            spriteDying.nextAndDraw(ticks);
     }
 }
 
@@ -127,4 +131,19 @@ void UnitView::setCurrentDirection() {
         directionX = -1;
         directionY = 1;
     }
+}
+
+void UnitView::enableDying() {
+    currentState = DYING;
+    spriteDying.setDestXY(x, y);
+    spriteDying.setTimePerSprite(timePerPixel);
+    spriteDying.setStartXStartY(cfg["DYING_START_X"].as<int>(),
+                                cfg["DYING_START_Y"].as<int>()
+                                + currentDirection *
+                                  cfg["DYING_H"].as<int>());
+    int offsetX = spriteWalking.getOffsetX() +
+            cfg["DYING_OFFSET_X"].as<int>();
+    int offsetY = spriteWalking.getOffsetY() +
+            cfg["DYING_OFFSET_Y"].as<int>();
+    spriteDying.setOffsetXY(offsetX, offsetY);
 }

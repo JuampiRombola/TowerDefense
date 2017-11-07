@@ -29,6 +29,7 @@ public:
     void setTexture(SDL_Texture *newTexture);
     int getOffsetX();
     int getOffsetY();
+    void setAlphaMod(Uint8 alpha);
 };
 
 

@@ -5,12 +5,16 @@
 #include "Common/SpriteNamesConfig.h"
 #include "Model/PortalEntradaView.h"
 #include "Model/PortalSalidaView.h"
-#include "Model/FireTowerView.h"
+#include "Model/TowerView.h"
 #include "Model/UnitView.h"
+#include "Model/ShotView.h"
+#include "Model/SpellView.h"
 
 #define TITLE "Tower Defense"
+
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
+#define FPS 40
 
 #define MAPSIZE 7
 
@@ -20,9 +24,9 @@ int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_VIDEO);
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
-    TextureLoader textureLoader(renderer.getRenderer());
+    TextureLoader textureLoader(renderer.getRenderer(), 0);
 
-    MapView mapView(MAPSIZE, MAPSIZE, GELIDO, renderer, textureLoader);
+    MapView mapView(MAPSIZE, MAPSIZE, DESIERTO, renderer, textureLoader);
 
     //Armo un camino
     mapView.addPathTile(0, 0);
@@ -41,9 +45,10 @@ int main(int argc, char** argv) {
 
     //Pongo tierra firme
     mapView.addStructureTile(1, 4);
+    mapView.addStructureTile(2, 0);
     mapView.addStructureTile(2, 2);
     mapView.addStructureTile(4, 4);
-    mapView.addStructureTile(5, 6);
+    mapView.addStructureTile(4, 6);
 
     //Pongo un portal de entrada y uno de salida
     PortalView portalEntrada = PortalEntradaView(textureLoader, renderer);
@@ -51,23 +56,35 @@ int main(int argc, char** argv) {
     PortalView portalSalida = PortalSalidaView(textureLoader, renderer);
     portalSalida.setXY(6, 6);
 
-    //Agrego una torre de fuego en el 1,4
-    FireTowerView fireTower1(textureLoader, renderer);
-    fireTower1.setXY(1, 4);
+    //Agrego una torre de aire en el 2,0
+    TowerView tower1(TORRE_AIRE, textureLoader, renderer);
+    tower1.setXY(2, 0);
 
-    //Agrego una torre de fuego en el 4,4
-    FireTowerView fireTower2(textureLoader, renderer);
-    fireTower2.setXY(4, 4);
+    //Agrego una torre de agua en el 4,4
+    TowerView tower2(TORRE_AGUA, textureLoader, renderer);
+    tower2.setXY(4, 4);
+
+    //Agrego una torre de fuego en el 1,4
+    TowerView tower3(TORRE_FUEGO, textureLoader, renderer);
+    tower3.setXY(1, 4);
+
+    //Agrego una torre de tierra en el 5,5
+    TowerView tower4(TORRE_TIERRA, textureLoader, renderer);
+    tower4.setXY(4, 6);
+
+    //Agrego un disparo
+    ShotView shot = ShotView(DISPARO_AIRE, textureLoader, renderer);
+
+    //Agrego un muro de fuego
+    SpellView fireWall = SpellView(FIREWALL, textureLoader, renderer);
 
     //Creo una unidad en el 0,0
-    UnitView unit(ABOMINABLE, textureLoader, renderer);
-    //unit.move(0, 0, 1, 0, 5000);
-    //unit.move(1, 0, 1, 1, 5000);
-    unit.move(0, 0, 1, 0, 5000);
+    UnitView unit(HALCONSANGRIENTO, textureLoader, renderer);
+    unit.move(0, 0, 1, 0, 3000);
 
     Uint32 t1;
     Uint32 t2;
-    Uint32 s = 1000 / 30;
+    Uint32 s = 1000 / FPS;
     Uint32 delta = 0;
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
@@ -79,31 +96,37 @@ int main(int argc, char** argv) {
 
             switch (event.type) {
                 case SDL_QUIT:
-                    quit = true;
-                    break;
+                    quit = true; break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
                         case SDLK_ESCAPE:
-                            quit = true;
-                            break;
+                            quit = true; break;
                         case SDLK_i:
-                            renderer.zoomIn();
-                            break;
+                            renderer.zoomIn(); break;
                         case SDLK_o:
-                            renderer.zoomOut();
-                            break;
+                            renderer.zoomOut(); break;
+                        case SDLK_d:
+                            unit.enableDying(); break;
+                        case SDLK_s:
+                            shot.shoot(2, 0, 0, 0, 500); break;
+                        case SDLK_a:
+                            fireWall.cast(1, 1, 5000); break;
+                        case SDLK_z:
+                            unit.move(1, 0, 1, 1, 3000);; break;
+                        case SDLK_x:
+                            unit.move(1, 1, 0, 1, 3000);; break;
+                        case SDLK_c:
+                            unit.move(0, 1, 0, 0, 3000);; break;
+                        case SDLK_v:
+                            unit.move(0, 0, 1, 0, 3000);; break;
                         case SDLK_LEFT:
-                            renderer.updateCamera(-1, 0);
-                            break;
+                            renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
-                            renderer.updateCamera(1, 0);
-                            break;
+                            renderer.updateCamera(1, 0); break;
                         case SDLK_UP:
-                            renderer.updateCamera(0, -1);
-                            break;
+                            renderer.updateCamera(0, -1); break;
                         case SDLK_DOWN:
-                            renderer.updateCamera(0, 1);
-                            break;
+                            renderer.updateCamera(0, 1); break;
                     }
             }
         }
@@ -117,8 +140,12 @@ int main(int argc, char** argv) {
         //if ((ticks % 100) == 0)
             //unit.move(1, 0, 1, 1, 5000);
         unit.draw(ticks);
-        fireTower1.draw(ticks);
-        fireTower2.draw(ticks);
+        tower1.draw(ticks);
+        tower2.draw(ticks);
+        tower3.draw(ticks);
+        tower4.draw(ticks);
+        fireWall.draw(ticks);
+        shot.draw(ticks);
 
         renderer.present();
 

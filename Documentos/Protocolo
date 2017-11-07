@@ -20,7 +20,12 @@ Servidor -> Cliente
     2. [Mover unidad][id] // Si el camino no tiene los siguientes, mandarlo
     3. [Matar unidad][id]
 
+  Hechizos:
+    1. [tipo][x][y][tiempo de demora]
+    //2. [habilitar hechizo][tipo]
 
+  Marcar celda
+    2. [Marcar celda][x][y]{[duracion]}
 
 
 Referencias:

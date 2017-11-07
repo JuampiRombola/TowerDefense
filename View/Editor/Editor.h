@@ -3,17 +3,27 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 #include "../Model/MapView.h"
 #include "../Common/SpriteNamesConfig.h"
+#include "../Model/PortalView.h"
+#include "../Model/PortalEntradaView.h"
+#include "../Model/PortalSalidaView.h"
+#include <list>
 
 class Editor {
 private:
+    TextureLoader &textureLoader;
+    Renderer &renderer;
     std::vector<std::vector<std::string>> hordas;
     int superficie;
     std::string nombre;
     MapView& map;
+    std::list<PortalView*> portales;
+    std::function<void(int, int)> mapFunction;
 public:
-    explicit Editor(MapView& map);
+    explicit Editor(MapView &map, TextureLoader &textureLoader,
+                        Renderer &renderer);
     ~Editor();
     void setSuperficie(int superficie);
     void agregarEnemigo(int horda, std::string enemigo);
@@ -24,6 +34,15 @@ public:
     unsigned int getCantidadEnemigosEnHorda(std::string enemigo, int horda);
     std::string& getNombre();
     void exportar();
+    void waitForPathTile();
+    void waitForStructureTile();
+    void waitForSpawnPortalTile();
+    void waitForExitPortalTile();
+    void applyTileFunction(int x, int y);
+    void unbindWaitingFunction();
+    void addSpawnTile(int x, int y);
+    void addExitTile(int x, int y);
+    void draw();
 };
 
 #endif //TOWERDEFENSE_EDITOR_H

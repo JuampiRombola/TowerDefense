@@ -3,13 +3,14 @@
 
 
 #include "../Common/View.h"
-#include "../Common/Sprite.h"
 #include "../Common/TextureLoader.h"
+#include "../Common/AnimatedSprite.h"
 
 class UnitView : public View {
 private:
-    Sprite spriteWalking;
-    Sprite spriteDying;
+    const YAML::Node cfg;
+    AnimatedSprite spriteWalking;
+    AnimatedSprite spriteDying;
     enum Direction {S, SO, O, NO, N, NE, E, SE};
     enum State {WALKING, DYING};
     int currentDirection;
@@ -29,6 +30,7 @@ public:
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
     void move(int x, int y, int nextX, int nextY, Uint32 t);
+    void enableDying();
 
 private:
     void setNumberOfPixelsToMove(Uint32 currentTime);

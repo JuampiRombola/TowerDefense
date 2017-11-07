@@ -11,8 +11,9 @@
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
+#define EDITOR_MODE 1
 
-#define MAPSIZE 10
+#define MAPSIZE 7
 
 int main(int argc, char** argv) {
     bool quit = false;
@@ -20,20 +21,23 @@ int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_VIDEO);
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
-    TextureLoader textureLoader(renderer.getRenderer());
+    TextureLoader textureLoader(renderer.getRenderer(), EDITOR_MODE);
 
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
 
     int mouse_x = -1, mouse_y = -1;
     MousePosition mouse(mouse_x, mouse_y);
 
-    Editor editor(mapView);
+    Editor editor(mapView, textureLoader, renderer);
 
     KeyboardInput keyboardInput(editor.getNombre());
 
     Buttons buttons(mouse, renderer, editor, textureLoader, keyboardInput);
     buttons.addSuperficieButtons();
     buttons.addNuevaHordaButton();
+
+    int tileX = 0;
+    int tileY = 0;
 
     while (!quit) {
         SDL_PollEvent(&event);
@@ -45,6 +49,9 @@ int main(int argc, char** argv) {
             case SDL_MOUSEBUTTONDOWN:
                 SDL_GetMouseState(&mouse_x, &mouse_y);
                 mouse.toggleActive();
+                tileX = mapView.getTileXFromPixel(mouse_x, mouse_y);
+                tileY = mapView.getTileYFromPixel(mouse_x, mouse_y);
+                editor.applyTileFunction(tileX, tileY);
                 break;
             case SDL_FINGERDOWN:
                 mouse_x = static_cast<int>(event.tfinger.x);
@@ -69,7 +76,7 @@ int main(int argc, char** argv) {
              ++horda) {
             buttons.addEnemigosButton(horda);
         }
-        mapView.draw(0);
+        editor.draw();
         buttons.draw();
         renderer.present();
     }

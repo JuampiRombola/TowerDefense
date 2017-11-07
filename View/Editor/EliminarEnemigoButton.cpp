@@ -6,7 +6,7 @@ EliminarEnemigoButton::EliminarEnemigoButton(int id, int horda,
                                              SDL_Texture *texture,
                                              MousePosition &mousePosition,
                                              Renderer &renderer, Editor &editor)
-        : Button(id, 0, 300 + horda * 200, 50, 50, texture, mousePosition,
+        : Button(id, 0, 400 + horda * 200, 50, 50, texture, mousePosition,
                  renderer), horda(horda), enemigo(enemigo), editor(editor) {}
 
 void EliminarEnemigoButton::click() {

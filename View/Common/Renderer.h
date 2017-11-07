@@ -39,6 +39,8 @@ public:
     void zoomIn();
     void zoomOut();
     bool isOnCamera(int x, int y);
+    int pixelToCartesianX(int x, int y);
+    int pixelToCartesianY(int x, int y);
 };
 
 

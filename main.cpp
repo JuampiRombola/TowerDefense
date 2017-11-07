@@ -6,7 +6,7 @@
 #include "View/Common/SpriteNamesConfig.h"
 #include "View/Model/PortalEntradaView.h"
 #include "View/Model/PortalSalidaView.h"
-#include "View/Model/FireTowerView.h"
+#include "View/Model/TowerView.h"
 #include "View/Model/UnitView.h"
 #include "TowerDefenseServer/include/GameConfiguration.h"
 #include "TowerDefenseServer/include/TowerDefenseGame.h"
@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_VIDEO);
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
-    TextureLoader textureLoader(renderer.getRenderer());
+    TextureLoader textureLoader(renderer.getRenderer(), 0);
 
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
 
@@ -63,11 +63,11 @@ int main(int argc, char** argv) {
     portalSalida.setXY(6, 6);
 
     //Agrego una torre de fuego en el 1,4
-    FireTowerView fireTower1(textureLoader, renderer);
+    TowerView fireTower1(TORRE_FUEGO, textureLoader, renderer);
     fireTower1.setXY(1, 4);
 
     //Agrego una torre de fuego en el 4,4
-    FireTowerView fireTower2(textureLoader, renderer);
+    TowerView fireTower2(TORRE_FUEGO, textureLoader, renderer);
     fireTower2.setXY(4, 4);
 
     //Creo una unidad en el 0,0
@@ -88,31 +88,23 @@ int main(int argc, char** argv) {
 
             switch (event.type) {
                 case SDL_QUIT:
-                    quit = true;
-                    break;
+                    quit = true; break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
                         case SDLK_ESCAPE:
-                            quit = true;
-                            break;
+                            quit = true; break;
                         case SDLK_i:
-                            renderer.zoomIn();
-                            break;
+                            renderer.zoomIn(); break;
                         case SDLK_o:
-                            renderer.zoomOut();
-                            break;
+                            renderer.zoomOut(); break;
                         case SDLK_LEFT:
-                            renderer.updateCamera(-1, 0);
-                            break;
+                            renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
-                            renderer.updateCamera(1, 0);
-                            break;
+                            renderer.updateCamera(1, 0); break;
                         case SDLK_UP:
-                            renderer.updateCamera(0, -1);
-                            break;
+                            renderer.updateCamera(0, -1); break;
                         case SDLK_DOWN:
-                            renderer.updateCamera(0, 1);
-                            break;
+                            renderer.updateCamera(0, 1); break;
                     }
             }
         }

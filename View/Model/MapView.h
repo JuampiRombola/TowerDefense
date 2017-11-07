@@ -5,6 +5,7 @@
 #include "../Common/Sprite.h"
 #include "../Common/Renderer.h"
 #include "../Common/TextureLoader.h"
+#include "../Common/AnimatedSprite.h"
 
 class MapView {
 private:
@@ -14,7 +15,7 @@ private:
     std::vector<std::pair<int, int>> structureTiles;
     Sprite envTile;
     Sprite pathTile;
-    Sprite structureTile;
+    AnimatedSprite structureTile;
     TextureLoader& textures;
     Renderer& renderer;
 
@@ -27,6 +28,9 @@ public:
     void addStructureTile(int x, int y);
     void selectBackgroundColor(Renderer &renderer, int environment);
     void setEnvTile(int env);
+    int getTileXFromPixel(int x, int y);
+    int getTileYFromPixel(int x, int y);
+    bool isValidTile(int x, int y);
 };
 
 

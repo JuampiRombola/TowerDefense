@@ -83,8 +83,10 @@ set(SOURCE_FILES_V
         View/Common/Sprite.h View/Common/SpriteNamesConfig.h View/Common/View.cpp View/Common/View.h
         View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
         View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
-        View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h
-        View/Model/UnitView.cpp View/Model/UnitView.h)
+        View/Model/PortalSalidaView.h View/Model/TowerView.cpp View/Model/TowerView.h
+        View/Model/UnitView.cpp View/Model/UnitView.h View/Model/ShotView.cpp View/Model/ShotView.h
+        View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Model/SpellView.cpp
+        View/Model/SpellView.h)
 
 set(SOURCE_FILES_E
         View/Common/Window.cpp View/Common/Window.h View/Common/ViewError.cpp
@@ -94,7 +96,7 @@ set(SOURCE_FILES_E
         View/Common/Sprite.h View/Common/SpriteNamesConfig.h View/Common/View.cpp View/Common/View.h
         View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
         View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
-        View/Model/PortalSalidaView.h View/Model/FireTowerView.cpp View/Model/FireTowerView.h
+        View/Model/PortalSalidaView.h View/Model/TowerView.cpp View/Model/TowerView.h
         View/Common/MousePosition.cpp View/Common/MousePosition.h View/Editor/Editor.cpp
         View/Editor/Editor.h View/Common/KeyboardInput.cpp View/Common/KeyboardInput.h
         View/Editor/Button.cpp View/Editor/Button.h View/Editor/AgregarEnemigoButton.cpp
@@ -105,7 +107,12 @@ set(SOURCE_FILES_E
         View/Editor/ToggleButton.cpp View/Editor/ToggleButton.h View/Editor/Buttons.cpp
         View/Editor/Buttons.h View/Common/Text.cpp View/Common/Text.h View/Common/Image.cpp
         View/Common/Image.h View/Editor/DoNothingButton.cpp View/Editor/DoNothingButton.h
-        View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h)
+        View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h
+        View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Editor/AgregarCaminoButton.cpp
+        View/Editor/AgregarCaminoButton.h View/Editor/AgregarTierraFirmeButton.cpp
+        View/Editor/AgregarTierraFirmeButton.h View/Editor/AgregarPortalEntradaButton.cpp
+        View/Editor/AgregarPortalEntradaButton.h View/Editor/AgregarPortalSalidaButton.cpp
+        View/Editor/AgregarPortalSalidaButton.h)
 
 add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})
@@ -118,7 +125,7 @@ pkg_search_module(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
 #target_link_libraries(TowerDefense ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
-target_link_libraries(TowerDefenseView ${SDL2IMAGE_LIBRARIES})
-target_link_libraries(TowerDefenseEditor ${SDL2IMAGE_LIBRARIES})
+target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES})
+target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES})
 target_link_libraries(TowerDefenseModel yaml-cpp)
 target_link_libraries(TowerDefense yaml-cpp ${SDL2IMAGE_LIBRARIES})

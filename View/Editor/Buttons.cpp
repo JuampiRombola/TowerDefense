@@ -1,4 +1,8 @@
 #include "Buttons.h"
+#include "AgregarCaminoButton.h"
+#include "AgregarTierraFirmeButton.h"
+#include "AgregarPortalEntradaButton.h"
+#include "AgregarPortalSalidaButton.h"
 
 Buttons::Buttons(MousePosition &mousePosition, Renderer &renderer,
                  Editor &editor, TextureLoader &textureLoader, KeyboardInput
@@ -60,9 +64,25 @@ void Buttons::addSuperficieButtons() {
                                                  renderer, editor);
     buttons.push_back(glaciarButton);
 
-    Image *text = new Text(100, 50, 500, 0, textureLoader
-            .getTexture(FONT), renderer);
-    images.push_back(text);
+    Button *pathTileButton = new AgregarCaminoButton(++nextId, textureLoader
+            .getTexture(PATH_TILE_EDITOR), mousePosition, renderer, editor);
+    buttons.push_back(pathTileButton);
+
+    Button *structureTileButton = new AgregarTierraFirmeButton(++nextId,
+            textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition,
+            renderer, editor);
+    buttons.push_back(structureTileButton);
+
+    Button *spawnTileButton = new AgregarPortalEntradaButton(++nextId,
+            textureLoader.getTexture(PORTAL_ENTRADA_EDITOR), mousePosition,
+            renderer, editor);
+    buttons.push_back(spawnTileButton);
+
+    Button *exitTileButton = new AgregarPortalSalidaButton(++nextId,
+            textureLoader.getTexture(PORTAL_SALIDA_EDITOR), mousePosition,
+            renderer, editor);
+    buttons.push_back(exitTileButton);
+
 }
 
 void Buttons::addNuevaHordaButton() {

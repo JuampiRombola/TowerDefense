@@ -1,3 +1,5 @@
+#include <iostream>
+#include <cmath>
 #include "Renderer.h"
 
 #define HEIGHTFACTOR 80
@@ -31,8 +33,8 @@ void Renderer::copy(SDL_Texture *texture,
                     int offsetX, int offsetY) {
     int x = dst->x;
     int y = dst->y;
-    dst->x = cartesianToIsometricX(x, y) - offsetX * zoom - cameraX;
-    dst->y = cartesianToIsometricY(x, y) - offsetY * zoom - cameraY;
+    dst->x = (cartesianToIsometricX(x, y) - offsetX - cameraX) * zoom;
+    dst->y = (cartesianToIsometricY(x, y) - offsetY - cameraY) * zoom;
     if (!isOnCamera(dst->x, dst->y)) {
         dst->x = x;
         dst->y = y;
@@ -71,13 +73,13 @@ void Renderer::updateCamera(int x, int y) {
 
     this->cameraX += (x * factor);
     if (cameraX < 0) cameraX = 0;
-    if (cameraX > (mapWidth * zoom - windowWidth + 2 * PADDING * zoom))
-        cameraX = mapWidth * zoom - windowWidth + 2 * PADDING * zoom;
+    if (cameraX > (2 * (zoom * mapWidth + PADDING) - windowWidth))
+        cameraX = 2 * (zoom * mapWidth + PADDING) - windowWidth;
 
     this->cameraY += (y * factor);
     if (cameraY < 0) cameraY = 0;
-    if (cameraY > (mapHeight * zoom - windowHeight + 2 * PADDING))
-        cameraY = mapHeight * zoom - windowHeight + 2 * PADDING;
+    if (cameraY > (2 * (zoom * mapHeight + PADDING) - windowHeight))
+        cameraY = 2 * (zoom * mapHeight + PADDING) - windowHeight;
 }
 
 SDL_Renderer *Renderer::getRenderer() {
@@ -85,26 +87,26 @@ SDL_Renderer *Renderer::getRenderer() {
 }
 
 int Renderer::cartesianToIsometricX(int x, int y) {
-    return (((x  - y) * WIDTHFACTOR) + paddingWidth - WIDTHFACTOR) * zoom;
+    return (((x  - y) * WIDTHFACTOR) + paddingWidth);
 }
 
 int Renderer::cartesianToIsometricY(int x, int y) {
-    return ((x  + y) * HEIGHTFACTOR * zoom / 2) + paddingHeight;
+    return ((x  + y) * HEIGHTFACTOR / 2) + paddingHeight;
 }
 
 void Renderer::zoomIn() {
     if (zoom < 5) {
         zoom += 1;
-        cameraX += mapWidth / 2;
-        cameraY += windowHeight / 2 + WIDTHFACTOR;
+        cameraX += (windowWidth / 2) / zoom;
+        cameraY += (windowHeight / 2) / zoom;
     }
 }
 
 void Renderer::zoomOut() {
     if (zoom > 1) {
+        cameraX -= (windowWidth / 2) / zoom;
+        cameraY -= (windowHeight / 2) / zoom;
         zoom -= 1;
-        cameraX -= mapWidth / 2;
-        cameraY -= windowHeight / 2 + WIDTHFACTOR;
     }
 }
 
@@ -112,4 +114,22 @@ bool Renderer::isOnCamera(int x, int y) {
     return ((x >= -(WIDTHFACTOR + TOLERANCE) * zoom) &&
             (y >= -(HEIGHTFACTOR + TOLERANCE) * zoom) &&
             (x <= windowWidth) && (y <= windowHeight));
+}
+
+int Renderer::pixelToCartesianX(int x, int y) {
+    double result = ((x/zoom + cameraX - paddingWidth - WIDTHFACTOR)
+                     / static_cast<double>(WIDTHFACTOR) +
+                    (y/zoom + cameraY - paddingHeight)
+                     / static_cast<double>(HEIGHTFACTOR / 2)) / 2;
+    if (result < 0) return -1;
+    return static_cast<int>(result);
+}
+
+int Renderer::pixelToCartesianY(int x, int y) {
+    double result = ((y / zoom + cameraY - paddingHeight)
+                     / static_cast<double>(HEIGHTFACTOR / 2) -
+                     (x/zoom +cameraX - paddingWidth - WIDTHFACTOR)
+                     / static_cast<double>(WIDTHFACTOR)) / 2;
+    if (result < 0) return -1;
+    return static_cast<int>(result);
 }

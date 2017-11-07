@@ -1,13 +1,18 @@
+#include <cmath>
 #include "MapView.h"
 #include "../Common/SpriteNamesConfig.h"
 
 #define PATHTILE 1
 
+#define STRUCTURE_COLUMNS 2
+#define STRUCTURE_ROWS 1
+#define STRUCTURE_TPS 350
+
 #define SPRITE_TILE_W 128
 #define SPRITE_TILE_H 64
 #define SPRITE_TILE_DEEP_H 96
-#define STRUCTURE_TILE_W 511
-#define STRUCTURE_TILE_H 256
+#define STRUCTURE_W 511
+#define STRUCTURE_H 256
 
 #define TILE_WIDTH 160
 #define TILE_HEIGHT 80
@@ -18,15 +23,17 @@ MapView::MapView(int width, int height, int env,
         width(width), height(height),
         envTile(textures.getTexture(env), renderer),
         pathTile(textures.getTexture(env + PATHTILE), renderer),
-        structureTile(textures.getTexture(TIERRAFIRME), renderer),
+        structureTile(textures.getTexture(TIERRAFIRME), renderer,
+                      STRUCTURE_W, STRUCTURE_H, 0, 0,
+                      STRUCTURE_COLUMNS, STRUCTURE_ROWS),
         textures(textures), renderer(renderer) {
     selectBackgroundColor(renderer, env);
     envTile.setSourceRect(0, 0, SPRITE_TILE_W, SPRITE_TILE_DEEP_H);
     envTile.setDestRect(0, 0, TILE_WIDTH, TILE_HEIGHT_DEEP);
     pathTile.setSourceRect(0, 0, SPRITE_TILE_W, SPRITE_TILE_H);
     pathTile.setDestRect(0, 0, TILE_WIDTH, TILE_HEIGHT);
-    structureTile.setSourceRect(0, 0, STRUCTURE_TILE_W, STRUCTURE_TILE_H);
     structureTile.setDestRect(0, 0, TILE_WIDTH, TILE_HEIGHT);
+    structureTile.setTimePerSprite(STRUCTURE_TPS);
 }
 
 MapView::~MapView() {}
@@ -44,7 +51,7 @@ void MapView::draw(Uint32 ticks) {
     }
     for (auto &sTile : structureTiles) {
         structureTile.setDestXY(sTile.first, sTile.second);
-        structureTile.draw();
+        structureTile.nextAndDraw(ticks);
     }
 }
 
@@ -69,5 +76,18 @@ void MapView::selectBackgroundColor(Renderer &renderer, int environment) {
 
 void MapView::setEnvTile(int env) {
     envTile.setTexture(textures.getTexture(env));
+    pathTile.setTexture(textures.getTexture(env + PATHTILE));
     selectBackgroundColor(renderer, env);
+}
+
+int MapView::getTileXFromPixel(int x, int y) {
+    return static_cast<int>(std::floor(renderer.pixelToCartesianX(x, y)));
+}
+
+int MapView::getTileYFromPixel(int x, int y) {
+    return static_cast<int>(std::floor(renderer.pixelToCartesianY(x, y)));
+}
+
+bool MapView::isValidTile(int x, int y) {
+    return (x >= 0 && x < width) && (y >= 0 && y < height);
 }
