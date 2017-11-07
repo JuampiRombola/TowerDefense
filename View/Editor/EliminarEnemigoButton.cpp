@@ -15,9 +15,9 @@ void EliminarEnemigoButton::click() {
 }
 
 void EliminarEnemigoButton::draw(int number) {
+    div_t division = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
     button.x = 0;
-    button.y = HORDA_MODIFY_QUANTITY_PADDING +
-               (number - TOTAL_MAIN_BUTTONS - HORDA_TOTAL_ENEMIES) *
-               HORDA_TOTAL_HEIGHT / (HORDA_TOTAL_BUTTONS);
+    button.y =
+            HORDA_MODIFY_QUANTITY_PADDING + division.quot * HORDA_TOTAL_HEIGHT;
     Button::draw(number);
 }

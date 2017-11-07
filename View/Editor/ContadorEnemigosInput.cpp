@@ -8,11 +8,10 @@ ContadorEnemigosInput::ContadorEnemigosInput(int horda, std::string enemigo,
           editor(editor) {}
 
 void ContadorEnemigosInput::draw(int number) {
+    div_t division = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
     button.x = 0;
     button.y = HORDA_QUANTITY_PADDING +
-               (number - TOTAL_MAIN_BUTTONS - HORDA_TOTAL_ENEMIES -
-                HORDA_TOTAL_MODIFY_QUANTITY) * HORDA_TOTAL_HEIGHT /
-               (HORDA_TOTAL_BUTTONS);
+               division.quot * HORDA_TOTAL_HEIGHT;
     this->text = std::to_string(
             editor.getCantidadEnemigosEnHorda(enemigo, horda));
     Text::draw(number);

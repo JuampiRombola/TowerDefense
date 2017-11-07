@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "AgregarEnemigoButton.h"
 
 AgregarEnemigoButton::AgregarEnemigoButton(int horda,
@@ -14,10 +15,10 @@ void AgregarEnemigoButton::click() {
 }
 
 void AgregarEnemigoButton::draw(int number) {
+    div_t division = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
     button.x = HORDA_MODIFY_QUANTITY_SIZE;
-    button.y = HORDA_MODIFY_QUANTITY_PADDING +
-               (number - TOTAL_MAIN_BUTTONS - HORDA_TOTAL_ENEMIES - 1) *
-               HORDA_TOTAL_HEIGHT / (HORDA_TOTAL_BUTTONS);
+    button.y =
+            HORDA_MODIFY_QUANTITY_PADDING + division.quot * HORDA_TOTAL_HEIGHT;
     Button::draw(number);
 
 }
