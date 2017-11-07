@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <iostream>
 #include "ContadorEnemigosInput.h"
 
 ContadorEnemigosInput::ContadorEnemigosInput(int horda, std::string enemigo,
@@ -8,10 +10,11 @@ ContadorEnemigosInput::ContadorEnemigosInput(int horda, std::string enemigo,
           editor(editor) {}
 
 void ContadorEnemigosInput::draw(int number) {
-    div_t division = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
-    button.x = 0;
+    div_t hordaNro = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
+    div_t enemigoNro = div(hordaNro.rem, HORDA_BUTTONS_PER_ENEMY);
+    button.x = enemigoNro.quot * HORDA_ENEMIGO_IMG_SIZE;
     button.y = HORDA_QUANTITY_PADDING +
-               division.quot * HORDA_TOTAL_HEIGHT;
+               hordaNro.quot * HORDA_TOTAL_HEIGHT;
     this->text = std::to_string(
             editor.getCantidadEnemigosEnHorda(enemigo, horda));
     Text::draw(number);

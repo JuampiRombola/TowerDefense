@@ -72,6 +72,10 @@ void Buttons::addInitialButtons() {
 void Buttons::addEnemigosButton(int horda) {
     addEnemigoButton(horda, ABMONIBLE_KEY, ABMONIBLE_EDITOR);
     addEnemigoButton(horda, ESPECTRO_KEY, ABMONIBLE_EDITOR);
+    addEnemigoButton(horda, DEMONIO_VERDE_KEY, ABMONIBLE_EDITOR);
+    addEnemigoButton(horda, HALCON_SANGRIENTO_KEY, ABMONIBLE_EDITOR);
+    addEnemigoButton(horda, NO_MUERTO_KEY, ABMONIBLE_EDITOR);
+    addEnemigoButton(horda, HOMBRE_CABRA_KEY, ABMONIBLE_EDITOR);
     /*Image *eliminarHordaButton = new EliminarHordaButton(horda,
                                                           textureLoader.getTexture(
             ELIMINAR_HORDA_BTN), mousePosition, renderer, editor);

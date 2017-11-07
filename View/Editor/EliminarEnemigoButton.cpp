@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 #include "EliminarEnemigoButton.h"
 
 EliminarEnemigoButton::EliminarEnemigoButton(int horda,
@@ -15,9 +16,10 @@ void EliminarEnemigoButton::click() {
 }
 
 void EliminarEnemigoButton::draw(int number) {
-    div_t division = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
-    button.x = 0;
+    div_t hordaNro = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
+    div_t enemigoNro = div(hordaNro.rem, HORDA_BUTTONS_PER_ENEMY);
+    button.x = enemigoNro.quot * HORDA_ENEMIGO_IMG_SIZE;
     button.y =
-            HORDA_MODIFY_QUANTITY_PADDING + division.quot * HORDA_TOTAL_HEIGHT;
+            HORDA_MODIFY_QUANTITY_PADDING + hordaNro.quot * HORDA_TOTAL_HEIGHT;
     Button::draw(number);
 }

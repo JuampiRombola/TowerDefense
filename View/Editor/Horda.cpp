@@ -3,6 +3,10 @@
 Horda::Horda(int id) : id(id) {
     cantidadEnemigos[ABMONIBLE_KEY] = 0;
     cantidadEnemigos[ESPECTRO_KEY] = 0;
+    cantidadEnemigos[DEMONIO_VERDE_KEY] = 0;
+    cantidadEnemigos[HALCON_SANGRIENTO_KEY] = 0;
+    cantidadEnemigos[NO_MUERTO_KEY] = 0;
+    cantidadEnemigos[HOMBRE_CABRA_KEY] = 0;
 }
 
 int Horda::getId() {
@@ -14,9 +18,9 @@ void Horda::agregarEnemigo(std::string enemigo) {
 }
 
 void Horda::eliminarEnemigo(std::string enemigo) {
+    if (cantidadEnemigos[enemigo] == 0)
+        return;
     cantidadEnemigos[enemigo] -= 1;
-    if (cantidadEnemigos[enemigo] < 0)
-        cantidadEnemigos[enemigo] = 0;
 }
 
 std::string Horda::exportar() {
