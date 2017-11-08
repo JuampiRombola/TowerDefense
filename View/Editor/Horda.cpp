@@ -26,7 +26,7 @@ void Horda::eliminarEnemigo(std::string enemigo) {
 std::string Horda::exportar() {
     std::stringstream msg;
     for (std::pair<std::string, int> enemigo : cantidadEnemigos) {
-        msg << enemigo.first << ": " << enemigo.second << "\n";
+        msg << "  " << enemigo.first << ": " << enemigo.second << "\n";
     }
     return msg.str();
 }

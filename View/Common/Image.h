@@ -15,6 +15,7 @@ public:
           Renderer& renderer);
     virtual void draw(int number);
     virtual bool isClicked();
+    virtual bool belongsToHorda(int horda);
 };
 
 

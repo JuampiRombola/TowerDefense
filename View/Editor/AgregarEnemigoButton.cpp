@@ -24,3 +24,7 @@ void AgregarEnemigoButton::draw(int number) {
     Button::draw(number);
 
 }
+
+bool AgregarEnemigoButton::belongsToHorda(int hordaId) {
+    return horda == hordaId;
+}

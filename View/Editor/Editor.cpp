@@ -65,10 +65,11 @@ std::string& Editor::getNombre() {
 void Editor::exportar() {
     std::cout << "Nombre: " << nombre << "\n";
     std::cout << "Superficie: " << superficie << "\n";
-    unsigned int i = 0;
+    unsigned int hordaNro = 0;
     for (auto& horda : hordas) {
+        std::cout << "Horda " << hordaNro << "\n";
         std::cout << horda.exportar();
-        ++i;
+        ++hordaNro;
     }
 }
 

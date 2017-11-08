@@ -12,3 +12,7 @@ void Image::draw(int number) {
 bool Image::isClicked() {
     return false;
 }
+
+bool Image::belongsToHorda(int horda) {
+    return false;
+}

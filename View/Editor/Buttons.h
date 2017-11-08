@@ -35,6 +35,7 @@ public:
     void draw();
     void addInitialButtons();
     void addEnemigosButton(int horda);
+    void deleteButtonsOfHorda(int horda);
     bool isAnyClicked();
 };
 
