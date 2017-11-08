@@ -1,6 +1,7 @@
+#include <iostream>
 #include "Horda.h"
 
-Horda::Horda(int id) : id(id) {
+Horda::Horda(int id) : id(id), tiempo(0) {
     cantidadEnemigos[ABMONIBLE_KEY] = 0;
     cantidadEnemigos[ESPECTRO_KEY] = 0;
     cantidadEnemigos[DEMONIO_VERDE_KEY] = 0;
@@ -28,9 +29,24 @@ std::string Horda::exportar() {
     for (std::pair<std::string, int> enemigo : cantidadEnemigos) {
         msg << "  " << enemigo.first << ": " << enemigo.second << "\n";
     }
+    msg << "  tiempo: " << tiempo << "\n";
     return msg.str();
 }
 
 unsigned int Horda::getCantidadEnemigosDeTipo(std::string enemigo) {
     return cantidadEnemigos[enemigo];
+}
+
+void Horda::aumentarTiempo() {
+    ++tiempo;
+}
+
+void Horda::disminuirTiempo() {
+    if (tiempo == 0)
+        return;
+    --tiempo;
+}
+
+int Horda::getTiempo() {
+    return tiempo;
 }

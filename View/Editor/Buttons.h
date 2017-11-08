@@ -18,6 +18,9 @@
 #include "../Common/SpriteNamesConfig.h"
 #include "ContadorEnemigosInput.h"
 #include "EnemigoImage.h"
+#include "AumentarTiempoButton.h"
+#include "DisminuirTiempoButton.h"
+#include "ContadorTiempoInput.h"
 
 class Buttons {
 private:
@@ -28,6 +31,7 @@ private:
     TextureLoader &textureLoader;
     KeyboardInput &keyboardInput;
     void addEnemigoButton(int horda, std::string enemigoKey, int texture);
+    void addTiempoEntreHorda(int horda);
 public:
     Buttons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
             TextureLoader &textureLoader, KeyboardInput &keyboardInput);

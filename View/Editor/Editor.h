@@ -31,7 +31,6 @@ public:
     void eliminarEnemigo(int horda, std::string enemigo);
     void agregarHorda(int id);
     void eliminarHorda(int horda);
-    unsigned int getCantidadHordas();
     unsigned int getCantidadEnemigosEnHorda(std::string enemigo, int horda);
     std::string& getNombre();
     void exportar();
@@ -43,6 +42,9 @@ public:
     void unbindWaitingFunction();
     void addSpawnTile(int x, int y);
     void addExitTile(int x, int y);
+    void aumentarTiempoHorda(int hordaId);
+    void disminuirTiempoHorda(int horda);
+    int getTiempoHorda(int horda);
     void draw();
 };
 

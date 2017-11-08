@@ -16,3 +16,5 @@ bool Image::isClicked() {
 bool Image::belongsToHorda(int horda) {
     return false;
 }
+
+Image::~Image() {}

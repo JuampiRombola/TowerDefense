@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Buttons.h"
 #include "AgregarCaminoButton.h"
 #include "AgregarTierraFirmeButton.h"
@@ -86,7 +87,8 @@ void Buttons::addEnemigosButton(int horda) {
     addEnemigoButton(horda, HALCON_SANGRIENTO_KEY, ABMONIBLE_EDITOR);
     addEnemigoButton(horda, NO_MUERTO_KEY, ABMONIBLE_EDITOR);
     addEnemigoButton(horda, HOMBRE_CABRA_KEY, ABMONIBLE_EDITOR);
-    Image *eliminarHordaButton = new EliminarHordaButton(horda,
+    addTiempoEntreHorda(horda);
+    /*Image *eliminarHordaButton = new EliminarHordaButton(horda,
                                                          textureLoader.getTexture(
                                                                  ELIMINAR_HORDA_BTN),
                                                          mousePosition,
@@ -94,7 +96,7 @@ void Buttons::addEnemigosButton(int horda) {
                                                          std::bind(
                                                                  &Buttons::deleteButtonsOfHorda,
                                                                  this, _1));
-    images.push_back(eliminarHordaButton);
+    images.push_back(eliminarHordaButton);*/
 }
 
 void Buttons::addEnemigoButton(int horda, std::string enemigoKey, int texture) {
@@ -123,8 +125,53 @@ void Buttons::addEnemigoButton(int horda, std::string enemigoKey, int texture) {
     images.push_back(cantidad);
 }
 
-void Buttons::deleteButtonsOfHorda(int horda) {
+void Buttons::addTiempoEntreHorda(int horda) {
+    Image *clockImg = new EnemigoImage(horda, textureLoader.getTexture
+            (ABMONIBLE_EDITOR), renderer);
+    images.push_back(clockImg);
 
+    Image *aumentarTiempo = new AumentarTiempoButton(horda, textureLoader.getTexture(
+            ENEMIGO_SUMA),
+                                                     mousePosition, renderer,
+                                                     editor);
+    images.push_back(aumentarTiempo);
+
+    Image *disminuirTiempo = new DisminuirTiempoButton(horda, textureLoader.getTexture(
+            ENEMIGO_RESTA),
+                                                       mousePosition, renderer,
+                                                       editor);
+    images.push_back(disminuirTiempo);
+
+    Image *contadorTiempo = new ContadorTiempoInput(horda,
+                                                    textureLoader.getTexture(FONT),
+                                                    renderer, editor);
+    images.push_back(contadorTiempo);
+}
+
+void Buttons::deleteButtonsOfHorda(int horda) {
+    /*std::cout << "Hay " << images.size() << " images\n";
+    std::list<Image*> hordaImages;
+    auto itInicial = images.begin();
+    while (!(*itInicial)->belongsToHorda(horda))
+        ++itInicial;
+    auto itFinal = itInicial;
+    std::advance(itFinal, HORDA_TOTAL_BUTTONS);
+    hordaImages.splice(hordaImages.begin(), images, itInicial, itFinal);
+    std::cout << "Saco " << hordaImages.size() << " images\n";
+    std::cout << "Termina habiendo " << images.size() << " images\n";
+    for (Image* image : hordaImages) {
+        delete image;
+    }
+    std::cout << "Termino de deletear\n";*/
+    auto it = images.begin();
+    for (auto& image : images) {
+        if (image->belongsToHorda(horda)) {
+            delete *it;
+            it = images.erase(it);
+        } else {
+            it++;
+        }
+    }
 }
 
 bool Buttons::isAnyClicked() {

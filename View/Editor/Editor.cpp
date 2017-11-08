@@ -38,15 +38,11 @@ void Editor::agregarHorda(int id) {
 void Editor::eliminarHorda(int hordaId) {
     auto it = hordas.begin();
     for (auto& horda : hordas) {
-        ++it;
         if (horda.getId() == hordaId)
             break;
+        ++it;
     }
     hordas.erase(it);
-}
-
-unsigned int Editor::getCantidadHordas() {
-    return static_cast<unsigned int>(this->hordas.size());
 }
 
 unsigned int Editor::getCantidadEnemigosEnHorda(std::string enemigo,
@@ -114,6 +110,27 @@ void Editor::addExitTile(int x, int y) {
     portal->setXY(x, y);
     portales.push_back(portal);
     unbindWaitingFunction();
+}
+
+void Editor::aumentarTiempoHorda(int hordaId) {
+    for (auto& horda : hordas) {
+        if (hordaId == horda.getId())
+            horda.aumentarTiempo();
+    }
+}
+
+void Editor::disminuirTiempoHorda(int hordaId) {
+    for (auto& horda : hordas) {
+        if (hordaId == horda.getId())
+            horda.disminuirTiempo();
+    }
+}
+
+int Editor::getTiempoHorda(int hordaId) {
+    for (auto& horda : hordas) {
+        if (hordaId == horda.getId())
+            return horda.getTiempo();
+    }
 }
 
 void Editor::draw() {

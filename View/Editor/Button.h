@@ -20,6 +20,7 @@ public:
     virtual ~Button();
 
     virtual void draw(int number);
+
 };
 
 #endif //TOWERDEFENSE_BUTTON_H

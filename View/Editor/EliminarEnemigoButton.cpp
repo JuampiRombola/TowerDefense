@@ -23,3 +23,7 @@ void EliminarEnemigoButton::draw(int number) {
             HORDA_MODIFY_QUANTITY_PADDING + hordaNro.quot * HORDA_TOTAL_HEIGHT;
     Button::draw(number);
 }
+
+bool EliminarEnemigoButton::belongsToHorda(int hordaNro) {
+    return horda == hordaNro;
+}

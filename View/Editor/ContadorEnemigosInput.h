@@ -15,7 +15,7 @@ public:
                           Renderer &renderer, Editor &editor);
 
     void draw(int number);
-
+    bool belongsToHorda(int horda);
 };
 
 

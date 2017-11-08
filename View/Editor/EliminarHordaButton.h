@@ -17,6 +17,7 @@ public:
                             Editor &editor,
                             std::function<void(int)> deleteButtonsFn);
     void draw(int number);
+    bool belongsToHorda(int hordaNro);
 };
 
 #endif //TOWERDEFENSE_ELIMINARHORDABUTTON_H

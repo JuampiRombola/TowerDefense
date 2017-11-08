@@ -1,6 +1,3 @@
-#include <cmath>
-#include <iostream>
-#include <stdlib.h>
 #include "EnemigoImage.h"
 
 EnemigoImage::EnemigoImage(int horda, SDL_Texture *texture, Renderer &renderer)
@@ -14,4 +11,8 @@ void EnemigoImage::draw(int number) {
     button.x = enemigoNro.quot * HORDA_ENEMIGO_IMG_SIZE;
     button.y = HORDA_ENEMIGO_PADDING + hordaNro.quot * HORDA_TOTAL_HEIGHT;
     Image::draw(number);
+}
+
+bool EnemigoImage::belongsToHorda(int hordaNro) {
+    return horda == hordaNro;
 }

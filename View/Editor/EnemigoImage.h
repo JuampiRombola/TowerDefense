@@ -10,6 +10,7 @@ private:
 public:
     EnemigoImage(int horda, SDL_Texture *texture, Renderer &renderer);
     virtual void draw(int number);
+    bool belongsToHorda(int hordaNro);
 };
 
 

@@ -1,5 +1,7 @@
 #include "EliminarHordaButton.h"
 
+#include <utility>
+
 EliminarHordaButton::EliminarHordaButton(int horda, SDL_Texture *texture,
                                          MousePosition &mousePosition,
                                          Renderer &renderer, Editor &editor,
@@ -14,7 +16,11 @@ void EliminarHordaButton::click() {
 
 void EliminarHordaButton::draw(int number) {
     div_t hordaNro = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
-    button.x = HORDA_TOTAL_ENEMIES * HORDA_ENEMIGO_IMG_SIZE;
+    button.x = (HORDA_TOTAL_ENEMIES + 1) * HORDA_ENEMIGO_IMG_SIZE;
     button.y = HORDA_ENEMIGO_PADDING + hordaNro.quot * HORDA_TOTAL_HEIGHT;
     Button::draw(number);
+}
+
+bool EliminarHordaButton::belongsToHorda(int hordaNro) {
+    return horda == hordaNro;
 }
