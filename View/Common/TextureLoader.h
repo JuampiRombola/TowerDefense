@@ -12,7 +12,7 @@ class TextureLoader {
 private:
     std::vector<SDL_Surface *> images;
     std::map<int, SDL_Texture*> textures;
-    const YAML::Node cfg;
+    YAML::Node cfg;
 
 public:
     TextureLoader(SDL_Renderer *renderer, int mode);

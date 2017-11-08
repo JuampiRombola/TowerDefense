@@ -5,12 +5,12 @@ enum ProjectileType { pFire, pWater, pAir, pGround };
 
 struct ProjectileVM {
   ProjectileType type;
-  uint distanceToCover;
-  uint distanceCovered;
-  uint fromXpos;
-  uint fromYpos;
-  uint toXpos;
-  uint toYpos;
+    unsigned int distanceToCover;
+    unsigned int distanceCovered;
+    unsigned int fromXpos;
+    unsigned int fromYpos;
+    unsigned int toXpos;
+    unsigned int toYpos;
 };
 
 #endif

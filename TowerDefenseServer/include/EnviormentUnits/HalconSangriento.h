@@ -5,7 +5,7 @@
 
 class HalconSangriento : public EnviormentUnit {
 public:
-	HalconSangriento(uint id, uint stepDelay, uint healthPoints);
+	HalconSangriento(uint id, uint stepDelay, uint healthPoints, ThreadSafeQueue<GameNotification*>& notifications);
 	~HalconSangriento();
 	void PrintDebug();
 	bool Flies();

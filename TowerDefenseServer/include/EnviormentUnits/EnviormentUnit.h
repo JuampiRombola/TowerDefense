@@ -5,6 +5,11 @@ struct UnitVM;
 class Map;
 class PathTile;
 
+#include "../GameNotifications/GameNotification.h"
+#include "../ThreadSafeQueue.h"
+
+
+
 class EnviormentUnit{
 protected:
 	unsigned long long  _lastTimeStamp_ms;
@@ -26,11 +31,14 @@ protected:
 	uint _lastSlowDuration_sec;
 	uint _activePercentSlow;
 
+	ThreadSafeQueue<GameNotification*>& _notifications;
+
 	PathTile* _GetNextTile();
 	uint _GetActualStepDelay();
 	bool _CanStep();
 public:
-	EnviormentUnit(uint id, uint stepDelay_ms, int healthPoints);
+	EnviormentUnit(uint id, uint stepDelay_ms, int healthPoints, 
+		ThreadSafeQueue<GameNotification*>& notifications);
 	virtual ~EnviormentUnit();
 	void Step();
 	uint GetId();

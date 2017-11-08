@@ -31,79 +31,45 @@ _projectiles()
 		}
 	}
 	//Armo un camino a mano
-	PathTile* spawn1 = new PathTile(0,0, this);
-	//PathTile* spawn2 = new PathTile(0,9, this);
 
+
+	PathTile* hackEnd = new PathTile(6, 7, this, nullptr);
+
+	PathTile* end = new PathTile(6,6, this, hackEnd);
+
+	_PlacePathTile(hackEnd);
+	_SetFinishTile(hackEnd);
+
+
+	PathTile* p1 = new PathTile(6, 5, this, end);
+	_PlacePathTile(p1);
+	PathTile* p2 = new PathTile(5, 5, this, p1);
+	_PlacePathTile(p2);
+	p1 = new PathTile(4, 5, this, p2);
+	_PlacePathTile(p1);
+	p2 = new PathTile(3, 5, this, p1);
+	_PlacePathTile(p2);
+	p1 = new PathTile(3, 4, this, p2);
+	_PlacePathTile(p1);
+	p2 = new PathTile(2, 4, this, p1);
+	_PlacePathTile(p2);
+	p1 = new PathTile(2, 3, this, p2);
+	_PlacePathTile(p1);
+	p2 = new PathTile(1, 3, this, p1);
+	_PlacePathTile(p2);
+	p1 = new PathTile(1, 2, this, p2);
+	_PlacePathTile(p1);
+	p2 = new PathTile(1, 1, this, p1);
+	_PlacePathTile(p2);
+	p1 = new PathTile(1, 0, this, p2);
+	_PlacePathTile(p1);
+
+	PathTile* spawn1 = new PathTile(0,0, this, p1);
 	_PlacePathTile(spawn1);
 	_SetSpawnTile(spawn1);
-	//_PlacePathTile(spawn2);
-	//_SetSpawnTile(spawn2);
 
-	/*_PlacePathTile(new PathTile(1,9, this));
-	_PlacePathTile(new PathTile(1,8, this));
-	_PlacePathTile(new PathTile(1,7, this));
-	_PlacePathTile(new PathTile(1,6, this));
-	_PlacePathTile(new PathTile(2,6, this));
+	PlaceGroundTile(new SolidGroundTile(2,5));
 
-	_PlacePathTile(new PathTile(3,7, this));
-	_PlacePathTile(new PathTile(3,8, this));
-	_PlacePathTile(new PathTile(4,8, this));
-	_PlacePathTile(new PathTile(5,8, this));
-	_PlacePathTile(new PathTile(6,8, this));
-
-
-	     mapView.addPathTile(0, 0);
-    mapView.addPathTile(1, 0);
-    mapView.addPathTile(1, 1);
-    mapView.addPathTile(1, 2);
-    mapView.addPathTile(1, 3);
-    mapView.addPathTile(2, 3);
-    mapView.addPathTile(2, 4);
-    mapView.addPathTile(3, 4);
-    mapView.addPathTile(3, 5);
-    mapView.addPathTile(4, 5);
-    mapView.addPathTile(5, 5);
-    mapView.addPathTile(6, 5);
-    mapView.addPathTile(6, 6);
-
-	 */
-
-	_PlacePathTile(new PathTile(1,0, this));
-	_PlacePathTile(new PathTile(1,1, this));
-	_PlacePathTile(new PathTile(1,2, this));
-	_PlacePathTile(new PathTile(1,3, this));
-	_PlacePathTile(new PathTile(2,3, this));
-	_PlacePathTile(new PathTile(2,4, this));
-	_PlacePathTile(new PathTile(3,4, this));
-	_PlacePathTile(new PathTile(3,5, this));
-	_PlacePathTile(new PathTile(4,5, this));
-	_PlacePathTile(new PathTile(5,5, this));
-	_PlacePathTile(new PathTile(6,5, this));
-
-	/*_PlacePathTile(new PathTile(3,5, this));
-	_PlacePathTile(new PathTile(3,6, this));
-	_PlacePathTile(new PathTile(4,6, this));
-	_PlacePathTile(new PathTile(5,6, this));*/
-
-	PathTile* end = new PathTile(6,6, this);
-	_PlacePathTile(end);
-	_SetFinishTile(end);
-
-
-	//PlaceGroundTile(new SolidGroundTile(2,5));
-
-
-
-	for (uint i = 0; i < _cols; i++)
-	{
-		for (uint j = 0; j < _rows; j++)
-		{
-			PathTile* tile = GetPathTile(i, j);
-			if (tile != nullptr){
-				tile->InitPossiblePaths();
-			}
-		}
-	}
 }
 
 

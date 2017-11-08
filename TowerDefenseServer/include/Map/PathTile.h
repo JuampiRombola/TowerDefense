@@ -37,8 +37,9 @@ private:
 	Map* _map;
 
 public:
-	PathTile(uint xPos, uint yPos, Map* map);
+	PathTile(uint xPos, uint yPos, Map* map, PathTile* next);
 	~PathTile();
+	PathTile* next;
 	char GetSymbol();
 	bool CanSpawn();
 	void SetCanSpawn();

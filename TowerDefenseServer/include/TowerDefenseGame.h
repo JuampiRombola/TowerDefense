@@ -16,6 +16,9 @@
 #include "ViewModels/UnitVM.h"
 #include "ViewModels/ProjectileVM.h"
 #include "ViewModels/TowerVM.h"
+#include "GameNotifications/GameNotification.h"
+#include "ThreadSafeQueue.h"
+
 
 
 class TowerDefenseGame{
@@ -41,7 +44,7 @@ private:
 	void _SpawnEnemy();
 	void _ExecuteCommands();
 public:
-	TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg);
+	TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg, ThreadSafeQueue<GameNotification*>& notifications);
 	~TowerDefenseGame();
 	void Run();
 	bool Ended();
@@ -56,6 +59,7 @@ public:
 	Command* GetExecutedCommand();
 	EnviormentUnit* GetUnit(uint id);
 	GameConfiguration& GameCfg;
+	ThreadSafeQueue<GameNotification*>& notifications;
 
 	std::vector<UnitVM> GetUnitViewModels();
 	std::vector<ProjectileVM> GetProjectileViewModels();

@@ -45,4 +45,8 @@ void SpellView::cast(int x, int y, Uint32 t) {
     initTime = SDL_GetTicks();
 }
 
+bool SpellView::hasFinished() {
+    return !isEnable;
+}
+
 

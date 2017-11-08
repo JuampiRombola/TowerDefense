@@ -7,7 +7,7 @@ struct UnitVM;
 
 class DemonioVerde : public EnviormentUnit {
 public:
-	DemonioVerde(uint id, uint stepDelay, uint healthPoints);
+	DemonioVerde(uint id, uint stepDelay, uint healthPoints, ThreadSafeQueue<GameNotification*>& notifications);
 	~DemonioVerde();
 	void PrintDebug();
 	bool Flies();

@@ -12,13 +12,13 @@
 #include "../../include/Helpers.h"
 #include "../../include/Map/PathTile.h"
 
-PathTile::PathTile(uint xPos, uint yPos, Map* map) 
+PathTile::PathTile(uint xPos, uint yPos, Map* map, PathTile* next) 
 : Tile(xPos, yPos), _lastCrackTimeStamp_ms(0), _lastFireTimeStamp_ms(0), _lastVentiscaTimeStamp_ms(0),
 _lastTornadoTimeStamp_ms(0), _lastCrackDuration_ms(0), _lastFireDuration_ms(0), _lastVentiscaDuration_ms(0), 
  _lastFireDamage(0), _lastVentiscaDamage(0), 
  _lastVentiscaSlowPercent(0), _lastVentiscaSlowDuration_ms(0), _lastTornadoDuration_ms(0), _lastTornadoMaxDamage(0), 
 _isCracked(false), _isOnFire(false), _hasVentisca(false), _hasTornado(false), _canSpawn(false), _units(), 
-_possibleNextPaths(), _map(map) {}
+_possibleNextPaths(), _map(map), next(next) {}
 
 
 PathTile::~PathTile(){}

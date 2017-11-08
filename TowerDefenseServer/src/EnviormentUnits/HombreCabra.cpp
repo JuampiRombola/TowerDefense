@@ -4,7 +4,8 @@
 #include "../../include/Map/PathTile.h"
 #include "../../include/ViewModels/UnitVM.h"
 
-HombreCabra::HombreCabra(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
+HombreCabra::HombreCabra(uint id, uint stepDelay, uint healthPoints, ThreadSafeQueue<GameNotification*>& notifications) 
+: EnviormentUnit(id, stepDelay, healthPoints, notifications) {}
 
 HombreCabra::~HombreCabra()
 {
@@ -12,6 +13,7 @@ HombreCabra::~HombreCabra()
 }
 
 void HombreCabra::PrintDebug(){
+	return;
 	PathTile* pos = GetPosition();
 	if (pos == nullptr)
 		std::cout << "HombreCabra" << GetId() << " outside map\n";
@@ -29,6 +31,13 @@ UnitVM HombreCabra::GetViewModel(){
 	vm.healthPoints = _healthPoints;
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
+	if (_position->next != nullptr){
+		vm.nextXpos = _position->next->GetXPos();
+		vm.nextYpos = _position->next->GetYPos();
+	} else{
+		vm.nextYpos = -1;
+		vm.nextXpos = -1;
+	}
 	vm.stepDelay_ms = _GetActualStepDelay();
 	vm.id = _id;
 	return vm;

@@ -8,6 +8,7 @@ class PathTile;
 class EnviormentUnit;
 class TowerVM;
 #include "../Commands/UpgradeTowerCommand.h"
+#include "../Commands/BuildTowerCommand.h"
 #include "yaml-cpp/yaml.h"
 
 class Tower {
@@ -21,13 +22,16 @@ protected:
 	uint _damage;
 	uint _upgradeLevel;
 
+	ThreadSafeQueue<GameNotification*>& _notifications;
+
 	Projectile*  _Fire(EnviormentUnit* target); 
 	bool _CanFire(); 
 	EnviormentUnit* _GetTargetUnitInRange();
 
 	virtual Projectile* _BuildProjectile(PathTile* target) = 0;
 public:
-	Tower(uint cooldown_ms, uint range, uint damage, SolidGroundTile* position, Map* map);
+	Tower(uint cooldown_ms, uint range, uint damage, SolidGroundTile*
+	position, Map* map, ThreadSafeQueue<GameNotification*>& notis);
 	virtual ~Tower();
 	Projectile* Step(); 
 	virtual void PrintDebug() = 0;

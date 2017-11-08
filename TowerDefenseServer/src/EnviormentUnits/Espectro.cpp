@@ -4,7 +4,8 @@
 #include "../../include/Map/PathTile.h"
 #include "../../include/ViewModels/UnitVM.h"
 
-Espectro::Espectro(uint id, uint stepDelay, uint healthPoints) : EnviormentUnit(id, stepDelay, healthPoints) {}
+Espectro::Espectro(uint id, uint stepDelay, uint healthPoints, ThreadSafeQueue<GameNotification*>& notifications)
+ : EnviormentUnit(id, stepDelay, healthPoints, notifications) {}
 
 Espectro::~Espectro()
 {
@@ -29,6 +30,13 @@ UnitVM Espectro::GetViewModel(){
 	vm.healthPoints = _healthPoints;
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
+	if (_position->next != nullptr){
+		vm.nextXpos = _position->next->GetXPos();
+		vm.nextYpos = _position->next->GetYPos();
+	} else{
+		vm.nextYpos = -1;
+		vm.nextXpos = -1;
+	}
 	vm.stepDelay_ms = _GetActualStepDelay();
 	vm.id = _id;
 	return vm;

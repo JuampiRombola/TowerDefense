@@ -1,8 +1,8 @@
 unit_base_step_delay_ms: 5000
 towers:
  ground:
-  range: 1
-  cooldown_sec: 5
+  range: 2
+  cooldown_sec: 2
   damage: 20
   upgrade_range_increase: 2
   upgrade_range_mult: 500
@@ -78,24 +78,25 @@ spells:
 units:
  abmonible:
   health_points: 200
-  speed: 1
+  speed: 2
   flies: false
  demonio_verde:
   health_points: 300
-  speed: 1
+  speed: 3
   flies: false
  halcon_sangriento:
   health_points: 100
-  speed: 4
+  speed: 1
   flies: true
  hombre_cabra:
   health_points: 99
-  speed: 10
+  speed: 1
   flies: false
  espectro:
   health_points: 100
-  speed: 6
+  speed: 1
   flies: true
  no_muerto:
   health_points: 20
+  speed: 1
   flies: false

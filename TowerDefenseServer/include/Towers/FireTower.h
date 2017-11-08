@@ -17,7 +17,7 @@ protected:
 	Projectile* _BuildProjectile(PathTile* target);
 public:
 	FireTower(uint cooldown_ms, uint range, uint damage, 
-		SolidGroundTile* position, Map* map, uint collateralDamange, uint collateralRange);
+		SolidGroundTile* position, Map* map, uint collateralDamange, uint collateralRange, ThreadSafeQueue<GameNotification*>& notifications);
 	~FireTower();
 	void PrintDebug();
 	bool Upgrade(const YAML::Node& cfg, UpgradeType type);

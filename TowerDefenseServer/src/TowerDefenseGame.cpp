@@ -22,12 +22,13 @@
 
 
 
-TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg) : 
+TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg, 
+	ThreadSafeQueue<GameNotification*>& notifications) : 
 	_endedMutex(), _commandQueueMutex(), _commands(),_executedCommandQueueMutex(), 
 	_executedCommands(), _gameStateMutex(),
 	 _clockFrequencyMs(clockFrequencyMs), 
 	_ended(false), _steps(0), _enemyIdCounter(0), _units(), 
-	_map(10, 10, "jsonmapconfigfilename"), GameCfg(gamecfg)
+	_map(10, 10, "jsonmapconfigfilename"), GameCfg(gamecfg), notifications(notifications)
 {
 }
 
@@ -48,13 +49,36 @@ void TowerDefenseGame::_SpawnEnemy(){
 
 	uint unitbaseStepDelay_ms = GameCfg.Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
-
+/*
 	uint hombreCabraSpeed = GameCfg.Cfg["units"]["hombre_cabra"]["speed"].as<uint>();
 	uint hombreCabraStepDelay_ms = floor(unitbaseStepDelay_ms / hombreCabraSpeed);
 	uint hombreCabraHealthPoints = GameCfg.Cfg["units"]["hombre_cabra"]["health_points"].as<uint>();
-	EnviormentUnit* unit = new HombreCabra(++_enemyIdCounter, hombreCabraStepDelay_ms, hombreCabraHealthPoints);
-	_units.push_back(unit);
-	_map.PlaceUnit(unit, spawn);
+	EnviormentUnit* hombrecabra = new HombreCabra(++_enemyIdCounter,
+												  hombreCabraStepDelay_ms, hombreCabraHealthPoints, notifications);
+	_units.push_back(hombrecabra);
+	_map.PlaceUnit(hombrecabra, spawn);*/
+
+	uint aboCabraSpeed = GameCfg.Cfg["units"]["abmonible"]["speed"]
+			.as<uint>();
+	uint aboCabraStepDelay_ms = floor(unitbaseStepDelay_ms / aboCabraSpeed);
+	uint aboCabraHealthPoints = GameCfg
+			.Cfg["units"]["abmonible"]["health_points"].as<uint>();
+	EnviormentUnit* abo = new Abmonible(++_enemyIdCounter,
+												  aboCabraStepDelay_ms, aboCabraHealthPoints,
+										notifications);
+	_units.push_back(abo);
+	_map.PlaceUnit(abo, spawn);
+/*
+	uint demoSpeed = GameCfg.Cfg["units"]["demonio_verde"]["speed"].as<uint>();
+	uint demoStepDelay_ms = floor(unitbaseStepDelay_ms / demoSpeed);
+	uint demoHealthPoints = GameCfg.Cfg["units"]["demonio_verde"]["health_points"
+			""].as<uint>();
+
+	EnviormentUnit* demo = new DemonioVerde(++_enemyIdCounter,
+												  demoStepDelay_ms, demoHealthPoints,
+											notifications);
+	_units.push_back(demo);
+	_map.PlaceUnit(demo, spawn);*/
 }
 
 
@@ -109,17 +133,19 @@ bool TowerDefenseGame::_Step(){
 
 	_steps = _steps + 1;
 
-
-	if (actualTs - ts > 100 && _units.size() != 1){
+	static bool ff = false;
+	if (actualTs - ts > 5000 && !ff){
 		ts = actualTs;
 		_SpawnEnemy();
+		ff = true;
 	}
+
+	_map.Step();
 
 	for (auto it = _units.begin(); it != _units.end(); ++it){
 		(*it)->Step();
 	}
 
-	_map.Step();
 
 	auto it = _units.begin();
 	if (it != _units.end()){
@@ -158,10 +184,20 @@ bool TowerDefenseGame::Ended(){
 void TowerDefenseGame::Run()
 {
 
-	std::this_thread::sleep_for (std::chrono::milliseconds(5000));
+	unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
+	unsigned long long timestamp = 0;
+	unsigned long long delta = 0;
+	unsigned long long diference = 0;
+	while(_Step()) {
+		timestamp = Helpers::MillisecondsTimeStamp();
+		delta = timestamp - lastTimestamp;
+		diference = _clockFrequencyMs - delta;
 
-	while(_Step()) 
-		std::this_thread::sleep_for (std::chrono::milliseconds(_clockFrequencyMs));
+		if (diference >= 0)
+			std::this_thread::sleep_for (std::chrono::milliseconds(diference));
+		else
+			std::cout << "\n\nClock delayed " << diference * -1 << " ms\n\n" << std::flush;
+	}
 
 	//
 	// Por ahora solo se puede perder.

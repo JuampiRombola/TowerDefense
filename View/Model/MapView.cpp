@@ -81,11 +81,11 @@ void MapView::setEnvTile(int env) {
 }
 
 int MapView::getTileXFromPixel(int x, int y) {
-    return static_cast<int>(std::floor(renderer.pixelToCartesianX(x, y)));
+    return renderer.pixelToCartesianX(x, y);
 }
 
 int MapView::getTileYFromPixel(int x, int y) {
-    return static_cast<int>(std::floor(renderer.pixelToCartesianY(x, y)));
+    return renderer.pixelToCartesianY(x, y);
 }
 
 bool MapView::isValidTile(int x, int y) {

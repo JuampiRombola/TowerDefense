@@ -4,6 +4,7 @@
 #include "yaml-cpp/yaml.h"
 #include "Tower.h"
 #include "../Commands/UpgradeTowerCommand.h"
+#include "../Commands/BuildTowerCommand.h"
 
 class SolidGroundTile;
 class Map;
@@ -14,7 +15,8 @@ class GroundTower : public Tower {
 protected:
 	Projectile* _BuildProjectile(PathTile* target);
 public:
-	GroundTower(uint cooldown_sec, uint range, uint damage, SolidGroundTile* position, Map* map);
+	GroundTower(uint cooldown_sec, uint range, uint damage, SolidGroundTile*
+	position, Map* map, ThreadSafeQueue<GameNotification*>& notifications);
 	~GroundTower();
 	void PrintDebug();
 	bool Upgrade(const YAML::Node& cfg, UpgradeType type);

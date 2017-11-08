@@ -6,7 +6,7 @@ struct UnitVM;
 
 class NoMuerto : public EnviormentUnit {
 public:
-	NoMuerto(uint id, uint stepDelay, uint healthPoints);
+	NoMuerto(uint id, uint stepDelay, uint healthPoints, ThreadSafeQueue<GameNotification*>& notifications);
 	~NoMuerto();
 	void PrintDebug();
 	bool Flies();

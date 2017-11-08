@@ -2,7 +2,9 @@
 
 #define PIXELS 40
 
-UnitView::UnitView(int key, TextureLoader &textures, Renderer &renderer) :
+UnitView::UnitView(int id, int key, TextureLoader &textures, 
+                   Renderer &renderer) :
+        id(id), key(key), health(health),
         cfg(textures.getConfig(key)),
         spriteWalking(textures.getTexture(key), renderer,
                       cfg["WALKING_W"].as<int>(),
@@ -146,4 +148,12 @@ void UnitView::enableDying() {
     int offsetY = spriteWalking.getOffsetY() +
             cfg["DYING_OFFSET_Y"].as<int>();
     spriteDying.setOffsetXY(offsetX, offsetY);
+}
+
+std::string UnitView::onClick() {
+    return std::move(std::to_string(key) + " " + std::to_string(health));
+}
+
+int UnitView::getId() {
+    return id;
 }

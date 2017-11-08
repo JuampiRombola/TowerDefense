@@ -20,3 +20,7 @@ int View::getX() {
 int View::getY() {
     return this->y;
 }
+
+std::string View::onClick() {
+    return "";
+}

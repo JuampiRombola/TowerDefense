@@ -1,0 +1,10 @@
+#ifndef TOWERDEFENSE_HUDVIEW_H
+#define TOWERDEFENSE_HUDVIEW_H
+
+
+class HudVIew {
+
+};
+
+
+#endif //TOWERDEFENSE_HUDVIEW_H

@@ -4,6 +4,7 @@
 #include <vector>
 #include <cmath>
 
+#include "../../include/GameNotifications/UnitPositionGameNotification.h"
 
 #include "../../include/Map/Map.h"
 #include "../../include/Map/PathTile.h"
@@ -13,12 +14,12 @@
 #include "../../include/Exceptions/IncompletePathException.h"
 #include "../../include/Exceptions/UnitCannotMoveDiagonallyException.h"
 
-EnviormentUnit::EnviormentUnit(uint id, uint stepDelay_ms, int healthpoints): 
+EnviormentUnit::EnviormentUnit(uint id, uint stepDelay_ms, int healthpoints, ThreadSafeQueue<GameNotification*>& notifications): 
 _lastTimeStamp_ms(0), _lastSlowBeginTimeStamp_ms(0), _lastFreezeTimeStamp_ms(0),
  _alive(true), _id(id), _stepDelay(stepDelay_ms),
  _healthPoints(healthpoints), _position(nullptr), _lastPosition(nullptr), 
 _map(nullptr), _isSlowed(false), _isFrozen(false), _lastFreezeDuration_sec(0),
- _lastSlowDuration_sec(0), _activePercentSlow(1)
+ _lastSlowDuration_sec(0), _activePercentSlow(1), _notifications(notifications)
 {
 
 }
@@ -81,6 +82,9 @@ void EnviormentUnit::Step(){
 	if (!_CanStep())
 		return;
 
+	UnitVM vm = GetViewModel();
+	_notifications.Queue(new UnitPositionGameNotification(vm));
+
 	PathTile* next = _GetNextTile();
 
 	if (next == nullptr){
@@ -93,6 +97,7 @@ void EnviormentUnit::Step(){
 
 	_lastPosition = _position;
 	_position = next;
+
 
 	PrintDebug();
 }
@@ -156,6 +161,10 @@ uint EnviormentUnit::_GetActualStepDelay(){
 }
 
 PathTile* EnviormentUnit::_GetNextTile(){
+
+	return _position->next;
+
+/*
 	std::vector<PathTile*> p = _position->GetPossibleNextTiles(_lastPosition);
 
 	if (p.begin() == p.end()){
@@ -181,7 +190,7 @@ PathTile* EnviormentUnit::_GetNextTile(){
 		std::srand(std::time(0));
 		uint random_variable = (uint) std::rand() % p.size();
 		return p[random_variable];
-	}
+	}*/
 }
 
 PathTile* EnviormentUnit::GetPosition(){

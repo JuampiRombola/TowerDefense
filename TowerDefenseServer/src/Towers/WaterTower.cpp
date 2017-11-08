@@ -12,8 +12,9 @@
 #include "../../include/Commands/UpgradeTowerCommand.h"
 
 
-WaterTower::WaterTower(uint cooldown_sec, uint range, uint damage, uint slowPercent, uint slowDuration_sec, SolidGroundTile* position, Map* map)
-: Tower(cooldown_sec, range, damage, position, map), _slowPercent(slowPercent), _slowDuration_sec(slowDuration_sec) {}
+WaterTower::WaterTower(uint cooldown_sec, uint range, uint damage, uint slowPercent, uint slowDuration_sec, SolidGroundTile* position, Map* map, ThreadSafeQueue<GameNotification*>& notifications)
+: Tower(cooldown_sec, range, damage, position, map, notifications), _slowPercent
+		(slowPercent), _slowDuration_sec(slowDuration_sec) {}
 
 WaterTower::~WaterTower(){}
 
@@ -58,7 +59,7 @@ bool WaterTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
 					_damage += damageIncrease;
 					_upgradeLevel++;
 					return true;
-				}		
+				}
 			}
 			break;
 		case CollateralRange:
@@ -79,7 +80,7 @@ bool WaterTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
 					_slowDuration_sec += slowDurationIncrease_sec;
 					_upgradeLevel++;
 					return true;
-				}		
+				}
 			}
 	}
 

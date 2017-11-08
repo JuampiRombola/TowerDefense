@@ -2,6 +2,7 @@
 #define TOWERDEFENSE_VIEW_H
 
 #include <SDL_types.h>
+#include <string>
 
 class View {
 protected:
@@ -13,6 +14,7 @@ public:
     virtual ~View();
     virtual void draw(Uint32 ticks) = 0;
     virtual void setXY(int x, int y);
+    virtual std::string onClick();
     int getX();
     int getY();
 };

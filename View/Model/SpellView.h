@@ -19,6 +19,7 @@ public:
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
     void cast(int x, int y, Uint32 t);
+    bool hasFinished();
 };
 
 

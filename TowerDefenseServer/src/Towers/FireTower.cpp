@@ -12,8 +12,9 @@
 #include "../../include/Commands/BuildTowerCommand.h"
 
 FireTower::FireTower(uint cooldown_ms, uint range, uint damage, 
-	SolidGroundTile* position, Map* map, uint collateralDamage, uint collateralRange)
-: Tower(cooldown_ms, range, damage, position, map), _collateralDamage(collateralDamage), _collateralRange(collateralRange) {}
+	SolidGroundTile* position, Map* map, uint collateralDamage, uint collateralRange, ThreadSafeQueue<GameNotification*>& notifications)
+: Tower(cooldown_ms, range, damage, position, map, notifications), _collateralDamage
+		(collateralDamage), _collateralRange(collateralRange) {}
 
 FireTower::~FireTower(){}
 

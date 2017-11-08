@@ -6,7 +6,7 @@ struct UnitVM;
 
 class HombreCabra : public EnviormentUnit {
 public:
-	HombreCabra(uint id, uint stepDelay, uint healthPoints);
+	HombreCabra(uint id, uint stepDelay, uint healthPoints, ThreadSafeQueue<GameNotification*>& notifications);
 	~HombreCabra();
 	void PrintDebug();
 	bool Flies();

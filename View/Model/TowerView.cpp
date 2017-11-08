@@ -1,7 +1,9 @@
 #include "TowerView.h"
 #include "../Common/SpriteNamesConfig.h"
 
-TowerView::TowerView(int key, TextureLoader &textures, Renderer &renderer) :
+TowerView::TowerView(int id, int key, TextureLoader &textures, 
+                     Renderer &renderer) :
+        id(id), key(key), exp(0),
         cfg(textures.getConfig(key)),
         spriteTower(textures.getTexture(key), renderer,
                     cfg["TOWER_W"].as<int>(),
@@ -40,4 +42,12 @@ void TowerView::setXY(int x, int y) {
     View::setXY(x, y);
     spriteTower.setDestXY(x, y);
     spriteFire.setDestXY(x, y);
+}
+
+std::string TowerView::onClick() {
+    return std::move(std::to_string(key) + " " + std::to_string(exp));
+}
+
+int TowerView::getId() {
+    return id;
 }

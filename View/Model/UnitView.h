@@ -8,6 +8,9 @@
 
 class UnitView : public View {
 private:
+    int id;
+    int key;
+    int health;
     const YAML::Node cfg;
     AnimatedSprite spriteWalking;
     AnimatedSprite spriteDying;
@@ -26,11 +29,13 @@ private:
     bool isFirstStep;
 
 public:
-    UnitView(int key, TextureLoader &textures, Renderer &renderer);
+    UnitView(int id, int key, TextureLoader &textures, Renderer &renderer);
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
     void move(int x, int y, int nextX, int nextY, Uint32 t);
     void enableDying();
+    std::string onClick() override;
+    int getId();
 
 private:
     void setNumberOfPixelsToMove(Uint32 currentTime);

@@ -12,8 +12,9 @@
 #include "../../include/ViewModels/TowerVM.h"
 
 
-AirTower::AirTower(uint cooldown_sec, uint range, uint damage, uint nonflyingDamage, SolidGroundTile* position, Map* map)
-: Tower(cooldown_sec, range, damage, position, map), _nonFlyingDamage(nonflyingDamage) {}
+AirTower::AirTower(uint cooldown_sec, uint range, uint damage, uint nonflyingDamage, SolidGroundTile* position, Map* map, ThreadSafeQueue<GameNotification*>& notifications)
+: Tower(cooldown_sec, range, damage, position, map, notifications), _nonFlyingDamage
+		(nonflyingDamage) {}
 
 AirTower::~AirTower(){}
 

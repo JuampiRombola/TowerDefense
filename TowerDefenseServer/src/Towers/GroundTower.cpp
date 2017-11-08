@@ -12,8 +12,10 @@
 #include "../../include/ViewModels/TowerVM.h"
 
 
-GroundTower::GroundTower(uint cooldown_sec, uint range, uint damage, SolidGroundTile* position, Map* map)
-: Tower(cooldown_sec, range, damage, position, map) {}
+GroundTower::GroundTower(uint cooldown_sec, uint range, uint damage,
+						 SolidGroundTile* position, Map* map,
+						 ThreadSafeQueue<GameNotification*>& notis)
+: Tower(cooldown_sec, range, damage, position, map, notis) {}
 
 GroundTower::~GroundTower(){}
 

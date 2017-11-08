@@ -5,10 +5,13 @@
 #include "../../include/EnviormentUnits/EnviormentUnit.h"
 #include "../../include/Map/Map.h"
 #include "../../include/Helpers.h"
+#include "../../include/GameNotifications/ProjectileFiredGameNotification.h"
+#include "../../include/Towers/Projectile.h"
 
-Tower::Tower(uint cooldown_ms, uint range, uint damage, SolidGroundTile* pos, Map* map) : 
+Tower::Tower(uint cooldown_ms, uint range, uint damage, SolidGroundTile* pos,
+			 Map* map, ThreadSafeQueue<GameNotification*>& notis) :
 _lastTimeStamp_ms(0), _cooldown_ms(cooldown_ms), _map(map), _position(pos), _range(range), _experience(0), _damage(damage),
-_upgradeLevel(1) {
+_upgradeLevel(1), _notifications(notis) {
 
 }
 
@@ -31,8 +34,12 @@ bool Tower::_CanFire(){
 Projectile* Tower::Step(){
 	if (_CanFire()){
 		EnviormentUnit* targetUnit = _GetTargetUnitInRange();
-		if (targetUnit != nullptr)
-			return _Fire(targetUnit);
+		if (targetUnit != nullptr){
+			Projectile* p = _Fire(targetUnit);
+			ProjectileVM vm = p->GetViewModel();
+			ProjectileFiredGameNotification* noti = new	ProjectileFiredGameNotification(vm);
+			_notifications.Queue(noti);
+		}
 	}
 
 	return nullptr;

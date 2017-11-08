@@ -6,10 +6,12 @@ enum UnitType { uAbmonible, uDemonioVerde, uEspectro, uHalconSangriento, uHombre
 struct UnitVM {
   UnitType unitType;
   int healthPoints;
-  uint xPos;
-  uint yPos;
-  uint stepDelay_ms;
-  uint id;
+  unsigned int xPos;
+  unsigned int yPos;
+  unsigned int nextXpos;
+  unsigned int nextYpos;
+  unsigned int stepDelay_ms;
+  unsigned int id;
 };
 
 #endif

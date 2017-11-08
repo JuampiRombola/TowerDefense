@@ -7,7 +7,7 @@ struct UnitVM;
 
 class Espectro : public EnviormentUnit {
 public:
-	Espectro(uint id, uint stepDelay, uint healthPoints);
+	Espectro(uint id, uint stepDelay, uint healthPoints, ThreadSafeQueue<GameNotification*>& notifications);
 	~Espectro();
 	void PrintDebug();
 	bool Flies();
