@@ -10,6 +10,9 @@
 #include "View/Model/UnitView.h"
 #include "TowerDefenseServer/include/GameConfiguration.h"
 #include "TowerDefenseServer/include/TowerDefenseGame.h"
+#include "TowerDefenseServer/include/ThreadSafeQueue.h"
+#include "TowerDefenseServer/include/GameNotifications/GameNotification.h"
+#include "TowerDefenseServer/include/Commands/BuildTowerCommand.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -22,9 +25,12 @@ int main(int argc, char** argv) {
     std::string ss("../TowerDefenseServer/config.yaml");
     GameConfiguration cfg(ss);
     uint clockDelaymilliseconds = 100;
-    TowerDefenseGame game(clockDelaymilliseconds, cfg);
+    ThreadSafeQueue<GameNotification*> notis;
+    TowerDefenseGame game(clockDelaymilliseconds, cfg, notis);
     std::thread gameClock(&TowerDefenseGame::Run, &game);
 
+    BuildTowerCommand tower(Ground, 2, 5);
+    game.QueueCommand(&tower);
 
     bool quit = false;
     SDL_Event event{};
@@ -52,7 +58,7 @@ int main(int argc, char** argv) {
 
     //Pongo tierra firme
     mapView.addStructureTile(1, 4);
-    mapView.addStructureTile(2, 2);
+    mapView.addStructureTile(2, 5);
     mapView.addStructureTile(4, 4);
     mapView.addStructureTile(5, 6);
 
@@ -63,20 +69,26 @@ int main(int argc, char** argv) {
     portalSalida.setXY(6, 6);
 
     //Agrego una torre de fuego en el 1,4
-    TowerView fireTower1(TORRE_FUEGO, textureLoader, renderer);
-    fireTower1.setXY(1, 4);
+    TowerView groundTower(1, TORRE_TIERRA, textureLoader, renderer);
+    groundTower.setXY(2, 5);
 
     //Agrego una torre de fuego en el 4,4
-    TowerView fireTower2(TORRE_FUEGO, textureLoader, renderer);
-    fireTower2.setXY(4, 4);
+//    TowerView fireTower2(2, TORRE_FUEGO, textureLoader, renderer);
+//    fireTower2.setXY(4, 4);
 
     //Creo una unidad en el 0,0
-    UnitView unit(ABOMINABLE, textureLoader, renderer);
-    unit.move(0, 0, 1, 0, 5000);
+    //UnitView unit(1, ABOMINABLE, textureLoader, renderer);
+    //unit.move(0, 0, 1, 0, 5000);
 
+    std::vector<UnitView*> units;
+    std::vector<ShotView*> shots;
+
+
+
+    uint32_t  fps = 40;
     Uint32 t1;
     Uint32 t2;
-    Uint32 s = 1000 / 30;
+    Uint32 s = 1000 / fps;
     Uint32 delta = 0;
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
@@ -84,27 +96,49 @@ int main(int argc, char** argv) {
     while (!quit) {
         t1 = SDL_GetTicks();
 
-        while(SDL_PollEvent(&event)) {
+        while (SDL_PollEvent(&event)) {
 
             switch (event.type) {
                 case SDL_QUIT:
-                    quit = true; break;
+                    quit = true;
+                    break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
                         case SDLK_ESCAPE:
-                            quit = true; break;
+                            quit = true;
+                            break;
                         case SDLK_i:
-                            renderer.zoomIn(); break;
+                            renderer.zoomIn();
+                            break;
                         case SDLK_o:
-                            renderer.zoomOut(); break;
+                            renderer.zoomOut();
+                            break;
+                            /* case SDLK_d:
+                                 unit.enableDying(); break;
+                             case SDLK_s:
+                                 shot.shoot(2, 0, 0, 0, 500); break;
+                             case SDLK_a:
+                                 fireWall.cast(1, 1, 5000); break;
+                             case SDLK_z:
+                                 unit.move(1, 0, 1, 1, 3000);; break;
+                             case SDLK_x:
+                                 unit.move(1, 1, 0, 1, 3000);; break;
+                             case SDLK_c:
+                                 unit.move(0, 1, 0, 0, 3000);; break;
+                             case SDLK_v:
+                                 unit.move(0, 0, 1, 0, 3000);; break;*/
                         case SDLK_LEFT:
-                            renderer.updateCamera(-1, 0); break;
+                            renderer.updateCamera(-1, 0);
+                            break;
                         case SDLK_RIGHT:
-                            renderer.updateCamera(1, 0); break;
+                            renderer.updateCamera(1, 0);
+                            break;
                         case SDLK_UP:
-                            renderer.updateCamera(0, -1); break;
+                            renderer.updateCamera(0, -1);
+                            break;
                         case SDLK_DOWN:
-                            renderer.updateCamera(0, 1); break;
+                            renderer.updateCamera(0, 1);
+                            break;
                     }
             }
         }
@@ -116,16 +150,23 @@ int main(int argc, char** argv) {
         portalSalida.draw(ticks);
 
 
-        std::vector<UnitVM> unitVms = game.GetUnitViewModels();
-        if (unitVms.begin() != unitVms.end()){
-            UnitVM vm = *unitVms.begin();
-            unit.move(vm.xPos, vm.yPos, 0, 0, 5000);
+        GameNotification *noti = notis.Dequeue();
+        while (noti != nullptr) {
+            noti->NotifyUnits(units, textureLoader, renderer);
+            noti->NotifyShots(shots, textureLoader, renderer);
+            noti = notis.Dequeue();
         }
-        
 
-        unit.draw(ticks);
-        fireTower1.draw(ticks);
-        fireTower2.draw(ticks);
+        for (auto it = units.begin(); it != units.end(); ++it) {
+            ticks = SDL_GetTicks();
+            (*it)->draw(ticks);
+        }
+
+        for (auto it = shots.begin(); it != shots.end(); ++it) {
+            (*it)->draw(ticks);
+        }
+
+        groundTower.draw(ticks);
 
         renderer.present();
 
@@ -138,7 +179,6 @@ int main(int argc, char** argv) {
         } else
             delta = elapsedTime - s;
     }
-
     gameClock.join();
     SDL_Quit();
 }

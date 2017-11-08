@@ -58,6 +58,12 @@ set(SOURCE_FILES_M
         TowerDefenseServer/include/GameConfiguration.h
         TowerDefenseServer/include/Helpers.h
         TowerDefenseServer/include/TowerDefenseGame.h
+        TowerDefenseServer/include/GameNotifications/GameNotification.h
+        TowerDefenseServer/src/GameNotifications/GameNotification.cpp
+        TowerDefenseServer/include/GameNotifications/ProjectileFiredGameNotification.h
+        TowerDefenseServer/src/GameNotifications/ProjectileFiredGameNotification.cpp
+        TowerDefenseServer/include/GameNotifications/UnitPositionGameNotification.h
+        TowerDefenseServer/src/GameNotifications/UnitPositionGameNotification.cpp
         TowerDefenseServer/src/GameConfiguration.cpp
         TowerDefenseServer/src/TowerDefenseGame.cpp
         TowerDefenseServer/src/Towers/AirProjectile.cpp
@@ -86,7 +92,7 @@ set(SOURCE_FILES_V
         View/Model/PortalSalidaView.h View/Model/TowerView.cpp View/Model/TowerView.h
         View/Model/UnitView.cpp View/Model/UnitView.h View/Model/ShotView.cpp View/Model/ShotView.h
         View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Model/SpellView.cpp
-        View/Model/SpellView.h)
+        View/Model/SpellView.h View/Model/ModelView.cpp View/Model/ModelView.h View/Model/DepthLevel.cpp View/Model/DepthLevel.h View/Model/HudVIew.cpp View/Model/HudVIew.h)
 
 set(SOURCE_FILES_E
         View/Common/Window.cpp View/Common/Window.h View/Common/ViewError.cpp
@@ -116,7 +122,6 @@ set(SOURCE_FILES_E
 
 add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})
-add_executable(TowerDefenseModel ${SOURCE_FILES_M}  TowerDefenseServer/src/main.cpp)
 add_executable(TowerDefense ${SOURCE_FILES_M} ${SOURCE_FILES_V} main.cpp)
 
 INCLUDE(FindPkgConfig)
@@ -127,5 +132,4 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
 #target_link_libraries(TowerDefense ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES})
 target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES})
-target_link_libraries(TowerDefenseModel yaml-cpp)
 target_link_libraries(TowerDefense yaml-cpp ${SDL2IMAGE_LIBRARIES})
