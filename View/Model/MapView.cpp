@@ -94,7 +94,18 @@ bool MapView::isValidTile(int x, int y) {
 
 void MapView::setWidth(int newWidth) {
     if (newWidth < width) {
-
+        for (auto it = pathTiles.begin(); it != pathTiles.end();) {
+            if ((*it).first >= newWidth)
+                pathTiles.erase(it);
+            else
+                ++it;
+        }
+        for (auto it = structureTiles.begin(); it != structureTiles.end();) {
+            if ((*it).first >= newWidth)
+                structureTiles.erase(it);
+            else
+                ++it;
+        }
     }
     width = newWidth;
 }
@@ -104,6 +115,21 @@ int MapView::getWidth() {
 }
 
 void MapView::setHeight(int newHeight) {
+    if (newHeight < height) {
+        for (auto it = pathTiles.begin(); it != pathTiles.end();) {
+            if ((*it).second >= newHeight)
+                pathTiles.erase(it);
+            else
+                ++it;
+        }
+
+        for (auto it = structureTiles.begin(); it != structureTiles.end();) {
+            if ((*it).second >= newHeight)
+                structureTiles.erase(it);
+            else
+                ++it;
+        }
+    }
     height = newHeight;
 }
 
