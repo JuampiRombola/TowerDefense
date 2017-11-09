@@ -49,14 +49,14 @@ void TowerDefenseGame::_SpawnEnemy(){
 
 	uint unitbaseStepDelay_ms = GameCfg.Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
-/*
+
 	uint hombreCabraSpeed = GameCfg.Cfg["units"]["hombre_cabra"]["speed"].as<uint>();
 	uint hombreCabraStepDelay_ms = floor(unitbaseStepDelay_ms / hombreCabraSpeed);
 	uint hombreCabraHealthPoints = GameCfg.Cfg["units"]["hombre_cabra"]["health_points"].as<uint>();
 	EnviormentUnit* hombrecabra = new HombreCabra(++_enemyIdCounter,
 												  hombreCabraStepDelay_ms, hombreCabraHealthPoints, notifications);
 	_units.push_back(hombrecabra);
-	_map.PlaceUnit(hombrecabra, spawn);*/
+	_map.PlaceUnit(hombrecabra, spawn);
 
 	uint aboCabraSpeed = GameCfg.Cfg["units"]["abmonible"]["speed"]
 			.as<uint>();
@@ -68,7 +68,7 @@ void TowerDefenseGame::_SpawnEnemy(){
 										notifications);
 	_units.push_back(abo);
 	_map.PlaceUnit(abo, spawn);
-/*
+
 	uint demoSpeed = GameCfg.Cfg["units"]["demonio_verde"]["speed"].as<uint>();
 	uint demoStepDelay_ms = floor(unitbaseStepDelay_ms / demoSpeed);
 	uint demoHealthPoints = GameCfg.Cfg["units"]["demonio_verde"]["health_points"
@@ -78,7 +78,7 @@ void TowerDefenseGame::_SpawnEnemy(){
 												  demoStepDelay_ms, demoHealthPoints,
 											notifications);
 	_units.push_back(demo);
-	_map.PlaceUnit(demo, spawn);*/
+	_map.PlaceUnit(demo, spawn);
 }
 
 

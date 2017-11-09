@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
     portalSalida.setXY(6, 6);
 
     //Agrego una torre de aire en el 2,0
-    TowerView tower1(1, TORRE_AIRE, textureLoader, renderer);
+    TowerView tower1(1, TORRE_TIERRA, textureLoader, renderer);
     tower1.setXY(2, 0);
 
     //Agrego una torre de agua en el 4,4
@@ -73,13 +73,13 @@ int main(int argc, char** argv) {
     tower4.setXY(4, 6);
 
     //Agrego un disparo
-    ShotView shot = ShotView(DISPARO_AIRE, textureLoader, renderer);
+    ShotView shot = ShotView(DISPARO_TIERRA, textureLoader, renderer);
 
     //Agrego un muro de fuego
-    SpellView fireWall = SpellView(FIREWALL, textureLoader, renderer);
+    SpellView fireWall = SpellView(METEORITO, textureLoader, renderer);
 
     //Creo una unidad en el 0,0
-    UnitView unit(1, HALCONSANGRIENTO, textureLoader, renderer);
+    UnitView unit(1, ABOMINABLE, textureLoader, renderer);
     unit.move(0, 0, 1, 0, 3000);
 
     Uint32 t1;

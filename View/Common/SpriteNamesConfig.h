@@ -27,7 +27,13 @@
 #define HOMBRECABRA 23
 #define NOMUERTO 24
 #define FIREWALL 25
-#define TOTAL 26
+#define GRIETA 26
+#define METEORITO 27
+#define CONGELACION 28
+#define VENTISCA 29
+#define TORNADO 30
+#define RAYO 31
+#define TOTAL 32
 
 #define AGREGAR_HORDA_BTN 100
 #define ENEMIGO_SUMA 101

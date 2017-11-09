@@ -9,6 +9,7 @@
 
 class SpellView : public View {
 private:
+    const YAML::Node cfg;
     AnimatedSprite sprite;
     Uint32 initTime;
     Uint32 requiredTime;

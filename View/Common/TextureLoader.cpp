@@ -58,32 +58,49 @@ const YAML::Node TextureLoader::getConfig(int key) {
 }
 
 std::string TextureLoader::intToStringKey(int key) {
-    if (key == ABOMINABLE)
-        return "ABOMINABLE";
-    if (key == HALCONSANGRIENTO)
-        return "HALCONSANGRIENTO";
-    if (key == DEMONIOVERDE)
-        return "DEMONIOVERDE";
-    if (key == ESPECTRO)
-        return "ESPECTRO";
-    if (key == HOMBRECABRA)
-        return "HOMBRECABRA";
-    if (key == NOMUERTO)
-        return "NOMUERTO";
-    if (key == DISPARO_FUEGO)
-        return "DISPARO_FUEGO";
-    if (key == DISPARO_TIERRA)
-        return "DISPARO_TIERRA";
-    if (key == DISPARO_AGUA)
-        return "DISPARO_AGUA";
-    if (key == DISPARO_AIRE)
-        return "DISPARO_AIRE";
-    if (key == TORRE_FUEGO)
-        return "TORRE_FUEGO";
-    if (key == TORRE_TIERRA)
-        return "TORRE_TIERRA";
-    if (key == TORRE_AGUA)
-        return "TORRE_AGUA";
-    if (key == TORRE_AIRE)
-        return "TORRE_AIRE";
+    switch (key) {
+        case ABOMINABLE:
+            return "ABOMINABLE";
+        case HALCONSANGRIENTO:
+            return "HALCONSANGRIENTO";
+        case DEMONIOVERDE:
+            return "DEMONIOVERDE";
+        case ESPECTRO:
+            return "ESPECTRO";
+        case HOMBRECABRA:
+            return "HOMBRECABRA";
+        case NOMUERTO:
+            return "NOMUERTO";
+        case DISPARO_FUEGO:
+            return "DISPARO_FUEGO";
+        case DISPARO_TIERRA:
+            return "DISPARO_TIERRA";
+        case DISPARO_AGUA:
+            return "DISPARO_AGUA";
+        case DISPARO_AIRE:
+            return "DISPARO_AIRE";
+        case TORRE_FUEGO:
+            return "TORRE_FUEGO";
+        case TORRE_TIERRA:
+            return "TORRE_TIERRA";
+        case TORRE_AGUA:
+            return "TORRE_AGUA";
+        case TORRE_AIRE:
+            return "TORRE_AIRE";
+        case GRIETA:
+            return "GRIETA";
+        case METEORITO:
+            return "METEORITO";
+        case FIREWALL:
+            return "FIREWALL";
+        case CONGELACION:
+            return "CONGELACION";
+        case VENTISCA:
+            return "VENTISCA";
+        case TORNADO:
+            return "TORNADO";
+        case RAYO:
+            return "RAYO";
+    }
+
 }

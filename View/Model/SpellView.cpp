@@ -1,26 +1,23 @@
 #include "SpellView.h"
 
-#define SPELL_W 119
-#define SPELL_H 160
-#define SPELL_START_X 1
-#define SPELL_START_Y 0
-#define SPELL_COLUMNS 20
-#define SPELL_ROWS 1
-#define SPELL_OFFSET_X (-14)
-#define SPELL_OFFSET_Y 94
-#define SPELL_TPS 100
-#define SPELL_TANSPARENCY 150
-
 SpellView::SpellView(int key, TextureLoader &textures, Renderer &renderer) :
+        cfg(textures.getConfig(key)),
         sprite(textures.getTexture(key), renderer,
-               SPELL_W, SPELL_H,
-               SPELL_START_X, SPELL_START_Y,
-               SPELL_COLUMNS, SPELL_ROWS) {
-    sprite.setAlphaMod(SPELL_TANSPARENCY);
+               cfg["SPELL_W"].as<int>(),
+               cfg["SPELL_H"].as<int>(),
+               cfg["SPELL_START_X"].as<int>(),
+               cfg["SPELL_START_Y"].as<int>(),
+               cfg["SPELL_COLUMNS"].as<int>(),
+               cfg["SPELL_ROWS"].as<int>()) {
+    sprite.setAlphaMod(cfg["SPELL_TANSPARENCY"].as<uint>());
     isEnable = false;
-    sprite.setDestRect(x, y, SPELL_W, SPELL_H);
-    sprite.setOffsetXY(SPELL_OFFSET_X, SPELL_OFFSET_Y);
-    sprite.setTimePerSprite(SPELL_TPS);
+    sprite.setDestRect(x, y,
+                       cfg["SPELL_DST_W"].as<int>(),
+                       cfg["SPELL_DST_H"].as<int>());
+    sprite.setOffsetXY(cfg["SPELL_OFFSET_X"].as<int>(),
+                       cfg["SPELL_OFFSET_Y"].as<int>());
+    sprite.setTimePerSprite(cfg["SPELL_TPS"].as<uint>());
+    sprite.setDisplayMode(cfg["SPELL_DISPLAY_MODE"].as<int>());
 }
 
 void SpellView::draw(Uint32 ticks) {
@@ -28,8 +25,8 @@ void SpellView::draw(Uint32 ticks) {
     if ((ticks - initTime) >= requiredTime) {
         isEnable = false;
         sprite.reset();
+        return;
     }
-    sprite.draw();
     sprite.nextAndDraw(ticks);
 }
 
