@@ -63,9 +63,9 @@ int main(int argc, char** argv) {
     mapView.addStructureTile(5, 6);
 
     //Pongo un portal de entrada y uno de salida
-    PortalView portalEntrada = PortalEntradaView(textureLoader, renderer);
+    PortalEntradaView portalEntrada = PortalEntradaView(textureLoader, renderer);
     portalEntrada.setXY(0, 0);
-    PortalView portalSalida = PortalSalidaView(textureLoader, renderer);
+    PortalSalidaView portalSalida = PortalSalidaView(textureLoader, renderer);
     portalSalida.setXY(6, 6);
 
     //Agrego una torre de fuego en el 1,4

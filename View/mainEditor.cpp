@@ -11,6 +11,7 @@
 #define WINDOWWIDTH 640
 #define WINDOWHEIGHT 480
 #define EDITOR_MODE 1
+#define SALIDA_DEFAULT "mapa"
 
 #define MAPSIZE 7
 
@@ -27,7 +28,12 @@ int main(int argc, char** argv) {
     int mouse_x = -1, mouse_y = -1;
     MousePosition mouse(mouse_x, mouse_y);
 
-    Editor editor(mapView, textureLoader, renderer, std::string(argv[1]));
+    std::string salida;
+    if (argv[1])
+        salida.append(argv[1]);
+    else
+        salida.append(SALIDA_DEFAULT);
+    Editor editor(mapView, textureLoader, renderer, std::string(salida));
 
     Buttons buttons(mouse, renderer, editor, textureLoader);
     buttons.addInitialButtons();
