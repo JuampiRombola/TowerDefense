@@ -41,6 +41,8 @@ public:
     bool isOnCamera(int x, int y);
     int pixelToCartesianX(int x, int y);
     int pixelToCartesianY(int x, int y);
+    void setMapWidth(int mapH, int newW);
+    void setMapHeight(int mapW, int mapH, int newH);
 };
 
 

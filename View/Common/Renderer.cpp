@@ -12,10 +12,10 @@
 #define TOLERANCE 380
 
 Renderer::Renderer(Window &window, int mapWidth, int mapHeight) :
-        mapWidth(mapWidth * WIDTHFACTOR * 2),
-        mapHeight(mapHeight * HEIGHTFACTOR),
+        mapWidth(mapWidth*WIDTHFACTOR + mapHeight*WIDTHFACTOR - WIDTHFACTOR),
+        mapHeight(this->mapWidth / 2),
         cameraX(this->mapWidth/4), cameraY(this->mapHeight/4),
-        paddingWidth(mapWidth * WIDTHFACTOR + PADDING),
+        paddingWidth(mapHeight * WIDTHFACTOR + PADDING),
         paddingHeight(PADDING),
         zoom(ZOOMINITIAL),
         renderer(SDL_CreateRenderer(window.getWindow(), -1, 0)),
@@ -73,13 +73,13 @@ void Renderer::updateCamera(int x, int y) {
 
     this->cameraX += (x * factor);
     if (cameraX < 0) cameraX = 0;
-    if (cameraX > (2 * (zoom * mapWidth + PADDING) - windowWidth))
-        cameraX = 2 * (zoom * mapWidth + PADDING) - windowWidth;
+    if (cameraX > (zoom * mapWidth + 2*PADDING - windowWidth))
+        cameraX = zoom * mapWidth + 2*PADDING - windowWidth;
 
     this->cameraY += (y * factor);
     if (cameraY < 0) cameraY = 0;
-    if (cameraY > (2 * (zoom * mapHeight + PADDING) - windowHeight))
-        cameraY = 2 * (zoom * mapHeight + PADDING) - windowHeight;
+    if (cameraY > (zoom * mapHeight + 2*PADDING - windowHeight))
+        cameraY = zoom * mapHeight + 2*PADDING - windowHeight;
 }
 
 SDL_Renderer *Renderer::getRenderer() {
@@ -97,15 +97,15 @@ int Renderer::cartesianToIsometricY(int x, int y) {
 void Renderer::zoomIn() {
     if (zoom < 5) {
         zoom += 1;
-        cameraX += (windowWidth / 2) / zoom;
-        cameraY += (windowHeight / 2) / zoom;
+        cameraX += (windowWidth / 2 / zoom);
+        cameraY += (windowHeight / 2 / zoom);
     }
 }
 
 void Renderer::zoomOut() {
     if (zoom > 1) {
-        cameraX -= (windowWidth / 2) / zoom;
-        cameraY -= (windowHeight / 2) / zoom;
+        cameraX -= (windowWidth / 2 / zoom);
+        cameraY -= (windowHeight / 2 / zoom);
         zoom -= 1;
     }
 }
@@ -132,4 +132,16 @@ int Renderer::pixelToCartesianY(int x, int y) {
                      / static_cast<double>(WIDTHFACTOR)) / 2;
     if (result < 0) return -1;
     return static_cast<int>(result);
+}
+
+void Renderer::setMapWidth(int mapH, int newW) {
+    mapWidth = newW*WIDTHFACTOR + mapH*WIDTHFACTOR - WIDTHFACTOR;
+    mapHeight = mapWidth / 2;
+}
+
+void Renderer::setMapHeight(int mapW, int mapH, int newH) {
+    mapWidth = mapW*WIDTHFACTOR + newH*WIDTHFACTOR - WIDTHFACTOR;
+    mapHeight = mapWidth / 2;
+    paddingWidth = newH * WIDTHFACTOR + PADDING;
+    cameraX += (newH - mapH) * WIDTHFACTOR;
 }

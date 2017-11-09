@@ -12,6 +12,7 @@ void ModelView::createPathTile() {
 }
 
 ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader) : 
-        renderer(renderer), textureLoader(textureLoader) {
+        renderer(renderer), textureLoader(textureLoader),
+        map(1, 1, 1, renderer, textureLoader) {
 
 }
