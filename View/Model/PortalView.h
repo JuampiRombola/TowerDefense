@@ -18,6 +18,7 @@ public:
     ~PortalView() override;
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
+    std::string getType() = 0;
 };
 
 

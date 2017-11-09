@@ -8,13 +8,16 @@ class EliminarHordaButton : public Button {
 private:
     Editor &editor;
     int horda;
-
+    std::function<void(int)> deleteButtonsFn;
     void click();
 
 public:
-    EliminarHordaButton(int id, int horda, SDL_Texture *texture,
-                        MousePosition &mousePosition, Renderer &renderer,
-                        Editor &editor);
+    EliminarHordaButton(int horda, SDL_Texture *texture,
+                            MousePosition &mousePosition, Renderer &renderer,
+                            Editor &editor,
+                            std::function<void(int)> deleteButtonsFn);
+    void draw(int number);
+    bool belongsToHorda(int hordaNro);
 };
 
 #endif //TOWERDEFENSE_ELIMINARHORDABUTTON_H

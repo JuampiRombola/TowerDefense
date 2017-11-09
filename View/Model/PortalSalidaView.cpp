@@ -13,3 +13,7 @@ PortalSalidaView::PortalSalidaView(TextureLoader &textures,
 }
 
 PortalSalidaView::~PortalSalidaView() {}
+
+std::string PortalSalidaView::getType() {
+    return "salida";
+}

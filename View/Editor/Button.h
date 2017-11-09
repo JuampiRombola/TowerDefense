@@ -11,16 +11,16 @@ private:
     MousePosition &mousePosition;
     virtual void click() = 0;
 protected:
-    int id;
     bool isClicked();
 public:
-    Button(int id, int posX, int posY, int width, int height,
-           SDL_Texture *texture, MousePosition &mousePosition,
-           Renderer &renderer);
+    Button(int posX, int posY, int width, int height,
+               SDL_Texture *texture, MousePosition &mousePosition,
+               Renderer &renderer);
 
     virtual ~Button();
 
-    virtual void draw();
+    virtual void draw(int number);
+
 };
 
 #endif //TOWERDEFENSE_BUTTON_H

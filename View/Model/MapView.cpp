@@ -91,3 +91,65 @@ int MapView::getTileYFromPixel(int x, int y) {
 bool MapView::isValidTile(int x, int y) {
     return (x >= 0 && x < width) && (y >= 0 && y < height);
 }
+
+void MapView::setWidth(int newWidth) {
+    if (newWidth < width) {
+        for (auto it = pathTiles.begin(); it != pathTiles.end();) {
+            if ((*it).first >= newWidth)
+                pathTiles.erase(it);
+            else
+                ++it;
+        }
+        for (auto it = structureTiles.begin(); it != structureTiles.end();) {
+            if ((*it).first >= newWidth)
+                structureTiles.erase(it);
+            else
+                ++it;
+        }
+    }
+    width = newWidth;
+}
+
+int MapView::getWidth() {
+    return width;
+}
+
+void MapView::setHeight(int newHeight) {
+    if (newHeight < height) {
+        for (auto it = pathTiles.begin(); it != pathTiles.end();) {
+            if ((*it).second >= newHeight)
+                pathTiles.erase(it);
+            else
+                ++it;
+        }
+
+        for (auto it = structureTiles.begin(); it != structureTiles.end();) {
+            if ((*it).second >= newHeight)
+                structureTiles.erase(it);
+            else
+                ++it;
+        }
+    }
+    height = newHeight;
+}
+
+int MapView::getHeight() {
+    return height;
+}
+
+std::string MapView::exportar() {
+    std::stringstream mapToString;
+    mapToString << "ancho: " << width << "\n";
+    mapToString << "alto: " << height << "\n";
+    mapToString << "caminos:\n";
+    for (auto& path : pathTiles) {
+        mapToString << " - x: " << path.first << "\n";
+        mapToString << "   y: " << path.second << "\n";
+    }
+    mapToString << "superficies:\n";
+    for (auto& structureTile : structureTiles) {
+        mapToString << " - x: " << structureTile.first << "\n";
+        mapToString << "   y: " << structureTile.second << "\n";
+    }
+    return mapToString.str();
+}
