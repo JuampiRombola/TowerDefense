@@ -133,6 +133,22 @@ int Editor::getTiempoHorda(int hordaId) {
     }
 }
 
+void Editor::aumentarAltoMapa() {
+    map.setHeight(map.getHeight() + 1);
+}
+
+void Editor::disminuirAltoMapa() {
+    map.setHeight(map.getHeight() - 1);
+}
+
+void Editor::aumentarAnchoMapa() {
+    map.setWidth(map.getWidth() + 1);
+}
+
+void Editor::disminuirAnchoMapa() {
+    map.setWidth(map.getWidth() - 1);
+}
+
 void Editor::draw() {
     Uint32 ticks = SDL_GetTicks();
     map.draw(ticks);

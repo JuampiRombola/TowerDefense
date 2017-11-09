@@ -21,6 +21,10 @@
 #include "AumentarTiempoButton.h"
 #include "DisminuirTiempoButton.h"
 #include "ContadorTiempoInput.h"
+#include "AumentarAltoMapaButton.h"
+#include "AumentarAnchoMapaButton.h"
+#include "DisminuirAnchoMapaButton.h"
+#include "DisminuirAltoMapaButton.h"
 
 class Buttons {
 private:

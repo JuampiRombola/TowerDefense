@@ -77,6 +77,41 @@ void Buttons::addInitialButtons() {
             textureLoader.getTexture(AGREGAR_HORDA_BTN), mousePosition,
             renderer, editor, std::bind(&Buttons::addEnemigosButton, this, _1));
     images.push_back(button);
+
+    Image *altoIcon = new Image(ALTO_BUTTON_X, ALTO_BUTTON_Y,
+                                ALTO_BUTTON_WIDTH, ALTO_BUTTON_HEIGHT,
+                                textureLoader.getTexture(ALTO_MAPA), renderer);
+    images.push_back(altoIcon);
+
+    Image *aumentarAlto = new AumentarAltoMapaButton(textureLoader.getTexture
+                                                            (ENEMIGO_SUMA),
+                                                    mousePosition,
+                                                    renderer, editor);
+    images.push_back(aumentarAlto);
+
+    Image *disminuirAlto = new DisminuirAltoMapaButton(textureLoader.getTexture
+                                                               (ENEMIGO_RESTA),
+                                                       mousePosition,
+                                                       renderer, editor);
+    images.push_back(disminuirAlto);
+
+    Image *anchoIcon = new Image(ANCHO_BUTTON_X, ANCHO_BUTTON_Y,
+                                ANCHO_BUTTON_WIDTH, ANCHO_BUTTON_HEIGHT,
+                                textureLoader.getTexture(ANCHO_MAPA), renderer);
+    images.push_back(anchoIcon);
+
+
+    Image *aumentarAncho = new AumentarAnchoMapaButton(textureLoader.getTexture
+                                                               (ENEMIGO_SUMA),
+                                                       mousePosition,
+                                                       renderer, editor);
+    images.push_back(aumentarAncho);
+
+    Image *disminuirAncho = new DisminuirAnchoMapaButton(textureLoader.getTexture
+                                                                 (ENEMIGO_RESTA),
+                                                         mousePosition,
+                                                         renderer, editor);
+    images.push_back(disminuirAncho);
 }
 
 void Buttons::addEnemigosButton(int horda) {

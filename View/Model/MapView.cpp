@@ -91,3 +91,22 @@ int MapView::getTileYFromPixel(int x, int y) {
 bool MapView::isValidTile(int x, int y) {
     return (x >= 0 && x < width) && (y >= 0 && y < height);
 }
+
+void MapView::setWidth(int newWidth) {
+    if (newWidth < width) {
+
+    }
+    width = newWidth;
+}
+
+int MapView::getWidth() {
+    return width;
+}
+
+void MapView::setHeight(int newHeight) {
+    height = newHeight;
+}
+
+int MapView::getHeight() {
+    return height;
+}
