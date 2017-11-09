@@ -73,6 +73,7 @@ int main(int argc, char** argv) {
                 tileX = mapView.getTileXFromPixel(mouse_x, mouse_y);
                 tileY = mapView.getTileYFromPixel(mouse_x, mouse_y);
                 editor.applyTileFunction(tileX, tileY);
+                mouse.deactivate();
             }
         }
         event.type = 0;
