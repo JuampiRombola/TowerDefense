@@ -98,7 +98,7 @@ set(SOURCE_FILES_E
         View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
         View/Model/PortalSalidaView.h View/Model/TowerView.cpp View/Model/TowerView.h
         View/Common/MousePosition.cpp View/Common/MousePosition.h View/Editor/Editor.cpp
-        View/Editor/Editor.h View/Common/KeyboardInput.cpp View/Common/KeyboardInput.h
+        View/Editor/Editor.h
         View/Editor/Button.cpp View/Editor/Button.h View/Editor/AgregarEnemigoButton.cpp
         View/Editor/AgregarEnemigoButton.h View/Editor/EliminarEnemigoButton.cpp
         View/Editor/EliminarEnemigoButton.h View/Editor/EliminarHordaButton.cpp
@@ -112,7 +112,7 @@ set(SOURCE_FILES_E
         View/Editor/AgregarCaminoButton.h View/Editor/AgregarTierraFirmeButton.cpp
         View/Editor/AgregarTierraFirmeButton.h View/Editor/AgregarPortalEntradaButton.cpp
         View/Editor/AgregarPortalEntradaButton.h View/Editor/AgregarPortalSalidaButton.cpp
-        View/Editor/AgregarPortalSalidaButton.h View/Editor/Horda.cpp View/Editor/Horda.h View/Editor/EnemigoImage.cpp View/Editor/EnemigoImage.h View/Editor/EditorConstants.h View/Editor/AumentarTiempoButton.cpp View/Editor/AumentarTiempoButton.h View/Editor/DisminuirTiempoButton.cpp View/Editor/DisminuirTiempoButton.h View/Editor/ContadorTiempoInput.cpp View/Editor/ContadorTiempoInput.h View/Editor/AumentarAnchoMapaButton.cpp View/Editor/AumentarAnchoMapaButton.h View/Editor/AumentarAltoMapaButton.cpp View/Editor/AumentarAltoMapaButton.h View/Editor/DisminuirAltoMapaButton.cpp View/Editor/DisminuirAltoMapaButton.h View/Editor/DisminuirAnchoMapaButton.cpp View/Editor/DisminuirAnchoMapaButton.h)
+        View/Editor/AgregarPortalSalidaButton.h View/Editor/Horda.cpp View/Editor/Horda.h View/Editor/EnemigoImage.cpp View/Editor/EnemigoImage.h View/Editor/EditorConstants.h View/Editor/AumentarTiempoButton.cpp View/Editor/AumentarTiempoButton.h View/Editor/DisminuirTiempoButton.cpp View/Editor/DisminuirTiempoButton.h View/Editor/ContadorTiempoInput.cpp View/Editor/ContadorTiempoInput.h View/Editor/AumentarAnchoMapaButton.cpp View/Editor/AumentarAnchoMapaButton.h View/Editor/AumentarAltoMapaButton.cpp View/Editor/AumentarAltoMapaButton.h View/Editor/DisminuirAltoMapaButton.cpp View/Editor/DisminuirAltoMapaButton.h View/Editor/DisminuirAnchoMapaButton.cpp View/Editor/DisminuirAnchoMapaButton.h View/Editor/GuardarButton.cpp View/Editor/GuardarButton.h View/Editor/File.cpp View/Editor/File.h)
 
 add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_E})

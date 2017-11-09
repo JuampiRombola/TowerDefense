@@ -5,13 +5,11 @@
 #include "AgregarPortalEntradaButton.h"
 #include "AgregarPortalSalidaButton.h"
 
-Buttons::Buttons(MousePosition &mousePosition, Renderer &renderer,
-                 Editor &editor, TextureLoader &textureLoader,
-                 KeyboardInput &keyboardInput) : mousePosition(mousePosition),
+Buttons::Buttons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
+                 TextureLoader &textureLoader) : mousePosition(mousePosition),
                                                  renderer(renderer),
                                                  editor(editor),
-                                                 textureLoader(textureLoader),
-                                                 keyboardInput(keyboardInput) {}
+                                                 textureLoader(textureLoader) {}
 
 
 Buttons::~Buttons() {
@@ -112,6 +110,12 @@ void Buttons::addInitialButtons() {
                                                          mousePosition,
                                                          renderer, editor);
     images.push_back(disminuirAncho);
+
+    Image *saveButton = new GuardarButton(textureLoader.getTexture
+                                                  (SAVE_BUTTON),
+                                          mousePosition,
+                                          renderer, editor);
+    images.push_back(saveButton);
 }
 
 void Buttons::addEnemigosButton(int horda) {

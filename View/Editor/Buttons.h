@@ -6,7 +6,6 @@
 #include "Button.h"
 #include "../Common/Text.h"
 #include "../Common/MousePosition.h"
-#include "../Common/KeyboardInput.h"
 #include "../Common/Renderer.h"
 #include "../Common/TextureLoader.h"
 #include "SuperficieButton.h"
@@ -25,6 +24,7 @@
 #include "AumentarAnchoMapaButton.h"
 #include "DisminuirAnchoMapaButton.h"
 #include "DisminuirAltoMapaButton.h"
+#include "GuardarButton.h"
 
 class Buttons {
 private:
@@ -33,12 +33,11 @@ private:
     Renderer &renderer;
     Editor& editor;
     TextureLoader &textureLoader;
-    KeyboardInput &keyboardInput;
     void addEnemigoButton(int horda, std::string enemigoKey, int texture);
     void addTiempoEntreHorda(int horda);
 public:
     Buttons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
-            TextureLoader &textureLoader, KeyboardInput &keyboardInput);
+                TextureLoader &textureLoader);
     ~Buttons();
     void draw();
     void addInitialButtons();

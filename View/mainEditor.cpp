@@ -5,7 +5,6 @@
 #include "Model/MapView.h"
 #include "Common/MousePosition.h"
 #include "Editor/Editor.h"
-#include "Common/KeyboardInput.h"
 #include "Editor/Buttons.h"
 
 #define TITLE "Tower Defense"
@@ -28,11 +27,9 @@ int main(int argc, char** argv) {
     int mouse_x = -1, mouse_y = -1;
     MousePosition mouse(mouse_x, mouse_y);
 
-    Editor editor(mapView, textureLoader, renderer);
+    Editor editor(mapView, textureLoader, renderer, std::string(argv[1]));
 
-    KeyboardInput keyboardInput(editor.getNombre());
-
-    Buttons buttons(mouse, renderer, editor, textureLoader, keyboardInput);
+    Buttons buttons(mouse, renderer, editor, textureLoader);
     buttons.addInitialButtons();
 
     int tileX = 0;
@@ -78,7 +75,6 @@ int main(int argc, char** argv) {
         buttons.draw();
         renderer.present();
     }
-    editor.exportar();
     SDL_Quit();
     return 0;
 }

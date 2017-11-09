@@ -11,6 +11,7 @@
 #include "../Model/PortalSalidaView.h"
 #include "Horda.h"
 #include <list>
+#include "File.h"
 
 class Editor {
 private:
@@ -24,7 +25,7 @@ private:
     std::function<void(int, int)> mapFunction;
 public:
     explicit Editor(MapView &map, TextureLoader &textureLoader,
-                        Renderer &renderer);
+                        Renderer &renderer, std::string name);
     ~Editor();
     void setSuperficie(int superficie);
     void agregarEnemigo(int horda, std::string enemigo);
@@ -32,7 +33,6 @@ public:
     void agregarHorda(int id);
     void eliminarHorda(int horda);
     unsigned int getCantidadEnemigosEnHorda(std::string enemigo, int horda);
-    std::string& getNombre();
     void exportar();
     void waitForPathTile();
     void waitForStructureTile();

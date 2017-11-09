@@ -35,6 +35,7 @@ public:
     int getWidth();
     void setHeight(int newHeight);
     int getHeight();
+    std::string exportar();
 };
 
 
