@@ -16,6 +16,10 @@ bool MousePosition::isActive() {
     return active;
 }
 
-void MousePosition::toggleActive() {
-    active = !active;
+void MousePosition::activate() {
+    active = true;
+}
+
+void MousePosition::deactivate() {
+    active = false;
 }

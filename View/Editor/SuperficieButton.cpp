@@ -1,14 +1,19 @@
 #include "SuperficieButton.h"
 
-SuperficieButton::SuperficieButton(int id, int number, const int
-                                   superficie, SDL_Texture *texture,
+SuperficieButton::SuperficieButton(const int superficie,
+                                   SDL_Texture *texture,
                                    MousePosition &mousePosition,
                                    Renderer &renderer, Editor &editor) :
-        Button(id, number*100, 0, 100, 100, texture, mousePosition, renderer),
-        number(number), superficie(superficie), editor(editor) {}
-
-SuperficieButton::~SuperficieButton() = default;
+        Button(SUPERFICIE_BUTTON_WIDTH, 0, SUPERFICIE_BUTTON_WIDTH,
+               SUPERFICIE_BUTTON_HEIGHT, texture, mousePosition, renderer),
+        superficie(superficie), editor(editor) {}
 
 void SuperficieButton::click() {
     editor.setSuperficie(superficie);
 }
+
+void SuperficieButton::draw(int number) {
+    button.x = number * SUPERFICIE_BUTTON_WIDTH;
+    Button::draw(number);
+}
+

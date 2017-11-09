@@ -7,15 +7,15 @@
 
 class SuperficieButton : public Button {
 private:
-    int number;
     const int superficie;
     Editor &editor;
     void click();
 public:
-    SuperficieButton(int id, int number, const int superficie, SDL_Texture
-    *texture, MousePosition &mousePosition, Renderer &renderer,
-                     Editor& editor);
-    ~SuperficieButton();
+    SuperficieButton(const int superficie,
+                         SDL_Texture *texture,
+                         MousePosition &mousePosition,
+                         Renderer &renderer, Editor &editor);
+    void draw(int number);
 };
 
 

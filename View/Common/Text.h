@@ -11,7 +11,7 @@ public:
     Text(int posX, int posY, int width, int height,
               SDL_Texture *texture, Renderer &renderer);
 
-    virtual void draw();
+    virtual void draw(int number);
 
 };
 

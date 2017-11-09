@@ -8,6 +8,7 @@ class PortalEntradaView : public PortalView {
 public:
     PortalEntradaView(TextureLoader &textures, Renderer &renderer);
     ~PortalEntradaView();
+    std::string getType();
 };
 
 

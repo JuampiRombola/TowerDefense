@@ -7,6 +7,7 @@ class PortalSalidaView : public PortalView {
 public:
     PortalSalidaView(TextureLoader &textures, Renderer &renderer);
     ~PortalSalidaView() override;
+    std::string getType();
 };
 
 

@@ -1,19 +1,19 @@
 #include "Button.h"
 
-Button::Button(int id, int posX, int posY, int width, int height,
+Button::Button(int posX, int posY, int width, int height,
                SDL_Texture *texture, MousePosition &mousePosition,
                Renderer &renderer) : mousePosition(mousePosition),
                                      Image(posX, posY, width, height, texture,
-                                           renderer), id(id) {}
+                                           renderer) {}
 
 Button::~Button() = default;
 
-void Button::draw() {
+void Button::draw(int number) {
     if (this->isClicked()) {
         this->click();
-        mousePosition.toggleActive();
+        mousePosition.deactivate();
     }
-    Image::draw();
+    Image::draw(number);
 }
 
 bool Button::isClicked() {

@@ -13,10 +13,14 @@ private:
     void click();
 
 public:
-    EliminarEnemigoButton(int id, int horda, const std::string &enemigo,
-                          SDL_Texture *texture, MousePosition &mousePosition,
-                          Renderer &renderer, Editor &editor);
-
+    EliminarEnemigoButton(int horda,
+                              const std::string &enemigo,
+                              SDL_Texture *texture,
+                              MousePosition &mousePosition,
+                              Renderer &renderer,
+                              Editor &editor);
+    void draw(int number);
+    bool belongsToHorda(int hordaNro);
 };
 
 

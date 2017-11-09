@@ -13,3 +13,7 @@ PortalEntradaView::PortalEntradaView(TextureLoader &textures,
 }
 
 PortalEntradaView::~PortalEntradaView() {}
+
+std::string PortalEntradaView::getType() {
+    return "entrada";
+}

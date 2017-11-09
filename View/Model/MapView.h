@@ -31,6 +31,11 @@ public:
     int getTileXFromPixel(int x, int y);
     int getTileYFromPixel(int x, int y);
     bool isValidTile(int x, int y);
+    void setWidth(int newWidth);
+    int getWidth();
+    void setHeight(int newHeight);
+    int getHeight();
+    std::string exportar();
 };
 
 

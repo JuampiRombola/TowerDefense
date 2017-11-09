@@ -8,8 +8,10 @@ class AgregarCaminoButton : public Button {
 private:
     Editor &editor;
 public:
-    AgregarCaminoButton(int id, SDL_Texture *texture, MousePosition &mousePosition,
-                        Renderer &renderer, Editor &editor);
+    AgregarCaminoButton(SDL_Texture *texture,
+                            MousePosition &mousePosition,
+                            Renderer &renderer,
+                            Editor &editor);
     void click();
 };
 

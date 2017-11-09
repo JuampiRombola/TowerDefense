@@ -6,7 +6,7 @@ Text::Text(int posX, int posY, int width, int height,
                                                   texture, renderer),
                                            text("") {}
 
-void Text::draw() {
+void Text::draw(int number) {
     int xActual = button.x;
     for (char &caracter : text) {
         SDL_Rect src = {0, (caracter - 32) * 24, 14, 24};

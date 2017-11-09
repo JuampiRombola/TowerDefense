@@ -12,7 +12,8 @@ public:
     int getPosX();
     int getPosY();
     bool isActive();
-    void toggleActive();
+    void activate();
+    void deactivate();
 };
 
 #endif //TOWERDEFENSE_MOUSEPOSITION_H
