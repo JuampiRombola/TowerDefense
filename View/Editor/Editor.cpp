@@ -47,8 +47,8 @@ void Editor::eliminarHorda(int hordaId) {
     hordas.erase(it);
 }
 
-unsigned int
-Editor::getCantidadEnemigosEnHorda(std::string enemigo, int hordaId) {
+unsigned int Editor::getCantidadEnemigosEnHorda(std::string enemigo, int
+hordaId) {
     for (auto &horda : hordas) {
         if (hordaId == horda.getId())
             return horda.getCantidadEnemigosDeTipo(enemigo);
@@ -146,6 +146,12 @@ void Editor::aumentarAltoMapa() {
 }
 
 void Editor::disminuirAltoMapa() {
+    for (auto it = portales.begin(); it != portales.end();) {
+        if ((*it)->getY() >= (map.getHeight() - 1))
+            it = portales.erase(it);
+        else
+            ++it;
+    }
     map.setHeight(map.getHeight() - 1);
 }
 
@@ -154,6 +160,12 @@ void Editor::aumentarAnchoMapa() {
 }
 
 void Editor::disminuirAnchoMapa() {
+    for (auto it = portales.begin(); it != portales.end();) {
+        if ((*it)->getX() >= (map.getWidth() - 1))
+            it = portales.erase(it);
+        else
+            ++it;
+    }
     map.setWidth(map.getWidth() - 1);
 }
 
