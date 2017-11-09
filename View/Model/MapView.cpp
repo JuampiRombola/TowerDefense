@@ -108,6 +108,7 @@ void MapView::setWidth(int newWidth) {
         }
     }
     width = newWidth;
+    renderer.setMapWidth(width, height);
 }
 
 int MapView::getWidth() {
@@ -130,6 +131,7 @@ void MapView::setHeight(int newHeight) {
                 ++it;
         }
     }
+    renderer.setMapHeight(width, height,newHeight);
     height = newHeight;
 }
 

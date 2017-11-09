@@ -13,7 +13,7 @@ class ModelView {
 private:
     Renderer &renderer;
     TextureLoader &textureLoader;
-    MapView *map;
+    MapView map;
     std::mutex m;
     std::vector<ShotView *> shots;
     std::vector<DepthLevel *> depthLevels;
