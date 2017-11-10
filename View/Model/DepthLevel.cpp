@@ -38,7 +38,10 @@ void DepthLevel::removeUnit(int id) {
 
 void DepthLevel::draw(Uint32 time) {
     if (portalEntrada) portalEntrada->draw(time);
-    
+
+    //Remuevo las unidades que ya estan muertas
+    units.remove_if([] (UnitView *unit) {return unit->isDead();}); //Estoy perdiendo memoria
+
     // Dibujo unidades
     for (auto unit : units)
         unit->draw(time);
@@ -48,7 +51,7 @@ void DepthLevel::draw(Uint32 time) {
         tower->draw(time);
     
     // Remuevo los spells que terminaron
-    spells.remove_if([] (SpellView *spell) {return spell->hasFinished();});
+    spells.remove_if([] (SpellView *spell) {return spell->hasFinished();}); //Estoy perdiendo memoria
     
     // Dibujo spells
     for (auto spell : spells)

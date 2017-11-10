@@ -22,16 +22,21 @@ private:
 
 public:
     ModelView(Renderer &renderer, TextureLoader &textureLoader);
+    ~ModelView();
     void draw(Uint32 time);
-    void isClickOnMap(int x, int y);
-    void createPathTile();
-    void createStructureTile();
-    void createPortal();
-    void createUnit();
-    void createTower();
-    void createSpell();
-    void createShot();
-
+    bool isValidTile(int x, int y);
+    void createPathTile(int x, int y);
+    void createStructureTile(int x, int y);
+    void setMapWidthHeight(int w, int h);
+    void createPortalEntrada(int x, int y);
+    void createPortalSalida(int x, int y);
+    void createUnit(int id, int key,
+                    int x, int y, int toX, int toY, Uint32 t);
+    void createTower(int id, int key, int x, int y);
+    void createSpell(int key, int x, int y, Uint32 t);
+    void createShot(int key, int x, int y, int toX, int toY, Uint32 t);
+    void moveUnit(int id, int x, int y, int toX, int toY, Uint32 t);
+    void killUnit(int id);
 };
 
 

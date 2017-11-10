@@ -59,9 +59,10 @@ void UnitView::draw(Uint32 ticks) {
                                         cfg["WALKING_H"].as<int>());
         spriteWalking.setTimePerSprite(timePerPixel);
         spriteWalking.nextAndDraw(ticks);
-    } else {
-        if (spriteDying.getCurrentSprite() != cfg["DYING_COLUMNS"].as<int>())
-            spriteDying.nextAndDraw(ticks);
+    } else if (currentState == DYING) {
+        if (spriteDying.getCurrentSprite() == cfg["DYING_COLUMNS"].as<int>())
+            currentState = DEAD;
+        spriteDying.nextAndDraw(ticks);
     }
 }
 
@@ -156,4 +157,8 @@ std::string UnitView::onClick() {
 
 int UnitView::getId() {
     return id;
+}
+
+bool UnitView::isDead() {
+    return (currentState == DEAD);
 }
