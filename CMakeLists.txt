@@ -105,7 +105,7 @@ set(SOURCE_FILES_E
         View/Model/PortalSalidaView.h View/Model/TowerView.cpp View/Model/TowerView.h
         View/Common/MousePosition.cpp View/Common/MousePosition.h View/Editor/Editor.cpp
         View/Editor/Editor.h
-        View/Editor/Button.cpp View/Editor/Button.h View/Editor/AgregarEnemigoButton.cpp
+        View/Common/Button.cpp View/Common/Button.h View/Editor/AgregarEnemigoButton.cpp
         View/Editor/AgregarEnemigoButton.h View/Editor/EliminarEnemigoButton.cpp
         View/Editor/EliminarEnemigoButton.h View/Editor/EliminarHordaButton.cpp
         View/Editor/EliminarHordaButton.h View/Editor/NuevaHordaButton.cpp
