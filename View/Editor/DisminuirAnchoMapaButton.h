@@ -3,7 +3,7 @@
 
 
 #include "Editor.h"
-#include "Button.h"
+#include "../Common/Button.h"
 
 class DisminuirAnchoMapaButton : public Button {
 private:

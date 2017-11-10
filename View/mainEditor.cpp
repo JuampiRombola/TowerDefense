@@ -5,7 +5,7 @@
 #include "Model/MapView.h"
 #include "Common/MousePosition.h"
 #include "Editor/Editor.h"
-#include "Editor/Buttons.h"
+#include "Editor/EditorButtons.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
         salida.append(SALIDA_DEFAULT);
     Editor editor(mapView, textureLoader, renderer, std::string(salida));
 
-    Buttons buttons(mouse, renderer, editor, textureLoader);
+    EditorButtons buttons(mouse, renderer, editor, textureLoader);
     buttons.addInitialButtons();
 
     int tileX = 0;

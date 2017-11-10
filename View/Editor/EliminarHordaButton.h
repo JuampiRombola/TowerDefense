@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_ELIMINARHORDABUTTON_H
 #define TOWERDEFENSE_ELIMINARHORDABUTTON_H
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class EliminarHordaButton : public Button {

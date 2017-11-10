@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_DISMINUIRTIEMPOBUTTON_H
 #define TOWERDEFENSE_DISMINUIRTIEMPOBUTTON_H
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class DisminuirTiempoButton : public Button {

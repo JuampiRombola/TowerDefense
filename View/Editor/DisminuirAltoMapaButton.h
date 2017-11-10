@@ -2,7 +2,7 @@
 #define TOWERDEFENSE_DISMINUIRALTOMAPABUTTON_H
 
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class DisminuirAltoMapaButton : public Button {

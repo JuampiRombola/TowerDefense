@@ -1,23 +1,23 @@
 #include <iostream>
-#include "Buttons.h"
+#include "EditorButtons.h"
 #include "AgregarCaminoButton.h"
 #include "AgregarTierraFirmeButton.h"
 #include "AgregarPortalEntradaButton.h"
 #include "AgregarPortalSalidaButton.h"
 
-Buttons::Buttons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
+EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
                  TextureLoader &textureLoader) : mousePosition(mousePosition),
                                                  renderer(renderer),
                                                  editor(editor),
                                                  textureLoader(textureLoader) {}
 
 
-Buttons::~Buttons() {
+EditorButtons::~EditorButtons() {
     for (Image *image : images)
         delete image;
 }
 
-void Buttons::draw() {
+void EditorButtons::draw() {
     int i = 0;
     for (Image *image : images) {
         image->draw(i);
@@ -25,7 +25,7 @@ void Buttons::draw() {
     }
 }
 
-void Buttons::addInitialButtons() {
+void EditorButtons::addInitialButtons() {
     using namespace std::placeholders; //Esto lo uso en el botón de crear horda
     Image *praderaButton = new SuperficieButton(PRADERA,
                                                 textureLoader.getTexture(
@@ -73,7 +73,7 @@ void Buttons::addInitialButtons() {
 
     Image *button = new NuevaHordaButton(
             textureLoader.getTexture(AGREGAR_HORDA_BTN), mousePosition,
-            renderer, editor, std::bind(&Buttons::addEnemigosButton, this, _1));
+            renderer, editor, std::bind(&EditorButtons::addEnemigosButton, this, _1));
     images.push_back(button);
 
     Image *altoIcon = new Image(ALTO_BUTTON_X, ALTO_BUTTON_Y,
@@ -118,7 +118,7 @@ void Buttons::addInitialButtons() {
     images.push_back(saveButton);
 }
 
-void Buttons::addEnemigosButton(int horda) {
+void EditorButtons::addEnemigosButton(int horda) {
     using namespace std::placeholders;
     addEnemigoButton(horda, ABMONIBLE_KEY, ABMONIBLE_EDITOR);
     addEnemigoButton(horda, ESPECTRO_KEY, ABMONIBLE_EDITOR);
@@ -133,12 +133,12 @@ void Buttons::addEnemigosButton(int horda) {
                                                          mousePosition,
                                                          renderer, editor,
                                                          std::bind(
-                                                                 &Buttons::deleteButtonsOfHorda,
+                                                                 &EditorButtons::deleteButtonsOfHorda,
                                                                  this, _1));
     images.push_back(eliminarHordaButton);*/
 }
 
-void Buttons::addEnemigoButton(int horda, std::string enemigoKey, int texture) {
+void EditorButtons::addEnemigoButton(int horda, std::string enemigoKey, int texture) {
     Image *enemigoImg = new EnemigoImage(horda,
                                          textureLoader.getTexture(texture),
                                          renderer);
@@ -164,7 +164,7 @@ void Buttons::addEnemigoButton(int horda, std::string enemigoKey, int texture) {
     images.push_back(cantidad);
 }
 
-void Buttons::addTiempoEntreHorda(int horda) {
+void EditorButtons::addTiempoEntreHorda(int horda) {
     Image *clockImg = new EnemigoImage(horda, textureLoader.getTexture
             (ABMONIBLE_EDITOR), renderer);
     images.push_back(clockImg);
@@ -187,7 +187,7 @@ void Buttons::addTiempoEntreHorda(int horda) {
     images.push_back(contadorTiempo);
 }
 
-void Buttons::deleteButtonsOfHorda(int horda) {
+void EditorButtons::deleteButtonsOfHorda(int horda) {
     /*std::cout << "Hay " << images.size() << " images\n";
     std::list<Image*> hordaImages;
     auto itInicial = images.begin();
@@ -213,7 +213,7 @@ void Buttons::deleteButtonsOfHorda(int horda) {
     }
 }
 
-bool Buttons::isAnyClicked() {
+bool EditorButtons::isAnyClicked() {
     for (auto &image : images) {
         if (image->isClicked())
             return true;

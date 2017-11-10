@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_AGREGARENEMIGOBUTTON_H
 #define TOWERDEFENSE_AGREGARENEMIGOBUTTON_H
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class AgregarEnemigoButton : public Button {

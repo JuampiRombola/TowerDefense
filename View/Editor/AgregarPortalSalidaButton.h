@@ -4,7 +4,7 @@
 
 #include "Editor.h"
 #include "../Common/MousePosition.h"
-#include "Button.h"
+#include "../Common/Button.h"
 
 class AgregarPortalSalidaButton : public Button {
 private:

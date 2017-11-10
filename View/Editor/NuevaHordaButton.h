@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_NUEVAHORDABUTTON_H
 #define TOWERDEFENSE_NUEVAHORDABUTTON_H
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class NuevaHordaButton : public Button {

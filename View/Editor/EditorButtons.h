@@ -3,7 +3,7 @@
 
 #include <list>
 #include <SDL2/SDL.h>
-#include "Button.h"
+#include "../Common/Button.h"
 #include "../Common/Text.h"
 #include "../Common/MousePosition.h"
 #include "../Common/Renderer.h"
@@ -26,7 +26,7 @@
 #include "DisminuirAltoMapaButton.h"
 #include "GuardarButton.h"
 
-class Buttons {
+class EditorButtons {
 private:
     std::list<Image*> images;
     MousePosition &mousePosition;
@@ -36,9 +36,9 @@ private:
     void addEnemigoButton(int horda, std::string enemigoKey, int texture);
     void addTiempoEntreHorda(int horda);
 public:
-    Buttons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
+    EditorButtons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
                 TextureLoader &textureLoader);
-    ~Buttons();
+    ~EditorButtons();
     void draw();
     void addInitialButtons();
     void addEnemigosButton(int horda);

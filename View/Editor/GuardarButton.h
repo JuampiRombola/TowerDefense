@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_GUARDARBUTTON_H
 #define TOWERDEFENSE_GUARDARBUTTON_H
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class GuardarButton : public Button {

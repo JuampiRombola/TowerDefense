@@ -2,9 +2,9 @@
 #define TOWERDEFENSE_BUTTON_H
 
 #include <SDL2/SDL.h>
-#include "../Common/MousePosition.h"
-#include "../Common/Renderer.h"
-#include "../Common/Image.h"
+#include "MousePosition.h"
+#include "Renderer.h"
+#include "Image.h"
 
 class Button : public Image {
 private:

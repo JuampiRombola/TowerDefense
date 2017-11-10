@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_AGREGARPORTALENTRADABUTTON_H
 #define TOWERDEFENSE_AGREGARPORTALENTRADABUTTON_H
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class AgregarPortalEntradaButton : public Button {

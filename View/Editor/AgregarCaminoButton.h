@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_AGREGARCAMINOBUTTON_H
 #define TOWERDEFENSE_AGREGARCAMINOBUTTON_H
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class AgregarCaminoButton : public Button {

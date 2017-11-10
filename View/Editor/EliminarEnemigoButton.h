@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_ELIMINARENEMIGOBUTTON_H
 #define TOWERDEFENSE_ELIMINARENEMIGOBUTTON_H
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class EliminarEnemigoButton : public Button {

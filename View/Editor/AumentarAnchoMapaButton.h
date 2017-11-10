@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_AUMENTARANCHOMAPABUTTON_H
 #define TOWERDEFENSE_AUMENTARANCHOMAPABUTTON_H
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class AumentarAnchoMapaButton : public Button {

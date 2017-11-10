@@ -2,7 +2,7 @@
 #define TOWERDEFENSE_AGREGARTIERRAFIRMEBUTTON_H
 
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class AgregarTierraFirmeButton : public Button {

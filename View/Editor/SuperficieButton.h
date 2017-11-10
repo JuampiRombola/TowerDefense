@@ -2,7 +2,7 @@
 #define TOWERDEFENSE_SUPERFICIEBUTTON_H
 
 #include <string>
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class SuperficieButton : public Button {

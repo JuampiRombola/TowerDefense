@@ -2,7 +2,7 @@
 #define TOWERDEFENSE_AUMENTARTIEMPOBUTTON_H
 
 
-#include "Button.h"
+#include "../Common/Button.h"
 #include "Editor.h"
 
 class AumentarTiempoButton : public Button {
