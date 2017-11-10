@@ -79,7 +79,7 @@ set(SOURCE_FILES_M
         TowerDefenseServer/include/ViewModels/CommandVM.h
         TowerDefenseServer/include/ViewModels/ProjectileVM.h
         TowerDefenseServer/include/ViewModels/TowerVM.h
-        TowerDefenseServer/include/ViewModels/UnitVM.h)
+        TowerDefenseServer/include/ViewModels/UnitVM.h SDLRunner.cpp SDLRunner.h GTKRunner.cpp GTKRunner.h)
 
 set(SOURCE_FILES_V
         View/Common/Window.cpp
@@ -128,8 +128,14 @@ INCLUDE(FindPkgConfig)
 #pkg_search_module(SDL2 REQUIRED)
 pkg_search_module(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+include_directories(${GTK3_INCLUDE_DIRS})
+link_directories(${GTK3_LIBRARY_DIRS})
+add_definitions(${GTK3_CFLAGS_OTHER})
+
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
 #target_link_libraries(TowerDefense ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
 target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES})
 target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES})
-target_link_libraries(TowerDefense yaml-cpp ${SDL2IMAGE_LIBRARIES})
+target_link_libraries(TowerDefense yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES})
