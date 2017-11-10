@@ -15,7 +15,7 @@ private:
     AnimatedSprite spriteWalking;
     AnimatedSprite spriteDying;
     enum Direction {S, SO, O, NO, N, NE, E, SE};
-    enum State {WALKING, DYING};
+    enum State {WALKING, DYING, DEAD};
     int currentDirection;
     int currentState;
     int nextX;
@@ -36,6 +36,7 @@ public:
     void enableDying();
     std::string onClick() override;
     int getId();
+    bool isDead();
 
 private:
     void setNumberOfPixelsToMove(Uint32 currentTime);

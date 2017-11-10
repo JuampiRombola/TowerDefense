@@ -16,7 +16,7 @@
 #define WINDOWHEIGHT 480
 #define FPS 40
 
-#define MAPSIZE 20
+#define MAPSIZE 7
 
 int main(int argc, char** argv) {
     bool quit = false;
