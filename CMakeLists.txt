@@ -110,8 +110,8 @@ set(SOURCE_FILES_E
         View/Editor/EliminarEnemigoButton.h View/Editor/EliminarHordaButton.cpp
         View/Editor/EliminarHordaButton.h View/Editor/NuevaHordaButton.cpp
         View/Editor/NuevaHordaButton.h View/Editor/SuperficieButton.cpp View/Editor/SuperficieButton.h
-        View/Editor/Buttons.cpp
-        View/Editor/Buttons.h View/Common/Text.cpp View/Common/Text.h View/Common/Image.cpp
+        View/Editor/EditorButtons.cpp
+        View/Editor/EditorButtons.h View/Common/Text.cpp View/Common/Text.h View/Common/Image.cpp
         View/Common/Image.h
         View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h
         View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Editor/AgregarCaminoButton.cpp
