@@ -121,11 +121,11 @@ void EditorButtons::addInitialButtons() {
 void EditorButtons::addEnemigosButton(int horda) {
     using namespace std::placeholders;
     addEnemigoButton(horda, ABMONIBLE_KEY, ABMONIBLE_EDITOR);
-    addEnemigoButton(horda, ESPECTRO_KEY, ABMONIBLE_EDITOR);
-    addEnemigoButton(horda, DEMONIO_VERDE_KEY, ABMONIBLE_EDITOR);
-    addEnemigoButton(horda, HALCON_SANGRIENTO_KEY, ABMONIBLE_EDITOR);
-    addEnemigoButton(horda, NO_MUERTO_KEY, ABMONIBLE_EDITOR);
-    addEnemigoButton(horda, HOMBRE_CABRA_KEY, ABMONIBLE_EDITOR);
+    addEnemigoButton(horda, ESPECTRO_KEY, ESPECTRO_EDITOR);
+    addEnemigoButton(horda, DEMONIO_VERDE_KEY, DEMONIO_VERDE_EDITOR);
+    addEnemigoButton(horda, HALCON_SANGRIENTO_KEY, HALCON_SANGRIENTO_EDITOR);
+    addEnemigoButton(horda, NO_MUERTO_KEY, NO_MUERTO_EDITOR);
+    addEnemigoButton(horda, HOMBRE_CABRA_KEY, HOMBRE_CABRA_EDITOR);
     addTiempoEntreHorda(horda);
     /*Image *eliminarHordaButton = new EliminarHordaButton(horda,
                                                          textureLoader.getTexture(
@@ -166,7 +166,7 @@ void EditorButtons::addEnemigoButton(int horda, std::string enemigoKey, int text
 
 void EditorButtons::addTiempoEntreHorda(int horda) {
     Image *clockImg = new EnemigoImage(horda, textureLoader.getTexture
-            (ABMONIBLE_EDITOR), renderer);
+            (CLOCK_EDITOR), renderer);
     images.push_back(clockImg);
 
     Image *aumentarTiempo = new AumentarTiempoButton(horda, textureLoader.getTexture(
