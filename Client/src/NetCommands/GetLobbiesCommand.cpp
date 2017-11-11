@@ -1,8 +1,8 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include "NetCommands/GetLobbiesCommand.h"
-#include "../../Protocolo.h"
+#include "../../include/NetCommands/GetLobbiesCommand.h"
+#include "../../../Common/Protocolo.h"
 
 GetLobbiesCommand::GetLobbiesCommand() 
 {

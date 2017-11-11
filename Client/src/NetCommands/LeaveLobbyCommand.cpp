@@ -1,5 +1,5 @@
-#include "NetCommands/LeaveLobbyCommand.h"
-#include "../../Protocolo.h"
+#include "../../include/NetCommands/LeaveLobbyCommand.h"
+#include "../../../Common/Protocolo.h"
 
 LeaveLobbyCommand::LeaveLobbyCommand()
 {

@@ -3,10 +3,10 @@
 
 #include <thread>
 #include <iostream>
-#include "SocketWrapper.h"
-#include "../../Protocolo.h"
-#include "Lobbies/ClientLobbyManager.h"
-#include "GUINotifications/GUINotificationQueue.h"
+#include "../../../Common/SocketWrapper.h"
+#include "../../../Common/Protocolo.h"
+#include "../Lobbies/ClientLobbyManager.h"
+#include "../GUINotifications/GUINotificationQueue.h"
 
 class NotificationReciever : public std::thread
 {

@@ -1,4 +1,4 @@
-#include "NetCommands/NetCommand.h"
+#include "../../include/NetCommands/NetCommand.h"
 
 NetCommand::NetCommand() 
 {

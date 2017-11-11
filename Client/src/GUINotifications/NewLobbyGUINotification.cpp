@@ -1,6 +1,6 @@
 
 
-#include "GUINotifications/NewLobbyGUINotification.h"
+#include "../../include/GUINotifications/NewLobbyGUINotification.h"
 
 
 NewLobbyGUINotification::NewLobbyGUINotification(Lobby& lobby) : _lobby(lobby) {

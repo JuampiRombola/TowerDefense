@@ -6,9 +6,9 @@
 #include <mutex>
 #include <condition_variable>
 #include <queue>
-#include "NetCommands/NetCommand.h"
-#include "SocketWrapper.h"
-#include "../../Protocolo.h"
+#include "../../../Common/SocketWrapper.h"
+#include "../../../Common/Protocolo.h"
+#include "NetCommand.h"
 
 class CommandDispatcher : public std::thread
 {

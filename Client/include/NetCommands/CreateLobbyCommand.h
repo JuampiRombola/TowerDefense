@@ -2,8 +2,8 @@
 #define __JOIN_LOBBY_COMAMND__
 
 #include <string>
-#include "NetCommands/NetCommand.h"
-#include "NetCommands/CreateLobbyCommand.h"
+#include "../../include/NetCommands/NetCommand.h"
+#include "../../include/NetCommands/CreateLobbyCommand.h"
 
 class CreateLobbyCommand : public NetCommand
 {

@@ -1,4 +1,4 @@
-#include "NetCommands/CommandDispatcher.h"
+#include "../../include/NetCommands/CommandDispatcher.h"
 
 CommandDispatcher::CommandDispatcher(SocketWrapper& socket) : 
 _sock(socket), _commands(), _queueLock(), _cv(), _stop(false) {

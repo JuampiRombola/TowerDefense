@@ -1,4 +1,4 @@
-#include "Lobbies/LobbyPlayer.h"
+#include "../../include/Lobbies/LobbyPlayer.h"
 
 
 LobbyPlayer::LobbyPlayer(std::string& name, uint guid)

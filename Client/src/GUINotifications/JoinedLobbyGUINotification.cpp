@@ -1,6 +1,6 @@
 
 
-#include "GUINotifications/JoinedLobbyGUINotification.h"
+#include "../../include/GUINotifications/JoinedLobbyGUINotification.h"
 
 
 JoinedLobbyGUINotification::JoinedLobbyGUINotification

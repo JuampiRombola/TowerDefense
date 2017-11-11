@@ -2,7 +2,7 @@
 #define __GET_LOBBIES_COMAMND__
 
 #include <string>
-#include "NetCommands/NetCommand.h"
+#include "../../include/NetCommands/NetCommand.h"
 
 class GetLobbiesCommand : public NetCommand
 {

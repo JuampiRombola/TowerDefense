@@ -2,7 +2,7 @@
 #define __LEAVE_LOBBY_COMMAND_
 
 #include <string>
-#include "NetCommands/NetCommand.h"
+#include "../../include/NetCommands/NetCommand.h"
 
 class LeaveLobbyCommand : public NetCommand
 {

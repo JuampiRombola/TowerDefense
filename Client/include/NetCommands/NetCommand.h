@@ -1,7 +1,7 @@
 #ifndef __NET_COMMAND__
 #define __NET_COMMAND__
 
-#include "SocketWrapper.h"
+#include "../../../Common/SocketWrapper.h"
 
 class NetCommand
 {

@@ -6,9 +6,9 @@
 #include <mutex>
 #include <iostream>
 
-#include "SocketWrapper.h"
-#include "GUINotifications/GUINotificationQueue.h"
-#include "Lobbies/Lobby.h"
+#include "Lobby.h"
+#include "../../../Common/SocketWrapper.h"
+#include "../GUINotifications/GUINotificationQueue.h"
 
 class ClientLobbyManager{
 private:

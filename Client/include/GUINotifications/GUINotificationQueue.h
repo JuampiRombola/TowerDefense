@@ -3,7 +3,7 @@
 
 #include <queue>
 #include <mutex>
-#include "GUINotifications/GUINotification.h"
+#include "../../include/GUINotifications/GUINotification.h"
 
 class GUINotificationQueue{
 private:

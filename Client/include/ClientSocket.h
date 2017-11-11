@@ -2,7 +2,7 @@
 #define __CLIENT_SOCKET_T__
 
 #include <string>
-#include "SocketWrapper.h"
+#include "../../Common/SocketWrapper.h"
 
 class ClientSocket final : public SocketWrapper
 {

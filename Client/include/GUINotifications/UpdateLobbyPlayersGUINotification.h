@@ -2,7 +2,7 @@
 #define __UPDATE_LOBBY_PLAYERS_NOTIF__
 
 #include <iostream>
-#include "GUINotifications/GUINotification.h"
+#include "../GUINotifications/GUINotification.h"
 #include <string>
 #include <vector>
 

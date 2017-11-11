@@ -1,5 +1,5 @@
-#include "NetCommands/LogInCommand.h"
-#include "../../Protocolo.h"
+#include "../../include/NetCommands/LogInCommand.h"
+#include "../../../Common/Protocolo.h"
 
 
 LogInCommand::LogInCommand(std::string& name) : _name(name) {

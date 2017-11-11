@@ -1,5 +1,5 @@
-#include <Lobbies/Lobby.h>
-#include "Exceptions/PlayerLeftTheLobbyAndWasntInIt.h"
+#include "../../include/Exceptions/PlayerLeftTheLobbyAndWasntInIt.h"
+#include "../../include/Lobbies/Lobby.h"
 
 Lobby::Lobby(std::string& name, uint guid) : _name(name), _guid(guid), _players()
 {

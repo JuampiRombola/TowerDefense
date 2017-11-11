@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "NetCommands/NetCommand.h"
-#include "SocketWrapper.h"
+#include "../../include/NetCommands/NetCommand.h"
+#include "../../../Common/SocketWrapper.h"
 
 class LogInCommand : public NetCommand{
 private:

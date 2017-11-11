@@ -2,7 +2,7 @@
 #define __JOINED_LOBBY_NOTIF__
 
 #include <iostream>
-#include "GUINotifications/GUINotification.h"
+#include "GUINotification.h"
 #include <string>
 #include <vector>
 

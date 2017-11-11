@@ -1,4 +1,4 @@
-#include "GUINotifications/NotificationReciever.h"
+#include "../../include/GUINotifications/NotificationReciever.h"
 
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GUINotificationQueue& guiNotifications) 
 : _sock(socket), _lobbyManager(lobbyManager), _guiNotifications(guiNotifications) {

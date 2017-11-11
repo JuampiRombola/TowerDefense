@@ -1,4 +1,4 @@
-#include "GUINotifications/GUINotificationQueue.h"
+#include "../../include/GUINotifications/GUINotificationQueue.h"
 
 GUINotificationQueue::GUINotificationQueue() : _notifications(), _mutex() {
 	

@@ -11,11 +11,11 @@ extern int errno;
 #include <string.h>
 #include <sys/types.h>
 #include <string>
-#include "ClientSocket.h"
+#include "../include/ClientSocket.h"
+#include "../../Common/SocketWrapper.h"
 
 
-
-ClientSocket::ClientSocket(std::string host_name, std::string service) 
+ClientSocket::ClientSocket(std::string host_name, std::string service)
 : SocketWrapper(-1) ,_connected(false) 
 {
 	_connected = _Connect(host_name, service);

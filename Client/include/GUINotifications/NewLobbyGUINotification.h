@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#include "GUINotifications/GUINotification.h"
-#include "Lobbies/Lobby.h"
+#include "GUINotification.h"
+#include "../Lobbies/Lobby.h"
 
 class NewLobbyGUINotification : public GUINotification {
 private:

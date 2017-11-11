@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "Lobbies/LobbyPlayer.h"
+#include "LobbyPlayer.h"
 
 class Lobby{
 

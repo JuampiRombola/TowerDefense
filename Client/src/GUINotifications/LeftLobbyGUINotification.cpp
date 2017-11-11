@@ -1,4 +1,4 @@
-#include "GUINotifications/LeftLobbyGUINotification.h"
+#include "../../include/GUINotifications/LeftLobbyGUINotification.h"
 
 
 LeftLobbyGUINotification::LeftLobbyGUINotification(std::vector<Lobby*>& lobbies) : _lobbies(lobbies) {

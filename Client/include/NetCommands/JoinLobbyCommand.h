@@ -2,7 +2,7 @@
 #define __JOIN_LOBBY_COMMAND__
 
 #include <string>
-#include "NetCommands/NetCommand.h"
+#include "../../include/NetCommands/NetCommand.h"
 
 class JoinLobbyCommand : public NetCommand
 {

@@ -1,5 +1,5 @@
-#include "NetCommands/JoinLobbyCommand.h"
-#include "../../Protocolo.h"
+#include "../../include/NetCommands/JoinLobbyCommand.h"
+#include "../../../Common/Protocolo.h"
 
 JoinLobbyCommand::JoinLobbyCommand(uint lobbyGUID) : _lobbyGUID(lobbyGUID)
 {

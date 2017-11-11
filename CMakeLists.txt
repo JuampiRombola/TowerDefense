@@ -154,9 +154,59 @@ set(SOURCE_FILES_EDITOR
 
 set(SOURCE_FILES_CLIENT_GTK
         Client/GTKRunner.h
-        Client/GTKRunner.cpp)
+        Client/GTKRunner.cpp
+        Client/src/GUINotifications/GUINotification.cpp
+        Client/src/GUINotifications/GUINotificationQueue.cpp
+        Client/src/GUINotifications/JoinedLobbyGUINotification.cpp
+        Client/src/GUINotifications/LeftLobbyGUINotification.cpp
+        Client/src/GUINotifications/NewLobbyGUINotification.cpp
+        Client/src/GUINotifications/NotificationReciever.cpp
+        Client/src/GUINotifications/UpdateLobbyPlayersGUINotification.cpp
+
+        Client/include/GUINotifications/GUINotification.h
+        Client/include/GUINotifications/GUINotificationQueue.h
+        Client/include/GUINotifications/JoinedLobbyGUINotification.h
+        Client/include/GUINotifications/LeftLobbyGUINotification.h
+        Client/include/GUINotifications/NewLobbyGUINotification.h
+        Client/include/GUINotifications/NotificationReciever.h
+        Client/include/GUINotifications/UpdateLobbyPlayersGUINotification.h
+
+        Client/src/Lobbies/ClientLobbyManager.cpp
+        Client/src/Lobbies/LobbyPlayer.cpp
+        Client/src/Lobbies/Lobby.cpp
+        Client/include/Lobbies/ClientLobbyManager.h
+        Client/include/Lobbies/LobbyPlayer.h
+        Client/include/Lobbies/Lobby.h
+
+        Client/src/NetCommands/CommandDispatcher.cpp
+        Client/src/NetCommands/CreateLobbyCommand.cpp
+        Client/src/NetCommands/GetLobbiesCommand.cpp
+        Client/src/NetCommands/JoinLobbyCommand.cpp
+        Client/src/NetCommands/LeaveLobbyCommand.cpp
+        Client/src/NetCommands/LogInCommand.cpp
+        Client/src/NetCommands/NetCommand.cpp
+
+        Client/include/NetCommands/CommandDispatcher.h
+        Client/include/NetCommands/CreateLobbyCommand.h
+        Client/include/NetCommands/GetLobbiesCommand.h
+        Client/include/NetCommands/JoinLobbyCommand.h
+        Client/include/NetCommands/LeaveLobbyCommand.h
+        Client/include/NetCommands/LogInCommand.h
+        Client/include/NetCommands/NetCommand.h
+
+        Client/include/Exceptions/ClientDisconnectedException.h
+        Client/include/Exceptions/SomePlayerJoinedLobbyAndLobbyNotSet.h
+        Client/include/Exceptions/SomePlayerLeftLobbyAndLobbyNotSet.h
+        Client/include/Exceptions/PlayerLeftTheLobbyAndWasntInIt.h
+        Client/include/Exceptions/JoinedInexistingLobbyException.h
+
+        )
 
 set(SOURCE_FILES_CLIENT
+        Common/SocketWrapper.h
+        Common/SocketWrapper.cpp
+        Client/src/ClientSocket.cpp
+        Client/include/ClientSocket.h
         Client/View/Common/Window.cpp
         Client/View/Common/Window.h
         Client/View/Common/ViewError.cpp

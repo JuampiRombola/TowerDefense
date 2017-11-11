@@ -1,13 +1,13 @@
 
-#include "Lobbies/ClientLobbyManager.h"
-#include "../../Protocolo.h"
-#include "GUINotifications/NewLobbyGUINotification.h"
-#include "GUINotifications/JoinedLobbyGUINotification.h"
-#include "GUINotifications/UpdateLobbyPlayersGUINotification.h"
-#include "Exceptions/JoinedInexistingLobbyException.h"
-#include "Exceptions/SomePlayerLeftLobbyAndLobbyNotSet.h"
-#include "Exceptions/SomePlayerJoinedLobbyAndLobbyNotSet.h"
-#include "GUINotifications/LeftLobbyGUINotification.h"
+#include "../../include/Lobbies/ClientLobbyManager.h"
+#include "../../../Common/Protocolo.h"
+#include "../../include/GUINotifications/NewLobbyGUINotification.h"
+#include "../../include/GUINotifications/JoinedLobbyGUINotification.h"
+#include "../../include/GUINotifications/UpdateLobbyPlayersGUINotification.h"
+#include "../../include/Exceptions/JoinedInexistingLobbyException.h"
+#include "../../include/Exceptions/SomePlayerLeftLobbyAndLobbyNotSet.h"
+#include "../../include/Exceptions/SomePlayerJoinedLobbyAndLobbyNotSet.h"
+#include "../../include/GUINotifications/LeftLobbyGUINotification.h"
 
 
 ClientLobbyManager::ClientLobbyManager(GUINotificationQueue& guiNotiQueue, SocketWrapper& _sock) 

@@ -1,8 +1,8 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include "NetCommands/CreateLobbyCommand.h"
-#include "../../Protocolo.h"
+#include "../../include/NetCommands/CreateLobbyCommand.h"
+#include "../../../Common/Protocolo.h"
 
 CreateLobbyCommand::CreateLobbyCommand(std::string lobbyName) : _lobbyName(lobbyName) 
 {
