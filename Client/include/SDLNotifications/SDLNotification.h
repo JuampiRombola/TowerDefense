@@ -2,10 +2,10 @@
 #define __GUI_NOTIFICATION__
 
 
-class GUINotification {
+class SDLNotification {
 public:
-	GUINotification();
-	virtual ~GUINotification() = 0;
+	SDLNotification();
+	virtual ~SDLNotification() = 0;
 	virtual void Execute() = 0;
 };
 

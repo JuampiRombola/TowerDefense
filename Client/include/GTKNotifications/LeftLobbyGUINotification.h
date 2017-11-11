@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <vector>
-#include "../SDLNotifications/GUINotification.h"
+#include "../SDLNotifications/SDLNotification.h"
 #include "../Lobbies/Lobby.h"
 
-class LeftLobbyGUINotification : public GUINotification {
+class LeftLobbyGUINotification : public SDLNotification {
 private:
 	std::vector<Lobby*> _lobbies;
 public:

@@ -2,10 +2,10 @@
 // Created by tino on 11/11/17.
 //
 
-#ifndef TOWERDEFENSE_GTKNOTIFICATION_H
-#define TOWERDEFENSE_GTKNOTIFICATION_H
+#ifndef TOWERDEFENSE_GTKNOTIFICATION_H_H
+#define TOWERDEFENSE_GTKNOTIFICATION_H_H
 
-#include "../../GTKRunner.h"
+class GTKRunner;
 
 class GTKNotification {
 public:

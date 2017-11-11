@@ -2,11 +2,11 @@
 #define __JOINED_LOBBY_NOTIF__
 
 #include <iostream>
-#include "../SDLNotifications/GUINotification.h"
+#include "../SDLNotifications/SDLNotification.h"
 #include <string>
 #include <vector>
 
-class JoinedLobbyGUINotification : public GUINotification {
+class JoinedLobbyGUINotification : public SDLNotification {
 private:
 	std::string _lobbyName;
 	std::vector<std::string> _playerNames;

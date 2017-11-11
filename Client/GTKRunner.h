@@ -9,45 +9,57 @@
 #include "include/Lobbies/ClientLobbyManager.h"
 #include "include/NotificationReciever.h"
 #include "include/NetCommands/CommandDispatcher.h"
-#include "include/SDLNotifications/GUINotificationQueue.h"
-#include "../Server/include/ThreadSafeQueue.h"
+#include "include/NonBlockingThreadSafeQueue.h"
+#include "include/GTKNotifications/GTKNotification.h"
+#include "include/SDLNotifications/SDLNotification.h"
 
-class GTKNotification;
 
-#ifndef __GTK_NOTIFICATION_QUEUE__
-#define __GTK_NOTIFICATION_QUEUE__
-template class ThreadSafeQueue<GTKNotification*>;
-#endif
+enum LobbiesListEnum {
+    COLUMN_STRING,
+    COLUMN_INT,
+    COLUMN_BOOLEAN,
+    N_COLUMNS
+};
 
 class GTKRunner {
 private:
-    static void destroy( GtkWidget *widget, gpointer   data );
+    static void ShutdownGTK();
+    static void newLobby_clicked(GtkWidget* widget, gpointer data);
+    static void joinLobby_clicked(GtkWidget* widget, gpointer data);
     static void connect_clicked(GtkWidget* widget, gpointer data);
     static void login_clicked(GtkWidget* widget, gpointer data);
 public:
     GTKRunner();
     ~GTKRunner();
 
-    ThreadSafeQueue<GTKNotification*> GtkNotifications;
-    GUINotificationQueue* guiNotiQueue;
+    NonBlockingThreadSafeQueue<GTKNotification*> gtkNotifications;
     ClientLobbyManager* lobbyManager;
     NotificationReciever* reciever;
     CommandDispatcher* dispatcher;
 
     GtkWindow *window_connect;
     GtkWindow *window_login;
+    GtkWindow *window_lobbies;
+
+    GtkListBox *listbox_lobbies;
+    GtkListStore *list_store_lobbies;
 
     bool OK;
     void MessageBox(std::string s);
+
+    void LogInSuccess();
+    void LogInFailed();
 
     ClientSocket* sock;
 
     GtkEntry *entry_ip;
     GtkEntry *entry_port;
     GtkEntry *entry_name;
+    GtkEntry *entry_newLobbyName;
 
     void Run(int* argc, char***argv);
 };
+
 
 
 #endif //TOWERDEFENSE_GTKRUNNER_H

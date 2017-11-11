@@ -111,6 +111,7 @@ void TFServer::_HandleLogin(PlayerProxy& player){
 	for (auto it = _playerProxies.begin(); it != _playerProxies.end(); ++it){
 		if ((*it)->Name() == playerName ){
 			_notifications.Queue(new InvalidLogInNotification(player));
+			return;
 		}
 	}
 

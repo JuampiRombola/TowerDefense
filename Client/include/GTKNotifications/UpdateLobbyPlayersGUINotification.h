@@ -2,11 +2,11 @@
 #define __UPDATE_LOBBY_PLAYERS_NOTIF__
 
 #include <iostream>
-#include "../SDLNotifications/GUINotification.h"
+#include "../SDLNotifications/SDLNotification.h"
 #include <string>
 #include <vector>
 
-class UpdateLobbyPlayersGUINotification : public GUINotification {
+class UpdateLobbyPlayersGUINotification : public SDLNotification {
 private:
 	std::vector<std::string> _playerNames;
 public:

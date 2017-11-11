@@ -166,19 +166,17 @@ set(SOURCE_FILES_CLIENT_GTK
         Common/SocketConnectionException.h
         Common/ClientDisconnectedException.h
 
-        Client/src/SDLNotifications/GUINotification.cpp
-        Client/src/SDLNotifications/GUINotificationQueue.cpp
+        Client/src/SDLNotifications/SDLNotification.cpp
         Client/src/GTKNotifications/JoinedLobbyGUINotification.cpp
         Client/src/GTKNotifications/LeftLobbyGUINotification.cpp
-        Client/src/GTKNotifications/NewLobbyGUINotification.cpp
+        Client/src/GTKNotifications/NewLobbyGTKNotification.cpp
         Client/src/NotificationReciever.cpp
         Client/src/GTKNotifications/UpdateLobbyPlayersGUINotification.cpp
 
-        Client/include/SDLNotifications/GUINotification.h
-        Client/include/SDLNotifications/GUINotificationQueue.h
+        Client/include/SDLNotifications/SDLNotification.h
         Client/include/GTKNotifications/JoinedLobbyGUINotification.h
         Client/include/GTKNotifications/LeftLobbyGUINotification.h
-        Client/include/GTKNotifications/NewLobbyGUINotification.h
+        Client/include/GTKNotifications/NewLobbyGTKNotification.h
         Client/include/NotificationReciever.h
         Client/include/GTKNotifications/UpdateLobbyPlayersGUINotification.h
 
@@ -216,7 +214,9 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/include/GTKNotifications/LogInSuccessGtkNotification.h
         Client/src/GTKNotifications/LogInSuccessGtkNotification.cpp
         Client/include/GTKNotifications/LogInFailedGtkNotification.h
-        Client/src/GTKNotifications/LogInFailedGtkNotification.cpp)
+        Client/src/GTKNotifications/LogInFailedGtkNotification.cpp
+
+        Client/include/NonBlockingThreadSafeQueue.h)
 
 
 set(SOURCE_FILES_EDITOR

@@ -3,6 +3,8 @@
 //
 
 #include "../../include/GTKNotifications/LogInFailedGtkNotification.h"
+#include "../../GTKRunner.h"
+
 
 LogInFailedGtkNotification::LogInFailedGtkNotification(){
 
@@ -13,5 +15,5 @@ LogInFailedGtkNotification::~LogInFailedGtkNotification(){
 }
 
 void LogInFailedGtkNotification::Execute(GTKRunner& runner){
-    runner.MessageBox("Log in faileddd!!");
+    runner.LogInFailed();
 }

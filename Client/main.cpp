@@ -1,16 +1,8 @@
 
 #include "GTKRunner.h"
 #include "SDLRunner.h"
-#include "include/ClientSocket.h"
-#include "include/SDLNotifications/GUINotificationQueue.h"
-#include "include/Lobbies/ClientLobbyManager.h"
-#include "include/NotificationReciever.h"
-#include "include/NetCommands/CommandDispatcher.h"
 
 int main(int argc, char** argv) {
-
-
-
 
     bool go = true;
 
@@ -96,7 +88,7 @@ i++;
 //}
 std::this_thread::sleep_for (std::chrono::milliseconds(2500));
 std::cout << "POLLING GUI: i: " << i << "\n" << std::flush;
-GUINotification* noti = guiNotiQueue.GetGUINotification();
+SDLNotification* noti = guiNotiQueue.GetGUINotification();
 while (noti != nullptr){
 //refresco la gui con la notificacion
 noti->Execute();

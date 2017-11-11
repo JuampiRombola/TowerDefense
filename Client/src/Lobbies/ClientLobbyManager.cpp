@@ -1,17 +1,18 @@
 
 #include "../../include/Lobbies/ClientLobbyManager.h"
 #include "../../../Common/Protocolo.h"
-#include "../../include/GTKNotifications/NewLobbyGUINotification.h"
+#include "../../include/GTKNotifications/NewLobbyGTKNotification.h"
 #include "../../include/GTKNotifications/JoinedLobbyGUINotification.h"
 #include "../../include/GTKNotifications/UpdateLobbyPlayersGUINotification.h"
 #include "../../include/Exceptions/JoinedInexistingLobbyException.h"
 #include "../../include/Exceptions/SomePlayerLeftLobbyAndLobbyNotSet.h"
 #include "../../include/Exceptions/SomePlayerJoinedLobbyAndLobbyNotSet.h"
 #include "../../include/GTKNotifications/LeftLobbyGUINotification.h"
+#include "../../GTKRunner.h"
 
 
-ClientLobbyManager::ClientLobbyManager(GUINotificationQueue& guiNotiQueue, SocketWrapper& _sock, GTKRunner& runner)
-: _sock(_sock), _lobbies(), _guiNotiQueue(guiNotiQueue), _joinedLobby(nullptr), Runner(runner) {
+ClientLobbyManager::ClientLobbyManager(SocketWrapper& _sock, GTKRunner& runner)
+: _sock(_sock), _lobbies(), _joinedLobby(nullptr), _runner(runner) {
 
 }
 
@@ -53,7 +54,7 @@ void ClientLobbyManager::HandleNotification(){
 void ClientLobbyManager::_HandleLeaveLobby(){
 	_joinedLobby->Reset();
 	_joinedLobby = nullptr;
-	_guiNotiQueue.Queue(new LeftLobbyGUINotification(_lobbies));
+	//_guiNotiQueue.Queue(new LeftLobbyGUINotification(_lobbies));
 }
 
 void ClientLobbyManager::_HandlePlayerJoinedLobby(){
@@ -67,7 +68,7 @@ void ClientLobbyManager::_HandlePlayerJoinedLobby(){
 
 	_joinedLobby->AddPlayer(pname, pguid);	
 	std::vector<std::string> pnames = _joinedLobby->PlayerNames();
-	_guiNotiQueue.Queue(new UpdateLobbyPlayersGUINotification(pnames));
+	//_guiNotiQueue.Queue(new UpdateLobbyPlayersGUINotification(pnames));
 }
 
 void ClientLobbyManager::_HandlePlayerLeftLobby(){
@@ -78,7 +79,7 @@ void ClientLobbyManager::_HandlePlayerLeftLobby(){
 	std::cout << "HANDLING PLAYER LEFT LOBBY, PGUID: " << (int) pguid << '\n' << std::flush;
 	_joinedLobby->PlayerLeft(pguid);
 	std::vector<std::string> pnames = _joinedLobby->PlayerNames();
-	_guiNotiQueue.Queue(new UpdateLobbyPlayersGUINotification(pnames));
+	//_guiNotiQueue.Queue(new UpdateLobbyPlayersGUINotification(pnames));
 }
 
 void ClientLobbyManager::_HandleLobbyJoin(){
@@ -113,7 +114,7 @@ void ClientLobbyManager::_HandleLobbyJoin(){
 	}
 
 	std::vector<std::string> pnames = l->PlayerNames();
-	_guiNotiQueue.Queue(new JoinedLobbyGUINotification(l->Name(), pnames));
+	//_guiNotiQueue.Queue(new JoinedLobbyGUINotification(l->Name(), pnames));
 
 }
 
@@ -134,7 +135,7 @@ void ClientLobbyManager::_HandleNewLobbyNotification(){
 
 	if (!found){
 		_lobbies.push_back(new Lobby(lobbyName, lobbyGuid));
- 		_guiNotiQueue.Queue(new NewLobbyGUINotification(*(_lobbies.back())));
+		_runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*(_lobbies.back())));
 	}
 }
 
@@ -148,6 +149,6 @@ void ClientLobbyManager::_HandleGetLobbies(){
 		_sock.Recieve((char*) &lobbyNameSize, 1);
 		std::string lobbyName = _sock.RecieveString(lobbyNameSize);
 		_lobbies.push_back(new Lobby(lobbyName, lobbyGuid));
-		_guiNotiQueue.Queue(new NewLobbyGUINotification(*(_lobbies.back())));
+		_runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*(_lobbies.back())));
 	}
 }
