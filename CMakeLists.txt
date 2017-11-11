@@ -4,125 +4,245 @@ project(TowerDefense)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 
-set(SOURCE_FILES_M
-        TowerDefenseServer/include/Commands/BuildTowerCommand.h
-        TowerDefenseServer/include/Commands/CastSpellCommand.h
-        TowerDefenseServer/include/Commands/Command.h
-        TowerDefenseServer/include/Commands/UpgradeTowerCommand.h
-        TowerDefenseServer/src/Commands/BuildTowerCommand.cpp
-        TowerDefenseServer/src/Commands/CastSpellCommand.cpp
-        TowerDefenseServer/src/Commands/Command.cpp
-        TowerDefenseServer/src/Commands/UpgradeTowerCommand.cpp
-        TowerDefenseServer/include/EnviormentUnits/Abmonible.h
-        TowerDefenseServer/include/EnviormentUnits/DemonioVerde.h
-        TowerDefenseServer/include/EnviormentUnits/EnviormentUnit.h
-        TowerDefenseServer/include/EnviormentUnits/Espectro.h
-        TowerDefenseServer/include/EnviormentUnits/HalconSangriento.h
-        TowerDefenseServer/include/EnviormentUnits/HombreCabra.h
-        TowerDefenseServer/include/EnviormentUnits/NoMuerto.h
-        TowerDefenseServer/src/EnviormentUnits/Abmonible.cpp
-        TowerDefenseServer/src/EnviormentUnits/DemonioVerde.cpp
-        TowerDefenseServer/src/EnviormentUnits/EnviormentUnit.cpp
-        TowerDefenseServer/src/EnviormentUnits/Espectro.cpp
-        TowerDefenseServer/src/EnviormentUnits/HalconSangriento.cpp
-        TowerDefenseServer/src/EnviormentUnits/HombreCabra.cpp
-        TowerDefenseServer/src/EnviormentUnits/NoMuerto.cpp
-        TowerDefenseServer/include/Exceptions/IncompletePathException.h
-        TowerDefenseServer/include/Exceptions/NonPlacedUnitCannotStepException.h
-        TowerDefenseServer/include/Exceptions/NoSetSpawnTilesException.h
-        TowerDefenseServer/include/Exceptions/PositionAlreadyHasTileException.h
-        TowerDefenseServer/include/Exceptions/SolidGroundAlreadyHasTowerException.h
-        TowerDefenseServer/include/Exceptions/TileCannotSpawnException.h
-        TowerDefenseServer/include/Exceptions/TileIsOutOfBoundsException.h
-        TowerDefenseServer/include/Exceptions/UnitCannotMoveDiagonallyException.h
-        TowerDefenseServer/include/Exceptions/UnitIsAlreadyOnThisTileException.h
-        TowerDefenseServer/include/Exceptions/UnitIsNotOnThisTileException.h
-        TowerDefenseServer/include/Map/Map.h
-        TowerDefenseServer/include/Map/PathTile.h
-        TowerDefenseServer/include/Map/SolidGroundTile.h
-        TowerDefenseServer/include/Map/Tile.h
-        TowerDefenseServer/src/Map/Map.cpp
-        TowerDefenseServer/src/Map/PathTile.cpp
-        TowerDefenseServer/src/Map/SolidGroundTile.cpp
-        TowerDefenseServer/src/Map/Tile.cpp
-        TowerDefenseServer/include/Towers/AirProjectile.h
-        TowerDefenseServer/include/Towers/AirTower.h
-        TowerDefenseServer/include/Towers/FireTower.h
-        TowerDefenseServer/include/Towers/FireProjectile.h
-        TowerDefenseServer/include/Towers/GroundProjectile.h
-        TowerDefenseServer/include/Towers/GroundTower.h
-        TowerDefenseServer/include/Towers/Projectile.h
-        TowerDefenseServer/include/Towers/Tower.h
-        TowerDefenseServer/include/Towers/WaterTower.h
-        TowerDefenseServer/include/Towers/WaterProjectile.h
-        TowerDefenseServer/include/GameConfiguration.h
-        TowerDefenseServer/include/Helpers.h
-        TowerDefenseServer/include/TowerDefenseGame.h
-        TowerDefenseServer/include/GameNotifications/GameNotification.h
-        TowerDefenseServer/src/GameNotifications/GameNotification.cpp
-        TowerDefenseServer/include/GameNotifications/ProjectileFiredGameNotification.h
-        TowerDefenseServer/src/GameNotifications/ProjectileFiredGameNotification.cpp
-        TowerDefenseServer/include/GameNotifications/UnitPositionGameNotification.h
-        TowerDefenseServer/src/GameNotifications/UnitPositionGameNotification.cpp
-        TowerDefenseServer/src/GameConfiguration.cpp
-        TowerDefenseServer/src/TowerDefenseGame.cpp
-        TowerDefenseServer/src/Towers/AirProjectile.cpp
-        TowerDefenseServer/src/Towers/AirTower.cpp
-        TowerDefenseServer/src/Towers/FireProjectile.cpp
-        TowerDefenseServer/src/Towers/FireTower.cpp
-        TowerDefenseServer/src/Towers/GroundProjectile.cpp
-        TowerDefenseServer/src/Towers/GroundTower.cpp
-        TowerDefenseServer/src/Towers/Projectile.cpp
-        TowerDefenseServer/src/Towers/Tower.cpp
-        TowerDefenseServer/src/Towers/WaterProjectile.cpp
-        TowerDefenseServer/src/Towers/WaterTower.cpp
-        TowerDefenseServer/include/ViewModels/CommandVM.h
-        TowerDefenseServer/include/ViewModels/ProjectileVM.h
-        TowerDefenseServer/include/ViewModels/TowerVM.h
-        TowerDefenseServer/include/ViewModels/UnitVM.h SDLRunner.cpp SDLRunner.h GTKRunner.cpp GTKRunner.h)
+set(SOURCE_FILES_SERVER
+        Common/SocketWrapper.cpp
+        Common/SocketWrapper.h
+        Common/ClientDisconnectedException.h
+        Server/include/Exceptions/PlayerLeftLobbyHeWasntInException.h
+        Server/include/Exceptions/PlayerStateInLobbyAndHasNoLobbySet.h
+        Common/SocketConnectionException.h
+        Server/include/Lobbies/Lobby.h
+        Server/src/Lobbies/Lobby.cpp
+        Server/include/Lobbies/LobbyManager.h
+        Server/src/Lobbies/LobbyManager.cpp
+        Server/include/Notifications/InvalidLogInNotification.h
+        Server/include/Notifications/LeftLobbyNotification.h
+        Server/include/Notifications/LobbyJoinedNotification.h
+        Server/include/Notifications/LoggedInNotification.h
+        Server/include/Notifications/NewLobbyNotification.h
+        Server/include/Notifications/Notification.h
+        Server/include/Notifications/PlayerLeftLobbyNotification.h
+        Server/include/Notifications/SendLobbiesNotification.h
+        Server/src/Notifications/InvalidLoginNotification.cpp
+        Server/src/Notifications/LeftLobbyNotification.cpp
+        Server/src/Notifications/LobbyJoinedNotification.cpp
+        Server/src/Notifications/LoggedInNotification.cpp
+        Server/src/Notifications/NewLobbyNotification.cpp
+        Server/src/Notifications/Notification.cpp
+        Server/src/Notifications/PlayerLeftLobbyNotification.cpp
+        Server/src/Notifications/SendLobbiesNotification.cpp
+        Server/src/PlayerProxy.cpp
+        Server/src/ServerSocket.cpp
+        Server/src/TFServer.cpp
+        Server/include/PlayerProxy.h
+        Server/include/ServerSocket.h
+        Server/include/TFServer.h
+        Server/include/ThreadSafeQueue.h
+        Server/include/GameModel/Commands/BuildTowerCommand.h
+        Server/include/GameModel/Commands/BuildTowerCommand.h
+        Server/include/GameModel/Commands/CastSpellCommand.h
+        Server/include/GameModel/Commands/Command.h
+        Server/include/GameModel/Commands/UpgradeTowerCommand.h
+        Server/src/GameModel/Commands/BuildTowerCommand.cpp
+        Server/src/GameModel/Commands/CastSpellCommand.cpp
+        Server/src/GameModel/Commands/Command.cpp
+        Server/src/GameModel/Commands/UpgradeTowerCommand.cpp
+        Server/include/GameModel/EnviormentUnits/Abmonible.h
+        Server/include/GameModel/EnviormentUnits/DemonioVerde.h
+        Server/include/GameModel/EnviormentUnits/EnviormentUnit.h
+        Server/include/GameModel/EnviormentUnits/Espectro.h
+        Server/include/GameModel/EnviormentUnits/HalconSangriento.h
+        Server/include/GameModel/EnviormentUnits/HombreCabra.h
+        Server/include/GameModel/EnviormentUnits/NoMuerto.h
+        Server/src/GameModel/EnviormentUnits/Abmonible.cpp
+        Server/src/GameModel/EnviormentUnits/DemonioVerde.cpp
+        Server/src/GameModel/EnviormentUnits/EnviormentUnit.cpp
+        Server/src/GameModel/EnviormentUnits/Espectro.cpp
+        Server/src/GameModel/EnviormentUnits/HalconSangriento.cpp
+        Server/src/GameModel/EnviormentUnits/HombreCabra.cpp
+        Server/src/GameModel/EnviormentUnits/NoMuerto.cpp
+        Server/include/GameModel/Exceptions/IncompletePathException.h
+        Server/include/GameModel/Exceptions/NonPlacedUnitCannotStepException.h
+        Server/include/GameModel/Exceptions/NoSetSpawnTilesException.h
+        Server/include/GameModel/Exceptions/PositionAlreadyHasTileException.h
+        Server/include/GameModel/Exceptions/SolidGroundAlreadyHasTowerException.h
+        Server/include/GameModel/Exceptions/TileCannotSpawnException.h
+        Server/include/GameModel/Exceptions/TileIsOutOfBoundsException.h
+        Server/include/GameModel/Exceptions/UnitCannotMoveDiagonallyException.h
+        Server/include/GameModel/Exceptions/UnitIsAlreadyOnThisTileException.h
+        Server/include/GameModel/Exceptions/UnitIsNotOnThisTileException.h
+        Server/include/GameModel/Map/Map.h
+        Server/include/GameModel/Map/PathTile.h
+        Server/include/GameModel/Map/SolidGroundTile.h
+        Server/include/GameModel/Map/Tile.h
+        Server/src/GameModel/Map/Map.cpp
+        Server/src/GameModel/Map/PathTile.cpp
+        Server/src/GameModel/Map/SolidGroundTile.cpp
+        Server/src/GameModel/Map/Tile.cpp
+        Server/include/GameModel/Towers/AirProjectile.h
+        Server/include/GameModel/Towers/AirTower.h
+        Server/include/GameModel/Towers/FireTower.h
+        Server/include/GameModel/Towers/FireProjectile.h
+        Server/include/GameModel/Towers/GroundProjectile.h
+        Server/include/GameModel/Towers/GroundTower.h
+        Server/include/GameModel/Towers/Projectile.h
+        Server/include/GameModel/Towers/Tower.h
+        Server/include/GameModel/Towers/WaterTower.h
+        Server/include/GameModel/Towers/WaterProjectile.h
+        Server/include/GameModel/GameConfiguration.h
+        Server/include/GameModel/Helpers.h
+        Server/include/GameModel/TowerDefenseGame.h
+        Server/include/GameModel/GameNotifications/GameNotification.h
+        Server/include/GameModel/GameNotifications/UnitPositionGameNotification.h
+        Server/src/GameModel/GameNotifications/GameNotification.cpp
+        Server/src/GameModel/GameNotifications/UnitPositionGameNotification.cpp
+        Server/src/GameModel/GameConfiguration.cpp
+        Server/src/GameModel/TowerDefenseGame.cpp
+        Server/src/GameModel/Towers/AirProjectile.cpp
+        Server/src/GameModel/Towers/AirTower.cpp
+        Server/src/GameModel/Towers/FireProjectile.cpp
+        Server/src/GameModel/Towers/FireTower.cpp
+        Server/src/GameModel/Towers/GroundProjectile.cpp
+        Server/src/GameModel/Towers/GroundTower.cpp
+        Server/src/GameModel/Towers/Projectile.cpp
+        Server/src/GameModel/Towers/Tower.cpp
+        Server/src/GameModel/Towers/WaterProjectile.cpp
+        Server/src/GameModel/Towers/WaterTower.cpp
+        Server/include/GameModel/ViewModels/CommandVM.h
+        Server/include/GameModel/ViewModels/ProjectileVM.h
+        Server/include/GameModel/ViewModels/TowerVM.h
+        Server/include/GameModel/ViewModels/UnitVM.h)
 
-set(SOURCE_FILES_V
-        View/Common/Window.cpp
-        View/Common/Window.h View/Common/ViewError.cpp View/Common/ViewError.h View/Common/Renderer.cpp
-        View/Common/Renderer.h View/Common/TextureLoader.cpp View/Common/TextureLoader.h
-        View/Model/MapView.cpp View/Model/MapView.h View/Common/Sprite.cpp
-        View/Common/Sprite.h View/Common/SpriteNamesConfig.h View/Common/View.cpp View/Common/View.h
-        View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
-        View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
-        View/Model/PortalSalidaView.h View/Model/TowerView.cpp View/Model/TowerView.h
-        View/Model/UnitView.cpp View/Model/UnitView.h View/Model/ShotView.cpp View/Model/ShotView.h
-        View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Model/SpellView.cpp
-        View/Model/SpellView.h View/Model/ModelView.cpp View/Model/ModelView.h View/Model/DepthLevel.cpp View/Model/DepthLevel.h View/Model/HudVIew.cpp View/Model/HudVIew.h)
+set(SOURCE_FILES_EDITOR
+        Client/View/Common/Window.cpp
+        Client/View/Common/Window.h
+        Client/View/Common/Renderer.cpp
+        Client/View/Common/ViewError.h
+        Client/View/Common/ViewError.cpp
+        Client/View/Common/Renderer.h
+        Client/View/Common/TextureLoader.cpp
+        Client/View/Common/TextureLoader.h
+        Client/View/Model/MapView.cpp
+        Client/View/Model/MapView.h
+        Client/View/Common/Sprite.cpp
+        Client/View/Common/Sprite.h
+        Client/View/Common/SpriteNamesConfig.h
+        Client/View/Common/View.cpp
+        Client/View/Common/View.h
+        Client/View/Model/PortalView.cpp
+        Client/View/Model/PortalView.h
+        Client/View/Model/PortalEntradaView.cpp
+        Client/View/Model/PortalEntradaView.h
+        Client/View/Model/PortalSalidaView.cpp
+        Client/View/Model/PortalSalidaView.h
+        Client/View/Model/TowerView.cpp
+        Client/View/Model/TowerView.h
+        Client/View/Model/UnitView.cpp
+        Client/View/Model/UnitView.h
+        Client/View/Model/ShotView.cpp
+        Client/View/Model/ShotView.h
+        Client/View/Common/AnimatedSprite.cpp
+        Client/View/Common/AnimatedSprite.h
+        Client/View/Model/SpellView.cpp
+        Client/View/Model/SpellView.h
+        Client/View/Model/ModelView.cpp
+        Client/View/Model/ModelView.h
+        Client/View/Model/DepthLevel.cpp
+        Client/View/Model/DepthLevel.h
+        Client/View/Model/HudVIew.cpp
+        Client/View/Model/HudVIew.h)
 
-set(SOURCE_FILES_E
-        View/Common/Window.cpp View/Common/Window.h View/Common/ViewError.cpp
-        View/Common/ViewError.h View/Common/Renderer.cpp
-        View/Common/Renderer.h View/Common/TextureLoader.cpp View/Common/TextureLoader.h
-        View/Model/MapView.cpp View/Model/MapView.h View/mainEditor.cpp View/Common/Sprite.cpp
-        View/Common/Sprite.h View/Common/SpriteNamesConfig.h View/Common/View.cpp View/Common/View.h
-        View/Model/PortalView.cpp View/Model/PortalView.h View/Model/PortalEntradaView.cpp
-        View/Model/PortalEntradaView.h View/Model/PortalSalidaView.cpp
-        View/Model/PortalSalidaView.h View/Model/TowerView.cpp View/Model/TowerView.h
-        View/Common/MousePosition.cpp View/Common/MousePosition.h View/Editor/Editor.cpp
-        View/Editor/Editor.h
-        View/Common/Button.cpp View/Common/Button.h View/Editor/AgregarEnemigoButton.cpp
-        View/Editor/AgregarEnemigoButton.h View/Editor/EliminarEnemigoButton.cpp
-        View/Editor/EliminarEnemigoButton.h View/Editor/EliminarHordaButton.cpp
-        View/Editor/EliminarHordaButton.h View/Editor/NuevaHordaButton.cpp
-        View/Editor/NuevaHordaButton.h View/Editor/SuperficieButton.cpp View/Editor/SuperficieButton.h
-        View/Editor/EditorButtons.cpp
-        View/Editor/EditorButtons.h View/Common/Text.cpp View/Common/Text.h View/Common/Image.cpp
-        View/Common/Image.h
-        View/Editor/ContadorEnemigosInput.cpp View/Editor/ContadorEnemigosInput.h
-        View/Common/AnimatedSprite.cpp View/Common/AnimatedSprite.h View/Editor/AgregarCaminoButton.cpp
-        View/Editor/AgregarCaminoButton.h View/Editor/AgregarTierraFirmeButton.cpp
-        View/Editor/AgregarTierraFirmeButton.h View/Editor/AgregarPortalEntradaButton.cpp
-        View/Editor/AgregarPortalEntradaButton.h View/Editor/AgregarPortalSalidaButton.cpp
-        View/Editor/AgregarPortalSalidaButton.h View/Editor/Horda.cpp View/Editor/Horda.h View/Editor/EnemigoImage.cpp View/Editor/EnemigoImage.h View/Editor/EditorConstants.h View/Editor/AumentarTiempoButton.cpp View/Editor/AumentarTiempoButton.h View/Editor/DisminuirTiempoButton.cpp View/Editor/DisminuirTiempoButton.h View/Editor/ContadorTiempoInput.cpp View/Editor/ContadorTiempoInput.h View/Editor/AumentarAnchoMapaButton.cpp View/Editor/AumentarAnchoMapaButton.h View/Editor/AumentarAltoMapaButton.cpp View/Editor/AumentarAltoMapaButton.h View/Editor/DisminuirAltoMapaButton.cpp View/Editor/DisminuirAltoMapaButton.h View/Editor/DisminuirAnchoMapaButton.cpp View/Editor/DisminuirAnchoMapaButton.h View/Editor/GuardarButton.cpp View/Editor/GuardarButton.h View/Editor/File.cpp View/Editor/File.h)
+set(SOURCE_FILES_CLIENT
+        Client/View/Common/Window.cpp
+        Client/View/Common/Window.h
+        Client/View/Common/ViewError.cpp
+        Client/View/Common/ViewError.h
+        Client/View/Common/Renderer.cpp
+        Client/View/Common/Renderer.h
+        Client/View/Common/TextureLoader.cpp
+        Client/View/Common/TextureLoader.h
+        Client/View/Model/MapView.cpp
+        Client/View/Model/MapView.h
+        Client/View/Common/Sprite.cpp
+        Client/View/Common/Sprite.h
+        Client/View/Common/SpriteNamesConfig.h
+        Client/View/Common/View.cpp
+        Client/View/Common/View.h
+        Client/View/Model/PortalView.cpp
+        Client/View/Model/PortalView.h
+        Client/View/Model/PortalEntradaView.cpp
+        Client/View/Model/PortalEntradaView.h
+        Client/View/Model/PortalSalidaView.cpp
+        Client/View/Model/PortalSalidaView.h
+        Client/View/Model/TowerView.cpp
+        Client/View/Model/TowerView.h
+        Client/View/Common/MousePosition.cpp
+        Client/View/Common/MousePosition.h
+        Client/View/Editor/Editor.cpp
+        Client/View/Editor/Editor.h
+        Client/View/Common/Button.cpp
+        Client/View/Common/Button.h
+        Client/View/Editor/AgregarEnemigoButton.cpp
+        Client/View/Editor/AgregarEnemigoButton.h
+        Client/View/Editor/EliminarEnemigoButton.cpp
+        Client/View/Editor/EliminarEnemigoButton.h
+        Client/View/Editor/EliminarHordaButton.cpp
+        Client/View/Editor/EliminarHordaButton.h
+        Client/View/Editor/NuevaHordaButton.cpp
+        Client/View/Editor/NuevaHordaButton.h
+        Client/View/Editor/SuperficieButton.cpp
+        Client/View/Editor/SuperficieButton.h
+        Client/View/Editor/EditorButtons.cpp
+        Client/View/Editor/EditorButtons.h
+        Client/View/Common/Text.cpp
+        Client/View/Common/Text.h
+        Client/View/Common/Image.cpp
+        Client/View/Common/Image.h
+        Client/View/Editor/ContadorEnemigosInput.cpp
+        Client/View/Editor/ContadorEnemigosInput.h
+        Client/View/Common/AnimatedSprite.cpp
+        Client/View/Common/AnimatedSprite.h
+        Client/View/Editor/AgregarCaminoButton.cpp
+        Client/View/Editor/AgregarCaminoButton.h
+        Client/View/Editor/AgregarTierraFirmeButton.cpp
+        Client/View/Editor/AgregarTierraFirmeButton.h
+        Client/View/Editor/AgregarPortalEntradaButton.cpp
+        Client/View/Editor/AgregarPortalEntradaButton.h
+        Client/View/Editor/AgregarPortalSalidaButton.cpp
+        Client/View/Editor/AgregarPortalSalidaButton.h
+        Client/View/Editor/Horda.cpp
+        Client/View/Editor/Horda.h
+        Client/View/Editor/EnemigoImage.cpp
+        Client/View/Editor/EnemigoImage.h
+        Client/View/Editor/EditorConstants.h
+        Client/View/Editor/AumentarTiempoButton.cpp
+        Client/View/Editor/AumentarTiempoButton.h
+        Client/View/Editor/DisminuirTiempoButton.cpp
+        Client/View/Editor/DisminuirTiempoButton.h
+        Client/View/Editor/ContadorTiempoInput.cpp
+        Client/View/Editor/ContadorTiempoInput.h
+        Client/View/Editor/AumentarAnchoMapaButton.cpp
+        Client/View/Editor/AumentarAnchoMapaButton.h
+        Client/View/Editor/AumentarAltoMapaButton.cpp
+        Client/View/Editor/AumentarAltoMapaButton.h
+        Client/View/Editor/DisminuirAltoMapaButton.cpp
+        Client/View/Editor/DisminuirAltoMapaButton.h
+        Client/View/Editor/DisminuirAnchoMapaButton.cpp
+        Client/View/Editor/DisminuirAnchoMapaButton.h
+        Client/View/Editor/GuardarButton.cpp
+        Client/View/Editor/GuardarButton.h
+        Client/View/Editor/File.cpp
+        Client/View/Editor/File.h
+        Client/GTKRunner.cpp
+        Client/GTKRunner.h
+        Client/SDLRunner.h
+        Client/SDLRunner.cpp)
 
-add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
-add_executable(TowerDefenseEditor ${SOURCE_FILES_E})
-add_executable(TowerDefense ${SOURCE_FILES_M} ${SOURCE_FILES_V} main.cpp)
+
+add_executable(TFServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
+#add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
+add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR})
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} Client/main.cpp)
 
 INCLUDE(FindPkgConfig)
 #pkg_search_module(SDL2 REQUIRED)
@@ -135,7 +255,10 @@ link_directories(${GTK3_LIBRARY_DIRS})
 add_definitions(${GTK3_CFLAGS_OTHER})
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
-#target_link_libraries(TowerDefense ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
-target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES})
+
+target_link_libraries(TFServer yaml-cpp)
 target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES})
-target_link_libraries(TowerDefense yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES})
+
+#target_link_libraries(TowerDefense ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
+#target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES})
+target_link_libraries(TowerDefenseClient yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES})
