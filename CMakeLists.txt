@@ -113,7 +113,7 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/ViewModels/TowerVM.h
         Server/include/GameModel/ViewModels/UnitVM.h)
 
-set(SOURCE_FILES_EDITOR
+set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp
         Client/View/Common/Window.h
         Client/View/Common/Renderer.cpp
@@ -122,13 +122,15 @@ set(SOURCE_FILES_EDITOR
         Client/View/Common/Renderer.h
         Client/View/Common/TextureLoader.cpp
         Client/View/Common/TextureLoader.h
-        Client/View/Model/MapView.cpp
-        Client/View/Model/MapView.h
         Client/View/Common/Sprite.cpp
         Client/View/Common/Sprite.h
         Client/View/Common/SpriteNamesConfig.h
         Client/View/Common/View.cpp
         Client/View/Common/View.h
+        Client/View/Common/AnimatedSprite.cpp
+        Client/View/Common/AnimatedSprite.h
+        Client/View/Model/MapView.cpp
+        Client/View/Model/MapView.h
         Client/View/Model/PortalView.cpp
         Client/View/Model/PortalView.h
         Client/View/Model/PortalEntradaView.cpp
@@ -141,8 +143,6 @@ set(SOURCE_FILES_EDITOR
         Client/View/Model/UnitView.h
         Client/View/Model/ShotView.cpp
         Client/View/Model/ShotView.h
-        Client/View/Common/AnimatedSprite.cpp
-        Client/View/Common/AnimatedSprite.h
         Client/View/Model/SpellView.cpp
         Client/View/Model/SpellView.h
         Client/View/Model/ModelView.cpp
@@ -150,11 +150,22 @@ set(SOURCE_FILES_EDITOR
         Client/View/Model/DepthLevel.cpp
         Client/View/Model/DepthLevel.h
         Client/View/Model/HudVIew.cpp
-        Client/View/Model/HudVIew.h)
+        Client/View/Model/HudVIew.h
+        Client/SDLRunner.h
+        Client/SDLRunner.cpp)
+
 
 set(SOURCE_FILES_CLIENT_GTK
         Client/GTKRunner.h
         Client/GTKRunner.cpp
+
+        Client/src/ClientSocket.cpp
+        Client/include/ClientSocket.h
+        Common/SocketWrapper.cpp
+        Common/SocketWrapper.h
+        Common/SocketConnectionException.h
+        Common/ClientDisconnectedException.h
+
         Client/src/GUINotifications/GUINotification.cpp
         Client/src/GUINotifications/GUINotificationQueue.cpp
         Client/src/GUINotifications/JoinedLobbyGUINotification.cpp
@@ -202,40 +213,8 @@ set(SOURCE_FILES_CLIENT_GTK
 
         )
 
-set(SOURCE_FILES_CLIENT
-        Common/SocketWrapper.h
-        Common/SocketWrapper.cpp
-        Client/src/ClientSocket.cpp
-        Client/include/ClientSocket.h
-        Client/View/Common/Window.cpp
-        Client/View/Common/Window.h
-        Client/View/Common/ViewError.cpp
-        Client/View/Common/ViewError.h
-        Client/View/Common/Renderer.cpp
-        Client/View/Common/Renderer.h
-        Client/View/Common/TextureLoader.cpp
-        Client/View/Common/TextureLoader.h
-        Client/View/Model/MapView.cpp
-        Client/View/Model/MapView.h
-        Client/View/Common/Sprite.cpp
-        Client/View/Common/Sprite.h
-        Client/View/Common/SpriteNamesConfig.h
-        Client/View/Common/View.cpp
-        Client/View/Common/View.h
-        Client/View/Model/PortalView.cpp
-        Client/View/Model/PortalView.h
-        Client/View/Model/PortalEntradaView.cpp
-        Client/View/Model/PortalEntradaView.h
-        Client/View/Model/PortalSalidaView.cpp
-        Client/View/Model/PortalSalidaView.h
-        Client/View/Model/TowerView.cpp
-        Client/View/Model/TowerView.h
-        Client/View/Common/MousePosition.cpp
-        Client/View/Common/MousePosition.h
-        Client/View/Editor/Editor.cpp
-        Client/View/Editor/Editor.h
-        Client/View/Common/Button.cpp
-        Client/View/Common/Button.h
+
+set(SOURCE_FILES_EDITOR
         Client/View/Editor/AgregarEnemigoButton.cpp
         Client/View/Editor/AgregarEnemigoButton.h
         Client/View/Editor/EliminarEnemigoButton.cpp
@@ -248,14 +227,10 @@ set(SOURCE_FILES_CLIENT
         Client/View/Editor/SuperficieButton.h
         Client/View/Editor/EditorButtons.cpp
         Client/View/Editor/EditorButtons.h
-        Client/View/Common/Text.cpp
-        Client/View/Common/Text.h
-        Client/View/Common/Image.cpp
-        Client/View/Common/Image.h
+        Client/View/Editor/Editor.cpp
+        Client/View/Editor/Editor.h
         Client/View/Editor/ContadorEnemigosInput.cpp
         Client/View/Editor/ContadorEnemigosInput.h
-        Client/View/Common/AnimatedSprite.cpp
-        Client/View/Common/AnimatedSprite.h
         Client/View/Editor/AgregarCaminoButton.cpp
         Client/View/Editor/AgregarCaminoButton.h
         Client/View/Editor/AgregarTierraFirmeButton.cpp
@@ -287,12 +262,43 @@ set(SOURCE_FILES_CLIENT
         Client/View/Editor/GuardarButton.h
         Client/View/Editor/File.cpp
         Client/View/Editor/File.h
-        Client/SDLRunner.h
-        Client/SDLRunner.cpp)
+        Client/View/Common/Window.cpp
+        Client/View/Common/Window.h
+        Client/View/Common/ViewError.cpp
+        Client/View/Common/ViewError.h
+        Client/View/Common/Renderer.cpp
+        Client/View/Common/Renderer.h
+        Client/View/Common/TextureLoader.cpp
+        Client/View/Common/TextureLoader.h
+        Client/View/Common/Sprite.cpp
+        Client/View/Common/Sprite.h
+        Client/View/Common/SpriteNamesConfig.h
+        Client/View/Common/View.cpp
+        Client/View/Common/View.h
+        Client/View/Common/MousePosition.cpp
+        Client/View/Common/MousePosition.h
+        Client/View/Common/Button.cpp
+        Client/View/Common/Button.h
+        Client/View/Common/Text.cpp
+        Client/View/Common/Text.h
+        Client/View/Common/Image.cpp
+        Client/View/Common/Image.h
+        Client/View/Common/AnimatedSprite.cpp
+        Client/View/Common/AnimatedSprite.h
+        Client/View/Model/MapView.cpp
+        Client/View/Model/MapView.h
+        Client/View/Model/PortalView.cpp
+        Client/View/Model/PortalView.h
+        Client/View/Model/PortalEntradaView.cpp
+        Client/View/Model/PortalEntradaView.h
+        Client/View/Model/PortalSalidaView.cpp
+        Client/View/Model/PortalSalidaView.h
+        Client/View/Model/TowerView.cpp
+        Client/View/Model/TowerView.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
-add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} ${SOURCE_FILES_CLIENT} Client/View/mainEditor.cpp)
+add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
 add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp)
 
 
