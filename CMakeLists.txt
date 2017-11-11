@@ -152,6 +152,10 @@ set(SOURCE_FILES_EDITOR
         Client/View/Model/HudVIew.cpp
         Client/View/Model/HudVIew.h)
 
+set(SOURCE_FILES_CLIENT_GTK
+        Client/GTKRunner.h
+        Client/GTKRunner.cpp)
+
 set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp
         Client/View/Common/Window.h
@@ -233,20 +237,18 @@ set(SOURCE_FILES_CLIENT
         Client/View/Editor/GuardarButton.h
         Client/View/Editor/File.cpp
         Client/View/Editor/File.h
-        Client/GTKRunner.cpp
-        Client/GTKRunner.h
         Client/SDLRunner.h
         Client/SDLRunner.cpp)
 
 
-add_executable(TFServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
-#add_executable(TowerDefenseView ${SOURCE_FILES_V} View/mainView.cpp)
-add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR})
-add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} Client/main.cpp)
+add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
+add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} ${SOURCE_FILES_CLIENT} Client/View/mainEditor.cpp)
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp)
+
 
 INCLUDE(FindPkgConfig)
-#pkg_search_module(SDL2 REQUIRED)
 pkg_search_module(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
@@ -254,11 +256,6 @@ include_directories(${GTK3_INCLUDE_DIRS})
 link_directories(${GTK3_LIBRARY_DIRS})
 add_definitions(${GTK3_CFLAGS_OTHER})
 
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
-
-target_link_libraries(TFServer yaml-cpp)
+target_link_libraries(TowerDefenseServer yaml-cpp)
 target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES})
-
-#target_link_libraries(TowerDefense ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES})
-#target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES})
 target_link_libraries(TowerDefenseClient yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES})
