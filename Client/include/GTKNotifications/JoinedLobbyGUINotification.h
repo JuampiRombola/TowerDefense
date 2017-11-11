@@ -2,7 +2,7 @@
 #define __JOINED_LOBBY_NOTIF__
 
 #include <iostream>
-#include "GUINotification.h"
+#include "../SDLNotifications/GUINotification.h"
 #include <string>
 #include <vector>
 

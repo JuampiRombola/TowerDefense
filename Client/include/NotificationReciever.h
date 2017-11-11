@@ -3,10 +3,10 @@
 
 #include <thread>
 #include <iostream>
-#include "../../../Common/SocketWrapper.h"
-#include "../../../Common/Protocolo.h"
-#include "../Lobbies/ClientLobbyManager.h"
-#include "../GUINotifications/GUINotificationQueue.h"
+#include "../../Common/SocketWrapper.h"
+#include "../../Common/Protocolo.h"
+#include "Lobbies/ClientLobbyManager.h"
+#include "SDLNotifications/GUINotificationQueue.h"
 
 class NotificationReciever : public std::thread
 {
@@ -15,9 +15,10 @@ class NotificationReciever : public std::thread
 		ClientLobbyManager& _lobbyManager;
 		GUINotificationQueue& _guiNotifications;
 		std::thread _thread;
-
+        GTKRunner& _runner;
 	public:
-		NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GUINotificationQueue& guiNotifications);
+		NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager,
+                             GUINotificationQueue& guiNotifications, GTKRunner& runner);
 		~NotificationReciever();
 		void RecieveNotifications();
 		void Run();

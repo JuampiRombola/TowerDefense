@@ -2,9 +2,9 @@
 #include "GTKRunner.h"
 #include "SDLRunner.h"
 #include "include/ClientSocket.h"
-#include "include/GUINotifications/GUINotificationQueue.h"
+#include "include/SDLNotifications/GUINotificationQueue.h"
 #include "include/Lobbies/ClientLobbyManager.h"
-#include "include/GUINotifications/NotificationReciever.h"
+#include "include/NotificationReciever.h"
 #include "include/NetCommands/CommandDispatcher.h"
 
 int main(int argc, char** argv) {

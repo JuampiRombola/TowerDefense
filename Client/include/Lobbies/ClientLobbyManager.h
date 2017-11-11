@@ -8,7 +8,9 @@
 
 #include "Lobby.h"
 #include "../../../Common/SocketWrapper.h"
-#include "../GUINotifications/GUINotificationQueue.h"
+#include "../SDLNotifications/GUINotificationQueue.h"
+
+class GTKRunner;
 
 class ClientLobbyManager{
 private:
@@ -16,8 +18,9 @@ private:
 	std::vector<Lobby*> _lobbies;
 	GUINotificationQueue& _guiNotiQueue;
 	Lobby* _joinedLobby;
+	GTKRunner& Runner;
 public:
-	ClientLobbyManager(GUINotificationQueue& guiNotiQueue, SocketWrapper& sock);
+	ClientLobbyManager(GUINotificationQueue& guiNotiQueue, SocketWrapper& sock, GTKRunner& GtkRunner);
 	~ClientLobbyManager();
 	void HandleNotification();
 	void _HandleNewLobbyNotification();
@@ -27,10 +30,5 @@ public:
 	void _HandlePlayerJoinedLobby();
 	void _HandleLeaveLobby();
 };
-
-
-
-
-
 
 #endif

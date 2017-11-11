@@ -1,6 +1,6 @@
 
 
-#include "../../include/GUINotifications/JoinedLobbyGUINotification.h"
+#include "../../include/GTKNotifications/JoinedLobbyGUINotification.h"
 
 
 JoinedLobbyGUINotification::JoinedLobbyGUINotification

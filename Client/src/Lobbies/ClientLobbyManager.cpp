@@ -1,17 +1,17 @@
 
 #include "../../include/Lobbies/ClientLobbyManager.h"
 #include "../../../Common/Protocolo.h"
-#include "../../include/GUINotifications/NewLobbyGUINotification.h"
-#include "../../include/GUINotifications/JoinedLobbyGUINotification.h"
-#include "../../include/GUINotifications/UpdateLobbyPlayersGUINotification.h"
+#include "../../include/GTKNotifications/NewLobbyGUINotification.h"
+#include "../../include/GTKNotifications/JoinedLobbyGUINotification.h"
+#include "../../include/GTKNotifications/UpdateLobbyPlayersGUINotification.h"
 #include "../../include/Exceptions/JoinedInexistingLobbyException.h"
 #include "../../include/Exceptions/SomePlayerLeftLobbyAndLobbyNotSet.h"
 #include "../../include/Exceptions/SomePlayerJoinedLobbyAndLobbyNotSet.h"
-#include "../../include/GUINotifications/LeftLobbyGUINotification.h"
+#include "../../include/GTKNotifications/LeftLobbyGUINotification.h"
 
 
-ClientLobbyManager::ClientLobbyManager(GUINotificationQueue& guiNotiQueue, SocketWrapper& _sock) 
-: _sock(_sock), _lobbies(), _guiNotiQueue(guiNotiQueue), _joinedLobby(nullptr) {
+ClientLobbyManager::ClientLobbyManager(GUINotificationQueue& guiNotiQueue, SocketWrapper& _sock, GTKRunner& runner)
+: _sock(_sock), _lobbies(), _guiNotiQueue(guiNotiQueue), _joinedLobby(nullptr), Runner(runner) {
 
 }
 

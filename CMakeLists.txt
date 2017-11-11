@@ -166,21 +166,21 @@ set(SOURCE_FILES_CLIENT_GTK
         Common/SocketConnectionException.h
         Common/ClientDisconnectedException.h
 
-        Client/src/GUINotifications/GUINotification.cpp
-        Client/src/GUINotifications/GUINotificationQueue.cpp
-        Client/src/GUINotifications/JoinedLobbyGUINotification.cpp
-        Client/src/GUINotifications/LeftLobbyGUINotification.cpp
-        Client/src/GUINotifications/NewLobbyGUINotification.cpp
-        Client/src/GUINotifications/NotificationReciever.cpp
-        Client/src/GUINotifications/UpdateLobbyPlayersGUINotification.cpp
+        Client/src/SDLNotifications/GUINotification.cpp
+        Client/src/SDLNotifications/GUINotificationQueue.cpp
+        Client/src/GTKNotifications/JoinedLobbyGUINotification.cpp
+        Client/src/GTKNotifications/LeftLobbyGUINotification.cpp
+        Client/src/GTKNotifications/NewLobbyGUINotification.cpp
+        Client/src/NotificationReciever.cpp
+        Client/src/GTKNotifications/UpdateLobbyPlayersGUINotification.cpp
 
-        Client/include/GUINotifications/GUINotification.h
-        Client/include/GUINotifications/GUINotificationQueue.h
-        Client/include/GUINotifications/JoinedLobbyGUINotification.h
-        Client/include/GUINotifications/LeftLobbyGUINotification.h
-        Client/include/GUINotifications/NewLobbyGUINotification.h
-        Client/include/GUINotifications/NotificationReciever.h
-        Client/include/GUINotifications/UpdateLobbyPlayersGUINotification.h
+        Client/include/SDLNotifications/GUINotification.h
+        Client/include/SDLNotifications/GUINotificationQueue.h
+        Client/include/GTKNotifications/JoinedLobbyGUINotification.h
+        Client/include/GTKNotifications/LeftLobbyGUINotification.h
+        Client/include/GTKNotifications/NewLobbyGUINotification.h
+        Client/include/NotificationReciever.h
+        Client/include/GTKNotifications/UpdateLobbyPlayersGUINotification.h
 
         Client/src/Lobbies/ClientLobbyManager.cpp
         Client/src/Lobbies/LobbyPlayer.cpp
@@ -211,7 +211,12 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/include/Exceptions/PlayerLeftTheLobbyAndWasntInIt.h
         Client/include/Exceptions/JoinedInexistingLobbyException.h
 
-        )
+        Client/include/GTKNotifications/GTKNotification.h
+        Client/src/GTKNotifications/GTKNotification.cpp
+        Client/include/GTKNotifications/LogInSuccessGtkNotification.h
+        Client/src/GTKNotifications/LogInSuccessGtkNotification.cpp
+        Client/include/GTKNotifications/LogInFailedGtkNotification.h
+        Client/src/GTKNotifications/LogInFailedGtkNotification.cpp)
 
 
 set(SOURCE_FILES_EDITOR
@@ -314,4 +319,4 @@ add_definitions(${GTK3_CFLAGS_OTHER})
 
 target_link_libraries(TowerDefenseServer yaml-cpp)
 target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES})
-target_link_libraries(TowerDefenseClient yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES})
+target_link_libraries(TowerDefenseClient yaml-cpp X11 ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES})

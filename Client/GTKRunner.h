@@ -7,9 +7,17 @@
 #include <gtk/gtk.h>
 #include "include/ClientSocket.h"
 #include "include/Lobbies/ClientLobbyManager.h"
-#include "include/GUINotifications/NotificationReciever.h"
+#include "include/NotificationReciever.h"
 #include "include/NetCommands/CommandDispatcher.h"
-#include "include/GUINotifications/GUINotificationQueue.h"
+#include "include/SDLNotifications/GUINotificationQueue.h"
+#include "../Server/include/ThreadSafeQueue.h"
+
+class GTKNotification;
+
+#ifndef __GTK_NOTIFICATION_QUEUE__
+#define __GTK_NOTIFICATION_QUEUE__
+template class ThreadSafeQueue<GTKNotification*>;
+#endif
 
 class GTKRunner {
 private:
@@ -20,15 +28,17 @@ public:
     GTKRunner();
     ~GTKRunner();
 
+    ThreadSafeQueue<GTKNotification*> GtkNotifications;
     GUINotificationQueue* guiNotiQueue;
     ClientLobbyManager* lobbyManager;
     NotificationReciever* reciever;
     CommandDispatcher* dispatcher;
 
-    GtkWidget *window_connect;
-    GtkWidget *window_login;
+    GtkWindow *window_connect;
+    GtkWindow *window_login;
 
     bool OK;
+    void MessageBox(std::string s);
 
     ClientSocket* sock;
 

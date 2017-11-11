@@ -1,4 +1,4 @@
-#include "../../include/GUINotifications/GUINotification.h"
+#include "../../include/SDLNotifications/GUINotification.h"
 
 GUINotification::GUINotification(){
 	

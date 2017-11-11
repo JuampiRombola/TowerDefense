@@ -1,8 +1,6 @@
 #ifndef _TOWER_DEFENSE_GAME_
 #define _TOWER_DEFENSE_GAME_
 
-
-
 #include <vector>
 #include <mutex>
 #include <queue>

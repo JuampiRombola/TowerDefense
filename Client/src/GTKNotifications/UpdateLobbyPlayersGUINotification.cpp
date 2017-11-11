@@ -1,6 +1,6 @@
 
 
-#include "../../include/GUINotifications/UpdateLobbyPlayersGUINotification.h"
+#include "../../include/GTKNotifications/UpdateLobbyPlayersGUINotification.h"
 
 
 UpdateLobbyPlayersGUINotification::UpdateLobbyPlayersGUINotification

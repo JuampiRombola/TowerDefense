@@ -1,7 +1,12 @@
-#include "../../include/GUINotifications/NotificationReciever.h"
+#include "../include/NotificationReciever.h"
+#include "../GTKRunner.h"
+#include "../include/GTKNotifications/LogInSuccessGtkNotification.h"
+#include "../include/GTKNotifications/LogInFailedGtkNotification.h"
 
-NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GUINotificationQueue& guiNotifications) 
-: _sock(socket), _lobbyManager(lobbyManager), _guiNotifications(guiNotifications) {
+
+NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager,
+										   GUINotificationQueue& guiNotifications, GTKRunner& runner)
+: _sock(socket), _lobbyManager(lobbyManager), _guiNotifications(guiNotifications), _runner(runner) {
 	
 }
 
@@ -23,10 +28,10 @@ void NotificationReciever::RecieveNotifications(){
 				_lobbyManager.HandleNotification();
 				break;
 			case LOG_IN_SUCCESS:
-				std::cout << "LOGGED IN\n";
+				_runner.GtkNotifications.Queue(new LogInSuccessGtkNotification());
 				break;
 			case LOG_IN_FAILED:
-				std::cout << "INVALID LOGIN\n";
+                _runner.GtkNotifications.Queue(new LogInFailedGtkNotification());
 				break;
 			default:
 				std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << '\'' << std::flush;

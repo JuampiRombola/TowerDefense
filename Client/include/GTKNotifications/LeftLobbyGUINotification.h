@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include "GUINotification.h"
+#include "../SDLNotifications/GUINotification.h"
 #include "../Lobbies/Lobby.h"
 
 class LeftLobbyGUINotification : public GUINotification {
