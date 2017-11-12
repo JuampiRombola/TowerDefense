@@ -15,5 +15,5 @@ LogInFailedGtkNotification::~LogInFailedGtkNotification(){
 }
 
 void LogInFailedGtkNotification::Execute(GTKRunner& runner){
-    runner.LogInFailed();
+    runner.MessageBox("Log in failed! Name already taken");
 }

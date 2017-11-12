@@ -167,14 +167,14 @@ set(SOURCE_FILES_CLIENT_GTK
         Common/ClientDisconnectedException.h
 
         Client/src/SDLNotifications/SDLNotification.cpp
-        Client/src/GTKNotifications/JoinedLobbyGUINotification.cpp
+        Client/src/GTKNotifications/JoinedLobbyGTKNotification.cpp
         Client/src/GTKNotifications/LeftLobbyGUINotification.cpp
         Client/src/GTKNotifications/NewLobbyGTKNotification.cpp
         Client/src/NotificationReciever.cpp
         Client/src/GTKNotifications/UpdateLobbyPlayersGUINotification.cpp
 
         Client/include/SDLNotifications/SDLNotification.h
-        Client/include/GTKNotifications/JoinedLobbyGUINotification.h
+        Client/include/GTKNotifications/JoinedLobbyGTKNotification.h
         Client/include/GTKNotifications/LeftLobbyGUINotification.h
         Client/include/GTKNotifications/NewLobbyGTKNotification.h
         Client/include/NotificationReciever.h

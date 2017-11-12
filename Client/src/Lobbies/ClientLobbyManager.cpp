@@ -2,7 +2,7 @@
 #include "../../include/Lobbies/ClientLobbyManager.h"
 #include "../../../Common/Protocolo.h"
 #include "../../include/GTKNotifications/NewLobbyGTKNotification.h"
-#include "../../include/GTKNotifications/JoinedLobbyGUINotification.h"
+#include "../../include/GTKNotifications/JoinedLobbyGTKNotification.h"
 #include "../../include/GTKNotifications/UpdateLobbyPlayersGUINotification.h"
 #include "../../include/Exceptions/JoinedInexistingLobbyException.h"
 #include "../../include/Exceptions/SomePlayerLeftLobbyAndLobbyNotSet.h"

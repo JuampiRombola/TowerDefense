@@ -15,19 +15,27 @@
 
 
 enum LobbiesListEnum {
-    COLUMN_STRING,
-    COLUMN_INT,
-    COLUMN_BOOLEAN,
-    N_COLUMNS
+    COLUMN_LOBBY_NAME,
+    COLUMN_LOBBY_ID,
+    LOBBIES_N_COLUMNS
+};
+
+enum LobbyPlayersListEnum {
+    COLUMN_PLAYER_NAME,
+    COLUMN_PLAYER_READY,
+    LOBBY_PLAYERS_N_COLUMNS
 };
 
 class GTKRunner {
 private:
-    static void ShutdownGTK();
+    static void _ShutdownGTK();
+    static void _LobbyWindowClosed();
     static void newLobby_clicked(GtkWidget* widget, gpointer data);
     static void joinLobby_clicked(GtkWidget* widget, gpointer data);
     static void connect_clicked(GtkWidget* widget, gpointer data);
     static void login_clicked(GtkWidget* widget, gpointer data);
+    static void leaveLobby_clicked(GtkWidget* widget, gpointer data);
+    static void lobbyReady_clicked(GtkWidget* widget, gpointer data);
 public:
     GTKRunner();
     ~GTKRunner();
@@ -40,15 +48,18 @@ public:
     GtkWindow *window_connect;
     GtkWindow *window_login;
     GtkWindow *window_lobbies;
+    GtkWindow *window_lobby;
 
-    GtkListBox *listbox_lobbies;
-    GtkListStore *list_store_lobbies;
+
+    void InitLobbyPlayersTreeView();
+    void InitLobbiesTreeView();
+
+    GtkTreeView *treeview_lobbies;
+    GtkTreeView *treeview_lobbyPlayers;
+
 
     bool OK;
     void MessageBox(std::string s);
-
-    void LogInSuccess();
-    void LogInFailed();
 
     ClientSocket* sock;
 
