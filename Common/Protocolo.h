@@ -9,3 +9,9 @@
 #define LOG_IN	20
 #define LOG_IN_FAILED 21
 #define LOG_IN_SUCCESS 22
+
+#define NEW_TOWER 30
+#define WATER_TOWER 31
+#define FIRE_TOWER 32
+#define EARTH_TOWER 33
+#define AIR_TOWER 34
