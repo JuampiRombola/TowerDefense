@@ -129,6 +129,12 @@ set(SOURCE_FILES_CLIENT
         Client/View/Common/View.h
         Client/View/Common/AnimatedSprite.cpp
         Client/View/Common/AnimatedSprite.h
+        Client/View/Common/Image.cpp
+        Client/View/Common/Image.h
+        Client/View/Common/Button.cpp
+        Client/View/Common/Button.h
+        Client/View/Common/MousePosition.cpp
+        Client/View/Common/MousePosition.h
         Client/View/Model/MapView.cpp
         Client/View/Model/MapView.h
         Client/View/Model/PortalView.cpp
@@ -151,8 +157,15 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/DepthLevel.h
         Client/View/Model/HudVIew.cpp
         Client/View/Model/HudVIew.h
+        Client/View/Model/NewTowerButton.cpp
+        Client/View/Model/NewTowerButton.h
+        Client/View/Model/ViewConstants.h
+        Client/View/Model/GameButtons.cpp
+        Client/View/Model/GameButtons.h
         Client/SDLRunner.h
-        Client/SDLRunner.cpp)
+        Client/SDLRunner.cpp
+        Client/src/NetCommands/NewTowerCommand.cpp
+        Client/include/NetCommands/NewTowerCommand.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
