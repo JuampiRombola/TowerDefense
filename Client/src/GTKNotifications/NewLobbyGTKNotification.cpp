@@ -14,7 +14,6 @@ NewLobbyGTKNotification::~NewLobbyGTKNotification(){
 }
 
 void NewLobbyGTKNotification::Execute(GTKRunner& runner){
-
     GtkTreeIter    iter;
     GtkTreeModel *model = gtk_tree_view_get_model (runner.treeview_lobbies);
     gtk_list_store_append(GTK_LIST_STORE(model), &iter);

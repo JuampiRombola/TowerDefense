@@ -142,7 +142,7 @@ void GTKRunner::InitLobbyPlayersTreeView()
     GtkCellRenderer     *renderer;
 
     renderer = gtk_cell_renderer_text_new ();
-    gtk_tree_view_insert_column_with_attributes (this->treeview_lobbies,
+    gtk_tree_view_insert_column_with_attributes (this->treeview_lobbyPlayers,
                                                  -1,
                                                  "Player Name",
                                                  renderer,
@@ -150,7 +150,7 @@ void GTKRunner::InitLobbyPlayersTreeView()
                                                  NULL);
 
     renderer = gtk_cell_renderer_text_new ();
-    gtk_tree_view_insert_column_with_attributes (this->treeview_lobbies,
+    gtk_tree_view_insert_column_with_attributes (this->treeview_lobbyPlayers,
                                                  -1,
                                                  "Ready",
                                                  renderer,
@@ -195,6 +195,7 @@ void GTKRunner::Run(int* argc, char***argv){
     g_signal_connect (button_leaveLobby, "clicked", G_CALLBACK(GTKRunner::leaveLobby_clicked), this);
     g_signal_connect (button_lobbyReady, "clicked", G_CALLBACK(GTKRunner::lobbyReady_clicked), this);
 
+    this->label_lobbyname = GTK_LABEL(gtk_builder_get_object(builder, "label_lobbyname"));
 
     this->entry_ip = GTK_ENTRY(gtk_builder_get_object(builder, "entry_ip"));
     this->entry_port = GTK_ENTRY(gtk_builder_get_object(builder, "entry_port"));
@@ -208,8 +209,6 @@ void GTKRunner::Run(int* argc, char***argv){
     this->InitLobbyPlayersTreeView();
 
     //liststore = GTK_LIST_STORE(gtk_builder_get_object(builder, "liststore1"));
-
-
 
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));

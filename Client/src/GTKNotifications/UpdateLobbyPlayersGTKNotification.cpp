@@ -1,6 +1,6 @@
 
 
-#include "../../include/GTKNotifications/UpdateLobbyPlayersGUINotification.h"
+#include "../../include/GTKNotifications/UpdateLobbyPlayersGTKNotification.h"
 
 
 UpdateLobbyPlayersGUINotification::UpdateLobbyPlayersGUINotification
@@ -13,9 +13,13 @@ UpdateLobbyPlayersGUINotification::~UpdateLobbyPlayersGUINotification(){
 	
 }
 
-void UpdateLobbyPlayersGUINotification::Execute(){
+void UpdateLobbyPlayersGUINotification::Execute(GTKRunner& runner){
+
+
 	std::cout << "LOBBY UPDATE!!" << '\n';
 	for (auto it = _playerNames.begin(); it != _playerNames.end(); ++it){
 		std::cout << *it << " is in the lobby\n";
 	}
 }
+
+

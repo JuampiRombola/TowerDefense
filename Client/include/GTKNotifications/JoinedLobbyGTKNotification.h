@@ -3,15 +3,15 @@
 
 #include <iostream>
 #include "../GTKNotifications/GTKNotification.h"
+#include "../Lobbies/Lobby.h"
 #include <string>
 #include <vector>
 
 class JoinedLobbyGUINotification : public GTKNotification {
 private:
-	std::string _lobbyName;
-	std::vector<std::string> _playerNames;
+	Lobby& _lobby;
 public:
-	JoinedLobbyGUINotification(std::string lobbyName, std::vector<std::string>& playerNames);
+	JoinedLobbyGUINotification(Lobby& lobby);
 	~JoinedLobbyGUINotification();
 	void Execute(GTKRunner& runner);
 };

@@ -3,7 +3,7 @@
 #include "../../../Common/Protocolo.h"
 #include "../../include/GTKNotifications/NewLobbyGTKNotification.h"
 #include "../../include/GTKNotifications/JoinedLobbyGTKNotification.h"
-#include "../../include/GTKNotifications/UpdateLobbyPlayersGUINotification.h"
+#include "../../include/GTKNotifications/UpdateLobbyPlayersGTKNotification.h"
 #include "../../include/Exceptions/JoinedInexistingLobbyException.h"
 #include "../../include/Exceptions/SomePlayerLeftLobbyAndLobbyNotSet.h"
 #include "../../include/Exceptions/SomePlayerJoinedLobbyAndLobbyNotSet.h"
@@ -113,9 +113,7 @@ void ClientLobbyManager::_HandleLobbyJoin(){
 		l->AddPlayer(pname, pguid);
 	}
 
-	std::vector<std::string> pnames = l->PlayerNames();
-	//_guiNotiQueue.Queue(new JoinedLobbyGUINotification(l->Name(), pnames));
-
+	_runner.gtkNotifications.Queue(new JoinedLobbyGUINotification(*_joinedLobby));
 }
 
 void ClientLobbyManager::_HandleNewLobbyNotification(){

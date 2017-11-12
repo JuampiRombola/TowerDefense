@@ -171,14 +171,14 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/GTKNotifications/LeftLobbyGUINotification.cpp
         Client/src/GTKNotifications/NewLobbyGTKNotification.cpp
         Client/src/NotificationReciever.cpp
-        Client/src/GTKNotifications/UpdateLobbyPlayersGUINotification.cpp
+        Client/src/GTKNotifications/UpdateLobbyPlayersGTKNotification.cpp
 
         Client/include/SDLNotifications/SDLNotification.h
         Client/include/GTKNotifications/JoinedLobbyGTKNotification.h
         Client/include/GTKNotifications/LeftLobbyGUINotification.h
         Client/include/GTKNotifications/NewLobbyGTKNotification.h
         Client/include/NotificationReciever.h
-        Client/include/GTKNotifications/UpdateLobbyPlayersGUINotification.h
+        Client/include/GTKNotifications/UpdateLobbyPlayersGTKNotification.h
 
         Client/src/Lobbies/ClientLobbyManager.cpp
         Client/src/Lobbies/LobbyPlayer.cpp

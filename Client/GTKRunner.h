@@ -57,6 +57,7 @@ public:
     GtkTreeView *treeview_lobbies;
     GtkTreeView *treeview_lobbyPlayers;
 
+    GtkLabel* label_lobbyname;
 
     bool OK;
     void MessageBox(std::string s);
