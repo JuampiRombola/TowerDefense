@@ -7,7 +7,7 @@
 #include "../../Common/SocketWrapper.h"
 class Lobby;
 
-enum PLAYER_STATE { LOGIN, BROWSING_LOBBIES, IN_LOBBY, IN_GAME };
+enum PLAYER_STATE { LOGIN, BROWSING_LOBBIES, IN_LOBBY, IN_GAME, DEAD };
 
 class PlayerProxy 
 {

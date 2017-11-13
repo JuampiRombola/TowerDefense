@@ -10,11 +10,14 @@ int main(int argc, char** argv) {
 
     gtk.Run(&argc, &argv);
 
+    CommandDispatcher* dispatcher = gtk.dispatcher;
+    NotificationReciever* reciever = gtk.reciever;
+
     if (!gtk.OK) return 0;
 
     SDLRunner sdl;
 
-    sdl.Run();
+    sdl.Run(dispatcher, reciever);
 
     return 0;
 }

@@ -2,6 +2,7 @@
 #include "../GTKRunner.h"
 #include "../include/GTKNotifications/LogInSuccessGtkNotification.h"
 #include "../include/GTKNotifications/LogInFailedGtkNotification.h"
+#include "../include/GTKNotifications/GameStartedGTKNotification.h"
 
 
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner)
@@ -57,9 +58,27 @@ void NotificationReciever::RecieveNotifications(){
 				std::cout << "LOG_IN_SUCCESS::\n" << std::flush;
 				_lobbyManager.HandleLoginSuccess();
 				break;
+			case PICK_SPELL:
+				std::cout << "PICK_SPELL::\n" << std::flush;
+				_lobbyManager.HandlePickedSpell();
+				break;
+			case UNPICK_SPELL:
+				std::cout << "UNPICK_SPELL::\n" << std::flush;
+				_lobbyManager.HandleUnpickedSpell();
+				break;
+			case PLAYER_PICKED_SPELL:
+				std::cout << "PLAYER_PICKED_SPELL::\n" << std::flush;
+				_lobbyManager.HandleOtherPlayerPickedSpell();
+				break;
+			case PLAYER_UNPICKED_SPELL:
+				std::cout << "PLAYER_UNPICKED_SPELL::\n" << std::flush;
+				_lobbyManager.HandleOtherPlayerUnpickedSpell();
+				break;
 			case LOG_IN_FAILED:
                 _runner.gtkNotifications.Queue(new LogInFailedGtkNotification());
 				break;
+			case GAME_STARTED:
+				_runner.gtkNotifications.Queue(new GameStartedGTKNotification());
 			default:
 				std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << ", ( " << (int) opcode << ")\'" << std::flush;
 		}

@@ -30,6 +30,9 @@ public:
 	void HandleLeaveLobby(PlayerProxy &player);
 	void HandleLogin(PlayerProxy &player);
 	void HandlePlayerIsReady(PlayerProxy &player);
+	void HandlePlayerPickedSpell(PlayerProxy &player);
+	void HandlePlayerUnpickedSpell(PlayerProxy &player);
+
 };
 
 #endif

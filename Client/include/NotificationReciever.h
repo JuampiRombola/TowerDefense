@@ -14,7 +14,6 @@ class NotificationReciever : public std::thread
 		std::mutex _stopMutex;
 		SocketWrapper& _sock;
 		ClientLobbyManager& _lobbyManager;
-		//GUINotificationQueue& _guiNotifications;
 		std::thread _thread;
         GTKRunner& _runner;
 		bool _stop;

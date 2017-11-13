@@ -5,10 +5,11 @@
 #include "include/NetCommands/JoinLobbyCommand.h"
 #include "include/NetCommands/LeaveLobbyCommand.h"
 #include "include/NetCommands/PlayerIsReadyCommand.h"
+#include "include/NetCommands/PickSpellCommand.h"
 #include <iostream>
 #include <gtk/gtk.h>
 
-void GTKRunner::_ShutdownGTK()
+void GTKRunner::ShutdownGTK()
 {
     gtk_main_quit();
 }
@@ -32,6 +33,85 @@ void GTKRunner::_LobbyWindowClosed(GtkWidget* widget, gpointer data)
                             COLUMN_LOBBY_ID, l->GUID(),
                             -1);
     }
+}
+
+
+void GTKRunner::_AirCheckboxToggled(GtkWidget* widget, gpointer data){
+    GTKRunner* runner = (GTKRunner*) data;
+    g_signal_handler_block(widget, runner->check_air_handler_id);
+    gboolean active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+    if (active){
+        //Lo checkeo entonces lo deschequeo.
+        //Porque para asegurar el check esperamos la notificacion del servidor
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(runner->check_air), FALSE);
+        runner->dispatcher->QueueCommand(new PickSpellCommand(SPELL_TYPE_AIR, true));
+        //player picked air power
+    } else {
+        //Lo mismo..
+        runner->dispatcher->QueueCommand(new PickSpellCommand(SPELL_TYPE_AIR, false));
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(runner->check_air), TRUE);
+        //player unpicked air power
+    }
+    g_signal_handler_unblock(widget, runner->check_air_handler_id);
+}
+
+void GTKRunner::_GroundCheckboxToggled(GtkWidget* widget, gpointer data){
+    GTKRunner* runner = (GTKRunner*) data;
+    g_signal_handler_block(widget, runner->check_ground_handler_id);
+    gboolean active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+    if (active){
+        //Lo checkeo entonces lo deschequeo.
+        //Porque para asegurar el check esperamos la notificacion del servidor
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(runner->check_ground), FALSE);
+        runner->dispatcher->QueueCommand(new PickSpellCommand(SPELL_TYPE_GROUND, true));
+        //player picked ground power
+    } else {
+        //Lo mismo..
+        runner->dispatcher->QueueCommand(new PickSpellCommand(SPELL_TYPE_GROUND, false));
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(runner->check_ground), TRUE);
+        //player unpicked ground power
+    }
+    g_signal_handler_unblock(widget, runner->check_ground_handler_id);
+}
+
+
+void GTKRunner::_FireCheckboxToggled(GtkWidget* widget, gpointer data){
+    GTKRunner* runner = (GTKRunner*) data;
+    g_signal_handler_block(widget, runner->check_fire_handler_id);
+    gboolean active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+    if (active){
+        //Lo checkeo entonces lo deschequeo.
+        //Porque para asegurar el check esperamos la notificacion del servidor
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(runner->check_fire), FALSE);
+        runner->dispatcher->QueueCommand(new PickSpellCommand(SPELL_TYPE_FIRE, true));
+        //player picked ground power
+    } else {
+        //Lo mismo..
+        runner->dispatcher->QueueCommand(new PickSpellCommand(SPELL_TYPE_FIRE, false));
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(runner->check_fire), TRUE);
+        //player unpicked ground power
+    }
+    g_signal_handler_unblock(widget, runner->check_fire_handler_id);
+}
+
+
+void GTKRunner::_WaterCheckboxToggled(GtkWidget* widget, gpointer data){
+    GTKRunner* runner = (GTKRunner*) data;
+    g_signal_handler_block(widget, runner->check_water_handler_id);
+    gboolean active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+    if (active){
+        //Lo checkeo entonces lo deschequeo.
+        //Porque para asegurar el check esperamos la notificacion del servidor
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(runner->check_water), FALSE);
+        runner->dispatcher->QueueCommand(new PickSpellCommand(SPELL_TYPE_WATER, true));
+        //player picked ground power
+    } else {
+        //Lo mismo..
+        runner->dispatcher->QueueCommand(new PickSpellCommand(SPELL_TYPE_WATER, false));
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(runner->check_water), TRUE);
+        //player unpicked ground power
+    }
+    g_signal_handler_unblock(widget, runner->check_water_handler_id);
 }
 
 
@@ -109,14 +189,15 @@ GTKRunner::~GTKRunner() {
     if (!OK){
         reciever->Stop();
         dispatcher->Stop();
-        delete lobbyManager;
         delete reciever;
         delete dispatcher;
     }
+    delete lobbyManager;
 }
 
 
 gboolean notification_check(gpointer data){
+
     GTKRunner* runner = (GTKRunner*) data;
     GTKNotification* gtkNoti = runner->gtkNotifications.Dequeue();
     while (gtkNoti != nullptr){
@@ -193,6 +274,16 @@ void GTKRunner::CreateAndShowLobbyWindow(){
     GtkBuilder* Lobbybuilder = gtk_builder_new ();
     gtk_builder_add_from_file (Lobbybuilder, "../Client/Lobby.glade", NULL);
     this->window_lobby = GTK_WINDOW(gtk_builder_get_object (Lobbybuilder, "window_lobby"));
+    this->check_air = GTK_CHECK_BUTTON(gtk_builder_get_object (Lobbybuilder, "check_air"));
+    this->check_fire = GTK_CHECK_BUTTON(gtk_builder_get_object (Lobbybuilder, "check_fire"));
+    this->check_ground = GTK_CHECK_BUTTON(gtk_builder_get_object (Lobbybuilder, "check_ground"));
+    this->check_water = GTK_CHECK_BUTTON(gtk_builder_get_object (Lobbybuilder, "check_water"));
+
+    this->check_air_handler_id = g_signal_connect (this->check_air, "toggled", G_CALLBACK(GTKRunner::_AirCheckboxToggled), this);
+    this->check_ground_handler_id = g_signal_connect (this->check_ground, "toggled", G_CALLBACK(GTKRunner::_GroundCheckboxToggled), this);
+    this->check_fire_handler_id = g_signal_connect (this->check_fire, "toggled", G_CALLBACK(GTKRunner::_FireCheckboxToggled), this);
+    this->check_water_handler_id = g_signal_connect (this->check_water, "toggled", G_CALLBACK(GTKRunner::_WaterCheckboxToggled), this);
+
     g_signal_connect (this->window_lobby, "destroy", G_CALLBACK(GTKRunner::_LobbyWindowClosed), this);
     GtkWidget* button_leaveLobby = GTK_WIDGET (gtk_builder_get_object (Lobbybuilder, "button_leaveLobby"));
     GtkWidget* button_lobbyReady = GTK_WIDGET (gtk_builder_get_object (Lobbybuilder, "button_lobbyReady"));

@@ -1,6 +1,4 @@
 #include "../../include/Notifications/LobbyJoinedNotification.h"
-
-
 #include <iostream>
 
 LobbyJoinedNotification::LobbyJoinedNotification(PlayerProxy& player, Lobby& lobby)
@@ -25,6 +23,17 @@ void LobbyJoinedNotification::Notify(){
 	uint32_t lobbyGUID = _lobby.GUID();
 	_player.sock.Send((char*) &ins, 1);
 	_player.sock.Send((char*) &lobbyGUID, 4);
+
+	//recordar que devuelve 0 si nadie eligio fuego.
+	uint32_t firepguid =_lobby.GetFirePlayerID();
+	_player.sock.Send((char*) &firepguid, 4);
+	uint32_t waterpguid =_lobby.GetWaterPlayerID();
+	_player.sock.Send((char*) &waterpguid, 4);
+	uint32_t airpguid =_lobby.GetAirPlayerID();
+	_player.sock.Send((char*) &airpguid, 4);
+	uint32_t groundpguid =_lobby.GetGroundPlayerID();
+	_player.sock.Send((char*) &groundpguid, 4);
+
 
 	ins = PLAYER_JOINED_LOBBY;
 	uint32_t playerGUID = _player.GUID();

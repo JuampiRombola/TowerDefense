@@ -16,3 +16,20 @@
 #define FIRE_TOWER 32
 #define EARTH_TOWER 33
 #define AIR_TOWER 34
+
+#define PLAYER_PICKED_SPELL 40
+#define PLAYER_UNPICKED_SPELL 41
+#define PICK_SPELL 42
+#define UNPICK_SPELL 43
+
+#define GAME_STARTED 44
+
+#ifndef __SPELLS_ENUM__
+#define __SPELLS_ENUM__
+enum SPELL_TYPE {
+    SPELL_TYPE_FIRE,
+    SPELL_TYPE_AIR,
+    SPELL_TYPE_GROUND,
+    SPELL_TYPE_WATER
+} ;
+#endif

@@ -1,4 +1,7 @@
 #include "SDLRunner.h"
+#include "include/NetCommands/CommandDispatcher.h"
+#include "include/NotificationReciever.h"
+
 SDLRunner::SDLRunner() {
 
 }
@@ -6,13 +9,8 @@ SDLRunner::~SDLRunner() {
 
 }
 
-void SDLRunner::Run(){
-    //std::string ss("../TowerDefenseServer/config.yaml");
-    //GameConfiguration cfg(ss);
-    //uint clockDelaymilliseconds = 100;
-    //ThreadSafeQueue<GameNotification*> notis;
-    //TowerDefenseGame game(clockDelaymilliseconds, cfg, notis);
-    //std::thread gameClock(&TowerDefenseGame::Run, &game);
+void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* reciever)
+{
 
     //BuildTowerCommand tower(Ground, 2, 5);
     //game.QueueCommand(&tower);
@@ -166,4 +164,6 @@ void SDLRunner::Run(){
             delta = elapsedTime - s;
     }
     SDL_Quit();
+    delete dispatcher;
+    delete reciever;
 }

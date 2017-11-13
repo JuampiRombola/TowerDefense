@@ -20,9 +20,7 @@
 #include "../../include/GameModel/GameConfiguration.h"
 #include "../../include/GameModel/Helpers.h"
 
-
-
-TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg, 
+TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg,
 	ThreadSafeQueue<GameNotification*>& notifications) : 
 	_endedMutex(), _commandQueueMutex(), _commands(),_executedCommandQueueMutex(), 
 	_executedCommands(), _gameStateMutex(),
@@ -30,6 +28,8 @@ TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gam
 	_ended(false), _steps(0), _enemyIdCounter(0), _units(), 
 	_map(10, 10, "jsonmapconfigfilename"), GameCfg(gamecfg), notifications(notifications)
 {
+
+
 }
 
 TowerDefenseGame::~TowerDefenseGame()

@@ -11,6 +11,8 @@
 #include "View/Model/PortalSalidaView.h"
 #include "View/Model/TowerView.h"
 #include "View/Model/UnitView.h"
+#include "include/NotificationReciever.h"
+#include "include/NetCommands/CommandDispatcher.h"
 
 #define TITLE "Tower Defense"
 
@@ -23,7 +25,7 @@ class SDLRunner {
 public:
     SDLRunner();
     ~SDLRunner();
-    void Run();
+    void Run(CommandDispatcher* dispatcher, NotificationReciever* reciever);
 };
 
 

@@ -16,6 +16,7 @@ set(SOURCE_FILES_SERVER
         Server/include/Lobbies/LobbyManager.h
         Server/src/Lobbies/LobbyManager.cpp
         Server/include/Notifications/InvalidLogInNotification.h
+        Server/include/Notifications/GameStartedNotification.h
         Server/include/Notifications/LeftLobbyNotification.h
         Server/include/Notifications/LobbyJoinedNotification.h
         Server/include/Notifications/LoggedInNotification.h
@@ -26,9 +27,14 @@ set(SOURCE_FILES_SERVER
         Server/src/Notifications/LeftLobbyNotification.cpp
         Server/src/Notifications/LobbyJoinedNotification.cpp
         Server/src/Notifications/LoggedInNotification.cpp
+        Server/src/Notifications/GameStartedNotification.cpp
         Server/src/Notifications/NewLobbyNotification.cpp
         Server/src/Notifications/Notification.cpp
         Server/src/Notifications/PlayerLeftLobbyNotification.cpp
+        Server/src/Notifications/PlayerPickedSpellNotification.cpp
+        Server/src/Notifications/PlayerUnpickedSpellNotification.cpp
+        Server/include/Notifications/PlayerPickedSpellNotification.h
+        Server/include/Notifications/PlayerUnpickedSpellNotification.h
         Server/src/PlayerProxy.cpp
         Server/src/ServerSocket.cpp
         Server/src/TFServer.cpp
@@ -184,12 +190,18 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/SDLNotifications/SDLNotification.cpp
         Client/src/GTKNotifications/JoinedLobbyGTKNotification.cpp
         Client/src/GTKNotifications/LeftLobbyGTKNotification.cpp
+        Client/src/GTKNotifications/PickedSpellGTKNotification.cpp
+        Client/src/GTKNotifications/OtherPickedSpellGTKNotification.cpp
         Client/src/GTKNotifications/NewLobbyGTKNotification.cpp
+        Client/src/GTKNotifications/GameStartedGTKNotification.cpp
         Client/src/GTKNotifications/PlayerLeftLobbyGTKNotification.cpp
         Client/src/NotificationReciever.cpp
 
         Client/include/SDLNotifications/SDLNotification.h
         Client/include/GTKNotifications/JoinedLobbyGTKNotification.h
+        Client/include/GTKNotifications/PickedSpellGTKNotification.h
+        Client/include/GTKNotifications/GameStartedGTKNotification.h
+        Client/include/GTKNotifications/OtherPickedSpellGTKNotification.h
         Client/include/GTKNotifications/LeftLobbyGTKNotification.h
         Client/include/GTKNotifications/NewLobbyGTKNotification.h
         Client/include/GTKNotifications/PlayerLeftLobbyGTKNotification.h
@@ -209,7 +221,9 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/NetCommands/LogInCommand.cpp
         Client/src/NetCommands/NetCommand.cpp
         Client/src/NetCommands/PlayerIsReadyCommand.cpp
+        Client/src/NetCommands/PickSpellCommand.cpp
 
+        Client/include/NetCommands/PickSpellCommand.h
         Client/include/NetCommands/CommandDispatcher.h
         Client/include/NetCommands/CreateLobbyCommand.h
         Client/include/NetCommands/JoinLobbyCommand.h

@@ -12,21 +12,20 @@
 
 class CommandDispatcher : public std::thread
 {
-	private:
-		SocketWrapper& _sock;
+private:
+	SocketWrapper& _sock;
     std::queue<NetCommand*> _commands;
     std::mutex _queueLock;
     std::condition_variable _cv;
     bool _stop;
     std::thread _thread;
-
     NetCommand* _DequeueCommand();
-	public:
-		CommandDispatcher(SocketWrapper& socket);
-		~CommandDispatcher();
+public:
+	CommandDispatcher(SocketWrapper& socket);
+	~CommandDispatcher();
     void QueueCommand(NetCommand* command);
-		void DispatchCommands();
-		void Run();
+	void DispatchCommands();
+	void Run();
     void Stop();
 };
 #endif

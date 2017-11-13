@@ -15,16 +15,21 @@
 #include "../include/Notifications/PlayerLeaveNotification.h"
 
 
-TFServer::TFServer(std::string service) : _playerGUID(0),_connectionHandlers(),_playerProxies(),
-_connectionHandlersMutex(), _acceptingConnsMutex(),  _playersProxiesMutex(), _isAcceptingConnections(false),  
-_lobbyManager(_notifications), _server(service), _notifications() {
+TFServer::TFServer(std::string service) : _playerGUID(1),_connectionHandlers(),_playerProxies(),
+_connectionHandlersMutex(), _acceptingConnsMutex(),  _playersProxiesMutex(), _gamesMutex(), _isAcceptingConnections(false),
+_lobbyManager(_notifications), _server(service), _notifications(), _gameNotifications(), _games() {
 }
 
 TFServer::~TFServer(){
 	std::cout << "SHUTDOWN TF SERVER \n" << std::flush;
 	_notifications.Release();
-	_acceptorThread.join();
-	_notificatorThread.join();
+
+	if (_acceptorThread.joinable())
+		_acceptorThread.join();
+
+	if (_notificatorThread.joinable())
+		_notificatorThread.join();
+
 	for (auto it = _connectionHandlers.begin(); it != _connectionHandlers.end(); ++it){
 		if ((*it).joinable())
 			(*it).join();
@@ -93,6 +98,15 @@ void TFServer::HandleConnection(PlayerProxy& player){
 					break;
 				case PLAYER_IS_READY:
 					_lobbyManager.HandlePlayerIsReady(player);
+					if (player.lobby->GameEnabled())
+						_LaunchGame(*(player.lobby));
+					break;
+				case PICK_SPELL:
+					_lobbyManager.HandlePlayerPickedSpell(player);
+					break;
+				case UNPICK_SPELL:
+					_lobbyManager.HandlePlayerUnpickedSpell(player);
+					break;
 				default:
 					std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << "'\n" << std::flush;
 			}
@@ -103,13 +117,30 @@ void TFServer::HandleConnection(PlayerProxy& player){
 		auto it = std::find(_playerProxies.begin(), _playerProxies.end(), &player);
 		if (it != _playerProxies.end()){
 			PlayerProxy* playerProxy = *it;
-			_playerProxies.erase(it);
+			//_playerProxies.erase(it);
 			_notifications.Queue(new PlayerLeaveNotification(playerProxy->GUID()));
-			delete playerProxy;
+			//delete playerProxy;
+			playerProxy->state = DEAD;
 		}
 		std::cerr << e.what() << '\n';
 	}		
 }
+
+#include "../../Server/include/GameModel/co
+void TFServer::_LaunchGame(Lobby& lobby){
+	std::lock_guard<std::mutex> lock(_connectionHandlersMutex);
+
+	std::string ss("../TowerDefenseServer/config.yaml");
+	//GameConfiguration cfg(ss);
+	//uint clockDelaymilliseconds = 100;
+	//ThreadSafeQueue<GameNotification*> notis;
+	//TowerDefenseGame game(clockDelaymilliseconds, cfg, notis);
+	//std::thread gameClock(&TowerDefenseGame::Run, &game);
+}
+
+
+
+
 
 void TFServer::_HandleLogin(PlayerProxy& player){
 	std::string playerName = player.sock.RecieveString();

@@ -23,10 +23,12 @@
 #define E_CANT_REGISTER 4
 
 #include <thread>
+#include <vector>
 #include "PlayerProxy.h"
 #include "Lobbies/LobbyManager.h"
 #include "ThreadSafeQueue.h"
 #include "Notifications/Notification.h"
+#include "GameModel/TowerDefenseGame.h"
 
 class TFServer 
 {
@@ -36,23 +38,25 @@ class TFServer
 		std::vector<PlayerProxy*> _playerProxies;
 		std::mutex _connectionHandlersMutex;
 		std::mutex _acceptingConnsMutex;
-		std::mutex _playersProxiesMutex;
+	std::mutex _playersProxiesMutex;
+	std::mutex _gamesMutex;
 		bool _isAcceptingConnections;
 		LobbyManager _lobbyManager;
 
 		ServerSocket _server;
 		ThreadSafeQueue<Notification*> _notifications;
+		ThreadSafeQueue<GameNotification*> _gameNotifications;
+		std::vector<TowerDefenseGame*> _games;
 
 		std::thread _acceptorThread;
 		std::thread _notificatorThread;
-
 
 
 		void _AcceptConnections();
 		void _NotifyClients();
 		void _SetIsAcceptingConnections();
 		void _HandleLogin(PlayerProxy& player);
-
+		void _LaunchGame(Lobby& lobby);
 		
 	public:
 		//El constructor inicia el socket en modo servidor.
