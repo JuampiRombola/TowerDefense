@@ -3,19 +3,12 @@
 #include "SDLRunner.h"
 
 int main(int argc, char** argv) {
-
-    bool go = true;
-
     GTKRunner gtk;
-
     gtk.Run(&argc, &argv);
-
-    if (!gtk.OK) return 0;
-
+    if (!gtk.OK)
+        return 0;
     SDLRunner sdl;
-
     sdl.Run();
-
     return 0;
 }
 
