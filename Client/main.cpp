@@ -3,11 +3,7 @@
 #include "SDLRunner.h"
 
 int main(int argc, char** argv) {
-
-    bool go = true;
-
     GTKRunner gtk;
-
     gtk.Run(&argc, &argv);
 
     ClientLobbyManager* lobbyManager = gtk.lobbyManager;

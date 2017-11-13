@@ -3,6 +3,8 @@
 #include "Common/TextureLoader.h"
 #include "Common/SpriteNamesConfig.h"
 #include "Model/ModelView.h"
+#include "Common/MousePosition.h"
+#include "Model/GameButtons.h"
 
 #define TITLE "Tower Defense"
 
@@ -53,6 +55,16 @@ int main(int argc, char** argv) {
     modelView.createTower(3, TORRE_FUEGO, 1, 4);
     modelView.createTower(4, TORRE_AGUA, 4, 6);
 
+    // Dispatcher
+    SocketWrapper fd(0);
+    CommandDispatcher cmdDispatcher(fd);
+
+    // HUD
+    int mouse_x = -1, mouse_y = -1;
+    MousePosition mouse(mouse_x, mouse_y);
+    GameButtons buttons(mouse, renderer, textureLoader, cmdDispatcher);
+    buttons.addTowerButtons();
+
     Uint32 t1;
     Uint32 t2;
     Uint32 s = 1000 / FPS;
@@ -67,55 +79,59 @@ int main(int argc, char** argv) {
         while(SDL_PollEvent(&event)) {
 
             switch (event.type) {
-                case SDL_QUIT:
-                    quit = true; break;
+                case SDL_QUIT: quit = true; break;
+                case SDL_MOUSEBUTTONDOWN:
+                    SDL_GetMouseState(&mouse_x, &mouse_y);
+                    mouse.activate();
+                    break;
+                case SDL_FINGERDOWN:
+                    mouse_x = static_cast<int>(event.tfinger.x);
+                    mouse_y = static_cast<int>(event.tfinger.y);
+                    mouse.activate();
+                    break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
-                        case SDLK_ESCAPE:
-                            quit = true; break;
-                        case SDLK_i:
-                            renderer.zoomIn(); break;
-                        case SDLK_o:
-                            renderer.zoomOut(); break;
-                        case SDLK_d:
-                            modelView.killUnit(1); break;
-                            //unit.enableDying(); break;
-                        case SDLK_s:
-                            modelView.createShot(DISPARO_TIERRA, 2, 0, 0, 0, 500);break;
-                            //shot.shoot(2, 0, 0, 0, 500); break;
-                        case SDLK_a:
-                            modelView.createSpell(FIREWALL, 1, 1, 5000);break;
-                            //fireWall.cast(1, 1, 5000); break;
-                        case SDLK_q:
-                            modelView.createUnit(++idUnit, ABOMINABLE, 0, 0, 1, 0, 3000); break;
-                        case SDLK_z:
-                            modelView.moveUnit(1, 1, 0, 1, 1, 3000);break;
-                            //unit.move(1, 0, 1, 1, 3000); break;
-                        case SDLK_x:
-                            modelView.moveUnit(1, 1, 1, 2, 1, 3000);break;
-                            //unit.move(1, 1, 0, 1, 3000); break;
-                        case SDLK_c:
-                            modelView.moveUnit(1, 2, 1, 3, 1, 3000);break;
-                            //unit.move(0, 1, 0, 0, 3000); break;
-                        case SDLK_v:
-                            modelView.moveUnit(1, 3, 1, 3, 2, 3000);break;
-                            //unit.move(0, 0, 1, 0, 3000); break;
-                        case SDLK_b:
-                            modelView.moveUnit(1, 3, 2, 3, 3, 3000);break;
-                        case SDLK_n:
-                            modelView.moveUnit(1, 3, 3, 2, 3, 3000);break;
-                        case SDLK_m:
-                            modelView.moveUnit(1, 2, 3, 2, 4, 3000);break;
-                        case SDLK_LEFT:
-                            renderer.updateCamera(-1, 0); break;
-                        case SDLK_RIGHT:
-                            renderer.updateCamera(1, 0); break;
-                        case SDLK_UP:
-                            renderer.updateCamera(0, -1); break;
-                        case SDLK_DOWN:
-                            renderer.updateCamera(0, 1); break;
+                        case SDLK_ESCAPE: quit = true; break;
+                        case SDLK_i: renderer.zoomIn(); break;
+                        case SDLK_o: renderer.zoomOut(); break;
+                        case SDLK_d: modelView.killUnit(1); break;
+                        case SDLK_s: modelView.createShot(
+                                    DISPARO_TIERRA, 2, 0, 0, 0, 500);break;
+                        case SDLK_a: modelView.createSpell(
+                                    FIREWALL, 1, 1, 5000);break;
+                        case SDLK_q: modelView.createUnit(
+                                    ++idUnit, ABOMINABLE, 0, 0, 1, 0, 3000);
+                            break;
+                        case SDLK_z: modelView.moveUnit(1, 1, 0, 1, 1, 3000);
+                            break;
+                        case SDLK_x: modelView.moveUnit(1, 1, 1, 2, 1, 3000);
+                            break;
+                        case SDLK_c: modelView.moveUnit(1, 2, 1, 3, 1, 3000);
+                            break;
+                        case SDLK_v: modelView.moveUnit(1, 3, 1, 3, 2, 3000);
+                            break;
+                        case SDLK_b: modelView.moveUnit(1, 3, 2, 3, 3, 3000);
+                            break;
+                        case SDLK_n: modelView.moveUnit(1, 3, 3, 2, 3, 3000);
+                            break;
+                        case SDLK_m: modelView.moveUnit(1, 2, 3, 2, 4, 3000);
+                            break;
+                        case SDLK_LEFT: renderer.updateCamera(-1, 0); break;
+                        case SDLK_RIGHT: renderer.updateCamera(1, 0); break;
+                        case SDLK_UP: renderer.updateCamera(0, -1); break;
+                        case SDLK_DOWN: renderer.updateCamera(0, 1); break;
                     }
+
             }
+            if (mouse.isActive()) {
+                /*if (!buttons.isAnyClicked()) {
+                    tileX = mapView.getTileXFromPixel(mouse_x, mouse_y);
+                    tileY = mapView.getTileYFromPixel(mouse_x, mouse_y);
+                    editor.applyTileFunction(tileX, tileY);
+                    mouse.deactivate();
+                }*/
+            }
+            event.type = 0;
         }
         renderer.clearRender();
 

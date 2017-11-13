@@ -27,6 +27,7 @@ public:
 	void DispatchCommands();
 	void Run();
     void Stop();
+
 };
 #endif
 
