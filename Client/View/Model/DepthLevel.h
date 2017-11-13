@@ -17,6 +17,7 @@ private:
     
 public:
     DepthLevel();
+    ~DepthLevel();
     void addPortalEntrada(PortalView *portal);
     void addPortalSalida(PortalView *portal);
     void addSpell(SpellView *spell);

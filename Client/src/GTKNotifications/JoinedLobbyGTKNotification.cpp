@@ -1,5 +1,3 @@
-
-
 #include <gtk/gtk.h>
 #include "../../include/GTKNotifications/JoinedLobbyGTKNotification.h"
 #include "../../GTKRunner.h"
@@ -41,6 +39,4 @@ void JoinedLobbyGUINotification::Execute(GTKRunner& runner){
 							COLUMN_PLAYER_ID, playerguid,
 							-1);
 	}
-
-
 }
