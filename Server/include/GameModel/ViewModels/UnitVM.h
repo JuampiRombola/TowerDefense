@@ -1,10 +1,10 @@
 #ifndef _UNITVM_
 #define _UNITVM_
 
-enum UnitType { uAbmonible, uDemonioVerde, uEspectro, uHalconSangriento, uHombreCabra, uNoMuerto }; 
+#include "../../../../Common/Protocolo.h"
 
 struct UnitVM {
-  UnitType unitType;
+    UNIT_TYPE unitType;
   int healthPoints;
   unsigned int xPos;
   unsigned int yPos;

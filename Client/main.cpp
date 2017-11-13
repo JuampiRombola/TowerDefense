@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
 
     gtk.Run(&argc, &argv);
 
+    ClientLobbyManager* lobbyManager = gtk.lobbyManager;
     CommandDispatcher* dispatcher = gtk.dispatcher;
     NotificationReciever* reciever = gtk.reciever;
 
@@ -17,7 +18,7 @@ int main(int argc, char** argv) {
 
     SDLRunner sdl;
 
-    sdl.Run(dispatcher, reciever);
+    sdl.Run(dispatcher, reciever, lobbyManager, gtk.sock);
 
     return 0;
 }

@@ -31,9 +31,7 @@ _projectiles()
 		}
 	}
 	//Armo un camino a mano
-
-
-
+	
 	PathTile* end = new PathTile(6,6, this, nullptr);
 	_PlacePathTile(end);
 	_SetFinishTile(end);
@@ -46,27 +44,27 @@ _projectiles()
 	_PlacePathTile(p1);
 	p2 = new PathTile(3, 5, this, p1);
 	_PlacePathTile(p2);
-	p1 = new PathTile(3, 4, this, p2);
+	p1 = new PathTile(2, 5, this, p2);
 	_PlacePathTile(p1);
 	p2 = new PathTile(2, 4, this, p1);
 	_PlacePathTile(p2);
 	p1 = new PathTile(2, 3, this, p2);
 	_PlacePathTile(p1);
-	p2 = new PathTile(1, 3, this, p1);
+	p2 = new PathTile(3, 3, this, p1);
 	_PlacePathTile(p2);
-	p1 = new PathTile(1, 2, this, p2);
+	p1 = new PathTile(3, 2, this, p2);
+	_PlacePathTile(p1);
+	p2 = new PathTile(3, 1, this, p1);
+	_PlacePathTile(p2);
+	p1 = new PathTile(2, 1, this, p2);
 	_PlacePathTile(p1);
 	p2 = new PathTile(1, 1, this, p1);
 	_PlacePathTile(p2);
 	p1 = new PathTile(1, 0, this, p2);
 	_PlacePathTile(p1);
-
 	PathTile* spawn1 = new PathTile(0,0, this, p1);
 	_PlacePathTile(spawn1);
 	_SetSpawnTile(spawn1);
-
-	//PlaceGroundTile(new SolidGroundTile(2,5));
-
 }
 
 

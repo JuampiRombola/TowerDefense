@@ -1,16 +1,16 @@
-#ifndef __UNIT_POS_GAME_NOTIFICATION__
-#define __UNIT_POS_GAME_NOTIFICATION__
+#ifndef __TOWER_PLACED_GAME_NOTIFICATION__
+#define __TOWER_PLACED_GAME_NOTIFICATION__
 
 #include "GameNotification.h"
-#include "../ViewModels/UnitVM.h"
+#include "../ViewModels/TowerVM.h"
 
-class UnitPositionGameNotification : public GameNotification
+class TowerPlacedGameNotification : public GameNotification
 {
 public:
-	UnitPositionGameNotification(UnitVM& vm);
-	~UnitPositionGameNotification();
+	TowerPlacedGameNotification(TowerVM& vm, std::vector<PlayerProxy*> playersToNotify);
+	~TowerPlacedGameNotification();
 	void Notify();
-	UnitVM vm;
+	TowerVM vm;
 };
 
 #endif

@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "../../../../Common/Protocolo.h"
 #include "../../../include/GameModel/EnviormentUnits/Abmonible.h"
 #include "../../../include/GameModel/Map/PathTile.h"
 #include "../../../include/GameModel/ViewModels/UnitVM.h"
@@ -26,7 +26,7 @@ bool Abmonible::Flies(){
 
 UnitVM Abmonible::GetViewModel(){
 	UnitVM vm;
-	vm.unitType = uAbmonible;
+	vm.unitType = UNIT_TYPE_Abmonible;
 	vm.healthPoints = _healthPoints;
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();

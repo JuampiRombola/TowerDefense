@@ -98,8 +98,10 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/TowerDefenseGame.h
         Server/include/GameModel/GameNotifications/GameNotification.h
         Server/include/GameModel/GameNotifications/UnitPositionGameNotification.h
+        Server/include/GameModel/GameNotifications/TowerPlacedGameNotification.h
         Server/src/GameModel/GameNotifications/GameNotification.cpp
         Server/src/GameModel/GameNotifications/UnitPositionGameNotification.cpp
+        Server/src/GameModel/GameNotifications/TowerPlacedGameNotification.cpp
         Server/src/GameModel/GameConfiguration.cpp
         Server/src/GameModel/TowerDefenseGame.cpp
         Server/src/GameModel/Towers/AirProjectile.cpp
@@ -115,7 +117,7 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/ViewModels/CommandVM.h
         Server/include/GameModel/ViewModels/ProjectileVM.h
         Server/include/GameModel/ViewModels/TowerVM.h
-        Server/include/GameModel/ViewModels/UnitVM.h Server/src/Notifications/PlayerLeaveNotification.cpp Server/include/Notifications/PlayerLeaveNotification.h)
+        Server/include/GameModel/ViewModels/UnitVM.h Server/src/Notifications/PlayerLeaveNotification.cpp Server/include/Notifications/PlayerLeaveNotification.h Server/src/GameModel/GameNotifications/UnitCreatedGameNotification.cpp Server/include/GameModel/GameNotifications/UnitCreatedGameNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp

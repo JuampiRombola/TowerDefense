@@ -3,6 +3,7 @@
 #include "../include/GTKNotifications/LogInSuccessGtkNotification.h"
 #include "../include/GTKNotifications/LogInFailedGtkNotification.h"
 #include "../include/GTKNotifications/GameStartedGTKNotification.h"
+#include "../View/Common/SpriteNamesConfig.h"
 
 
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner)
@@ -78,7 +79,12 @@ void NotificationReciever::RecieveNotifications(){
                 _runner.gtkNotifications.Queue(new LogInFailedGtkNotification());
 				break;
 			case GAME_STARTED:
+				std::cout << "GAME_STARTED::\n" << std::flush;
 				_runner.gtkNotifications.Queue(new GameStartedGTKNotification());
+				break;
+			case GAME_OPCODE:
+				std::cout << "GAME_OPCODE::\n" << std::flush;
+				_HandleGameOpcode();
 			default:
 				std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << ", ( " << (int) opcode << ")\'" << std::flush;
 		}
@@ -88,10 +94,102 @@ void NotificationReciever::RecieveNotifications(){
 }
 
 
+void NotificationReciever::_HandleGameOpcode(){
+	uint8_t opcode;
+	_sock.Recieve((char*) &opcode, 1);
+	switch (opcode) {
+		case TOWER_PLACED:
+			_HandleTowerPlaced();
+			break;
+		case UNIT_POSITION_UPDATE:
+			_HandleUnitPositionUpdate();
+			break;
+        case UNIT_CREATED:
+            _HandleUnitCreated();
+            break;
+    }
+}
+
+
+void NotificationReciever::_HandleTowerPlaced(){
+	uint32_t x;
+	_sock.Recieve((char *) &x, 4);
+	uint32_t y;
+	_sock.Recieve((char *) &y, 4);
+	SPELL_TYPE type;
+	_sock.Recieve((char *) &type, 1);
+	switch(type){
+		case SPELL_TYPE_FIRE:
+			model_view->createTower(990, TORRE_FUEGO, x, y);
+		case SPELL_TYPE_WATER:
+            model_view->createTower(990, TORRE_AGUA, x, y);
+		case SPELL_TYPE_AIR:
+            model_view->createTower(990, TORRE_AIRE, x, y);
+		case SPELL_TYPE_GROUND:
+            model_view->createTower(990, TORRE_TIERRA, x, y);
+	}
+}
+void NotificationReciever::_HandleUnitPositionUpdate(){
+    uint32_t unitID;
+    _sock.Recieve((char *) &unitID, 4);
+    uint32_t x;
+    _sock.Recieve((char *) &x, 4);
+    uint32_t y;
+    _sock.Recieve((char *) &y, 4);
+    uint32_t tox;
+    _sock.Recieve((char *) &tox, 4);
+    uint32_t toy;
+    _sock.Recieve((char *) &toy, 4);
+    uint32_t delay_ms ;
+    _sock.Recieve((char *) &delay_ms, 4);
+    model_view->moveUnit(unitID, x, y, tox, toy, delay_ms);
+}
+void NotificationReciever::_HandleUnitCreated(){
+    uint32_t unitID;
+    _sock.Recieve((char *) &unitID, 4);
+    uint32_t x;
+    _sock.Recieve((char *) &x, 4);
+    uint32_t y;
+    _sock.Recieve((char *) &y, 4);
+    uint32_t tox;
+    _sock.Recieve((char *) &tox, 4);
+    uint32_t toy;
+    _sock.Recieve((char *) &toy, 4);
+    uint32_t delay_ms ;
+    _sock.Recieve((char *) &delay_ms, 4);
+    uint8_t unittype;
+    _sock.Recieve((char *) &unittype, 1);
+    UNIT_TYPE type = (UNIT_TYPE) unittype;
+    switch(type){
+        case UNIT_TYPE_Abmonible:
+            model_view->createUnit(unitID, ABOMINABLE, x, y, tox, toy, delay_ms);
+            break;
+        case UNIT_TYPE_NoMuerto:
+            model_view->createUnit(unitID, NOMUERTO, x, y, tox, toy, delay_ms);
+            break;
+        case UNIT_TYPE_HalconSangriento:
+            model_view->createUnit(unitID, HALCONSANGRIENTO, x, y, tox, toy, delay_ms);
+            break;
+        case UNIT_TYPE_HombreCabra:
+            model_view->createUnit(unitID, HOMBRECABRA, x, y, tox, toy, delay_ms);
+            break;
+        case UNIT_TYPE_DemonioVerde:
+            model_view->createUnit(unitID, DEMONIOVERDE, x, y, tox, toy, delay_ms);
+            break;
+        case UNIT_TYPE_Espectro:
+            model_view->createUnit(unitID, ESPECTRO, x, y, tox, toy, delay_ms);
+            break;
+    }
+}
+
+
 bool NotificationReciever::_Stop(){
 	std::lock_guard<std::mutex> lock(_stopMutex);
 	return _stop;
 }
+
+
+
 
 void NotificationReciever::Stop(){
 	std::lock_guard<std::mutex> lock(_stopMutex);

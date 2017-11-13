@@ -20,7 +20,7 @@ bool UpgradeTowerCommand::Execute(Map* map, TowerDefenseGame* game){
 
 	Tower* t = tile->GetTower();
 	if (t != nullptr)
-		return t->Upgrade(game->GameCfg.Cfg, _type);
+		return t->Upgrade(game->GameCfg->Cfg, _type);
 
 	return false;
 }

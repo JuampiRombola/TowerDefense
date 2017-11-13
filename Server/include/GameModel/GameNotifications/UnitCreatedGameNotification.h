@@ -5,10 +5,18 @@
 #ifndef TOWERDEFENSE_UNITCREATEDGAMENOTIFICATION_H
 #define TOWERDEFENSE_UNITCREATEDGAMENOTIFICATION_H
 
+#include "GameNotification.h"
+#include "../ViewModels/UnitVM.h"
 
-class UnitCreatedGameNotification {
-
+class UnitCreatedGameNotification : public GameNotification
+{
+public:
+    UnitCreatedGameNotification(UnitVM& viewmodel, std::vector<PlayerProxy*> playersToNotify);
+    ~UnitCreatedGameNotification();
+    void Notify();
+    UnitVM vm;
 };
+
 
 
 #endif //TOWERDEFENSE_UNITCREATEDGAMENOTIFICATION_H

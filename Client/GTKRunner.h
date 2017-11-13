@@ -58,7 +58,6 @@ public:
     GtkWindow *window_lobbies;
     GtkWindow *window_lobby;
 
-    std::string TEST;
     void InitLobbyPlayersTreeView();
     void InitLobbiesTreeView();
     void CreateAndShowLobbyWindow();

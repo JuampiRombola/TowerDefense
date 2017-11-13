@@ -4,7 +4,7 @@
 struct UnitVM;
 class Map;
 class PathTile;
-
+class TowerDefenseGame;
 #include "../GameNotifications/GameNotification.h"
 #include "../../ThreadSafeQueue.h"
 
@@ -39,7 +39,7 @@ public:
 	EnviormentUnit(uint id, uint stepDelay_ms, int healthPoints, 
 		ThreadSafeQueue<GameNotification*>& notifications);
 	virtual ~EnviormentUnit();
-	void Step();
+	void Step(TowerDefenseGame& game);
 	uint GetId();
 	PathTile* GetPosition();
 	void SetPosition(PathTile* pos, Map* map);

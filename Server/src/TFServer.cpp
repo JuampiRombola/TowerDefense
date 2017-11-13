@@ -17,7 +17,7 @@
 
 TFServer::TFServer(std::string service) : _playerGUID(1),_connectionHandlers(),_playerProxies(),
 _connectionHandlersMutex(), _acceptingConnsMutex(),  _playersProxiesMutex(), _gamesMutex(), _isAcceptingConnections(false),
-_lobbyManager(_notifications), _server(service), _notifications(), _gameNotifications(), _games() {
+_lobbyManager(_notifications), _server(service), _notifications(), _gameNotifications(), _games(), _player2game() {
 }
 
 TFServer::~TFServer(){
@@ -64,6 +64,13 @@ void TFServer::_NotifyClients(){
 		noti->Notify();
 		delete noti;
 		noti = _notifications.Dequeue();
+	}
+
+	GameNotification* gameNoti = _gameNotifications.Dequeue();
+	while (gameNoti != nullptr){
+		gameNoti->Notify();
+		delete noti;
+		gameNoti = _gameNotifications.Dequeue();
 	}
 }
 
@@ -126,16 +133,16 @@ void TFServer::HandleConnection(PlayerProxy& player){
 	}		
 }
 
-#include "../../Server/include/GameModel/co
 void TFServer::_LaunchGame(Lobby& lobby){
-	std::lock_guard<std::mutex> lock(_connectionHandlersMutex);
+	static int gameId = 1;
+	std::lock_guard<std::mutex> lock(_gamesMutex);
+	std::vector<PlayerProxy*> playersInGame = lobby.GetPlayingPlayers();
+	TowerDefenseGame* game = new TowerDefenseGame(gameId++, _gameNotifications, playersInGame);
+	for (auto it = playersInGame.begin(); it != playersInGame.end(); ++it){
+		_player2game[(*it)] = game;
+	}
 
-	std::string ss("../TowerDefenseServer/config.yaml");
-	//GameConfiguration cfg(ss);
-	//uint clockDelaymilliseconds = 100;
-	//ThreadSafeQueue<GameNotification*> notis;
-	//TowerDefenseGame game(clockDelaymilliseconds, cfg, notis);
-	//std::thread gameClock(&TowerDefenseGame::Run, &game);
+	game->Run();
 }
 
 

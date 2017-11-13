@@ -26,7 +26,7 @@ bool DemonioVerde::Flies(){
 
 UnitVM DemonioVerde::GetViewModel(){
 	UnitVM vm;
-	vm.unitType = uDemonioVerde;
+	vm.unitType = UNIT_TYPE_DemonioVerde;
 	vm.healthPoints = _healthPoints;
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();

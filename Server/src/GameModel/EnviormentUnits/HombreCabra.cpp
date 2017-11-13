@@ -13,7 +13,6 @@ HombreCabra::~HombreCabra()
 }
 
 void HombreCabra::PrintDebug(){
-	return;
 	PathTile* pos = GetPosition();
 	if (pos == nullptr)
 		std::cout << "HombreCabra" << GetId() << " outside map\n";
@@ -27,7 +26,7 @@ bool HombreCabra::Flies(){
 
 UnitVM HombreCabra::GetViewModel(){
 	UnitVM vm;
-	vm.unitType = uHombreCabra;
+	vm.unitType = UNIT_TYPE_HombreCabra;
 	vm.healthPoints = _healthPoints;
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();

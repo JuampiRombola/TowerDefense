@@ -1,3 +1,6 @@
+#ifndef ___PROTOCOLO___
+#define ___PROTOCOLO___
+
 #define CREATE_LOBBY 11
 #define JOIN_LOBBY 13
 #define LEAVE_LOBBY 16
@@ -22,14 +25,36 @@
 #define PICK_SPELL 42
 #define UNPICK_SPELL 43
 
-#define GAME_STARTED 44
-
 #ifndef __SPELLS_ENUM__
 #define __SPELLS_ENUM__
 enum SPELL_TYPE {
-    SPELL_TYPE_FIRE,
-    SPELL_TYPE_AIR,
-    SPELL_TYPE_GROUND,
-    SPELL_TYPE_WATER
+    SPELL_TYPE_FIRE = 50,
+    SPELL_TYPE_AIR = 51,
+    SPELL_TYPE_GROUND = 52,
+    SPELL_TYPE_WATER = 53
 } ;
+#endif
+
+
+#ifndef __UNITS_ENUM__
+#define __UNITS_ENUM__
+enum UNIT_TYPE {
+    UNIT_TYPE_Abmonible = 54,
+    UNIT_TYPE_DemonioVerde = 55,
+    UNIT_TYPE_Espectro = 56,
+    UNIT_TYPE_HalconSangriento = 57,
+    UNIT_TYPE_HombreCabra = 58,
+    UNIT_TYPE_NoMuerto = 59
+} ;
+#endif
+
+
+
+#define GAME_STARTED 100
+#define GAME_OPCODE 101
+#define TOWER_PLACED 102
+#define UNIT_POSITION_UPDATE 103
+#define UNIT_CREATED 104
+
+
 #endif

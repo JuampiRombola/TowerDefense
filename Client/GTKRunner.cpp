@@ -161,7 +161,6 @@ void GTKRunner::MessageBox(std::string s){
 
 void GTKRunner::connect_clicked(GtkWidget* widget, gpointer data){
     GTKRunner* runner = (GTKRunner*) data;
-    std::string testep = runner->TEST;
     const gchar* ip = gtk_entry_get_text( runner->entry_ip );
     const gchar* port = gtk_entry_get_text( runner->entry_port );
     runner->sock = new ClientSocket(ip, port);
@@ -197,7 +196,6 @@ GTKRunner::~GTKRunner() {
 
 
 gboolean notification_check(gpointer data){
-
     GTKRunner* runner = (GTKRunner*) data;
     GTKNotification* gtkNoti = runner->gtkNotifications.Dequeue();
     while (gtkNoti != nullptr){
@@ -302,21 +300,15 @@ void GTKRunner::Run(int* argc, char***argv){
 
     gtk_init (argc, argv);
 
-
-
-
-
     builder = gtk_builder_new ();
     gtk_builder_add_from_file (builder, "../Client/Launcher.glade", NULL);
     this->window_connect = GTK_WINDOW(gtk_builder_get_object (builder, "window_connect"));
     this->window_login = GTK_WINDOW(gtk_builder_get_object (builder, "window_login"));
     this->window_lobbies = GTK_WINDOW(gtk_builder_get_object (builder, "window_lobbies"));
-    g_signal_connect (this->window_connect, "destroy", G_CALLBACK(GTKRunner::_ShutdownGTK), this);
-    g_signal_connect (this->window_login, "destroy", G_CALLBACK(GTKRunner::_ShutdownGTK), this);
-    g_signal_connect (this->window_lobbies, "destroy", G_CALLBACK(GTKRunner::_ShutdownGTK), this);
+    g_signal_connect (this->window_connect, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
+    g_signal_connect (this->window_login, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
+    g_signal_connect (this->window_lobbies, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
     //g_signal_connect (this->window_lobby, "destroy", G_CALLBACK(GTKRunner::_LobbyWindowClosed), this);
-
-    TEST = "SOMETEST";
 
     GtkWidget* button_connect = GTK_WIDGET (gtk_builder_get_object (builder, "button_connect"));
     GtkWidget* button_login = GTK_WIDGET (gtk_builder_get_object (builder, "button_login"));

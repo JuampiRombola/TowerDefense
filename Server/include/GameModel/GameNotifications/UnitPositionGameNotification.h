@@ -7,7 +7,7 @@
 class UnitPositionGameNotification : public GameNotification
 {
 public:
-	UnitPositionGameNotification(UnitVM& vm);
+	UnitPositionGameNotification(UnitVM& viewmodel, std::vector<PlayerProxy*> playersToNotify);
 	~UnitPositionGameNotification();
 	void Notify();
 	UnitVM vm;

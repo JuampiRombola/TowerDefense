@@ -26,7 +26,7 @@ bool HalconSangriento::Flies(){
 
 UnitVM HalconSangriento::GetViewModel(){
 	UnitVM vm;
-	vm.unitType = uHalconSangriento;
+	vm.unitType = UNIT_TYPE_HalconSangriento;
 	vm.healthPoints = _healthPoints;
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
