@@ -19,15 +19,15 @@ class CommandDispatcher : public std::thread
     std::condition_variable _cv;
     bool _stop;
     std::thread _thread;
-
     NetCommand* _DequeueCommand();
+
 	public:
-		CommandDispatcher(SocketWrapper& socket);
-		~CommandDispatcher();
-    void QueueCommand(NetCommand* command);
-		void DispatchCommands();
-		void Run();
-    void Stop();
+	CommandDispatcher(SocketWrapper& socket);
+	~CommandDispatcher();
+	void QueueCommand(NetCommand* command);
+	void DispatchCommands();
+	void Run();
+	void Stop();
 };
 #endif
 
