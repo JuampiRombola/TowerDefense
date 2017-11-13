@@ -28,6 +28,6 @@ void JoinedLobbyGUINotification::Execute(GTKRunner& runner){
 		gtk_list_store_set (GTK_LIST_STORE(model), &iter,
 							COLUMN_PLAYER_NAME, (*it).c_str(),
 							COLUMN_PLAYER_READY, false,
-							-1);*/
-	}
+							-1);
+	}*/
 }

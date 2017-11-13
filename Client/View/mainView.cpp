@@ -1,14 +1,8 @@
 #include "Common/Window.h"
 #include "Common/Renderer.h"
 #include "Common/TextureLoader.h"
-#include "Model/MapView.h"
 #include "Common/SpriteNamesConfig.h"
-#include "Model/PortalEntradaView.h"
-#include "Model/PortalSalidaView.h"
-#include "Model/TowerView.h"
-#include "Model/UnitView.h"
-#include "Model/ShotView.h"
-#include "Model/SpellView.h"
+#include "Model/ModelView.h"
 
 #define TITLE "Tower Defense"
 
@@ -26,61 +20,38 @@ int main(int argc, char** argv) {
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
 
-    MapView mapView(MAPSIZE, MAPSIZE, DESIERTO, renderer, textureLoader);
+    ModelView modelView(renderer, textureLoader);
+    modelView.setMapEnvironment(DESIERTO);
+    modelView.setMapWidthHeight(MAPSIZE, MAPSIZE);
+    modelView.createPathTile(0, 0);
+    modelView.createPathTile(1, 0);
+    modelView.createPathTile(1, 1);
+    modelView.createPathTile(2, 1);
+    modelView.createPathTile(3, 1);
+    modelView.createPathTile(3, 2);
+    modelView.createPathTile(3, 3);
+    modelView.createPathTile(2, 3);
+    modelView.createPathTile(2, 4);
+    modelView.createPathTile(2, 5);
+    modelView.createPathTile(3, 5);
+    modelView.createPathTile(4, 5);
+    modelView.createPathTile(5, 5);
+    modelView.createPathTile(6, 5);
+    modelView.createPathTile(6, 6);
 
-    //Armo un camino
-    mapView.addPathTile(0, 0);
-    mapView.addPathTile(1, 0);
-    mapView.addPathTile(1, 1);
-    mapView.addPathTile(1, 2);
-    mapView.addPathTile(1, 3);
-    mapView.addPathTile(2, 3);
-    mapView.addPathTile(2, 4);
-    mapView.addPathTile(3, 4);
-    mapView.addPathTile(3, 5);
-    mapView.addPathTile(4, 5);
-    mapView.addPathTile(5, 5);
-    mapView.addPathTile(6, 5);
-    mapView.addPathTile(6, 6);
+    modelView.createStructureTile(1, 4);
+    modelView.createStructureTile(2, 0);
+    modelView.createStructureTile(2, 2);
+    modelView.createStructureTile(3, 4);
+    modelView.createStructureTile(4, 6);
 
-    //Pongo tierra firme
-    mapView.addStructureTile(1, 4);
-    mapView.addStructureTile(2, 0);
-    mapView.addStructureTile(2, 2);
-    mapView.addStructureTile(4, 4);
-    mapView.addStructureTile(4, 6);
+    modelView.createPortalEntrada(0, 0);
+    modelView.createPortalSalida(6, 6);
 
-    //Pongo un portal de entrada y uno de salida
-    PortalEntradaView portalEntrada = PortalEntradaView(textureLoader, renderer);
-    portalEntrada.setXY(0, 0);
-    PortalSalidaView portalSalida = PortalSalidaView(textureLoader, renderer);
-    portalSalida.setXY(6, 6);
-
-    //Agrego una torre de aire en el 2,0
-    TowerView tower1(1, TORRE_TIERRA, textureLoader, renderer);
-    tower1.setXY(2, 0);
-
-    //Agrego una torre de agua en el 4,4
-    TowerView tower2(2, TORRE_AGUA, textureLoader, renderer);
-    tower2.setXY(4, 4);
-
-    //Agrego una torre de fuego en el 1,4
-    TowerView tower3(3, TORRE_FUEGO, textureLoader, renderer);
-    tower3.setXY(1, 4);
-
-    //Agrego una torre de tierra en el 5,5
-    TowerView tower4(4, TORRE_TIERRA, textureLoader, renderer);
-    tower4.setXY(4, 6);
-
-    //Agrego un disparo
-    ShotView shot = ShotView(DISPARO_TIERRA, textureLoader, renderer);
-
-    //Agrego un muro de fuego
-    SpellView fireWall = SpellView(METEORITO, textureLoader, renderer);
-
-    //Creo una unidad en el 0,0
-    UnitView unit(1, ABOMINABLE, textureLoader, renderer);
-    unit.move(0, 0, 1, 0, 3000);
+    modelView.createTower(1, TORRE_TIERRA, 2, 0);
+    modelView.createTower(2, TORRE_AIRE, 2, 2);
+    modelView.createTower(3, TORRE_FUEGO, 1, 4);
+    modelView.createTower(4, TORRE_AGUA, 4, 6);
 
     Uint32 t1;
     Uint32 t2;
@@ -89,6 +60,7 @@ int main(int argc, char** argv) {
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
 
+    int idUnit = 0;
     while (!quit) {
         t1 = SDL_GetTicks();
 
@@ -106,19 +78,34 @@ int main(int argc, char** argv) {
                         case SDLK_o:
                             renderer.zoomOut(); break;
                         case SDLK_d:
-                            unit.enableDying(); break;
+                            modelView.killUnit(1); break;
+                            //unit.enableDying(); break;
                         case SDLK_s:
-                            shot.shoot(2, 0, 0, 0, 500); break;
+                            modelView.createShot(DISPARO_TIERRA, 2, 0, 0, 0, 500);break;
+                            //shot.shoot(2, 0, 0, 0, 500); break;
                         case SDLK_a:
-                            fireWall.cast(1, 1, 5000); break;
+                            modelView.createSpell(FIREWALL, 1, 1, 5000);break;
+                            //fireWall.cast(1, 1, 5000); break;
+                        case SDLK_q:
+                            modelView.createUnit(++idUnit, ABOMINABLE, 0, 0, 1, 0, 3000); break;
                         case SDLK_z:
-                            unit.move(1, 0, 1, 1, 3000);; break;
+                            modelView.moveUnit(1, 1, 0, 1, 1, 3000);break;
+                            //unit.move(1, 0, 1, 1, 3000); break;
                         case SDLK_x:
-                            unit.move(1, 1, 0, 1, 3000);; break;
+                            modelView.moveUnit(1, 1, 1, 2, 1, 3000);break;
+                            //unit.move(1, 1, 0, 1, 3000); break;
                         case SDLK_c:
-                            unit.move(0, 1, 0, 0, 3000);; break;
+                            modelView.moveUnit(1, 2, 1, 3, 1, 3000);break;
+                            //unit.move(0, 1, 0, 0, 3000); break;
                         case SDLK_v:
-                            unit.move(0, 0, 1, 0, 3000);; break;
+                            modelView.moveUnit(1, 3, 1, 3, 2, 3000);break;
+                            //unit.move(0, 0, 1, 0, 3000); break;
+                        case SDLK_b:
+                            modelView.moveUnit(1, 3, 2, 3, 3, 3000);break;
+                        case SDLK_n:
+                            modelView.moveUnit(1, 3, 3, 2, 3, 3000);break;
+                        case SDLK_m:
+                            modelView.moveUnit(1, 2, 3, 2, 4, 3000);break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
@@ -132,20 +119,7 @@ int main(int argc, char** argv) {
         }
         renderer.clearRender();
 
-        Uint32 ticks = SDL_GetTicks();
-        mapView.draw(ticks);
-        portalEntrada.draw(ticks);
-        portalSalida.draw(ticks);
-
-        //if ((ticks % 100) == 0)
-            //unit.move(1, 0, 1, 1, 5000);
-        unit.draw(ticks);
-        tower1.draw(ticks);
-        tower2.draw(ticks);
-        tower3.draw(ticks);
-        tower4.draw(ticks);
-        fireWall.draw(ticks);
-        shot.draw(ticks);
+        modelView.draw(SDL_GetTicks());
 
         renderer.present();
 

@@ -107,3 +107,7 @@ void ShotView::enableExplosion() {
             cfg["EXPLOSION_OFFSET_Y"].as<int>();
     spriteExplosion.setOffsetXY(offsetX, offsetY);
 }
+
+bool ShotView::hasFinished() {
+    return (currentState == DISABLE);
+}

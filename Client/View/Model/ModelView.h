@@ -8,6 +8,8 @@
 #include <mutex>
 
 #include <map>
+#include <list>
+#include <vector>
 
 class ModelView {
 private:
@@ -15,7 +17,7 @@ private:
     TextureLoader &textureLoader;
     MapView map;
     std::mutex m;
-    std::vector<ShotView *> shots;
+    std::list<ShotView *> shots;
     std::vector<DepthLevel *> depthLevels;
     std::map<int, int> idDepthLevelsTowers;
     std::map<int, int> idDepthLevelsUnits;
@@ -25,9 +27,10 @@ public:
     ~ModelView();
     void draw(Uint32 time);
     bool isValidTile(int x, int y);
+    void setMapEnvironment(int type);
+    void setMapWidthHeight(int w, int h);
     void createPathTile(int x, int y);
     void createStructureTile(int x, int y);
-    void setMapWidthHeight(int w, int h);
     void createPortalEntrada(int x, int y);
     void createPortalSalida(int x, int y);
     void createUnit(int id, int key,

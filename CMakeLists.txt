@@ -165,7 +165,8 @@ set(SOURCE_FILES_CLIENT
         Client/SDLRunner.h
         Client/SDLRunner.cpp
         Client/src/NetCommands/NewTowerCommand.cpp
-        Client/include/NetCommands/NewTowerCommand.h)
+        Client/include/NetCommands/NewTowerCommand.h
+        Common/Lock.cpp Common/Lock.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -318,6 +319,7 @@ set(SOURCE_FILES_EDITOR
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
 add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp)
+add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
 
 
 INCLUDE(FindPkgConfig)
@@ -333,3 +335,4 @@ add_definitions(${GTK3_CFLAGS_OTHER})
 target_link_libraries(TowerDefenseServer yaml-cpp)
 target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES})
 target_link_libraries(TowerDefenseClient yaml-cpp X11 ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES})
+target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES})

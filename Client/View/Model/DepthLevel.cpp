@@ -2,6 +2,23 @@
 
 DepthLevel::DepthLevel() : portalEntrada(nullptr), portalSalida(nullptr) {}
 
+DepthLevel::~DepthLevel() {
+    if (portalEntrada) delete portalEntrada;
+    if (portalSalida) delete portalSalida;
+
+    auto it1 = spells.begin();
+    while (it1 != spells.end())
+        delete (*it1++);
+
+    auto it2 = towers.begin();
+    while (it2 != towers.end())
+        delete (*it2++);
+
+    auto it3 = units.begin();
+    while (it3 != units.end())
+        delete (*it1++);
+}
+
 void DepthLevel::addPortalEntrada(PortalView *portal) {
     portalEntrada = portal;
 }
@@ -40,7 +57,14 @@ void DepthLevel::draw(Uint32 time) {
     if (portalEntrada) portalEntrada->draw(time);
 
     //Remuevo las unidades que ya estan muertas
-    units.remove_if([] (UnitView *unit) {return unit->isDead();}); //Estoy perdiendo memoria
+    auto it = units.begin();
+    while (it != units.end()) {
+        if ((*it)->isDead()) {
+            delete (*it);
+            it = units.erase(it);
+        } else
+            ++it;
+    }
 
     // Dibujo unidades
     for (auto unit : units)
@@ -51,7 +75,14 @@ void DepthLevel::draw(Uint32 time) {
         tower->draw(time);
     
     // Remuevo los spells que terminaron
-    spells.remove_if([] (SpellView *spell) {return spell->hasFinished();}); //Estoy perdiendo memoria
+    auto it2 = spells.begin();
+    while (it2 != spells.end()) {
+        if ((*it2)->hasFinished()) {
+            delete (*it2);
+            it2 = spells.erase(it2);
+        } else
+            ++it2;
+    }
     
     // Dibujo spells
     for (auto spell : spells)
@@ -70,11 +101,11 @@ std::string DepthLevel::onCLick(int x, int y) {
     }
 
     for (auto unit : units) {
-        if (unit->getX() == x)
+        if (unit->getX() == x) {
             if (!result.empty())
                 result.append(",");
             result.append(unit->onClick());
+        }
     }
     return std::move(result);
 }
-
