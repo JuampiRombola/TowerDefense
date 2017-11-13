@@ -3,16 +3,15 @@
 
 #include <iostream>
 #include <vector>
-#include "../SDLNotifications/SDLNotification.h"
+#include "../GTKNotifications/GTKNotification.h"
 #include "../Lobbies/Lobby.h"
+class GTKRunner;
 
-class LeftLobbyGUINotification : public SDLNotification {
-private:
-	std::vector<Lobby*> _lobbies;
+class LeftLobbyGTKNotification : public GTKNotification {
 public:
-	LeftLobbyGUINotification(std::vector<Lobby*>& lobbies);
-	~LeftLobbyGUINotification();
-	void Execute();
+	LeftLobbyGTKNotification();
+	~LeftLobbyGTKNotification();
+	void Execute(GTKRunner& runner);
 };
 
 #endif

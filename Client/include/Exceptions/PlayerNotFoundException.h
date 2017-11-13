@@ -3,10 +3,10 @@
 #include <exception>
 
 
-class InexistingPlayerLeft : public std::exception
+class PlayerNotFoundException : public std::exception
 {
   virtual const char* what() const throw()
   {
-    return "se desconecto un jugador que no teniamos";
+    return "PlayerNotFoundException";
   }
 };

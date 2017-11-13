@@ -27,7 +27,9 @@ public:
 	//Lanza una excepcion en caso de error
 	bool Recieve(char* buffer, size_t length);
 
-	std::string RecieveString(size_t len);
+	std::string RecieveString();
+	void SendString(std::string& tosend);
+
 };
 
 #endif

@@ -22,7 +22,6 @@ set(SOURCE_FILES_SERVER
         Server/include/Notifications/NewLobbyNotification.h
         Server/include/Notifications/Notification.h
         Server/include/Notifications/PlayerLeftLobbyNotification.h
-        Server/include/Notifications/SendLobbiesNotification.h
         Server/src/Notifications/InvalidLoginNotification.cpp
         Server/src/Notifications/LeftLobbyNotification.cpp
         Server/src/Notifications/LobbyJoinedNotification.cpp
@@ -30,7 +29,6 @@ set(SOURCE_FILES_SERVER
         Server/src/Notifications/NewLobbyNotification.cpp
         Server/src/Notifications/Notification.cpp
         Server/src/Notifications/PlayerLeftLobbyNotification.cpp
-        Server/src/Notifications/SendLobbiesNotification.cpp
         Server/src/PlayerProxy.cpp
         Server/src/ServerSocket.cpp
         Server/src/TFServer.cpp
@@ -111,7 +109,7 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/ViewModels/CommandVM.h
         Server/include/GameModel/ViewModels/ProjectileVM.h
         Server/include/GameModel/ViewModels/TowerVM.h
-        Server/include/GameModel/ViewModels/UnitVM.h)
+        Server/include/GameModel/ViewModels/UnitVM.h Server/src/Notifications/PlayerLeaveNotification.cpp Server/include/Notifications/PlayerLeaveNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp
@@ -172,6 +170,8 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/GTKRunner.h
         Client/GTKRunner.cpp
 
+
+
         Client/src/ClientSocket.cpp
         Client/include/ClientSocket.h
         Common/SocketWrapper.cpp
@@ -179,48 +179,48 @@ set(SOURCE_FILES_CLIENT_GTK
         Common/SocketConnectionException.h
         Common/ClientDisconnectedException.h
 
+
         Client/src/SDLNotifications/SDLNotification.cpp
         Client/src/GTKNotifications/JoinedLobbyGTKNotification.cpp
-        Client/src/GTKNotifications/LeftLobbyGUINotification.cpp
+        Client/src/GTKNotifications/LeftLobbyGTKNotification.cpp
         Client/src/GTKNotifications/NewLobbyGTKNotification.cpp
+        Client/src/GTKNotifications/PlayerLeftLobbyGTKNotification.cpp
         Client/src/NotificationReciever.cpp
-        Client/src/GTKNotifications/UpdateLobbyPlayersGTKNotification.cpp
 
         Client/include/SDLNotifications/SDLNotification.h
         Client/include/GTKNotifications/JoinedLobbyGTKNotification.h
-        Client/include/GTKNotifications/LeftLobbyGUINotification.h
+        Client/include/GTKNotifications/LeftLobbyGTKNotification.h
         Client/include/GTKNotifications/NewLobbyGTKNotification.h
+        Client/include/GTKNotifications/PlayerLeftLobbyGTKNotification.h
         Client/include/NotificationReciever.h
-        Client/include/GTKNotifications/UpdateLobbyPlayersGTKNotification.h
 
         Client/src/Lobbies/ClientLobbyManager.cpp
-        Client/src/Lobbies/LobbyPlayer.cpp
+        Client/src/Lobbies/OtherPlayer.cpp
         Client/src/Lobbies/Lobby.cpp
         Client/include/Lobbies/ClientLobbyManager.h
-        Client/include/Lobbies/LobbyPlayer.h
+        Client/include/Lobbies/OtherPlayer.h
         Client/include/Lobbies/Lobby.h
 
         Client/src/NetCommands/CommandDispatcher.cpp
         Client/src/NetCommands/CreateLobbyCommand.cpp
-        Client/src/NetCommands/GetLobbiesCommand.cpp
         Client/src/NetCommands/JoinLobbyCommand.cpp
         Client/src/NetCommands/LeaveLobbyCommand.cpp
         Client/src/NetCommands/LogInCommand.cpp
         Client/src/NetCommands/NetCommand.cpp
+        Client/src/NetCommands/PlayerIsReadyCommand.cpp
 
         Client/include/NetCommands/CommandDispatcher.h
         Client/include/NetCommands/CreateLobbyCommand.h
-        Client/include/NetCommands/GetLobbiesCommand.h
         Client/include/NetCommands/JoinLobbyCommand.h
         Client/include/NetCommands/LeaveLobbyCommand.h
         Client/include/NetCommands/LogInCommand.h
         Client/include/NetCommands/NetCommand.h
+        Client/include/NetCommands/PlayerIsReadyCommand.h
 
         Client/include/Exceptions/ClientDisconnectedException.h
-        Client/include/Exceptions/SomePlayerJoinedLobbyAndLobbyNotSet.h
+        Client/include/Exceptions/OtherPlayerJoinedLobbyTwice.h
         Client/include/Exceptions/SomePlayerLeftLobbyAndLobbyNotSet.h
         Client/include/Exceptions/PlayerLeftTheLobbyAndWasntInIt.h
-        Client/include/Exceptions/JoinedInexistingLobbyException.h
 
         Client/include/GTKNotifications/GTKNotification.h
         Client/src/GTKNotifications/GTKNotification.cpp
@@ -229,7 +229,7 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/include/GTKNotifications/LogInFailedGtkNotification.h
         Client/src/GTKNotifications/LogInFailedGtkNotification.cpp
 
-        Client/include/NonBlockingThreadSafeQueue.h)
+        Client/include/NonBlockingThreadSafeQueue.h Client/src/GTKNotifications/PlayerJoinedLobbyGTKNotification.cpp Client/include/GTKNotifications/PlayerJoinedLobbyGTKNotification.h)
 
 
 set(SOURCE_FILES_EDITOR

@@ -3,10 +3,10 @@
 #include <exception>
 
 
-class PlayerLeftTheLobbyAndWasntInIt : public std::exception
+class NewLobbyNotifiedTwiceException : public std::exception
 {
   virtual const char* what() const throw()
   {
-    return "PlayerLeftTheLobbyAndWasntInIt";
+    return "NewLobbyNotifiedTwiceException";
   }
 };

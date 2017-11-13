@@ -57,11 +57,19 @@ bool SocketWrapper::Recieve(char* buffer, size_t msgLen){
 }
 
 
-std::string SocketWrapper::RecieveString(size_t len){
-	char* buff = new char[len + 1];
-	this->Recieve(buff, len);
-	buff[len] = '\0';
+std::string SocketWrapper::RecieveString(){
+	uint8_t lenbuf = -1;
+	this->Recieve((char*) &lenbuf, 1);
+	char* buff = new char[lenbuf + 1];
+	this->Recieve(buff, lenbuf);
+	buff[lenbuf] = '\0';
 	std::string str(buff);
 	delete buff;
 	return str;
+}
+
+void SocketWrapper::SendString(std::string& tosend){
+	uint8_t bufsz = tosend.length();
+	this->Send((char*) &bufsz, 1);
+	this->Send(tosend.c_str(), tosend.length());
 }

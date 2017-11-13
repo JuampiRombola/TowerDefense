@@ -20,16 +20,16 @@ private:
 	uint _lobbyGUID;
 	ThreadSafeQueue<Notification*>& _notifications;
 	void _CreateNewLobby(std::string& lobbyName);
-	void _HandleCreateNewLobby(PlayerProxy& player);
-	void _HandleGetLobbies(PlayerProxy& player);
-	void _HandleJoinLobby(PlayerProxy& player);
-	void _HandleLeaveLobby(PlayerProxy& player);
+
 public:
 	LobbyManager(ThreadSafeQueue<Notification*>& notifications);
 	~LobbyManager();
 
-	void HandleRequest(PlayerProxy& player);
-
+	void HandleCreateNewLobby(PlayerProxy &player);
+	void HandleJoinLobby(PlayerProxy &player);
+	void HandleLeaveLobby(PlayerProxy &player);
+	void HandleLogin(PlayerProxy &player);
+	void HandlePlayerIsReady(PlayerProxy &player);
 };
 
 #endif

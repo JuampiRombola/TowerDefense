@@ -1,19 +1,22 @@
-#include "../../include/Lobbies/LobbyPlayer.h"
+#include <iostream>
+#include "../../include/Lobbies/OtherPlayer.h"
 
 
-LobbyPlayer::LobbyPlayer(std::string& name, uint guid)
-: _name(name), _guid(guid) {
+OtherPlayer::OtherPlayer(std::string& name, uint guid)
+: _name(name), _guid(guid), joinedLobby(nullptr)
+{
+	std::cout << "Other player created: id " << guid << ", name " << name << '\n' << std::flush;
 
 }
 
-LobbyPlayer::~LobbyPlayer(){
+OtherPlayer::~OtherPlayer(){
 
 }
 
-std::string LobbyPlayer::Name(){
+std::string OtherPlayer::Name(){
 	return _name;
 }
 
-uint LobbyPlayer::GUID(){
+uint OtherPlayer::GUID(){
 	return _guid;
 }

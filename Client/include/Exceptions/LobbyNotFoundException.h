@@ -2,11 +2,10 @@
 #include <iostream>
 #include <exception>
 
-
-class ClientDisconnectedException : public std::exception
+class LobbyNotFoundException : public std::exception
 {
   virtual const char* what() const throw()
   {
-    return "El cliente se desconecto";
+    return "LobbyNotFoundException";
   }
 };

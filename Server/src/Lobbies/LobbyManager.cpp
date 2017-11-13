@@ -1,10 +1,10 @@
 #include <iostream>
 #include "../../include/Lobbies/LobbyManager.h"
 #include "../../../Common/Protocolo.h"
-#include "../../include/Notifications/SendLobbiesNotification.h"
 #include "../../include/Notifications/LobbyJoinedNotification.h"
 #include "../../include/Notifications/LeftLobbyNotification.h"
 #include "../../include/Exceptions/PlayerStateInLobbyAndHasNoLobbySet.h"
+#include "../../include/Notifications/LoggedInNotification.h"
 
 
 LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
@@ -18,27 +18,42 @@ LobbyManager::~LobbyManager(){
 	}
 }
 
-void LobbyManager::HandleRequest(PlayerProxy& player){
-	uint8_t opcode;
-	player.sock.Recieve((char*) &opcode, 1);
-	std::cout << "SERVER LOBBY MANAGER RECIEVED OPCODE: " << (int) opcode << "\n";
-	switch( opcode ){
-		case CREATE_LOBBY:
-			_HandleCreateNewLobby(player);
-			break;
-		case GET_LOBBIES:
-			_HandleGetLobbies(player);
-			break;
-		case JOIN_LOBBY:
-			_HandleJoinLobby(player);
-			break;
-		case LEAVE_LOBBY:
-			_HandleLeaveLobby(player);
-			break;
-	}
+void LobbyManager::HandlePlayerIsReady(PlayerProxy &player){
+	if (player.lobby == nullptr || player.state != IN_LOBBY)
+		return;
+
+	player.lobby->PlayerIsReady(player);
 }
 
-void LobbyManager::_HandleLeaveLobby(PlayerProxy& player){
+
+void LobbyManager::HandleLogin(PlayerProxy &player){
+	std::lock_guard<std::mutex> lock(_lobbiesMutex);
+	std::cout << " CHECKPOINT2 \n" << std::flush;
+
+
+	std::vector<Lobby* > lobbies;
+	auto lobbies2playersGUIDS = std::vector<std::tuple<uint32_t, uint32_t>>();
+
+	for (auto it = _lobbies.begin(); it != _lobbies.end(); ++it){
+		uint32_t lobbyGUID = (*it)->GUID();
+		lobbies.emplace_back(*it);
+		std::vector<int> playersGUIDS = (*it)->GetPlayersGUIDS();
+		uint size = playersGUIDS.size();
+		for (auto itplayer = playersGUIDS.begin(); itplayer != playersGUIDS.end(); ++itplayer){
+			uint32_t playerguid = *itplayer;
+			std::tuple<uint32_t , uint32_t > tup = std::tuple<uint32_t , uint32_t >(lobbyGUID, playerguid);
+			lobbies2playersGUIDS.emplace_back(tup);
+		}
+	}
+
+	int debug = lobbies2playersGUIDS.size();
+
+	_notifications.Queue(new LoggedInNotification(player, lobbies, lobbies2playersGUIDS));
+	std::cout << " CHECKPOINT2 \n" << std::flush;
+
+}
+
+void LobbyManager::HandleLeaveLobby(PlayerProxy &player){
 	std::lock_guard<std::mutex> lock(_lobbiesMutex);
 
 	if (player.state != IN_LOBBY)
@@ -46,14 +61,13 @@ void LobbyManager::_HandleLeaveLobby(PlayerProxy& player){
 
 	if (player.lobby == nullptr)
 		throw PlayerStateInLobbyAndHasNoLobbySet();
+	Lobby* lobbyleft = player.lobby;
 
 	player.lobby->PlayerLeave(player);
 	player.lobby = nullptr;
-
-	_notifications.Queue(new LeftLobbyNotification(player));
 }
 
-void LobbyManager::_HandleJoinLobby(PlayerProxy& player){
+void LobbyManager::HandleJoinLobby(PlayerProxy &player){
 	std::lock_guard<std::mutex> lock(_lobbiesMutex);
 	uint32_t lobbyguid = 1;
 	player.sock.Recieve((char*) &lobbyguid, 4);
@@ -79,29 +93,11 @@ void LobbyManager::_HandleJoinLobby(PlayerProxy& player){
 }
 
 
-void LobbyManager::_HandleGetLobbies(PlayerProxy& player){
-	std::lock_guard<std::mutex> lock(_lobbiesMutex);
-	if (player.state != BROWSING_LOBBIES)
-		return;
-
-	SendLobbiesNotification* noti = new SendLobbiesNotification(player);
-
-	for (auto it = _lobbies.begin(); it != _lobbies.end(); ++it){
-		noti->AddLobby(*it);
-	}
-
-	_notifications.Queue(noti);
-}
-
-void LobbyManager::_HandleCreateNewLobby(PlayerProxy& player){
+void LobbyManager::HandleCreateNewLobby(PlayerProxy &player){
 	uint8_t lobbyNameSize;
-	player.sock.Recieve((char*) &lobbyNameSize, 1);
-
-	std::string lobbyName = player.sock.RecieveString(lobbyNameSize);
-
-	if (player.state == BROWSING_LOBBIES){
+	std::string lobbyName = player.sock.RecieveString();
+	if (player.state == BROWSING_LOBBIES)
 		_CreateNewLobby(lobbyName);
-	}
 }
 
 void LobbyManager::_CreateNewLobby(std::string& lobbyName){

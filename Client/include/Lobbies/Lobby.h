@@ -3,14 +3,16 @@
 
 #include <string>
 #include <vector>
-#include "LobbyPlayer.h"
+#include "OtherPlayer.h"
+#include <mutex>
 
 class Lobby{
 
 private:
 	std::string _name;
 	uint _guid;
-	std::vector<LobbyPlayer*> _players;
+	std::vector<OtherPlayer*> _players;
+	std::mutex _otherPlayersMutex;
 
 public:
 	Lobby(std::string& name, uint guid);
@@ -18,10 +20,12 @@ public:
 
 	std::string Name();
 	uint GUID();
-	void AddPlayer(std::string& name, uint guid);
-	void PlayerLeft(uint pguid);
-	void Reset();
-	std::vector<std::string> PlayerNames();
+
+	std::vector<OtherPlayer*>::const_iterator GetOtherPlayer(uint32_t guid);
+	void PlayerJoin(OtherPlayer &player);
+	void PlayerLeave(OtherPlayer& player);
+	std::vector<OtherPlayer*> GetPlayersInLobby();
+
 };
 
 #endif

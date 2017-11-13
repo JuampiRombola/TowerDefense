@@ -4,6 +4,7 @@
 #include "../../include/Lobbies/Lobby.h"
 #include "../../include/Exceptions/PlayerLeftLobbyHeWasntInException.h"
 #include "../../include/Notifications/PlayerLeftLobbyNotification.h"
+#include "../../include/Notifications/LeftLobbyNotification.h"
 
 
 Lobby::Lobby(std::string name, uint guid, ThreadSafeQueue<Notification*>& notifications) 
@@ -14,12 +15,27 @@ Lobby::~Lobby(){
 
 }
 
+
 std::string Lobby::Name(){
 	return _name;
 }
 
 uint Lobby::GUID(){
 	return _guid;
+}
+
+void Lobby::PlayerIsReady(PlayerProxy &player) {
+
+
+}
+
+std::vector<int> Lobby::GetPlayersGUIDS(){
+	std::lock_guard<std::mutex> lock(_playersMutex);
+	std::vector<int> playerGUIDS;
+	for (auto it = _players.begin(); it != _players.end(); ++it){
+		playerGUIDS.emplace_back((*it)->GUID());
+	}
+	return playerGUIDS;
 }
 
 bool Lobby::PlayerJoin(PlayerProxy& player){
@@ -41,6 +57,8 @@ void Lobby::PlayerLeave(PlayerProxy& player){
 		throw PlayerLeftLobbyHeWasntInException();
 	}
 	player.state = BROWSING_LOBBIES;
+	player.lobby = nullptr;
 	_players.erase(it);
+	_notifications.Queue(new LeftLobbyNotification(player));
 	_notifications.Queue(new PlayerLeftLobbyNotification(*this, p->GUID()));
 }

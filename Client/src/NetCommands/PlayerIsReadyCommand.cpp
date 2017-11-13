@@ -1,18 +1,18 @@
-#include "../../include/NetCommands/LeaveLobbyCommand.h"
+#include "../../include/NetCommands/PlayerIsReadyCommand.h"
 #include "../../../Common/Protocolo.h"
 
-LeaveLobbyCommand::LeaveLobbyCommand()
+PlayerIsReadyCommand::PlayerIsReadyCommand()
 {
 	
 }
 
-LeaveLobbyCommand::~LeaveLobbyCommand(){
+PlayerIsReadyCommand::~PlayerIsReadyCommand(){
 	
 }
 
 
 
-void LeaveLobbyCommand::SendCommand(SocketWrapper& sock){
-	uint8_t instruction = LEAVE_LOBBY;
+void PlayerIsReadyCommand::SendCommand(SocketWrapper& sock){
+	uint8_t instruction = PLAYER_IS_READY;
 	sock.Send((char*)&instruction, 1);
 }

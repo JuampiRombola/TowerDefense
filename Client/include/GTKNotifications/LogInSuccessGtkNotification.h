@@ -6,10 +6,13 @@
 #define TOWERDEFENSE_LOGINSUCCESSGTKNOTIFICATION_H
 
 #include "GTKNotification.h"
+#include "../Lobbies/Lobby.h"
 
 class LogInSuccessGtkNotification : public GTKNotification{
+private:
+    std::vector<Lobby*> _lobbies;
 public:
-    LogInSuccessGtkNotification();
+    LogInSuccessGtkNotification(std::vector<Lobby*>& lobbies);
     ~LogInSuccessGtkNotification();
     void Execute(GTKRunner& runner);
 };

@@ -20,10 +20,12 @@ private:
 public:
 	Lobby(std::string name, uint guid, ThreadSafeQueue<Notification*>& notifications);
 	~Lobby();
+	std::vector<int> GetPlayersGUIDS();
 	std::string Name();
 	uint GUID();
 	bool PlayerJoin(PlayerProxy& player);
 	void PlayerLeave(PlayerProxy& player);
+	void PlayerIsReady(PlayerProxy& player);
 };
 
 #endif

@@ -6,9 +6,20 @@
 #define TOWERDEFENSE_PLAYERLEAVENOTIFICATION_H
 
 
-class PlayerLeaveNotification {
+#include "Notification.h"
+
+class PlayerLeaveNotification : public Notification
+{
+
+private:
+    uint32_t _playerGUID;
+public:
+    PlayerLeaveNotification(uint32_t guid);
+    ~PlayerLeaveNotification();
+
+    void Notify();
+    void SetPlayersToNotify(std::vector<PlayerProxy*>* players);
 
 };
-
 
 #endif //TOWERDEFENSE_PLAYERLEAVENOTIFICATION_H

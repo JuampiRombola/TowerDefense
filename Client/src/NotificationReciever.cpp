@@ -21,23 +21,53 @@ void NotificationReciever::Run(){
 void NotificationReciever::RecieveNotifications(){
 	uint8_t opcode;
 	while (!_Stop()){
+		std::cout << " CHECK \n" << std::flush;
 		_sock.Recieve((char*) &opcode, 1);
-		std::cout << "CLIENT RECIEVED NOTI OPCODE: " << (int)opcode << "\n";
+		std::cout << " RUN \n" << std::flush;
 		switch (opcode){
-			case LOBBY_OPCODE:
-				_lobbyManager.HandleNotification();
+			case CREATE_LOBBY:
+				std::cout << "CREATE_LOBBY::\n" << std::flush;
+				_lobbyManager.HandleNewLobbyNotification();
+				break;
+			case JOIN_LOBBY:
+				std::cout << "JOIN_LOBBY::\n" << std::flush;
+				_lobbyManager.HandleLobbyJoin();
+				break;
+			case LEAVE_LOBBY:
+				std::cout << "LEAVE_LOBBY::\n" << std::flush;
+				_lobbyManager.HandleLeaveLobby();
+				break;
+			case PLAYER_LEFT_LOBBY:
+				std::cout << "PLAYER_LEFT_LOBBY::\n" << std::flush;
+				_lobbyManager.HandlePlayerLeftLobby();
+				break;
+			case PLAYER_JOINED_LOBBY:
+				std::cout << "PLAYER_JOINED_LOBBY::\n" << std::flush;
+				_lobbyManager.HandlePlayerJoinedLobby();
+				break;
+			case PLAYER_JOIN:
+				std::cout << "PLAYER_JOIN::\n" << std::flush;
+				_lobbyManager.HandlePlayerJoin();
+				break;
+			case PLAYER_LEAVE:
+				std::cout << "PLAYER_LEAVE::\n" << std::flush;
+				_lobbyManager.HandlePlayerLeave();
 				break;
 			case LOG_IN_SUCCESS:
-				_runner.gtkNotifications.Queue(new LogInSuccessGtkNotification());
+				std::cout << "LOG_IN_SUCCESS::\n" << std::flush;
+				_lobbyManager.HandleLoginSuccess();
 				break;
 			case LOG_IN_FAILED:
                 _runner.gtkNotifications.Queue(new LogInFailedGtkNotification());
 				break;
 			default:
-				std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << '\'' << std::flush;
+				std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << ", ( " << (int) opcode << ")\'" << std::flush;
 		}
+		std::cout << " OUT \n" << std::flush;
 	}
+
 }
+
 
 bool NotificationReciever::_Stop(){
 	std::lock_guard<std::mutex> lock(_stopMutex);

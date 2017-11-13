@@ -1,18 +1,15 @@
-#include "../../include/GTKNotifications/LeftLobbyGUINotification.h"
+#include "../../include/GTKNotifications/LeftLobbyGTKNotification.h"
+#include "../../GTKRunner.h"
 
 
-LeftLobbyGUINotification::LeftLobbyGUINotification(std::vector<Lobby*>& lobbies) : _lobbies(lobbies) {
+LeftLobbyGTKNotification::LeftLobbyGTKNotification() {
 	
 }
 
-LeftLobbyGUINotification::~LeftLobbyGUINotification(){
+LeftLobbyGTKNotification::~LeftLobbyGTKNotification(){
 	
 }
 
-void LeftLobbyGUINotification::Execute(){
-	std::cout << "LEFT LOBBY, NOW BROWSING LOBBIES\n " << std::flush;
-	for (auto it = _lobbies.begin(); it != _lobbies.end(); ++it){
-		Lobby* l = *it;		
-		std::cout << "Lobby: '" << l->Name() << "', guid: " << l->GUID() << "\n " << std::flush;
-	}
+void LeftLobbyGTKNotification::Execute(GTKRunner& runner){
+    gtk_widget_show (GTK_WIDGET(runner.window_lobbies));
 }

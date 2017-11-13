@@ -23,9 +23,6 @@ void NewLobbyNotification::Notify(){
 	
 	for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it){
 		PlayerProxy* p = *it;
-
-		uint8_t opcode = LOBBY_OPCODE; //Para el lobby
-		p->sock.Send((char*) &opcode, 1);
 		uint8_t instruction = CREATE_LOBBY; ///New lobby
 		p->sock.Send((char*) &instruction, 1);
 		int32_t guid = _lobby.GUID();

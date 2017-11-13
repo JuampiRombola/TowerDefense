@@ -3,150 +3,191 @@
 #include "../../../Common/Protocolo.h"
 #include "../../include/GTKNotifications/NewLobbyGTKNotification.h"
 #include "../../include/GTKNotifications/JoinedLobbyGTKNotification.h"
-#include "../../include/GTKNotifications/UpdateLobbyPlayersGTKNotification.h"
-#include "../../include/Exceptions/JoinedInexistingLobbyException.h"
 #include "../../include/Exceptions/SomePlayerLeftLobbyAndLobbyNotSet.h"
-#include "../../include/Exceptions/SomePlayerJoinedLobbyAndLobbyNotSet.h"
-#include "../../include/GTKNotifications/LeftLobbyGUINotification.h"
+#include "../../include/Exceptions/PlayerJoinedInexistingLobbyException.h"
+#include "../../include/Exceptions/PlayerNotFoundException.h"
+#include "../../include/Exceptions/OtherPlayerJoinedLobbyTwice.h"
+#include "../../include/Exceptions/LobbyNotFoundException.h"
+#include "../../include/Exceptions/NewLobbyNotifiedTwiceException.h"
+#include "../../include/GTKNotifications/LeftLobbyGTKNotification.h"
 #include "../../GTKRunner.h"
+#include "../../include/GTKNotifications/PlayerJoinedLobbyGTKNotification.h"
+#include "../../include/GTKNotifications/PlayerLeftLobbyGTKNotification.h"
+#include "../../include/GTKNotifications/LogInSuccessGtkNotification.h"
 
 
 ClientLobbyManager::ClientLobbyManager(SocketWrapper& _sock, GTKRunner& runner)
-: _sock(_sock), _lobbies(), _joinedLobby(nullptr), _runner(runner) {
+: _sock(_sock), _lobbies(), _otherPlayers(), _joinedLobby(nullptr), _runner(runner) {
 
 }
 
 ClientLobbyManager::~ClientLobbyManager(){
-	for (auto it = _lobbies.begin(); it != _lobbies.end(); ++it){
-		delete (*it);
-	}
+    for (auto it = _lobbies.begin(); it != _lobbies.end(); ++it){
+        delete (*it);
+    }
+    for (auto it = _otherPlayers.begin(); it != _otherPlayers.end(); ++it){
+        delete (*it);
+    }
 }
 
-
-void ClientLobbyManager::HandleNotification(){
-	uint8_t opcode;
-	_sock.Recieve((char*) &opcode, 1);
-	std::cout << "CLIENT LOBBY MANAGER RECIEVED NOTI OPCODE: " << (int) opcode << "\n";
-	switch (opcode){
-		case CREATE_LOBBY:
-			_HandleNewLobbyNotification();
-			break;
-		case GET_LOBBIES:
-			_HandleGetLobbies();
-			break;
-		case JOIN_LOBBY:
-			_HandleLobbyJoin();
-			break;
-		case PLAYER_LEFT_LOBBY:
-			_HandlePlayerLeftLobby();
-			break;
-		case PLAYER_JOINED_LOBBY:
-			_HandlePlayerJoinedLobby();
-			break;
-		case LEAVE_LOBBY:
-			_HandleLeaveLobby();
-			break;
-		default:
-			std::cout << "UNKNOWN LOBBY OPCODE RECIEVED " << (int) opcode <<  "\n";
-	}
+void ClientLobbyManager::HandleLeaveLobby(){
+    _joinedLobby = nullptr;
+    _runner.gtkNotifications.Queue(new LeftLobbyGTKNotification());
 }
 
-void ClientLobbyManager::_HandleLeaveLobby(){
-	_joinedLobby->Reset();
-	_joinedLobby = nullptr;
-	//_guiNotiQueue.Queue(new LeftLobbyGUINotification(_lobbies));
+void ClientLobbyManager::HandleLobbyJoin(){
+    uint32_t lobbyGuid = -1;
+    _sock.Recieve((char*)&lobbyGuid, 4);
+    _joinedLobby = GetLobby(lobbyGuid);
+    _runner.gtkNotifications.Queue(new JoinedLobbyGUINotification(*_joinedLobby));
 }
 
-void ClientLobbyManager::_HandlePlayerJoinedLobby(){
-	uint32_t pguid = -1;
-	_sock.Recieve((char*) &pguid, 4);
-	uint8_t pnamesz = -1;
-	_sock.Recieve((char*) &pnamesz, 1);
-	std::string pname = _sock.RecieveString(pnamesz);
-	if (_joinedLobby == nullptr)
-		throw SomePlayerJoinedLobbyAndLobbyNotSet();
-
-	_joinedLobby->AddPlayer(pname, pguid);	
-	std::vector<std::string> pnames = _joinedLobby->PlayerNames();
-	//_guiNotiQueue.Queue(new UpdateLobbyPlayersGUINotification(pnames));
+void ClientLobbyManager::HandlePlayerJoin(){
+    uint32_t pguid = -1;
+    _sock.Recieve((char*) &pguid, 4);
+    std::string pname = _sock.RecieveString();
+    _otherPlayers.push_back(new OtherPlayer(pname, pguid));
+    std::cout << pname << ", id: " << pguid <<  " joined\n" << std::flush;
 }
 
-void ClientLobbyManager::_HandlePlayerLeftLobby(){
-	uint32_t pguid = -1;
-	_sock.Recieve((char*) &pguid, 4);
-	if (_joinedLobby == nullptr)
-		throw SomePlayerLeftLobbyAndLobbyNotSet();
-	std::cout << "HANDLING PLAYER LEFT LOBBY, PGUID: " << (int) pguid << '\n' << std::flush;
-	_joinedLobby->PlayerLeft(pguid);
-	std::vector<std::string> pnames = _joinedLobby->PlayerNames();
-	//_guiNotiQueue.Queue(new UpdateLobbyPlayersGUINotification(pnames));
+void ClientLobbyManager::HandlePlayerLeave(){
+    uint32_t pguid = -1;
+    _sock.Recieve((char*) &pguid, 4);
+    auto it = GetOtherPlayer(pguid);
+
+    OtherPlayer* p = *it;
+    if (p->joinedLobby != nullptr){
+        p->joinedLobby->PlayerLeave(*p);
+    }
+
+    _otherPlayers.erase(it);
+    delete *it;
 }
 
-void ClientLobbyManager::_HandleLobbyJoin(){
+std::vector<OtherPlayer*>::const_iterator ClientLobbyManager::GetOtherPlayer(uint32_t guid){
+    bool found = false;
+    for (auto it = _otherPlayers.begin(); it != _otherPlayers.end() && !found; ++it){
+        OtherPlayer* p = *it;
+        if (p->GUID() == guid){
+            found = true;
+            return it;
+        }
+    }
+    throw PlayerNotFoundException();
+}
+
+Lobby* ClientLobbyManager::GetLobby(uint32_t guid){
+    bool found = false;
+    for (auto it = _lobbies.begin(); it != _lobbies.end() && !found; ++it){
+        Lobby* l = *it;
+        if (l->GUID() == guid){
+            found = true;
+            return l;
+        }
+    }
+    throw LobbyNotFoundException();
+}
+
+void ClientLobbyManager::HandlePlayerJoinedLobby(){
+    uint32_t pguid = -1;
+    _sock.Recieve((char*) &pguid, 4);
+    uint32_t lobbyGuid = -1;
+    _sock.Recieve((char*)&lobbyGuid, 4);
+
+    std::cout << "player id: " << pguid << " joined lobby id: " << lobbyGuid << '\n' << std::flush;
+
+    Lobby* lobbyOtherPlayerJoined = GetLobby(lobbyGuid);
+    std::cout << "ASKLDJALKSDJKLASJDKLASD\n " << std::flush;
+
+    auto itplayer = GetOtherPlayer(pguid);
+    std::cout << "ASKLDJALKSDJKLASJDKLASD\n " << std::flush;
+
+    lobbyOtherPlayerJoined->PlayerJoin(*(*itplayer));
+
+    std::cout << "ASKLDJALKSDJKLASJDKLASD\n " << std::flush;
+
+    if (_joinedLobby == lobbyOtherPlayerJoined)
+        _runner.gtkNotifications.Queue(new PlayerJoinedLobbyGTKNotification(*(*itplayer)));
+
+    std::cout << "ASKLDJALKSDJKLASJDKLASD\n " << std::flush;
+
+}
+
+void ClientLobbyManager::HandlePlayerLeftLobby(){
+    uint32_t pguid = -1;
+    _sock.Recieve((char*) &pguid, 4);
+    uint32_t lobbyGuid = -1;
+    _sock.Recieve((char*)&lobbyGuid, 4);
+
+    Lobby* lobbyOtherPlayerLeft = GetLobby(lobbyGuid);
+    auto itplayer = GetOtherPlayer(pguid);
+    lobbyOtherPlayerLeft->PlayerLeave(*(*itplayer));
+
+    if (_joinedLobby == lobbyOtherPlayerLeft)
+        _runner.gtkNotifications.Queue(new PlayerLeftLobbyGTKNotification(*(*itplayer)));
+}
+
+void ClientLobbyManager::HandleNewLobbyNotification(){
 	uint32_t lobbyGuid = -1;
 	_sock.Recieve((char*)&lobbyGuid, 4);
-	bool found = false;
-	Lobby* l = nullptr;
+	std::string lobbyName = _sock.RecieveString();
 
-	for (auto it = _lobbies.begin(); it != _lobbies.end() && !found; ++it){
-		l = *it;
-		if (l->GUID() == lobbyGuid){
-			_joinedLobby = l;
-			found = true;
-		}
-	}
+    bool found = true;
+    try {
+        Lobby *lobby = GetLobby(lobbyGuid);
+    }catch (std::exception& e){
+        found = false;
+    }
 
-	if (!found){
-		throw JoinedInexistingLobbyException();
-	} 
+    if (found)
+        throw NewLobbyNotifiedTwiceException();
 
-	uint8_t playersInlobby = -1;
-	_sock.Recieve((char*) &playersInlobby, 1);
+    _lobbies.push_back(new Lobby(lobbyName, lobbyGuid));
+	_runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*(_lobbies.back())));
 
-	for (uint i = 0; i < playersInlobby; i++)
-	{
-		uint32_t pguid = -1;
-		_sock.Recieve((char*)&pguid, 4);
-		uint8_t pnamesize;
-		_sock.Recieve((char*) &pnamesize, 1);
-		std::string pname = _sock.RecieveString(pnamesize);
-		l->AddPlayer(pname, pguid);
-	}
-
-	_runner.gtkNotifications.Queue(new JoinedLobbyGUINotification(*_joinedLobby));
 }
 
-void ClientLobbyManager::_HandleNewLobbyNotification(){
-	uint32_t lobbyGuid = -1;
-	_sock.Recieve((char*)&lobbyGuid, 4);
-	uint8_t lobbyNameSize;
-	_sock.Recieve((char*) &lobbyNameSize, 1);
-	std::string lobbyName = _sock.RecieveString(lobbyNameSize);
-
-	bool found = false;
-	for (auto it = _lobbies.begin(); it != _lobbies.end() && !found; ++it){
-		Lobby* l = *it;
-
-		if (l->GUID() == lobbyGuid)
-			found = true;
-	}
-
-	if (!found){
-		_lobbies.push_back(new Lobby(lobbyName, lobbyGuid));
-		_runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*(_lobbies.back())));
-	}
+std::vector<Lobby*> ClientLobbyManager::GetLobbies(){
+    return _lobbies;
 }
 
-void ClientLobbyManager::_HandleGetLobbies(){
+void ClientLobbyManager::HandleLoginSuccess(){
 
-	int32_t lobbyAmount = -1, lobbyGuid = -1;
-	_sock.Recieve((char*) &lobbyAmount, 4);
-	for (int i = 0; i < lobbyAmount; i++){
-		_sock.Recieve((char*)&lobbyGuid, 4);
-		uint8_t lobbyNameSize;
-		_sock.Recieve((char*) &lobbyNameSize, 1);
-		std::string lobbyName = _sock.RecieveString(lobbyNameSize);
-		_lobbies.push_back(new Lobby(lobbyName, lobbyGuid));
-		_runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*(_lobbies.back())));
-	}
+    uint32_t lobbyCount = -1;
+    _sock.Recieve((char*) &lobbyCount, 4);
+
+    for (int i = 0; i < lobbyCount; i++){
+        uint32_t lobbyGuid = -1;
+        _sock.Recieve((char*) &lobbyGuid, 4);
+        std::string lobbyName = _sock.RecieveString();
+        _lobbies.push_back(new Lobby(lobbyName, lobbyGuid));
+        _runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*(_lobbies.back())));
+    }
+
+    uint32_t playerAmount = -1;
+    _sock.Recieve((char*) &playerAmount, 4);
+
+    for (int i = 0; i < playerAmount; i++){
+        uint32_t  playerGUID = -1;
+        _sock.Recieve((char*) &playerGUID, 4);
+        std::string playerName = _sock.RecieveString();
+        _otherPlayers.push_back(new OtherPlayer(playerName, playerGUID));
+    }
+
+    uint32_t relationsAmount = -1;
+    _sock.Recieve((char*) &relationsAmount, 4);
+
+    for (int i = 0; i < relationsAmount; i++){
+        uint32_t lobbyGuid = -1;
+        uint32_t playerGuid = -1;
+        _sock.Recieve((char*) &lobbyGuid, 4);
+        _sock.Recieve((char*) &playerGuid, 4);
+
+        Lobby* l = GetLobby(lobbyGuid);
+        auto itPlayer = GetOtherPlayer(playerGuid);
+
+        l->PlayerJoin(*(*itPlayer));
+    }
+
+    _runner.gtkNotifications.Queue(new LogInSuccessGtkNotification(_lobbies));
 }

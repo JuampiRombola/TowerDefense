@@ -15,18 +15,25 @@ class ClientLobbyManager{
 private:
 	SocketWrapper& _sock;
 	std::vector<Lobby*> _lobbies;
-	Lobby* _joinedLobby;
+	std::vector<OtherPlayer*> _otherPlayers;
 	GTKRunner& _runner;
+	Lobby* _joinedLobby;
+
+
+	std::vector<OtherPlayer*>::const_iterator  GetOtherPlayer(uint32_t guid);
+	Lobby* GetLobby(uint32_t guid);
 public:
 	ClientLobbyManager(SocketWrapper& sock, GTKRunner& GtkRunner);
 	~ClientLobbyManager();
-	void HandleNotification();
-	void _HandleNewLobbyNotification();
-	void _HandleGetLobbies();
-	void _HandleLobbyJoin();
-	void _HandlePlayerLeftLobby();
-	void _HandlePlayerJoinedLobby();
-	void _HandleLeaveLobby();
+	void HandleNewLobbyNotification();
+	void HandleLobbyJoin();
+	void HandlePlayerLeftLobby();
+	void HandlePlayerJoinedLobby();
+	void HandleLeaveLobby();
+	void HandlePlayerJoin();
+	void HandlePlayerLeave();
+	void HandleLoginSuccess();
+	std::vector<Lobby*> GetLobbies();
 };
 
 #endif

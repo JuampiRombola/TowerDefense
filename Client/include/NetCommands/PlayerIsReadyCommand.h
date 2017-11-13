@@ -1,17 +1,16 @@
-#ifndef __LOG_IN_COMMAND__
-#define __LOG_IN_COMMAND__
+#ifndef __PLAYER_IS_READY_COMMAND_
+#define __PLAYER_IS_READY_COMMAND_
 
 #include <string>
 
 #include "../../include/NetCommands/NetCommand.h"
 #include "../../../Common/SocketWrapper.h"
 
-class LogInCommand : public NetCommand{
-private:
-	std::string _name;
+class PlayerIsReadyCommand : public NetCommand{
+
 public:
-	LogInCommand(std::string& name);
-	~LogInCommand();
+    PlayerIsReadyCommand();
+	~PlayerIsReadyCommand();
 	void SendCommand(SocketWrapper& sock);
 };
 

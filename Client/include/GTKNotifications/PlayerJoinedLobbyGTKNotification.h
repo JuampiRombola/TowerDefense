@@ -6,8 +6,18 @@
 #define TOWERDEFENSE_PLAYERJOINEDLOBBYGTKNOTIFICATION_H
 
 
-class PlayerJoinedLobbyGTKNotification {
+#include "../Lobbies/Lobby.h"
+#include "GTKNotification.h"
 
+
+class PlayerJoinedLobbyGTKNotification : public GTKNotification {
+private:
+
+    OtherPlayer& _player;
+public:
+    PlayerJoinedLobbyGTKNotification(OtherPlayer& player);
+    ~PlayerJoinedLobbyGTKNotification();
+    void Execute(GTKRunner& runner);
 };
 
 

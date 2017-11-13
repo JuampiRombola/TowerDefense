@@ -1,15 +1,16 @@
 #include "../../include/Exceptions/PlayerLeftTheLobbyAndWasntInIt.h"
 #include "../../include/Lobbies/Lobby.h"
+#include "../../include/Exceptions/PlayerNotFoundException.h"
+#include "../../include/Exceptions/OtherPlayerJoinedLobbyTwice.h"
 
-Lobby::Lobby(std::string& name, uint guid) : _name(name), _guid(guid), _players()
+
+Lobby::Lobby(std::string& name, uint guid) : _name(name), _guid(guid), _players(), _otherPlayersMutex()
 {
-
+	std::cout << "Lobby created: id " << guid << ", name " << name << '\n' << std::flush;
 }
 
 Lobby::~Lobby(){
-	for (auto it = _players.begin(); it != _players.end(); ++it){
-		delete (*it);
-	}
+
 }
 
 uint Lobby::GUID(){
@@ -20,41 +21,43 @@ std::string Lobby::Name(){
 	return _name;
 }
 
-void Lobby::AddPlayer(std::string& name, uint guid){
-	std::cout << "ADDING PLAYER TO LOBBY WITH GUIID  " << (int) guid << '\n';
-	_players.push_back(new LobbyPlayer(name, guid));
-}
+void Lobby::PlayerJoin(OtherPlayer &player){
+	std::lock_guard<std::mutex> lock(_otherPlayersMutex);
+	bool found = true;
+	try	{
 
-void Lobby::Reset(){
-	_players.clear();
-}
-
-void Lobby::PlayerLeft(uint pguid){
-	bool found = false;
-	LobbyPlayer* p = nullptr;
-	auto it = _players.begin();
-	for (; it != _players.end() && !found; ++it){
-		p = *it;
-		uint playerguid = p->GUID();
-		std::cout << "CHECKING IF GUID: " << (int) playerguid << " IS THE ONE WHO LEFT\n" << std::flush;
-		if (playerguid == pguid){
-			std::cout << "FOUND THE PLAYER\n" <<std::flush;
-			found = true;
-			_players.erase(it);
-		}
+		std::cout << "INSIDE TRY\n" << std::flush;
+		auto it = GetOtherPlayer(player.GUID());
+	} catch(const std::exception& e) {
+		found = false;
 	}
 
-	if (!found)
-		throw PlayerLeftTheLobbyAndWasntInIt();
-	
-	delete p;
+	if (found)
+		throw OtherPlayerJoinedLobbyTwice();
 
-	std::cout << "LLEGO ACA?\n" << std::flush;
+	_players.push_back(&player);
 }
 
-std::vector<std::string> Lobby::PlayerNames(){
-	std::vector<std::string> pnames;
-	for (auto it = _players.begin(); it != _players.end(); ++it)
-		pnames.push_back((*it)->Name());
-	return pnames;
+void Lobby::PlayerLeave(OtherPlayer &player){
+	std::lock_guard<std::mutex> lock(_otherPlayersMutex);
+	auto it = GetOtherPlayer(player.GUID());
+	_players.erase(it);
+}
+
+std::vector<OtherPlayer*> Lobby::GetPlayersInLobby(){
+	std::vector<OtherPlayer*> otherplayers;
+	return _players;
+}
+
+
+std::vector<OtherPlayer*>::const_iterator Lobby::GetOtherPlayer(uint32_t guid){
+	bool found = false;
+	for (auto it = _players.begin(); it != _players.end() && !found; ++it){
+		OtherPlayer* p = *it;
+		if (p->GUID() == guid){
+			found = true;
+			return it;
+		}
+	}
+	throw PlayerNotFoundException();
 }

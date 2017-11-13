@@ -12,6 +12,7 @@
 #include "../../Common/Protocolo.h"
 #include "../include/Notifications/LoggedInNotification.h"
 #include "../include/Notifications/InvalidLogInNotification.h"
+#include "../include/Notifications/PlayerLeaveNotification.h"
 
 
 TFServer::TFServer(std::string service) : _playerGUID(0),_connectionHandlers(),_playerProxies(),
@@ -74,7 +75,6 @@ void TFServer::HandleConnection(PlayerProxy& player){
 	uint8_t opcode;
 	try 
 	{
-
 		while (true){
 			player.sock.Recieve((char*) &opcode, 1);
 			std::cout << "TFSERVER RECIEVED OPCODE " << (int) opcode << '\n';
@@ -82,9 +82,17 @@ void TFServer::HandleConnection(PlayerProxy& player){
 				case LOG_IN:
 					_HandleLogin(player);
 					break;
-				case LOBBY_OPCODE:
-					_lobbyManager.HandleRequest(player);
+				case CREATE_LOBBY:
+					_lobbyManager.HandleCreateNewLobby(player);
 					break;
+				case JOIN_LOBBY:
+					_lobbyManager.HandleJoinLobby(player);
+					break;
+				case LEAVE_LOBBY:
+					_lobbyManager.HandleLeaveLobby(player);
+					break;
+				case PLAYER_IS_READY:
+					_lobbyManager.HandlePlayerIsReady(player);
 				default:
 					std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << "'\n" << std::flush;
 			}
@@ -96,6 +104,7 @@ void TFServer::HandleConnection(PlayerProxy& player){
 		if (it != _playerProxies.end()){
 			PlayerProxy* playerProxy = *it;
 			_playerProxies.erase(it);
+			_notifications.Queue(new PlayerLeaveNotification(playerProxy->GUID()));
 			delete playerProxy;
 		}
 		std::cerr << e.what() << '\n';
@@ -103,9 +112,7 @@ void TFServer::HandleConnection(PlayerProxy& player){
 }
 
 void TFServer::_HandleLogin(PlayerProxy& player){
-	uint8_t playerNameSize;
-	player.sock.Recieve((char*) &playerNameSize, 1);
-	std::string playerName = player.sock.RecieveString(playerNameSize);
+	std::string playerName = player.sock.RecieveString();
 
 	std::lock_guard<std::mutex> lock1(_playersProxiesMutex);
 	for (auto it = _playerProxies.begin(); it != _playerProxies.end(); ++it){
@@ -116,7 +123,8 @@ void TFServer::_HandleLogin(PlayerProxy& player){
 	}
 
 	player.SetName(playerName);
-	_notifications.Queue(new LoggedInNotification(player));
+	std::cout << " CHECKPOINT \n" << std::flush;
+	_lobbyManager.HandleLogin(player);
 
 }
 

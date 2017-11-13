@@ -22,6 +22,7 @@ enum LobbiesListEnum {
 
 enum LobbyPlayersListEnum {
     COLUMN_PLAYER_NAME,
+    COLUMN_PLAYER_ID,
     COLUMN_PLAYER_READY,
     LOBBY_PLAYERS_N_COLUMNS
 };
@@ -29,7 +30,7 @@ enum LobbyPlayersListEnum {
 class GTKRunner {
 private:
     static void _ShutdownGTK();
-    static void _LobbyWindowClosed();
+    static void _LobbyWindowClosed(GtkWidget* widget, gpointer data);
     static void newLobby_clicked(GtkWidget* widget, gpointer data);
     static void joinLobby_clicked(GtkWidget* widget, gpointer data);
     static void connect_clicked(GtkWidget* widget, gpointer data);
@@ -50,10 +51,10 @@ public:
     GtkWindow *window_lobbies;
     GtkWindow *window_lobby;
 
-
+    std::string TEST;
     void InitLobbyPlayersTreeView();
     void InitLobbiesTreeView();
-
+    void CreateAndShowLobbyWindow();
     GtkTreeView *treeview_lobbies;
     GtkTreeView *treeview_lobbyPlayers;
 

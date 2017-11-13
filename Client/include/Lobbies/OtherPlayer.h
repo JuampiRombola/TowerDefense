@@ -2,17 +2,20 @@
 #define __LOBBY_PLAYER__
 
 #include <string>
+class Lobby;
 
-class LobbyPlayer{
+class OtherPlayer{
 private:
 	std::string _name;
 	uint _guid;
-
 public:
-	LobbyPlayer(std::string& name, uint guid);
-	~LobbyPlayer();
+	OtherPlayer(std::string& name, uint guid);
+	~OtherPlayer();
+	Lobby* joinedLobby;
+
 	std::string Name();
 	uint GUID();
+
 };
 
 
