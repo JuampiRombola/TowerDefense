@@ -153,8 +153,8 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/ModelView.h
         Client/View/Model/DepthLevel.cpp
         Client/View/Model/DepthLevel.h
-        Client/View/Model/HudVIew.cpp
-        Client/View/Model/HudVIew.h
+        Client/View/Model/HudView.cpp
+        Client/View/Model/HudView.h
         Client/View/Model/NewTowerButton.cpp
         Client/View/Model/NewTowerButton.h
         Client/View/Model/ViewConstants.h
@@ -164,7 +164,7 @@ set(SOURCE_FILES_CLIENT
         Client/SDLRunner.cpp
         Client/src/NetCommands/NewTowerCommand.cpp
         Client/include/NetCommands/NewTowerCommand.h
-        Common/Lock.cpp Common/Lock.h)
+        Common/Lock.cpp Common/Lock.h Client/View/Model/SpellButton.cpp Client/View/Model/SpellButton.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK

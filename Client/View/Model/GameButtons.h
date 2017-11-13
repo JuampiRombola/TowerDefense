@@ -12,16 +12,21 @@
 
 class GameButtons {
 private:
-    std::list<Image*> images;
+    Window &window;
     MousePosition &mousePosition;
     Renderer &renderer;
     TextureLoader &textureLoader;
     CommandDispatcher &dispatcher;
+    std::list<Image*> towers;
+    std::list<Image*> spells;
+
 public:
-    GameButtons(MousePosition &mousePosition, Renderer &renderer,
-                    TextureLoader &textureLoader, CommandDispatcher &dispatcher);
+    GameButtons(Window &w, MousePosition &mousePosition, Renderer &renderer,
+                TextureLoader &textureLoader, CommandDispatcher &dispatcher);
     ~GameButtons();
-    void addTowerButtons();
+    void addTowerButtons(int key, int &cmd);
+    bool isAnyClicked();
+    void draw();
 };
 
 

@@ -9,15 +9,14 @@
 
 class NewTowerButton : public Button {
 private:
-    const std::string element;
-    CommandDispatcher &dispatcher;
+    const int element;
+    int &command;
 public:
-    NewTowerButton(std::string element, SDL_Texture *texture,
+    NewTowerButton(Window &w, int element, int &cmd, SDL_Texture *texture,
                        MousePosition &mousePosition, Renderer &renderer,
-                       CommandDispatcher &dispatcher);
-    void draw(int number);
-    void click();
-    void throwCommand(int tileX, int tileY);
+                   int n);
+    void draw();
+    void click() override;
 };
 
 

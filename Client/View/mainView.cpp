@@ -3,8 +3,7 @@
 #include "Common/TextureLoader.h"
 #include "Common/SpriteNamesConfig.h"
 #include "Model/ModelView.h"
-#include "Common/MousePosition.h"
-#include "Model/GameButtons.h"
+#include "Model/HudView.h"
 
 #define TITLE "Tower Defense"
 
@@ -60,10 +59,11 @@ int main(int argc, char** argv) {
     CommandDispatcher cmdDispatcher(fd);
 
     // HUD
-    int mouse_x = -1, mouse_y = -1;
-    MousePosition mouse(mouse_x, mouse_y);
-    GameButtons buttons(mouse, renderer, textureLoader, cmdDispatcher);
-    buttons.addTowerButtons();
+    HudView hudView(window, textureLoader, renderer, cmdDispatcher);
+    hudView.addElementalButtons(ELEMENTAL_EARTH);
+    hudView.addElementalButtons(ELEMENTAL_FIRE);
+    hudView.addElementalButtons(ELEMENTAL_WATER);
+    hudView.addElementalButtons(ELEMENTAL_AIR);
 
     Uint32 t1;
     Uint32 t2;
@@ -81,13 +81,10 @@ int main(int argc, char** argv) {
             switch (event.type) {
                 case SDL_QUIT: quit = true; break;
                 case SDL_MOUSEBUTTONDOWN:
-                    SDL_GetMouseState(&mouse_x, &mouse_y);
-                    mouse.activate();
+                    hudView.getMouseState();
                     break;
                 case SDL_FINGERDOWN:
-                    mouse_x = static_cast<int>(event.tfinger.x);
-                    mouse_y = static_cast<int>(event.tfinger.y);
-                    mouse.activate();
+                    hudView.getFingerState(event);
                     break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
@@ -121,21 +118,13 @@ int main(int argc, char** argv) {
                         case SDLK_UP: renderer.updateCamera(0, -1); break;
                         case SDLK_DOWN: renderer.updateCamera(0, 1); break;
                     }
-
             }
-            if (mouse.isActive()) {
-                /*if (!buttons.isAnyClicked()) {
-                    tileX = mapView.getTileXFromPixel(mouse_x, mouse_y);
-                    tileY = mapView.getTileYFromPixel(mouse_x, mouse_y);
-                    editor.applyTileFunction(tileX, tileY);
-                    mouse.deactivate();
-                }*/
-            }
-            event.type = 0;
+            hudView.doMouseAction();
         }
         renderer.clearRender();
 
         modelView.draw(SDL_GetTicks());
+        hudView.draw();
 
         renderer.present();
 

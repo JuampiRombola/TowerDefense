@@ -13,12 +13,12 @@ void NewTowerCommand::SendCommand(SocketWrapper &sock) {
 }
 
 uint8_t NewTowerCommand::getElementCodeFromKey() {
-    if (towerElement == FIRE_TOWER_KEY)
+    /*if (towerElement == FIRE_TOWER_KEY)
         return FIRE_TOWER;
     else if (towerElement == WATER_TOWER_KEY)
         return WATER_TOWER;
     else if (towerElement == EARTH_TOWER_KEY)
         return EARTH_TOWER;
     else if (towerElement == AIR_TOWER_KEY)
-        return AIR_TOWER;
+        return AIR_TOWER;*/
 }

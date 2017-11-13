@@ -1,24 +1,20 @@
 #include "NewTowerButton.h"
-#include "../../include/NetCommands/NewTowerCommand.h"
 
-NewTowerButton::NewTowerButton(std::string element, SDL_Texture *texture,
-                               MousePosition &mousePosition, Renderer &renderer,
-                               CommandDispatcher &dispatcher)
-        : element(element), dispatcher(dispatcher),
-          Button(0, 0, TOWER_BUTTON_WIDTH, TOWER_BUTTON_HEIGHT, texture,
-                 mousePosition, renderer) {}
+NewTowerButton::NewTowerButton(Window &w, int element, int &cmd,
+                               SDL_Texture *texture,
+                               MousePosition &mousePosition,
+                               Renderer &renderer, int n)
+        : element(element), command(cmd),
+          Button(w.getWidth() - n*TOWER_BUTTON_WIDTH - n*PADDING_HUD,
+                 w.getHeight() - TOWER_BUTTON_HEIGHT - SPELL_BUTTON_HEIGHT
+                 - 2*PADDING_HUD, TOWER_BUTTON_WIDTH, TOWER_BUTTON_HEIGHT,
+                 texture, mousePosition, renderer) {}
 
-void NewTowerButton::draw(int number) {
-    button.x = number * TOWER_BUTTON_WIDTH;
-    Button::draw(number);
+void NewTowerButton::draw() {
+    Button::draw(0);
 }
 
 void NewTowerButton::click() {
-//Acá tengo que bindear la función throwCommand a algún lado para que se
-// ejecute en el ciclo del main de la vista
-}
-
-void NewTowerButton::throwCommand(int tileX, int tileY) {
-    auto* command = new NewTowerCommand(element, tileX, tileY);
-    dispatcher.QueueCommand(command);
+    command = element;
+    printf("Hice click en el boton de la torre de elemento %d\n", element);
 }
