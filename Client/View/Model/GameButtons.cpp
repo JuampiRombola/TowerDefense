@@ -2,6 +2,8 @@
 #include "SpellButton.h"
 
 #define BUTTONSOFFSET 200
+#define SPELLOFFSET_1 4
+#define SPELLOFFSET_2 5
 
 GameButtons::GameButtons(Window &w, MousePosition &mousePosition,
                          Renderer &renderer,
@@ -22,12 +24,16 @@ void GameButtons::addTowerButtons(int key, int &cmd) {
     towers.push_back(new NewTowerButton(window, key, cmd,
                      textureLoader.getTexture(key + BUTTONSOFFSET),
                      mousePosition, renderer, towers.size() + 1));
-    spells.push_back(new SpellButton(window, key, cmd,
-                                        textureLoader.getTexture(key + BUTTONSOFFSET),
-                                        mousePosition, renderer, spells.size() + 1));
-    spells.push_back(new SpellButton(window, key, cmd,
-                                        textureLoader.getTexture(key + BUTTONSOFFSET),
-                                        mousePosition, renderer, spells.size() + 1));
+    int spellKey = key + SPELLOFFSET_1 + 1*key;
+    spells.push_back(
+            new SpellButton(window, spellKey, cmd,
+                            textureLoader.getTexture(spellKey+BUTTONSOFFSET),
+                            mousePosition, renderer, spells.size() + 1));
+    spellKey = key + SPELLOFFSET_2 + 1*key;
+    spells.push_back(
+            new SpellButton(window, spellKey, cmd,
+                            textureLoader.getTexture(spellKey+BUTTONSOFFSET),
+                            mousePosition, renderer, spells.size() + 1));
 }
 
 bool GameButtons::isAnyClicked() {
