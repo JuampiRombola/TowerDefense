@@ -6,7 +6,9 @@ _sock(socket), _commands(), _queueLock(), _cv(), _stop(false) {
 }
 
 CommandDispatcher::~CommandDispatcher(){
-	_thread.join();
+	this->Stop();
+	if (_thread.joinable())
+		_thread.join();
 }
 
 void CommandDispatcher::Run(){

@@ -1,5 +1,6 @@
 
 #include "../../include/Lobbies/ClientLobbyManager.h"
+#include "../../include/Lobbies/Lobby.h"
 #include "../../../Common/Protocolo.h"
 #include "../../include/GTKNotifications/NewLobbyGTKNotification.h"
 #include "../../include/GTKNotifications/JoinedLobbyGTKNotification.h"
@@ -14,6 +15,8 @@
 #include "../../include/GTKNotifications/PlayerJoinedLobbyGTKNotification.h"
 #include "../../include/GTKNotifications/PlayerLeftLobbyGTKNotification.h"
 #include "../../include/GTKNotifications/LogInSuccessGtkNotification.h"
+#include "../../include/GTKNotifications/PickedSpellGTKNotification.h"
+#include "../../include/GTKNotifications/OtherPickedSpellGTKNotification.h"
 
 
 ClientLobbyManager::ClientLobbyManager(SocketWrapper& _sock, GTKRunner& runner)
@@ -39,6 +42,40 @@ void ClientLobbyManager::HandleLobbyJoin(){
     uint32_t lobbyGuid = -1;
     _sock.Recieve((char*)&lobbyGuid, 4);
     _joinedLobby = GetLobby(lobbyGuid);
+
+
+    uint32_t firepguid;
+    _sock.Recieve((char*) &firepguid, 4);
+    if (firepguid > 0){
+        auto it = GetOtherPlayer(firepguid);
+        OtherPlayer* p = *it;
+        _joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_FIRE, true);
+    }
+    
+    uint32_t waterpguid;
+    _sock.Recieve((char*) &waterpguid, 4);
+    if (waterpguid > 0){
+        auto it = GetOtherPlayer(waterpguid);
+        OtherPlayer* p = *it;
+        _joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_WATER, true);
+    }
+    
+    uint32_t airpguid;
+    _sock.Recieve((char*) &airpguid, 4);
+    if (airpguid > 0){
+        auto it = GetOtherPlayer(airpguid);
+        OtherPlayer* p = *it;
+        _joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_AIR, true);
+    }
+    
+    uint32_t groundpguid;
+    _sock.Recieve((char*) &groundpguid, 4);
+    if (groundpguid > 0){
+        auto it = GetOtherPlayer(groundpguid);
+        OtherPlayer* p = *it;
+        _joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_GROUND, true);
+    }    
+    
     _runner.gtkNotifications.Queue(new JoinedLobbyGUINotification(*_joinedLobby));
 }
 
@@ -95,21 +132,11 @@ void ClientLobbyManager::HandlePlayerJoinedLobby(){
     _sock.Recieve((char*)&lobbyGuid, 4);
 
     std::cout << "player id: " << pguid << " joined lobby id: " << lobbyGuid << '\n' << std::flush;
-
     Lobby* lobbyOtherPlayerJoined = GetLobby(lobbyGuid);
-    std::cout << "ASKLDJALKSDJKLASJDKLASD\n " << std::flush;
-
     auto itplayer = GetOtherPlayer(pguid);
-    std::cout << "ASKLDJALKSDJKLASJDKLASD\n " << std::flush;
-
     lobbyOtherPlayerJoined->PlayerJoin(*(*itplayer));
-
-    std::cout << "ASKLDJALKSDJKLASJDKLASD\n " << std::flush;
-
     if (_joinedLobby == lobbyOtherPlayerJoined)
         _runner.gtkNotifications.Queue(new PlayerJoinedLobbyGTKNotification(*(*itplayer)));
-
-    std::cout << "ASKLDJALKSDJKLASJDKLASD\n " << std::flush;
 
 }
 
@@ -122,7 +149,6 @@ void ClientLobbyManager::HandlePlayerLeftLobby(){
     Lobby* lobbyOtherPlayerLeft = GetLobby(lobbyGuid);
     auto itplayer = GetOtherPlayer(pguid);
     lobbyOtherPlayerLeft->PlayerLeave(*(*itplayer));
-
     if (_joinedLobby == lobbyOtherPlayerLeft)
         _runner.gtkNotifications.Queue(new PlayerLeftLobbyGTKNotification(*(*itplayer)));
 }
@@ -149,6 +175,44 @@ void ClientLobbyManager::HandleNewLobbyNotification(){
 
 std::vector<Lobby*> ClientLobbyManager::GetLobbies(){
     return _lobbies;
+}
+
+
+
+void ClientLobbyManager::HandlePickedSpell(){
+    uint8_t spell;
+    _sock.Recieve((char*) &spell, 1);
+    SPELL_TYPE spelltype = (SPELL_TYPE) spell;
+    _runner.gtkNotifications.Queue(new PickedSpellGTKNotification(spelltype, true));
+}
+
+void ClientLobbyManager::HandleUnpickedSpell(){
+    uint8_t spell;
+    _sock.Recieve((char*) &spell, 1);
+    SPELL_TYPE spelltype = (SPELL_TYPE) spell;
+    _runner.gtkNotifications.Queue(new PickedSpellGTKNotification(spelltype, false));
+}
+
+void ClientLobbyManager::HandleOtherPlayerPickedSpell(){
+    uint8_t spell;
+    _sock.Recieve((char*) &spell, 1);
+    uint32_t pguid;
+    _sock.Recieve((char*) &pguid, 4);
+    SPELL_TYPE spelltype = (SPELL_TYPE) spell;
+    auto it = this->GetOtherPlayer(pguid);
+    (*it)->joinedLobby->PlayerPickSpell(*(*it), spelltype, true);
+    _runner.gtkNotifications.Queue(new OtherPickedSpellGTKNotification(*(*it), spelltype, true));
+}
+
+void ClientLobbyManager::HandleOtherPlayerUnpickedSpell(){
+    uint8_t spell;
+    _sock.Recieve((char*) &spell, 1);
+    uint32_t pguid;
+    _sock.Recieve((char*) &pguid, 4);
+    SPELL_TYPE spelltype = (SPELL_TYPE) spell;
+    auto it = this->GetOtherPlayer(pguid);
+    (*it)->joinedLobby->PlayerPickSpell(*(*it), spelltype, false);
+    _runner.gtkNotifications.Queue(new OtherPickedSpellGTKNotification(*(*it), spelltype, false));
 }
 
 void ClientLobbyManager::HandleLoginSuccess(){

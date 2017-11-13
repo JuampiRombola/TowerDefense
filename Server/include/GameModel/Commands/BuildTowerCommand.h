@@ -24,7 +24,7 @@ private:
 public:
 	BuildTowerCommand(TowerType type, uint x, uint y);
 	~BuildTowerCommand();
-	bool Execute(Map* map, TowerDefenseGame* game);
+	bool Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications);
 	TowerType GetTowerType();
 	CommandVM GetViewModel();
 };

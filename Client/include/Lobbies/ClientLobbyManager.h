@@ -33,6 +33,12 @@ public:
 	void HandlePlayerJoin();
 	void HandlePlayerLeave();
 	void HandleLoginSuccess();
+
+	void HandlePickedSpell();
+	void HandleUnpickedSpell();
+	void HandleOtherPlayerPickedSpell();
+	void HandleOtherPlayerUnpickedSpell();
+
 	std::vector<Lobby*> GetLobbies();
 };
 

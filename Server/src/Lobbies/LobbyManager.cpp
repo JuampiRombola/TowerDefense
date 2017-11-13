@@ -4,6 +4,7 @@
 #include "../../include/Notifications/LobbyJoinedNotification.h"
 #include "../../include/Notifications/LeftLobbyNotification.h"
 #include "../../include/Exceptions/PlayerStateInLobbyAndHasNoLobbySet.h"
+#include "../../include/Exceptions/InvalidSpellTypeException.h"
 #include "../../include/Notifications/LoggedInNotification.h"
 
 
@@ -25,6 +26,48 @@ void LobbyManager::HandlePlayerIsReady(PlayerProxy &player){
 	player.lobby->PlayerIsReady(player);
 }
 
+void LobbyManager::HandlePlayerPickedSpell(PlayerProxy &player){
+	uint8_t spell;
+	player.sock.Recieve((char*) &spell, 1);
+	SPELL_TYPE type = (SPELL_TYPE )spell;
+	switch (type){
+		case SPELL_TYPE_WATER:
+			player.lobby->PlayerPickWater(player);
+			break;
+		case SPELL_TYPE_AIR:
+			player.lobby->PlayerPickAir(player);
+			break;
+		case SPELL_TYPE_GROUND:
+			player.lobby->PlayerPickGround(player);
+			break;
+		case SPELL_TYPE_FIRE:
+			player.lobby->PlayerPickFire(player);
+			break;
+		default:
+			throw InvalidSpellTypeException();
+	}
+}
+void LobbyManager::HandlePlayerUnpickedSpell(PlayerProxy &player){
+	uint8_t spell;
+	player.sock.Recieve((char*) &spell, 1);
+	SPELL_TYPE type = (SPELL_TYPE )spell;
+	switch (type){
+		case SPELL_TYPE_WATER:
+			player.lobby->PlayerUnpickWater(player);
+			break;
+		case SPELL_TYPE_AIR:
+			player.lobby->PlayerUnpickAir(player);
+			break;
+		case SPELL_TYPE_GROUND:
+			player.lobby->PlayerUnpickGround(player);
+			break;
+		case SPELL_TYPE_FIRE:
+			player.lobby->PlayerUnpickFire(player);
+			break;
+		default:
+			throw InvalidSpellTypeException();
+	}
+}
 
 void LobbyManager::HandleLogin(PlayerProxy &player){
 	std::lock_guard<std::mutex> lock(_lobbiesMutex);
@@ -72,7 +115,7 @@ void LobbyManager::HandleJoinLobby(PlayerProxy &player){
 	uint32_t lobbyguid = 1;
 	player.sock.Recieve((char*) &lobbyguid, 4);
 
-	if (player.state != BROWSING_LOBBIES)
+	if (player.state != BROWSING_LOBBIES )
 		return;
 
 	bool found = false;
@@ -82,11 +125,11 @@ void LobbyManager::HandleJoinLobby(PlayerProxy &player){
 		lobby = *it;
 		if (lobby->GUID() == lobbyguid){
 			found = true;
-			joined = lobby->PlayerJoin(player);
 		}
 	}
 
-	if (joined){
+
+	if (lobby->PlayerJoin(player)){
 		player.lobby = lobby;
 		_notifications.Queue(new LobbyJoinedNotification(player, *lobby));
 	}

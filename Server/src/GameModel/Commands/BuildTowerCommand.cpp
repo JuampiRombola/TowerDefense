@@ -10,6 +10,7 @@
 #include "../../../include/GameModel/TowerDefenseGame.h"
 #include <yaml-cpp/yaml.h>
 #include "../../../include/GameModel/ViewModels/CommandVM.h"
+#include "../../../include/GameModel/GameNotifications/TowerPlacedGameNotification.h"
 
 
 BuildTowerCommand::BuildTowerCommand(TowerType type, uint x, uint y):
@@ -17,29 +18,31 @@ BuildTowerCommand::BuildTowerCommand(TowerType type, uint x, uint y):
 
 BuildTowerCommand::~BuildTowerCommand(){}
 
-bool BuildTowerCommand::Execute(Map* map, TowerDefenseGame* game){
+bool BuildTowerCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications){
 	SolidGroundTile* tile = map->GetSolidGroundTile(_xPos ,_yPos);
 	if (tile != nullptr && !tile->HasTower()){
 		Tower* t = nullptr;
 
 		switch(_towerType){
 			case Ground:
-				t = _BuildGroundTower(map, tile, game->GameCfg.Cfg);  
+				t = _BuildGroundTower(map, tile, game->GameCfg->Cfg);
 				break;
 			case Air:
-				t = _BuildAirTower(map, tile, game->GameCfg.Cfg);
+				t = _BuildAirTower(map, tile, game->GameCfg->Cfg);
 				break;
 			case Water:
-				t = _BuildWaterTower(map, tile, game->GameCfg.Cfg);
+				t = _BuildWaterTower(map, tile, game->GameCfg->Cfg);
 				break;
 			case Fire:
-				t = _BuildFireTower(map, tile, game->GameCfg.Cfg);
+				t = _BuildFireTower(map, tile, game->GameCfg->Cfg);
 				break;
 		}
 
 		if (t != nullptr){
 			tile->PlaceTower(t);
 			std::cout << "TOWER PLACED\n" << std::flush;
+			TowerVM vm = t->GetViewModel();
+			notifications.Queue(new TowerPlacedGameNotification(vm, game->GetPlayers()));
 			return true;
 		}
 	}

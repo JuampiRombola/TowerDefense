@@ -1,0 +1,101 @@
+unit_base_step_delay_ms: 5000
+towers:
+ ground:
+  range: 1
+  cooldown_sec: 5
+  damage: 20
+  upgrade_range_increase: 2
+  upgrade_range_mult: 500
+  upgrade_range_base: 2
+  upgrade_damage_increase: 10
+  upgrade_damage_mult: 100
+  upgrade_damage_base: 1.5
+ fire:
+  range: 3
+  cooldown_sec: 3
+  target_damage: 6
+  collateral_damage: 3
+  collateral_range: 1
+  upgrade_range_increase: 1
+  upgrade_range_mult: 100
+  upgrade_range_base: 2
+  upgrade_damage_increase: 6
+  upgrade_collateral_damage_increase: 3
+  upgrade_damage_base: 1.5
+  upgrade_damage_mult: 100
+  upgrade_collateral_range_increase: 1
+  upgrade_collateral_range_base: 2
+  upgrade_collateral_range_mult: 500
+ water:
+  range: 3
+  cooldown_sec: 3
+  damage: 4
+  slow_percent: 25
+  slow_duration_sec: 2
+  upgrade_range_increase: 1
+  upgrade_range_mult: 100
+  upgrade_range_base: 2
+  upgrade_damage_increase: 4
+  upgrade_damage_mult: 100
+  upgrade_damage_base: 1.5
+  upgrade_slow_percent_increase: 25
+  upgrade_slow_duration_sec_increase: 1
+  upgrade_slow_mult: 100
+  upgrade_slow_base: 2
+ air:
+  range: 5
+  cooldown_sec: 5
+  flying_target_damage: 10
+  non_flying_target_damage: 2
+  upgrade_range_increase: 1
+  upgrade_range_mult: 100
+  upgrade_range_base: 2 
+  upgrade_flying_target_damage_increase: 10
+  upgrade_non_flying_target_damage_increase: 2
+  upgrade_damage_mult: 100
+  upgrade_damage_base: 1.5
+spells:
+ grieta:
+  duration_sec: 1
+ meteorito:
+  damage: 30
+  collateral_damage: 10
+  collateral_range: 2
+ murodefuego:
+  damage: 10
+  duration_sec: 5
+ congelacion:
+  duration_sec: 5
+ ventisca:
+  duration_sec: 5
+  slow_percent: 25
+  slow_duration_sec: 2
+ tornado:
+  max_damage: 50
+  duration_sec: 10
+ rayos:
+  max_damage: 50
+units:
+ abmonible:
+  health_points: 200
+  speed: 1
+  flies: false
+ demonio_verde:
+  health_points: 300
+  speed: 1
+  flies: false
+ halcon_sangriento:
+  health_points: 100
+  speed: 4
+  flies: true
+ hombre_cabra:
+  health_points: 99
+  speed: 10
+  flies: false
+ espectro:
+  health_points: 100
+  speed: 6
+  flies: true
+ no_muerto:
+  health_points: 20
+  flies: false

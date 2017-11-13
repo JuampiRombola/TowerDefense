@@ -1,24 +1,25 @@
+//
+// Created by tino on 13/11/17.
+//
 
-#include "../../../include/GameModel/ViewModels/UnitVM.h"
-#include "../../../include/GameModel/GameNotifications/UnitPositionGameNotification.h"
-#include "../../../../Common/Protocolo.h"
+#include "../../../include/GameModel/GameNotifications/UnitCreatedGameNotification.h"
 
-UnitPositionGameNotification::UnitPositionGameNotification(UnitVM& viewmodel, std::vector<PlayerProxy*> playersToNotify)
-        : GameNotification(playersToNotify), vm(viewmodel){
-
-}
-
-
-UnitPositionGameNotification::~UnitPositionGameNotification(){
+UnitCreatedGameNotification::UnitCreatedGameNotification(UnitVM& viewmodel, std::vector<PlayerProxy*> playersToNotify)
+: GameNotification(playersToNotify)
+{
 
 }
 
-void UnitPositionGameNotification::Notify(){
+UnitCreatedGameNotification::~UnitCreatedGameNotification(){
+
+}
+
+void UnitCreatedGameNotification::Notify(){
     for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); it++) {
         PlayerProxy *p = *it;
         int8_t game = GAME_OPCODE;
         p->sock.Send((char *) &game, 1);
-        int8_t opcode = UNIT_POSITION_UPDATE;
+        int8_t opcode = UNIT_CREATED;
         p->sock.Send((char *) &opcode, 1);
         uint32_t unitID = vm.id;
         p->sock.Send((char *) &unitID, 4);
@@ -32,5 +33,7 @@ void UnitPositionGameNotification::Notify(){
         p->sock.Send((char *) &toy, 4);
         uint32_t delay_ms = vm.stepDelay_ms;
         p->sock.Send((char *) &delay_ms, 4);
+        uint8_t spelltype = vm.unitType;
+        p->sock.Send((char*) &spelltype, 1);
     }
 }

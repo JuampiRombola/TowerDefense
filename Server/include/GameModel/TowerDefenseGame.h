@@ -5,6 +5,7 @@
 #include <mutex>
 #include <queue>
 #include <iostream>
+#include <thread>
 
 #include "Map/Map.h"
 #include "EnviormentUnits/EnviormentUnit.h"
@@ -29,22 +30,29 @@ private:
 
 	std::mutex _gameStateMutex;
 
-	uint _clockFrequencyMs;
+	uint _gameId;
 
 	bool _ended;
+	bool _stopped;
 	uint _steps;	
 	uint _enemyIdCounter;
 
 	std::vector<EnviormentUnit*> _units;
 
 	Map _map;
+	std::thread _thread;
 	bool _Step();
 	void _SpawnEnemy();
 	void _ExecuteCommands();
+	void _Run();
+
+	std::vector<PlayerProxy*> _players;
+
 public:
-	TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg, ThreadSafeQueue<GameNotification*>& notifications);
+	TowerDefenseGame(uint gameId, ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> _players);
 	~TowerDefenseGame();
 	void Run();
+	void Stop();
 	bool Ended();
 
 	//encolar un comando para ejecutar, si el comando tiene parametros
@@ -56,12 +64,15 @@ public:
 	// del juego
 	Command* GetExecutedCommand();
 	EnviormentUnit* GetUnit(uint id);
-	GameConfiguration& GameCfg;
+	GameConfiguration* GameCfg;
 	ThreadSafeQueue<GameNotification*>& notifications;
 
 	std::vector<UnitVM> GetUnitViewModels();
 	std::vector<ProjectileVM> GetProjectileViewModels();
 	std::vector<TowerVM> GetTowerViewModels();
+	std::vector<PlayerProxy*> GetPlayers();
+
+	uint GetID();
 };
 
 #endif

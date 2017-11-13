@@ -29,7 +29,6 @@ enum LobbyPlayersListEnum {
 
 class GTKRunner {
 private:
-    static void _ShutdownGTK();
     static void _LobbyWindowClosed(GtkWidget* widget, gpointer data);
     static void newLobby_clicked(GtkWidget* widget, gpointer data);
     static void joinLobby_clicked(GtkWidget* widget, gpointer data);
@@ -37,9 +36,17 @@ private:
     static void login_clicked(GtkWidget* widget, gpointer data);
     static void leaveLobby_clicked(GtkWidget* widget, gpointer data);
     static void lobbyReady_clicked(GtkWidget* widget, gpointer data);
+
+    static void _AirCheckboxToggled(GtkWidget* widget, gpointer data);
+    static void _GroundCheckboxToggled(GtkWidget* widget, gpointer data);
+    static void _FireCheckboxToggled(GtkWidget* widget, gpointer data);
+    static void _WaterCheckboxToggled(GtkWidget* widget, gpointer data);
+
+
 public:
     GTKRunner();
     ~GTKRunner();
+    static void ShutdownGTK();
 
     NonBlockingThreadSafeQueue<GTKNotification*> gtkNotifications;
     ClientLobbyManager* lobbyManager;
@@ -51,7 +58,6 @@ public:
     GtkWindow *window_lobbies;
     GtkWindow *window_lobby;
 
-    std::string TEST;
     void InitLobbyPlayersTreeView();
     void InitLobbiesTreeView();
     void CreateAndShowLobbyWindow();
@@ -69,6 +75,16 @@ public:
     GtkEntry *entry_port;
     GtkEntry *entry_name;
     GtkEntry *entry_newLobbyName;
+
+    GtkCheckButton *check_fire;
+    gulong check_fire_handler_id;
+    GtkCheckButton *check_ground;
+    gulong check_ground_handler_id;
+    GtkCheckButton *check_air;
+    gulong check_air_handler_id;
+    GtkCheckButton *check_water;
+    gulong check_water_handler_id;
+
 
     void Run(int* argc, char***argv);
 };

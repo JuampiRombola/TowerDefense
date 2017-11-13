@@ -26,7 +26,7 @@ bool NoMuerto::Flies(){
 
 UnitVM NoMuerto::GetViewModel(){
 	UnitVM vm;
-	vm.unitType = uNoMuerto;
+	vm.unitType = UNIT_TYPE_NoMuerto;
 	vm.healthPoints = _healthPoints;
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();

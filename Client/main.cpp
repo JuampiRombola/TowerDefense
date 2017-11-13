@@ -5,10 +5,17 @@
 int main(int argc, char** argv) {
     GTKRunner gtk;
     gtk.Run(&argc, &argv);
-    if (!gtk.OK)
-        return 0;
+
+    ClientLobbyManager* lobbyManager = gtk.lobbyManager;
+    CommandDispatcher* dispatcher = gtk.dispatcher;
+    NotificationReciever* reciever = gtk.reciever;
+
+    if (!gtk.OK) return 0;
+
     SDLRunner sdl;
-    sdl.Run();
+
+    sdl.Run(dispatcher, reciever, lobbyManager, gtk.sock);
+
     return 0;
 }
 

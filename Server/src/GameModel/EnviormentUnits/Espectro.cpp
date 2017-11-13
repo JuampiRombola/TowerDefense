@@ -26,7 +26,7 @@ bool Espectro::Flies(){
 
 UnitVM Espectro::GetViewModel(){
 	UnitVM vm;
-	vm.unitType = uEspectro;
+	vm.unitType = UNIT_TYPE_Espectro;
 	vm.healthPoints = _healthPoints;
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();

@@ -19,23 +19,28 @@
 #include "../../include/GameModel/Towers/GroundTower.h"
 #include "../../include/GameModel/GameConfiguration.h"
 #include "../../include/GameModel/Helpers.h"
+#include "../../include/GameModel/GameNotifications/UnitCreatedGameNotification.h"
 
-
-
-TowerDefenseGame::TowerDefenseGame(uint clockFrequencyMs, GameConfiguration& gamecfg, 
-	ThreadSafeQueue<GameNotification*>& notifications) : 
+TowerDefenseGame::TowerDefenseGame(uint gameId,
+	ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> playersInGame) :
 	_endedMutex(), _commandQueueMutex(), _commands(),_executedCommandQueueMutex(), 
 	_executedCommands(), _gameStateMutex(),
-	 _clockFrequencyMs(clockFrequencyMs), 
-	_ended(false), _steps(0), _enemyIdCounter(0), _units(), 
-	_map(10, 10, "jsonmapconfigfilename"), GameCfg(gamecfg), notifications(notifications)
+	 _gameId(gameId),
+	_ended(false), _stopped(false), _steps(0), _enemyIdCounter(0), _units(),
+	_map(7, 7, "map.yaml"), notifications(notifications), _players(playersInGame)
 {
+	std::string ss("config.yaml");
+	GameCfg = new GameConfiguration(ss);
 }
 
 TowerDefenseGame::~TowerDefenseGame()
 {
+	this->Stop();
+
 	for (auto it = _units.begin(); it != _units.end(); ++it)
 		delete *it;
+
+	delete GameCfg;
 }
 
 
@@ -47,15 +52,17 @@ void TowerDefenseGame::_SpawnEnemy(){
 	// como lo elegimos el politica del juego
 	// por ahora agarro uno random :P
 
-	uint unitbaseStepDelay_ms = GameCfg.Cfg["unit_base_step_delay_ms"].as<uint>();
+	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
-
-	uint hombreCabraSpeed = GameCfg.Cfg["units"]["hombre_cabra"]["speed"].as<uint>();
+	uint hombreCabraSpeed = GameCfg->Cfg["units"]["hombre_cabra"]["speed"].as<uint>();
 	uint hombreCabraStepDelay_ms = floor(unitbaseStepDelay_ms / hombreCabraSpeed);
-	uint hombreCabraHealthPoints = GameCfg.Cfg["units"]["hombre_cabra"]["health_points"].as<uint>();
+	uint hombreCabraHealthPoints = GameCfg->Cfg["units"]["hombre_cabra"]["health_points"].as<uint>();
 	EnviormentUnit* unit = new HombreCabra(++_enemyIdCounter, hombreCabraStepDelay_ms, hombreCabraHealthPoints, notifications);
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
+	UnitVM vm = unit->GetViewModel();
+    std::cout << "UNIT CREATEDDDDD\n" << std::flush;
+	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
 }
 
 
@@ -64,6 +71,7 @@ void TowerDefenseGame::QueueCommand(Command* command){
 	_commands.push(command);
 }
 
+/*
 Command* TowerDefenseGame::GetExecutedCommand(){
 	std::lock_guard<std::mutex> lock(_executedCommandQueueMutex);
 	if (_executedCommands.size() == 0)
@@ -72,7 +80,7 @@ Command* TowerDefenseGame::GetExecutedCommand(){
 	Command* c = _executedCommands.front();
 	_executedCommands.pop();
 	return c;
-}
+}*/
 
 EnviormentUnit* TowerDefenseGame::GetUnit(uint id){
 	for(auto it = _units.begin(); it != _units.end(); ++it){
@@ -87,10 +95,7 @@ void TowerDefenseGame::_ExecuteCommands(){
 	while (!_commands.empty()){
 		Command* c =_commands.front();
 		_commands.pop();
-		if (c->Execute(&_map, this)){
-			std::lock_guard<std::mutex> lock(_executedCommandQueueMutex);
-			_executedCommands.push(c);
-		}
+		c->Execute(&_map, this, notifications);
 	}
 }
 
@@ -102,22 +107,21 @@ bool TowerDefenseGame::_Step(){
 
 	std::lock_guard<std::mutex> gamelock(_gameStateMutex);
 	_ExecuteCommands();
-		
-	if (ts == 0) {
-		ts = actualTs;
-	}
 
 
 	_steps = _steps + 1;
 
 
-	if (actualTs - ts > 100 && _units.size() != 100){
+	//cada 10 segundos llamar a spawn enemy
+    static bool spawned = false;
+	if (!spawned){
+        spawned = true;
 		ts = actualTs;
 		_SpawnEnemy();
 	}
 
 	for (auto it = _units.begin(); it != _units.end(); ++it){
-		(*it)->Step();
+		(*it)->Step(*this);
 	}
 
 	_map.Step();
@@ -154,19 +158,28 @@ bool TowerDefenseGame::Ended(){
 	return _ended;
 }
 
+void TowerDefenseGame::Run(){
+	_thread = std::thread(&TowerDefenseGame::_Run, this);
+}
 
+void TowerDefenseGame::Stop(){
+	_stopped = true;
+	if (_thread.joinable())
+		_thread.join();
+}
 
-void TowerDefenseGame::Run()
+void TowerDefenseGame::_Run()
 {
-
-	unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
+	static uint clockFrequency = 200;
+    std::this_thread::sleep_for (std::chrono::milliseconds(3000));
+    unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
 	unsigned long long timestamp = 0;
 	unsigned long long delta = 0;
 	unsigned long long diference = 0;
-	while(_Step()) {
+	while(_Step() && !_stopped) {
 		timestamp = Helpers::MillisecondsTimeStamp();
 		delta = timestamp - lastTimestamp;
-		diference = _clockFrequencyMs - delta;
+		diference = clockFrequency - delta;
 
 		if (diference >= 0)
 			std::this_thread::sleep_for (std::chrono::milliseconds(diference));
@@ -182,7 +195,7 @@ void TowerDefenseGame::Run()
 	std::cout << "GAME OVER! \n";
 }
 
-std::vector<UnitVM> TowerDefenseGame::GetUnitViewModels(){
+	std::vector<UnitVM> TowerDefenseGame::GetUnitViewModels(){
 	std::lock_guard<std::mutex> lock(_gameStateMutex);
 	std::vector<UnitVM> uVms;
 	for (auto it = _units.begin(); it != _units.end(); ++it){
@@ -210,4 +223,13 @@ std::vector<TowerVM> TowerDefenseGame::GetTowerViewModels(){
 		t.push_back((*it)->GetViewModel());
 	}
 	return t;
+}
+
+std::vector<PlayerProxy*> TowerDefenseGame::GetPlayers(){
+	return _players;
+}
+
+
+uint TowerDefenseGame::GetID(){
+	return _gameId;
 }
