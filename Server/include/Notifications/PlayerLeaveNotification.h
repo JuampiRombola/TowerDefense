@@ -1,0 +1,14 @@
+//
+// Created by tino on 12/11/17.
+//
+
+#ifndef TOWERDEFENSE_PLAYERLEAVENOTIFICATION_H
+#define TOWERDEFENSE_PLAYERLEAVENOTIFICATION_H
+
+
+class PlayerLeaveNotification {
+
+};
+
+
+#endif //TOWERDEFENSE_PLAYERLEAVENOTIFICATION_H
