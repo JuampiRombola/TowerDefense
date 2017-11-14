@@ -17,8 +17,8 @@ private:
 public:
 	UpgradeTowerCommand(uint x, uint y, UpgradeType type);
 	~UpgradeTowerCommand();
-	bool Execute(Map* map, TowerDefenseGame* game);
-	CommandVM GetViewModel();
+	bool Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications);
+	///CommandVM GetViewModel();
 };
 
 #endif

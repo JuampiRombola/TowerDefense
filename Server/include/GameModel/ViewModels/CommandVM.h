@@ -8,14 +8,14 @@
 enum CommandType { BuildTower, UpgradeTower, CastSpell }; 
 
 struct CommandVM {
-  CommandType type;
+  /*CommandType type;
 
   Spell spellType;
   UpgradeType upgradeType;
   TowerType towerType;
   int xPos;
   int yPos;
-  int unitId;
+  int unitId;*/
 };
 
 #endif

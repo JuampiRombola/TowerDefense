@@ -11,9 +11,11 @@ struct CommandVM;
 class Command {
 public:
 	Command();
+
 	virtual ~Command();
+
 	virtual bool Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications) = 0;
-	virtual CommandVM GetViewModel() = 0;
+	//virtual CommandVM GetViewModel() = 0;
 };
 
 #endif

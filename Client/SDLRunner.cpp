@@ -77,6 +77,9 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     mv->createTower(4, TORRE_AGUA, 4, 6);*/
     HudView hudView(window, textureLoader, renderer, *_dispatcher);
     hudView.addElementalButtons(ELEMENTAL_EARTH);
+    hudView.addElementalButtons(ELEMENTAL_FIRE);
+    hudView.addElementalButtons(ELEMENTAL_WATER);
+    hudView.addElementalButtons(ELEMENTAL_AIR);
 
     Uint32 t1;
     Uint32 t2;
@@ -136,7 +139,6 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     SDL_Quit();
 
     delete mv;
-
 }
 
 

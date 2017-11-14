@@ -48,8 +48,6 @@ enum UNIT_TYPE {
 } ;
 #endif
 
-
-
 #define GAME_STARTED 100
 #define GAME_OPCODE 101
 #define TOWER_PLACED 102
@@ -57,6 +55,27 @@ enum UNIT_TYPE {
 #define UNIT_CREATED 104
 #define GAME_OVER 105
 #define PROJECTILE_FIRED 106
+#define UNIT_DIED 107
+
+
+#define CLIENT_CREATE_TOWER 108
+#define CLIENT_CAST_SPELL 109
+
+
+#ifndef __CAST_SPELL_ENUM__
+#define __CAST_SPELL_ENUM__
+enum CAST_SPELL_TYPE {
+    SPELL_TERRAFORMING = 200,
+    SPELL_GRIETA = 201,
+    SPELL_FIREWALL = 203,
+    SPELL_METEORITO = 204,
+    SPELL_CONGELACION = 205,
+    SPELL_VENTISCA = 206,
+    SPELL_TORNADO = 207,
+    SPELL_RAYO = 208
+} ;
+#endif
+
 
 
 #endif

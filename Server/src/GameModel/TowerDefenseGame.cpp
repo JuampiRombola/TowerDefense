@@ -21,6 +21,7 @@
 #include "../../include/GameModel/Helpers.h"
 #include "../../include/GameModel/GameNotifications/UnitCreatedGameNotification.h"
 #include "../../include/GameModel/GameNotifications/GameOverGameNotification.h"
+#include "../../include/GameModel/GameNotifications/UnitDiedGameNotification.h"
 
 TowerDefenseGame::TowerDefenseGame(uint gameId,
 	ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> playersInGame) :
@@ -38,10 +39,10 @@ TowerDefenseGame::TowerDefenseGame(uint gameId,
 //	mv->createTower(3, TORRE_FUEGO, 1, 4);
 //	mv->createTower(4, TORRE_AGUA, 4, 6);
 
-	this->QueueCommand(new BuildTowerCommand(Ground, 2, 0));
-	this->QueueCommand(new BuildTowerCommand(Air, 2, 2));
-	this->QueueCommand(new BuildTowerCommand(Fire, 1, 4));
-	this->QueueCommand(new BuildTowerCommand(Water, 4, 6));
+	//this->QueueCommand(new BuildTowerCommand(Ground, 2, 0));
+	//this->QueueCommand(new BuildTowerCommand(Air, 2, 2));
+	//this->QueueCommand(new BuildTowerCommand(Fire, 1, 4));
+	//this->QueueCommand(new BuildTowerCommand(Water, 4, 6));
 }
 
 TowerDefenseGame::~TowerDefenseGame()
@@ -159,6 +160,8 @@ bool TowerDefenseGame::_Step(){
 		for (; it != _units.end();){
 			if (!((*it)->IsAlive())){
 				std::cout << "REMOVING DEAD UNIT\n";
+				UnitVM vm = (*it)->GetViewModel();
+				notifications.Queue(new UnitDiedGameNotification(vm, _players));
 				_map.RemoveUnit(*it);
 				EnviormentUnit* unit = *it;
 				_units.erase(it);

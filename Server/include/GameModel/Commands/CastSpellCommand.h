@@ -2,33 +2,31 @@
 #define _CAST_SPELL_COMMAND_
 
 #include "../Commands/Command.h"
+#include "../../../../Common/Protocolo.h"
 class Map;
 class TowerDefenseGame;
-
-enum Spell { Terraforming, Grieta, Meteorito, MuroDeFuego, Congelacion, Ventisca, Tornado, Rayos };
 
 class CastSpellCommand : public Command {
 private:
 	int _xPos;
 	int _yPos;
 	int _unitId;
-	Spell _spell;
-	bool _CastTerraforming(Map* map);
-	bool _CastGrieta(Map* map);
-	bool _CastMeteorito(Map* map);
-	bool _CastMuroDeFuego(Map* map);
+	CAST_SPELL_TYPE _spell;
+	bool _CastTerraforming(Map* map, TowerDefenseGame* game);
+	bool _CastGrieta(Map* map, TowerDefenseGame* game);
+	bool _CastMeteorito(Map* map, TowerDefenseGame* game);
+	bool _CastMuroDeFuego(Map* map, TowerDefenseGame* game);
 	bool _CastCongelacion(Map* map, TowerDefenseGame* game);
-	bool _CastVentisca(Map* map);
-	bool _CastTornado(Map* map);
+	bool _CastVentisca(Map* map, TowerDefenseGame* game);
+	bool _CastTornado(Map* map, TowerDefenseGame* game);
 	bool _CastRayos(Map* map, TowerDefenseGame* game);
 
 public:
-	CastSpellCommand(Spell spell, uint x, uint y);
-	CastSpellCommand(Spell spell, uint unitId);
+	CastSpellCommand(CAST_SPELL_TYPE spell, uint x, uint y);
+	CastSpellCommand(CAST_SPELL_TYPE spell, uint unitId);
 	~CastSpellCommand();
-	bool Execute(Map* map, TowerDefenseGame* game);
-	Spell GetSpellType();
-	CommandVM GetViewModel();
+	bool Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications);
+	//CommandVM GetViewModel();
 };
 
 #endif

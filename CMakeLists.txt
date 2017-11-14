@@ -98,8 +98,10 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/TowerDefenseGame.h
         Server/include/GameModel/GameNotifications/GameNotification.h
         Server/include/GameModel/GameNotifications/UnitPositionGameNotification.h
+        Server/include/GameModel/GameNotifications/UnitDiedGameNotification.h
         Server/include/GameModel/GameNotifications/TowerPlacedGameNotification.h
         Server/src/GameModel/GameNotifications/GameNotification.cpp
+        Server/src/GameModel/GameNotifications/UnitDiedGameNotification.cpp
         Server/src/GameModel/GameNotifications/UnitPositionGameNotification.cpp
         Server/src/GameModel/GameNotifications/TowerPlacedGameNotification.cpp
         Server/src/GameModel/GameConfiguration.cpp
@@ -173,8 +175,8 @@ set(SOURCE_FILES_CLIENT
         Common/Lock.cpp Common/Lock.h
         Client/View/Model/SpellButton.cpp
         Client/View/Model/SpellButton.h
-        Client/src/NetCommands/MapCommand.cpp
-        Client/include/NetCommands/MapCommand.h)
+        Client/src/NetCommands/ClientBuildTowerCommand.cpp
+        Client/include/NetCommands/ClientBuildTowerCommand.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -219,6 +221,7 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/include/Lobbies/Lobby.h
 
         Client/src/NetCommands/CommandDispatcher.cpp
+        Client/src/NetCommands/ClientCastSpellCommand.cpp
         Client/src/NetCommands/CreateLobbyCommand.cpp
         Client/src/NetCommands/JoinLobbyCommand.cpp
         Client/src/NetCommands/LeaveLobbyCommand.cpp
@@ -226,8 +229,11 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/NetCommands/NetCommand.cpp
         Client/src/NetCommands/PlayerIsReadyCommand.cpp
         Client/src/NetCommands/PickSpellCommand.cpp
+        Client/src/NetCommands/ClientBuildTowerCommand.cpp
 
         Client/include/NetCommands/PickSpellCommand.h
+        Client/include/NetCommands/ClientCastSpellCommand.h
+        Client/include/NetCommands/ClientBuildTowerCommand.h
         Client/include/NetCommands/CommandDispatcher.h
         Client/include/NetCommands/CreateLobbyCommand.h
         Client/include/NetCommands/JoinLobbyCommand.h

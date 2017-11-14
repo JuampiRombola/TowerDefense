@@ -13,7 +13,7 @@ UpgradeTowerCommand::UpgradeTowerCommand(uint x, uint y, UpgradeType type):
 
 UpgradeTowerCommand::~UpgradeTowerCommand(){}
 
-bool UpgradeTowerCommand::Execute(Map* map, TowerDefenseGame* game){
+bool UpgradeTowerCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications){
 	SolidGroundTile* tile = map->GetSolidGroundTile(_xPos ,_yPos);
 	if (tile == nullptr)
 		return false;
@@ -25,6 +25,8 @@ bool UpgradeTowerCommand::Execute(Map* map, TowerDefenseGame* game){
 	return false;
 }
 
+
+/*
 CommandVM UpgradeTowerCommand::GetViewModel(){
 	CommandVM vm;
 	vm.type = UpgradeTower;
@@ -32,4 +34,4 @@ CommandVM UpgradeTowerCommand::GetViewModel(){
 	vm.xPos = _xPos;
 	vm.yPos = _yPos;
 	return vm;
-}
+}*/

@@ -1,4 +1,6 @@
 #include "HudView.h"
+#include "../../include/NetCommands/ClientCastSpellCommand.h"
+
 
 HudView::HudView(Window &w, TextureLoader &tl, Renderer &r,
                  CommandDispatcher &cd) :
@@ -30,9 +32,52 @@ void HudView::doMouseAction() {
 }
 
 void HudView::sendCommand(int x, int y) {
-    printf("OPCODE %d en la posicion (%d, %d)\n",
-           currentCommand, x, y);
-    MapCommand *command = new MapCommand(currentCommand, x, y);
+//    printf("OPCODE %d en la posicion (%d, %d)\n",currentCommand, x, y);
+    NetCommand *command;
+    if (currentCommand < 4){
+        switch(currentCommand){
+            case CMD_EARTH_TOWER:
+                command = new ClientBuildTowerCommand(SPELL_TYPE_GROUND, x, y);
+                break;
+            case CMD_FIRE_TOWER:
+                command = new ClientBuildTowerCommand(SPELL_TYPE_FIRE, x, y);
+                break;
+            case CMD_AIR_TOWER:
+                command = new ClientBuildTowerCommand(SPELL_TYPE_AIR, x, y);
+                break;
+            case CMD_WATER_TOWER:
+                command = new ClientBuildTowerCommand(SPELL_TYPE_WATER, x, y);
+                break;
+        }
+    } else {
+        switch(currentCommand){
+            case CMD_TERRAFORMING:
+                command = new ClientCastSpellCommand(SPELL_TERRAFORMING, x, y);
+                break;
+            case CMD_GRIETA:
+                command = new ClientCastSpellCommand(SPELL_GRIETA, x, y);
+                break;
+            case CMD_METEORITO:
+                command = new ClientCastSpellCommand(SPELL_METEORITO, x, y);
+                break;
+            case CMD_FIREWALL:
+                command = new ClientCastSpellCommand(SPELL_FIREWALL, x, y);
+                break;
+            case CMD_VENTISCA:
+                command = new ClientCastSpellCommand(SPELL_VENTISCA, x, y);
+                break;
+            case CMD_CONGELACION:
+                command = new ClientCastSpellCommand(SPELL_CONGELACION, x, y);
+                break;
+            case CMD_TORNADO:
+                command = new ClientCastSpellCommand(SPELL_TORNADO, x, y);
+                break;
+            case CMD_RAYO:
+                command = new ClientCastSpellCommand(SPELL_RAYO, x, y);
+                break;
+        }
+    }
+    
     dispatcher.QueueCommand(command);
 }
 

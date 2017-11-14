@@ -71,12 +71,18 @@ _projectiles()
 	
 	SolidGroundTile* solidGround = new SolidGroundTile(2, 0);
 	PlaceGroundTile(solidGround);
+	
 	SolidGroundTile* solidGround1 = new SolidGroundTile(2, 2);
 	PlaceGroundTile(solidGround1);
+	
 	SolidGroundTile* solidGround2 = new SolidGroundTile(1, 4);
 	PlaceGroundTile(solidGround2);
+	
 	SolidGroundTile* solidGround3 = new SolidGroundTile(4, 6);
 	PlaceGroundTile(solidGround3);
+	
+	SolidGroundTile* solidGround4 = new SolidGroundTile(3, 4);
+	PlaceGroundTile(solidGround4);
 }
 
 

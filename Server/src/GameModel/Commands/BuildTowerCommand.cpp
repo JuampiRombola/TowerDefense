@@ -9,7 +9,6 @@
 #include "../../../include/GameModel/Towers/Tower.h"
 #include "../../../include/GameModel/TowerDefenseGame.h"
 #include <yaml-cpp/yaml.h>
-#include "../../../include/GameModel/ViewModels/CommandVM.h"
 #include "../../../include/GameModel/GameNotifications/TowerPlacedGameNotification.h"
 
 
@@ -83,6 +82,8 @@ Tower* BuildTowerCommand::_BuildAirTower(Map* map, SolidGroundTile* tile, const 
 	return new AirTower(cooldown_sec * 1000, range, flyingTargetDamage, nonFlyingTargetDamage, tile, map);
 }
 
+
+/*
 CommandVM BuildTowerCommand::GetViewModel(){
 	CommandVM vm;
 	vm.type = BuildTower;
@@ -90,4 +91,4 @@ CommandVM BuildTowerCommand::GetViewModel(){
 	vm.xPos = _xPos;
 	vm.yPos = _yPos;
 	return vm;
-}
+}*/

@@ -85,7 +85,7 @@ bool FireTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
 
 TowerVM FireTower::GetViewModel(){
 	TowerVM vm;
-	vm.type = Air;
+	vm.type = Fire;
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
 	vm.experience = _experience;

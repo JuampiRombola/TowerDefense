@@ -14,7 +14,7 @@
 Renderer::Renderer(Window &window, int mapWidth, int mapHeight) :
         mapWidth(mapWidth*WIDTHFACTOR + mapHeight*WIDTHFACTOR - WIDTHFACTOR),
         mapHeight(this->mapWidth / 2),
-        cameraX(this->mapWidth/4), cameraY(this->mapHeight/4),
+        cameraX(0), cameraY(this->mapHeight/4),
         paddingWidth(mapHeight * WIDTHFACTOR + PADDING),
         paddingHeight(PADDING),
         zoom(ZOOMINITIAL),

@@ -10,29 +10,29 @@
 #include "../../../include/GameModel/TowerDefenseGame.h"
 #include "../../../include/GameModel/ViewModels/CommandVM.h"
 
-CastSpellCommand::CastSpellCommand(Spell spell, uint x, uint y):
+CastSpellCommand::CastSpellCommand(CAST_SPELL_TYPE spell, uint x, uint y):
  _xPos(x), _yPos(y), _unitId(-1), _spell(spell) {}
 
-CastSpellCommand::CastSpellCommand(Spell spell, uint unitId):
+CastSpellCommand::CastSpellCommand(CAST_SPELL_TYPE spell, uint unitId):
  _xPos(-1), _yPos(-1), _unitId(unitId), _spell(spell) {}
 
 CastSpellCommand::~CastSpellCommand(){}
 
-bool CastSpellCommand::Execute(Map* map, TowerDefenseGame* game){
+bool CastSpellCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications){
 	switch(_spell){
-		case Terraforming: return _CastTerraforming(map);
-		case Grieta: return _CastGrieta(map);
-		case Meteorito: return _CastMeteorito(map);
-		case MuroDeFuego: return _CastMuroDeFuego(map);
-		case Congelacion: return _CastCongelacion(map, game);
-		case Ventisca: return _CastVentisca(map);
-		case Tornado: return _CastTornado(map);
-		case Rayos: return _CastRayos(map, game);
+		case SPELL_TERRAFORMING: return _CastTerraforming(map, game);
+		case SPELL_GRIETA: return _CastGrieta(map, game);
+		case SPELL_METEORITO: return _CastMeteorito(map, game);
+		case SPELL_FIREWALL: return _CastMuroDeFuego(map, game);
+		case SPELL_CONGELACION: return _CastCongelacion(map, game);
+		case SPELL_VENTISCA: return _CastVentisca(map, game);
+		case SPELL_TORNADO: return _CastTornado(map, game);
+		case SPELL_RAYO: return _CastRayos(map, game);
 		default: return false;
 	}
 }
 
-bool CastSpellCommand::_CastTerraforming(Map* map){
+bool CastSpellCommand::_CastTerraforming(Map* map, TowerDefenseGame* game){
 	SolidGroundTile* tile = map->GetSolidGroundTile(_xPos, _yPos);
 	if (tile != nullptr)
 		return false;
@@ -41,7 +41,7 @@ bool CastSpellCommand::_CastTerraforming(Map* map){
 	return true;
 }
 
-bool CastSpellCommand::_CastGrieta(Map* map){
+bool CastSpellCommand::_CastGrieta(Map* map, TowerDefenseGame* game){
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
 	if (tile != nullptr){
 		tile->Crack(400);
@@ -50,7 +50,7 @@ bool CastSpellCommand::_CastGrieta(Map* map){
 	return false;
 }
 
-bool CastSpellCommand::_CastMeteorito(Map* map){
+bool CastSpellCommand::_CastMeteorito(Map* map, TowerDefenseGame* game){
 	uint collateralDamageRange = 2;
 	uint collateralDamage = 10;
 	uint targetDamage = 30;
@@ -74,7 +74,7 @@ bool CastSpellCommand::_CastMeteorito(Map* map){
 	return true;
 }
 
-bool CastSpellCommand::_CastMuroDeFuego(Map* map){
+bool CastSpellCommand::_CastMuroDeFuego(Map* map, TowerDefenseGame* game){
 	uint fireDuration_sec = 5;
 	uint fireDamage = 10;
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
@@ -95,7 +95,7 @@ bool CastSpellCommand::_CastCongelacion(Map* map, TowerDefenseGame* game){
 	return false;
 }
 
-bool CastSpellCommand::_CastVentisca(Map* map){
+bool CastSpellCommand::_CastVentisca(Map* map, TowerDefenseGame* game){
 	uint ventiscaDamage = 5;
 	uint percentSlow = 95;
 	uint slowDuration_sec = 4;
@@ -108,7 +108,7 @@ bool CastSpellCommand::_CastVentisca(Map* map){
 	return false;
 }
 
-bool CastSpellCommand::_CastTornado(Map* map){
+bool CastSpellCommand::_CastTornado(Map* map, TowerDefenseGame* game){
 	uint tornadoMaxDamage = 20;
 	uint tornadoDuration_sec = 5;
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
@@ -131,6 +131,8 @@ bool CastSpellCommand::_CastRayos(Map* map, TowerDefenseGame* game){
 	return false;
 }
 
+
+/*
 CommandVM CastSpellCommand::GetViewModel(){
 	CommandVM vm;
 	vm.type = CastSpell;
@@ -144,4 +146,4 @@ CommandVM CastSpellCommand::GetViewModel(){
 	}
 	return vm;
 
-}
+}*/

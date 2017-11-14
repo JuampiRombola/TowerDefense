@@ -5,7 +5,6 @@
 #include "../include/GTKNotifications/GameStartedGTKNotification.h"
 #include "../View/Common/SpriteNamesConfig.h"
 
-
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner)
 : _sock(socket), _lobbyManager(lobbyManager),  _runner(runner), _stop(false) {
 	
@@ -122,6 +121,11 @@ void NotificationReciever::_HandleGameOpcode(){
 			std::cout << "GAME_OVER::\n" << std::flush;
 			this->Stop();
             break;
+		case UNIT_DIED:
+			uint32_t unitid;
+			_sock.Recieve((char *) &unitid, 4);
+			model_view->killUnit(unitid);
+			break;
     }
 }
 
@@ -154,23 +158,28 @@ void NotificationReciever::_HandleProjectileFired(){
     }
 }
 void NotificationReciever::_HandleTowerPlaced(){
+    static int towerID = 1;
 	uint32_t x;
 	_sock.Recieve((char *) &x, 4);
 	uint32_t y;
 	_sock.Recieve((char *) &y, 4);
 	SPELL_TYPE type;
 	_sock.Recieve((char *) &type, 1);
-	return;
-	switch(type){
-		case SPELL_TYPE_FIRE:
-			model_view->createTower(990, TORRE_FUEGO, x, y);
-		case SPELL_TYPE_WATER:
-            model_view->createTower(990, TORRE_AGUA, x, y);
-		case SPELL_TYPE_AIR:
-            model_view->createTower(990, TORRE_AIRE, x, y);
-		case SPELL_TYPE_GROUND:
-            model_view->createTower(990, TORRE_TIERRA, x, y);
-	}
+    switch (type) {
+        case SPELL_TYPE_GROUND:
+            model_view->createTower(towerID++, TORRE_TIERRA , x, y);
+            break;
+        case SPELL_TYPE_FIRE:
+			std::cout << "LLEGO NOTIFCACION TORRE FUEGO 123\n" << std::flush;
+            model_view->createTower(towerID++, TORRE_FUEGO , x, y);
+            break;
+        case SPELL_TYPE_WATER:
+            model_view->createTower(towerID++, TORRE_AGUA , x, y);
+            break;
+        case SPELL_TYPE_AIR:
+            model_view->createTower(towerID++, TORRE_AIRE, x, y);
+            break;
+    }
 }
 void NotificationReciever::_HandleUnitPositionUpdate(){
     uint32_t unitID;

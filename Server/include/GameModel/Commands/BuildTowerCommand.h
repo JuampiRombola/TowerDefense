@@ -26,7 +26,7 @@ public:
 	~BuildTowerCommand();
 	bool Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications);
 	TowerType GetTowerType();
-	CommandVM GetViewModel();
+//	CommandVM GetViewModel();
 };
 
 #endif

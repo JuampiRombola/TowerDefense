@@ -116,7 +116,7 @@ void ModelView::draw(Uint32 time) {
 
     //Dibujo por niveles
     for (auto depthLevel : depthLevels)
-        depthLevel->draw(time);
+        depthLevel->draw(SDL_GetTicks());
 
     // Remuevo disparos terminados
     auto it = shots.begin();

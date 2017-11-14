@@ -4,14 +4,15 @@
 
 #include "../../../Common/SocketWrapper.h"
 #include "NetCommand.h"
+#include "../../../Common/Protocolo.h"
 
-class MapCommand : public NetCommand {
+class ClientBuildTowerCommand : public NetCommand {
 private:
-    int cmd;
-    int tileX;
-    int tileY;
+    SPELL_TYPE _type;
+    uint32_t _tileX;
+    uint32_t _tileY;
 public:
-    MapCommand(int cmd, int tileX, int tileY);
+    ClientBuildTowerCommand(SPELL_TYPE  type, uint32_t  tileX, uint32_t  tileY);
     void SendCommand(SocketWrapper& socket);
 };
 

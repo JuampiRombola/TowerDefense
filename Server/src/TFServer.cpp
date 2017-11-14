@@ -13,6 +13,7 @@
 #include "../include/Notifications/LoggedInNotification.h"
 #include "../include/Notifications/InvalidLogInNotification.h"
 #include "../include/Notifications/PlayerLeaveNotification.h"
+#include "../include/GameModel/Commands/CastSpellCommand.h"
 
 
 TFServer::TFServer(std::string service) : _playerGUID(1),_connectionHandlers(),_playerProxies(),
@@ -124,6 +125,9 @@ void TFServer::HandleConnection(PlayerProxy& player){
 				case UNPICK_SPELL:
 					_lobbyManager.HandlePlayerUnpickedSpell(player);
 					break;
+				case GAME_OPCODE:
+					_HandleGameCommand(player);
+					break;
 				default:
 					std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << "'\n" << std::flush;
 			}
@@ -141,6 +145,45 @@ void TFServer::HandleConnection(PlayerProxy& player){
 		}
 		std::cerr << e.what() << '\n';
 	}		
+}
+
+void TFServer::_HandleGameCommand(PlayerProxy& player){
+    TowerDefenseGame* game = _player2game[&player];
+    uint8_t ins;
+    player.sock.Recieve((char*) &ins, 1);
+
+    if (ins == CLIENT_CAST_SPELL){
+        uint8_t spelltype;
+        player.sock.Recieve((char*) &spelltype, 1);
+		uint32_t x;
+		player.sock.Recieve((char*) &x, 4);
+		uint32_t y;
+		player.sock.Recieve((char*) &y, 4);
+		game->QueueCommand(new CastSpellCommand((CAST_SPELL_TYPE) spelltype, x, y));
+    }
+
+	if (ins == CLIENT_CREATE_TOWER){
+		uint8_t spelltype;
+		player.sock.Recieve((char*) &spelltype, 1);
+		uint32_t x;
+		player.sock.Recieve((char*) &x, 4);
+		uint32_t y;
+		player.sock.Recieve((char*) &y, 4);
+		switch(spelltype){
+			case SPELL_TYPE_GROUND:
+				game->QueueCommand(new BuildTowerCommand(Ground , x, y));
+				break;
+			case SPELL_TYPE_FIRE:
+				game->QueueCommand(new BuildTowerCommand(Fire , x, y));
+				break;
+			case SPELL_TYPE_AIR:
+				game->QueueCommand(new BuildTowerCommand(Air , x, y));
+				break;
+			case SPELL_TYPE_WATER:
+				game->QueueCommand(new BuildTowerCommand(Water , x, y));
+				break;
+		}
+	}
 }
 
 void TFServer::_LaunchGame(Lobby& lobby){
