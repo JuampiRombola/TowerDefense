@@ -9,9 +9,10 @@
 class Button : public Image {
 private:
     MousePosition &mousePosition;
-    virtual void click() = 0;
+
 protected:
-    bool isClicked();
+    virtual void click() = 0;
+
 public:
     Button(int posX, int posY, int width, int height,
                SDL_Texture *texture, MousePosition &mousePosition,
@@ -21,6 +22,9 @@ public:
 
     virtual void draw(int number);
 
+    bool isClicked();
+
+    bool wasLastClick();
 };
 
 #endif //TOWERDEFENSE_BUTTON_H

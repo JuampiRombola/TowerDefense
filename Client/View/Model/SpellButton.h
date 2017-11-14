@@ -9,11 +9,13 @@ class SpellButton : public Button {
 private:
     const int type;
     int &command;
+    Image transparency;
+
 public:
-    SpellButton(Window &w, int type, int &cmd, SDL_Texture *texture,
-    MousePosition &mousePosition, Renderer &renderer,
-    int n);
-    void draw();
+    SpellButton(Window &w, int element, int &cmd, SDL_Texture *texture,
+                SDL_Texture *transp, MousePosition &mousePosition,
+                Renderer &renderer, int n);
+    void draw(int number) override;
     void click() override;
 };
 

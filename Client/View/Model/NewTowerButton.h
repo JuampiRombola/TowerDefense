@@ -11,11 +11,13 @@ class NewTowerButton : public Button {
 private:
     const int element;
     int &command;
+    Image transparency;
+
 public:
     NewTowerButton(Window &w, int element, int &cmd, SDL_Texture *texture,
-                       MousePosition &mousePosition, Renderer &renderer,
-                   int n);
-    void draw();
+                   SDL_Texture *transp, MousePosition &mousePosition,
+                   Renderer &renderer, int n);
+    void draw(int number) override;
     void click() override;
 };
 

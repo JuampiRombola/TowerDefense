@@ -23,3 +23,10 @@ bool Button::isClicked() {
              mousePosition.getPosY() > (button.y + button.h)) &&
            mousePosition.isActive();
 }
+
+bool Button::wasLastClick() {
+    return !(mousePosition.getPosX() < button.x ||
+             mousePosition.getPosX() > (button.x + button.w) ||
+             mousePosition.getPosY() < button.y ||
+             mousePosition.getPosY() > (button.y + button.h));
+}
