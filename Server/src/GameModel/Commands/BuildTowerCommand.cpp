@@ -19,6 +19,7 @@ BuildTowerCommand::BuildTowerCommand(TowerType type, uint x, uint y):
 BuildTowerCommand::~BuildTowerCommand(){}
 
 bool BuildTowerCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications){
+	std::cout << "EXECUTINGG TOWER BUILD COMMAND\n" << std::flush;
 	SolidGroundTile* tile = map->GetSolidGroundTile(_xPos ,_yPos);
 	if (tile != nullptr && !tile->HasTower()){
 		Tower* t = nullptr;
@@ -57,7 +58,7 @@ Tower* BuildTowerCommand::_BuildGroundTower(Map* map, SolidGroundTile* tile, con
 }
 
 Tower* BuildTowerCommand::_BuildFireTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg){
-	uint damage = cfg["towers"]["fire"]["damage"].as<uint>();
+	uint damage = cfg["towers"]["fire"]["target_damage"].as<uint>();
 	uint cooldown_sec = cfg["towers"]["fire"]["cooldown_sec"].as<uint>();
 	uint range = cfg["towers"]["fire"]["range"].as<uint>();
 	uint collateralRange = cfg["towers"]["fire"]["collateral_range"].as<uint>();

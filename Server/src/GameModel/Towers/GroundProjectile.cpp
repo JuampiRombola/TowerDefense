@@ -51,7 +51,7 @@ double GroundProjectile::_OnImpact(){
 
 ProjectileVM GroundProjectile::GetViewModel(){
 	ProjectileVM vm;
-	vm.type = pGround;
+	vm.type = SPELL_TYPE_GROUND;
 	vm.distanceToCover = _distance;
 	vm.distanceCovered = _distanceCovered;
 	vm.fromXpos = _origin->GetPosition()->GetXPos();

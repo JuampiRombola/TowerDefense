@@ -50,11 +50,14 @@ private:
 
 	std::thread _acceptorThread;
 	std::thread _notificatorThread;
+	std::thread _gameNotificatorThread;
+
 
 	std::map<PlayerProxy*, TowerDefenseGame*> _player2game;
 
 	void _AcceptConnections();
 	void _NotifyClients();
+	void _NotifyGamePlayers();
 	void _SetIsAcceptingConnections();
 	void _HandleLogin(PlayerProxy& player);
 	void _LaunchGame(Lobby& lobby);

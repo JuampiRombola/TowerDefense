@@ -87,6 +87,8 @@ public:
 
 
     void Run(int* argc, char***argv);
+
+    static gboolean notification_check(gpointer data);
 };
 
 

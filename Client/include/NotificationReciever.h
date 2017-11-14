@@ -25,12 +25,14 @@ private:
 	void _HandleTowerPlaced();
     void _HandleUnitPositionUpdate();
     void _HandleUnitCreated();
+	void _HandleProjectileFired();
 public:
 	NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner);
 	~NotificationReciever();
 	void RecieveNotifications();
 	void Run();
 	void Stop();
+	bool Running();
 	ModelView *model_view;
 
 };

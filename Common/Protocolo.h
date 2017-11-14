@@ -55,6 +55,8 @@ enum UNIT_TYPE {
 #define TOWER_PLACED 102
 #define UNIT_POSITION_UPDATE 103
 #define UNIT_CREATED 104
+#define GAME_OVER 105
+#define PROJECTILE_FIRED 106
 
 
 #endif

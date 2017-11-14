@@ -54,7 +54,7 @@ double AirProjectile::_OnImpact(){
 
 ProjectileVM AirProjectile::GetViewModel(){
 	ProjectileVM vm;
-	vm.type = pAir;
+	vm.type = SPELL_TYPE_AIR;
 	vm.distanceToCover = _distance;
 	vm.distanceCovered = _distanceCovered;
 	vm.fromXpos = _origin->GetPosition()->GetXPos();

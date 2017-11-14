@@ -15,6 +15,8 @@
 #include "../../../include/GameModel/EnviormentUnits/EnviormentUnit.h"
 #include "../../../include/GameModel/Map/PathTile.h"
 #include "../../../include/GameModel/Towers/Projectile.h"
+#include "../../../include/GameModel/TowerDefenseGame.h"
+#include "../../../include/GameModel/GameNotifications/ProjectileFiredGameNotification.h"
 
 Map::Map(uint rows, uint cols, std::string mapJsonConfig):
 _rows(rows), _cols(cols),
@@ -35,7 +37,7 @@ _projectiles()
 	PathTile* end = new PathTile(6,6, this, nullptr);
 	_PlacePathTile(end);
 	_SetFinishTile(end);
-
+	
 	PathTile* p1 = new PathTile(6, 5, this, end);
 	_PlacePathTile(p1);
 	PathTile* p2 = new PathTile(5, 5, this, p1);
@@ -65,6 +67,16 @@ _projectiles()
 	PathTile* spawn1 = new PathTile(0,0, this, p1);
 	_PlacePathTile(spawn1);
 	_SetSpawnTile(spawn1);
+
+	
+	SolidGroundTile* solidGround = new SolidGroundTile(2, 0);
+	PlaceGroundTile(solidGround);
+	SolidGroundTile* solidGround1 = new SolidGroundTile(2, 2);
+	PlaceGroundTile(solidGround1);
+	SolidGroundTile* solidGround2 = new SolidGroundTile(1, 4);
+	PlaceGroundTile(solidGround2);
+	SolidGroundTile* solidGround3 = new SolidGroundTile(4, 6);
+	PlaceGroundTile(solidGround3);
 }
 
 
@@ -191,13 +203,17 @@ void Map::_SetFinishTile(PathTile* tile){
 	} 
 }
 
-void Map::Step(){
+void Map::Step(TowerDefenseGame& game){
 	for (auto it = _groundTiles.begin(); it != _groundTiles.end(); ++it){
 		for (auto it2 = (*it).begin(); it2 != (*it).end(); ++it2){
 			if ((*it2) != nullptr){
 				Projectile* p = (*it2)->Step();
-				if (p != nullptr)
+				if (p != nullptr){
 					_projectiles.push_back(p);
+					ProjectileVM vm = p->GetViewModel();
+					game.notifications.Queue(new ProjectileFiredGameNotification(vm, game.GetPlayers()));
+					std::cout << "TOWER FIRED\n" << std::flush;
+				}
 			} 
 		}
 	}

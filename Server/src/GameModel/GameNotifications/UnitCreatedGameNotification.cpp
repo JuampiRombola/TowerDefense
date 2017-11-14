@@ -2,10 +2,11 @@
 // Created by tino on 13/11/17.
 //
 
+#include <iostream>
 #include "../../../include/GameModel/GameNotifications/UnitCreatedGameNotification.h"
 
 UnitCreatedGameNotification::UnitCreatedGameNotification(UnitVM& viewmodel, std::vector<PlayerProxy*> playersToNotify)
-: GameNotification(playersToNotify)
+: GameNotification(playersToNotify), vm(viewmodel)
 {
 
 }
@@ -35,5 +36,6 @@ void UnitCreatedGameNotification::Notify(){
         p->sock.Send((char *) &delay_ms, 4);
         uint8_t spelltype = vm.unitType;
         p->sock.Send((char*) &spelltype, 1);
+        std::cout << "unit notification created x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
     }
 }

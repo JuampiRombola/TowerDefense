@@ -59,16 +59,16 @@ void LoggedInNotification::Notify(){
 		_player.sock.Send((char*) &playerGuid, 4);
 	}
 
-	std::cout << " IM HERE ! \n" << std::flush;
 
 	/** Notifico a todos los otros jugadores que entro este jugadopr */
 	uint8_t otherPlayersOpcode = PLAYER_JOIN;
 	for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it){
-		(*it)->sock.Send((char*) &otherPlayersOpcode, 1);
-		uint32_t id = _player.GUID();
-		(*it)->sock.Send((char*) &id, 4);
-		std::string pname = _player.Name();
-		(*it)->sock.SendString(pname);
+		if((*it)->state != DEAD){
+			(*it)->sock.Send((char*) &otherPlayersOpcode, 1);
+			uint32_t id = _player.GUID();
+			(*it)->sock.Send((char*) &id, 4);
+			std::string pname = _player.Name();
+			(*it)->sock.SendString(pname);
+		}
 	}
-	std::cout << " YUP ! \n" << std::flush;
 }

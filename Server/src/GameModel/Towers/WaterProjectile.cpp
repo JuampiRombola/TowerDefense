@@ -54,7 +54,7 @@ double WaterProjectile::_OnImpact(){
 
 ProjectileVM WaterProjectile::GetViewModel(){
 	ProjectileVM vm;
-	vm.type = pWater;
+	vm.type = SPELL_TYPE_WATER;
 	vm.distanceToCover = _distance;
 	vm.distanceCovered = _distanceCovered;
 	vm.fromXpos = _origin->GetPosition()->GetXPos();

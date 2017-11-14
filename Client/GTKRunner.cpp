@@ -190,12 +190,12 @@ GTKRunner::~GTKRunner() {
         dispatcher->Stop();
         delete reciever;
         delete dispatcher;
+        delete lobbyManager;
     }
-    delete lobbyManager;
 }
 
 
-gboolean notification_check(gpointer data){
+gboolean GTKRunner::notification_check(gpointer data){
     GTKRunner* runner = (GTKRunner*) data;
     GTKNotification* gtkNoti = runner->gtkNotifications.Dequeue();
     while (gtkNoti != nullptr){
@@ -203,7 +203,7 @@ gboolean notification_check(gpointer data){
         delete gtkNoti;
         gtkNoti = runner->gtkNotifications.Dequeue();
     }
-    return true;
+    return false;
 }
 
 
@@ -335,6 +335,5 @@ void GTKRunner::Run(int* argc, char***argv){
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
     gtk_widget_show (GTK_WIDGET(this->window_connect));
-    g_idle_add(notification_check, this);
     gtk_main ();
 }

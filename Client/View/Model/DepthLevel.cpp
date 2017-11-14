@@ -1,3 +1,4 @@
+#include <iostream>
 #include "DepthLevel.h"
 
 DepthLevel::DepthLevel() : portalEntrada(nullptr), portalSalida(nullptr) {}
@@ -9,14 +10,12 @@ DepthLevel::~DepthLevel() {
     auto it1 = spells.begin();
     while (it1 != spells.end())
         delete (*it1++);
-
     auto it2 = towers.begin();
     while (it2 != towers.end())
         delete (*it2++);
-
     auto it3 = units.begin();
     while (it3 != units.end())
-        delete (*it1++);
+        delete (*it3++);
 }
 
 void DepthLevel::addPortalEntrada(PortalView *portal) {

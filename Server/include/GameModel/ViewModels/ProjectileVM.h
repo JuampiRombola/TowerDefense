@@ -1,10 +1,10 @@
 #ifndef _PROJECTILEVM_
 #define _PROJECTILEVM_
 
-enum ProjectileType { pFire, pWater, pAir, pGround }; 
+#include "../../../../Common/Protocolo.h"
 
 struct ProjectileVM {
-  ProjectileType type;
+  SPELL_TYPE type;
   uint distanceToCover;
   uint distanceCovered;
   uint fromXpos;

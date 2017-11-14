@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include "../../../include/GameModel/ViewModels/UnitVM.h"
 #include "../../../include/GameModel/GameNotifications/UnitPositionGameNotification.h"
 #include "../../../../Common/Protocolo.h"
@@ -32,5 +33,6 @@ void UnitPositionGameNotification::Notify(){
         p->sock.Send((char *) &toy, 4);
         uint32_t delay_ms = vm.stepDelay_ms;
         p->sock.Send((char *) &delay_ms, 4);
+        std::cout << "unit position noti x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
     }
 }

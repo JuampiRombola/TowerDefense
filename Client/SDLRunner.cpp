@@ -19,7 +19,9 @@ SDLRunner::~SDLRunner() {
     delete _dispatcher;
     delete _reciever;
     delete _lobbyManager;
+    std::cout << "lobbymanager deleted\n" << std::flush;
     delete _sock;
+    std::cout << "sock deleted\n" << std::flush;
 }
 
 void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* reciever, ClientLobbyManager* lobbyManager, ClientSocket* sock)
@@ -30,48 +32,47 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
-    ModelView mv(renderer, textureLoader);
 
-    //BuildTowerCommand tower(Ground, 2, 5);
-    //game.QueueCommand(&tower);
     _dispatcher = dispatcher;
     _lobbyManager = lobbyManager;
     _reciever = reciever;
     _sock = sock;
-    _reciever->model_view = &mv;
+    
+    ModelView* mv = new ModelView(renderer, textureLoader);
+    _reciever->model_view =  mv;
 
+    mv->setMapEnvironment(DESIERTO);
+    mv->setMapWidthHeight(MAPSIZE, MAPSIZE);
+    
+    mv->createPathTile(0, 0);
+    mv->createPathTile(1, 0);
+    mv->createPathTile(1, 1);
+    mv->createPathTile(2, 1);
+    mv->createPathTile(3, 1);
+    mv->createPathTile(3, 2);
+    mv->createPathTile(3, 3);
+    mv->createPathTile(2, 3);
+    mv->createPathTile(2, 4);
+    mv->createPathTile(2, 5);
+    mv->createPathTile(3, 5);
+    mv->createPathTile(4, 5);
+    mv->createPathTile(5, 5);
+    mv->createPathTile(6, 5);
+    mv->createPathTile(6, 6);
 
-    mv.setMapEnvironment(DESIERTO);
-    mv.setMapWidthHeight(MAPSIZE, MAPSIZE);
-    mv.createPathTile(0, 0);
-    mv.createPathTile(1, 0);
-    mv.createPathTile(1, 1);
-    mv.createPathTile(2, 1);
-    mv.createPathTile(3, 1);
-    mv.createPathTile(3, 2);
-    mv.createPathTile(3, 3);
-    mv.createPathTile(2, 3);
-    mv.createPathTile(2, 4);
-    mv.createPathTile(2, 5);
-    mv.createPathTile(3, 5);
-    mv.createPathTile(4, 5);
-    mv.createPathTile(5, 5);
-    mv.createPathTile(6, 5);
-    mv.createPathTile(6, 6);
+    mv->createStructureTile(1, 4);
+    mv->createStructureTile(2, 0);
+    mv->createStructureTile(2, 2);
+    mv->createStructureTile(3, 4);
+    mv->createStructureTile(4, 6);
 
-    mv.createStructureTile(1, 4);
-    mv.createStructureTile(2, 0);
-    mv.createStructureTile(2, 2);
-    mv.createStructureTile(3, 4);
-    mv.createStructureTile(4, 6);
+    mv->createPortalEntrada(0, 0);
+    mv->createPortalSalida(6, 6);
 
-    mv.createPortalEntrada(0, 0);
-    mv.createPortalSalida(6, 6);
-
-    mv.createTower(1, TORRE_TIERRA, 2, 0);
-    mv.createTower(2, TORRE_AIRE, 2, 2);
-    mv.createTower(3, TORRE_FUEGO, 1, 4);
-    mv.createTower(4, TORRE_AGUA, 4, 6);
+    mv->createTower(1, TORRE_TIERRA, 2, 0);
+    mv->createTower(2, TORRE_AIRE, 2, 2);
+    mv->createTower(3, TORRE_FUEGO, 1, 4);
+    mv->createTower(4, TORRE_AGUA, 4, 6);
 
     Uint32 t1;
     Uint32 t2;
@@ -81,7 +82,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     Uint32 delayTime = 0;
 
     int idUnit = 0;
-    while (!quit) {
+    while (!quit && _reciever->Running()) {
         t1 = SDL_GetTicks();
 
         while(SDL_PollEvent(&event)) {
@@ -97,35 +98,6 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                             renderer.zoomIn(); break;
                         case SDLK_o:
                             renderer.zoomOut(); break;
-                        case SDLK_d:
-                            mv.killUnit(1); break;
-                            //unit.enableDying(); break;
-                        case SDLK_s:
-                            mv.createShot(DISPARO_TIERRA, 2, 0, 0, 0, 500);break;
-                            //shot.shoot(2, 0, 0, 0, 500); break;
-                        case SDLK_a:
-                            mv.createSpell(FIREWALL, 1, 1, 5000);break;
-                            //fireWall.cast(1, 1, 5000); break;
-                        case SDLK_q:
-                            mv.createUnit(++idUnit, ABOMINABLE, 0, 0, 1, 0, 3000); break;
-                        case SDLK_z:
-                            mv.moveUnit(1, 1, 0, 1, 1, 3000);break;
-                            //unit.move(1, 0, 1, 1, 3000); break;
-                        case SDLK_x:
-                            mv.moveUnit(1, 1, 1, 2, 1, 3000);break;
-                            //unit.move(1, 1, 0, 1, 3000); break;
-                        case SDLK_c:
-                            mv.moveUnit(1, 2, 1, 3, 1, 3000);break;
-                            //unit.move(0, 1, 0, 0, 3000); break;
-                        case SDLK_v:
-                            mv.moveUnit(1, 3, 1, 3, 2, 3000);break;
-                            //unit.move(0, 0, 1, 0, 3000); break;
-                        case SDLK_b:
-                            mv.moveUnit(1, 3, 2, 3, 3, 3000);break;
-                        case SDLK_n:
-                            mv.moveUnit(1, 3, 3, 2, 3, 3000);break;
-                        case SDLK_m:
-                            mv.moveUnit(1, 2, 3, 2, 4, 3000);break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
@@ -138,11 +110,8 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
             }
         }
         renderer.clearRender();
-
-        mv.draw(SDL_GetTicks());
-
+        mv->draw(SDL_GetTicks());
         renderer.present();
-
         t2 = SDL_GetTicks();
         elapsedTime = t2 - t1 + delta;
         delayTime = s - elapsedTime;
@@ -154,12 +123,49 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     }
     SDL_Quit();
 
-    delete dispatcher;
-    delete reciever;
+    delete mv;
+
 }
 
 
 /*
+ * 
+ * 
+ * 
+ * 
+ * 
+
+                        case SDLK_d:
+                            mv->killUnit(1); break;
+                            //unit.enableDying(); break;
+                        case SDLK_s:
+                            mv->createShot(DISPARO_TIERRA, 2, 0, 0, 0, 500);break;
+                            //shot.shoot(2, 0, 0, 0, 500); break;
+                        case SDLK_a:
+                            mv->createSpell(FIREWALL, 1, 1, 5000);break;
+                            //fireWall.cast(1, 1, 5000); break;
+                        case SDLK_q:
+                            mv->createUnit(++idUnit, ABOMINABLE, 0, 0, 1, 0, 3000); break;
+                        case SDLK_z:
+                            mv->moveUnit(1, 1, 0, 1, 1, 3000);break;
+                            //unit.move(1, 0, 1, 1, 3000); break;
+                        case SDLK_x:
+                            mv->moveUnit(1, 1, 1, 2, 1, 3000);break;
+                            //unit.move(1, 1, 0, 1, 3000); break;
+                        case SDLK_c:
+                            mv->moveUnit(1, 2, 1, 3, 1, 3000);break;
+                            //unit.move(0, 1, 0, 0, 3000); break;
+                        case SDLK_v:
+                            mv->moveUnit(1, 3, 1, 3, 2, 3000);break;
+                            //unit.move(0, 0, 1, 0, 3000); break;
+                        case SDLK_b:
+                            mv->moveUnit(1, 3, 2, 3, 3, 3000);break;
+                        case SDLK_n:
+                            mv->moveUnit(1, 3, 3, 2, 3, 3000);break;
+                        case SDLK_m:
+                            mv->moveUnit(1, 2, 3, 2, 4, 3000);break;
+                            
+                            
   bool quit = false;
     SDL_Event event{};
     SDL_Init(SDL_INIT_VIDEO);

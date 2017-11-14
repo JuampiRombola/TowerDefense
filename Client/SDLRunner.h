@@ -36,5 +36,4 @@ public:
     void Run(CommandDispatcher* dispatcher, NotificationReciever* reciever, ClientLobbyManager* lobbyManager, ClientSocket* sock);
 };
 
-
 #endif

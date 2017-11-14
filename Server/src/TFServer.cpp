@@ -22,12 +22,18 @@ _lobbyManager(_notifications), _server(service), _notifications(), _gameNotifica
 
 TFServer::~TFServer(){
 	std::cout << "SHUTDOWN TF SERVER \n" << std::flush;
+	Stop();
+
 	_notifications.Release();
+	_gameNotifications.Release();
 
 	if (_acceptorThread.joinable())
 		_acceptorThread.join();
 
 	if (_notificatorThread.joinable())
+		_notificatorThread.join();
+
+	if (_gameNotificatorThread.joinable())
 		_notificatorThread.join();
 
 	for (auto it = _connectionHandlers.begin(); it != _connectionHandlers.end(); ++it){
@@ -65,11 +71,14 @@ void TFServer::_NotifyClients(){
 		delete noti;
 		noti = _notifications.Dequeue();
 	}
+}
 
+void TFServer::_NotifyGamePlayers(){
 	GameNotification* gameNoti = _gameNotifications.Dequeue();
 	while (gameNoti != nullptr){
+		std::cout << "GAME NOTIFICATION FLYING!\n" << std::flush;
 		gameNoti->Notify();
-		delete noti;
+		delete gameNoti;
 		gameNoti = _gameNotifications.Dequeue();
 	}
 }
@@ -80,6 +89,7 @@ void TFServer::_NotifyClients(){
 void TFServer::RunServer(){
 	_acceptorThread = std::thread(&TFServer::_AcceptConnections, this);
 	_notificatorThread = std::thread(&TFServer::_NotifyClients, this);
+	_gameNotificatorThread = std::thread(&TFServer::_NotifyGamePlayers, this);
 }
 
 
@@ -188,19 +198,3 @@ void TFServer::Stop(){
 	for ( std::thread& handler : _connectionHandlers ) 
     	handler.join();
 }
-
-
-/*
-void TFServer::_RespondError(SocketWrapper& socket, int errorCode){
-	std::string s = SubeHelpers::ErrorToString(errorCode);
-    int toSendLength = s.length();
-    socket.Send(s.c_str(), toSendLength);
-}
-
-
-void TFServer::_Respond(SocketWrapper& socket, std::string& commandResponse){
-    int toSendLength = commandResponse.length();
-    socket.Send(commandResponse.c_str(), toSendLength);
-}
-
-*/

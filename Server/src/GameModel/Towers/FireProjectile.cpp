@@ -82,7 +82,7 @@ double FireProjectile::_OnImpact(){
 
 ProjectileVM FireProjectile::GetViewModel(){
 	ProjectileVM vm;
-	vm.type = pFire;
+	vm.type = SPELL_TYPE_FIRE;
 	vm.distanceToCover = _distance;
 	vm.distanceCovered = _distanceCovered;
 	vm.fromXpos = _origin->GetPosition()->GetXPos();

@@ -11,6 +11,7 @@ class PathTile;
 class EnviormentUnit;
 
 #include "../Map/SolidGroundTile.h"
+class TowerDefenseGame;
 
 class Map{
 private:
@@ -42,7 +43,7 @@ public:
 	std::vector<PathTile*> GetFinishTiles();
 	std::vector<PathTile*> GetPathTilesInRange(Tile* tile, uint range);
 	void PlaceGroundTile(SolidGroundTile* tile);
-	void Step();
+	void Step(TowerDefenseGame& game);
 	std::vector<Projectile*> GetProjectiles();
 	std::vector<Tower*> GetTowers();
 };

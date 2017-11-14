@@ -12,8 +12,9 @@ NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyMan
 }
 
 NotificationReciever::~NotificationReciever(){
-	Stop();
-	_thread.join();
+	this->Stop();
+	if (_thread.joinable())
+		_thread.join();
 }
 
 void NotificationReciever::Run(){
@@ -77,14 +78,17 @@ void NotificationReciever::RecieveNotifications(){
 				break;
 			case LOG_IN_FAILED:
                 _runner.gtkNotifications.Queue(new LogInFailedGtkNotification());
+				g_idle_add(GTKRunner::notification_check, &_runner);
 				break;
 			case GAME_STARTED:
 				std::cout << "GAME_STARTED::\n" << std::flush;
 				_runner.gtkNotifications.Queue(new GameStartedGTKNotification());
+				g_idle_add(GTKRunner::notification_check, &_runner);
 				break;
 			case GAME_OPCODE:
 				std::cout << "GAME_OPCODE::\n" << std::flush;
 				_HandleGameOpcode();
+				break;
 			default:
 				std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << ", ( " << (int) opcode << ")\'" << std::flush;
 		}
@@ -99,18 +103,56 @@ void NotificationReciever::_HandleGameOpcode(){
 	_sock.Recieve((char*) &opcode, 1);
 	switch (opcode) {
 		case TOWER_PLACED:
+			std::cout << "TOWER_PLACED::\n" << std::flush;
 			_HandleTowerPlaced();
 			break;
 		case UNIT_POSITION_UPDATE:
+			std::cout << "UNIT_POSITION_UPDATE::\n" << std::flush;
 			_HandleUnitPositionUpdate();
 			break;
         case UNIT_CREATED:
-            _HandleUnitCreated();
+			std::cout << "UNIT_CREATED::\n" << std::flush;
+			_HandleUnitCreated();
+            break;
+        case PROJECTILE_FIRED:
+			std::cout << "PROJECTILE_FIRED::\n" << std::flush;
+			_HandleProjectileFired();
+            break;
+		case GAME_OVER:
+			std::cout << "GAME_OVER::\n" << std::flush;
+			this->Stop();
             break;
     }
 }
 
-
+void NotificationReciever::_HandleProjectileFired(){
+    uint32_t x;
+    _sock.Recieve((char *) &x, 4);
+    uint32_t y;
+    _sock.Recieve((char *) &y, 4);
+    uint32_t tox;
+    _sock.Recieve((char *) &tox, 4);
+    uint32_t toy;
+    _sock.Recieve((char *) &toy, 4);
+    uint32_t delay_ms;
+    _sock.Recieve((char *) &delay_ms, 4);
+    uint8_t spelltype;
+    _sock.Recieve((char*) &spelltype, 1);
+    switch(spelltype){
+        case SPELL_TYPE_WATER:
+            model_view->createShot(DISPARO_AGUA, x, y, tox, toy, delay_ms);
+            break;
+        case SPELL_TYPE_GROUND:
+            model_view->createShot(DISPARO_TIERRA, x, y, tox, toy, delay_ms);
+            break;
+        case SPELL_TYPE_FIRE:
+            model_view->createShot(DISPARO_FUEGO, x, y, tox, toy, delay_ms);
+            break;
+        case SPELL_TYPE_AIR:
+            model_view->createShot(DISPARO_AIRE, x, y, tox, toy, delay_ms);
+            break;
+    }
+}
 void NotificationReciever::_HandleTowerPlaced(){
 	uint32_t x;
 	_sock.Recieve((char *) &x, 4);
@@ -118,6 +160,7 @@ void NotificationReciever::_HandleTowerPlaced(){
 	_sock.Recieve((char *) &y, 4);
 	SPELL_TYPE type;
 	_sock.Recieve((char *) &type, 1);
+	return;
 	switch(type){
 		case SPELL_TYPE_FIRE:
 			model_view->createTower(990, TORRE_FUEGO, x, y);
@@ -142,7 +185,12 @@ void NotificationReciever::_HandleUnitPositionUpdate(){
     _sock.Recieve((char *) &toy, 4);
     uint32_t delay_ms ;
     _sock.Recieve((char *) &delay_ms, 4);
-    model_view->moveUnit(unitID, x, y, tox, toy, delay_ms);
+
+	if (tox > 10 || toy > 10)
+		return;
+	std::cout << "unit move x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
+
+	model_view->moveUnit(unitID, x, y, tox, toy, delay_ms);
 }
 void NotificationReciever::_HandleUnitCreated(){
     uint32_t unitID;
@@ -157,6 +205,7 @@ void NotificationReciever::_HandleUnitCreated(){
     _sock.Recieve((char *) &toy, 4);
     uint32_t delay_ms ;
     _sock.Recieve((char *) &delay_ms, 4);
+	std::cout << "unit created x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
     uint8_t unittype;
     _sock.Recieve((char *) &unittype, 1);
     UNIT_TYPE type = (UNIT_TYPE) unittype;
@@ -188,7 +237,10 @@ bool NotificationReciever::_Stop(){
 	return _stop;
 }
 
-
+bool NotificationReciever::Running(){
+	std::lock_guard<std::mutex> lock(_stopMutex);
+	return !_stop;
+}
 
 
 void NotificationReciever::Stop(){

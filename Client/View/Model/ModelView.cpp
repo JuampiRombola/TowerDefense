@@ -1,3 +1,4 @@
+#include <iostream>
 #include "ModelView.h"
 #include "PortalEntradaView.h"
 #include "PortalSalidaView.h"
@@ -13,8 +14,9 @@ ModelView::~ModelView() {
     while (it != shots.end())
         delete (*it++);
 
-    for (unsigned int i = 0; i < depthLevels.size(); ++i)
+    for (unsigned int i = 0; i < depthLevels.size(); ++i){
         delete depthLevels[i];
+    }
 }
 
 

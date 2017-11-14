@@ -75,14 +75,22 @@ std::vector<PlayerProxy*> Lobby::GetOtherPlayersInLobby(){
 std::vector<PlayerProxy*> Lobby::GetPlayersInLobbyWithSomeSpellSet(){
 	std::lock_guard<std::mutex> lock3(_playerSpellsSlotsMutex);
 	std::vector<PlayerProxy*> otherplayers;
+	
 	if (_firePlayer != nullptr)
 		otherplayers.push_back(_firePlayer);
-	if (_waterPlayer != nullptr)
-		otherplayers.push_back(_waterPlayer);
-	if (_airPlayer != nullptr)
-		otherplayers.push_back(_airPlayer);
-	if (_groundPlayer != nullptr)
-		otherplayers.push_back(_groundPlayer);
+	
+	if (_waterPlayer != nullptr){
+		if (std::find(otherplayers.begin(), otherplayers.end(), _waterPlayer) == otherplayers.end())
+			otherplayers.push_back(_waterPlayer);
+	}
+	if (_airPlayer != nullptr){
+		if (std::find(otherplayers.begin(), otherplayers.end(), _airPlayer) == otherplayers.end())
+			otherplayers.push_back(_airPlayer);
+	}
+	if (_groundPlayer != nullptr){
+		if (std::find(otherplayers.begin(), otherplayers.end(), _groundPlayer) == otherplayers.end())
+			otherplayers.push_back(_groundPlayer);
+	}
 	return otherplayers;
 }
 

@@ -71,7 +71,6 @@ void LobbyManager::HandlePlayerUnpickedSpell(PlayerProxy &player){
 
 void LobbyManager::HandleLogin(PlayerProxy &player){
 	std::lock_guard<std::mutex> lock(_lobbiesMutex);
-	std::cout << " CHECKPOINT2 \n" << std::flush;
 
 
 	std::vector<Lobby* > lobbies;
@@ -92,7 +91,6 @@ void LobbyManager::HandleLogin(PlayerProxy &player){
 	int debug = lobbies2playersGUIDS.size();
 
 	_notifications.Queue(new LoggedInNotification(player, lobbies, lobbies2playersGUIDS));
-	std::cout << " CHECKPOINT2 \n" << std::flush;
 
 }
 

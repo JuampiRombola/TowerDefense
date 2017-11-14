@@ -108,7 +108,6 @@ ServerSocket::~ServerSocket(){
 	for (auto it = _clients.begin(); it != _clients.end(); ++it){
 		SocketWrapper* client = *it;
 		delete client;
-
 	}
 }
 

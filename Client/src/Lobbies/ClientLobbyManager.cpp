@@ -36,6 +36,7 @@ ClientLobbyManager::~ClientLobbyManager(){
 void ClientLobbyManager::HandleLeaveLobby(){
     _joinedLobby = nullptr;
     _runner.gtkNotifications.Queue(new LeftLobbyGTKNotification());
+    g_idle_add(GTKRunner::notification_check, &_runner);
 }
 
 void ClientLobbyManager::HandleLobbyJoin(){
@@ -77,6 +78,7 @@ void ClientLobbyManager::HandleLobbyJoin(){
     }    
     
     _runner.gtkNotifications.Queue(new JoinedLobbyGUINotification(*_joinedLobby));
+    g_idle_add(GTKRunner::notification_check, &_runner);
 }
 
 void ClientLobbyManager::HandlePlayerJoin(){
@@ -135,8 +137,10 @@ void ClientLobbyManager::HandlePlayerJoinedLobby(){
     Lobby* lobbyOtherPlayerJoined = GetLobby(lobbyGuid);
     auto itplayer = GetOtherPlayer(pguid);
     lobbyOtherPlayerJoined->PlayerJoin(*(*itplayer));
-    if (_joinedLobby == lobbyOtherPlayerJoined)
+    if (_joinedLobby == lobbyOtherPlayerJoined){
         _runner.gtkNotifications.Queue(new PlayerJoinedLobbyGTKNotification(*(*itplayer)));
+        g_idle_add(GTKRunner::notification_check, &_runner);
+    }
 
 }
 
@@ -149,8 +153,10 @@ void ClientLobbyManager::HandlePlayerLeftLobby(){
     Lobby* lobbyOtherPlayerLeft = GetLobby(lobbyGuid);
     auto itplayer = GetOtherPlayer(pguid);
     lobbyOtherPlayerLeft->PlayerLeave(*(*itplayer));
-    if (_joinedLobby == lobbyOtherPlayerLeft)
+    if (_joinedLobby == lobbyOtherPlayerLeft){
         _runner.gtkNotifications.Queue(new PlayerLeftLobbyGTKNotification(*(*itplayer)));
+        g_idle_add(GTKRunner::notification_check, &_runner);
+    }
 }
 
 void ClientLobbyManager::HandleNewLobbyNotification(){
@@ -170,6 +176,7 @@ void ClientLobbyManager::HandleNewLobbyNotification(){
 
     _lobbies.push_back(new Lobby(lobbyName, lobbyGuid));
 	_runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*(_lobbies.back())));
+    g_idle_add(GTKRunner::notification_check, &_runner);
 
 }
 
@@ -184,6 +191,7 @@ void ClientLobbyManager::HandlePickedSpell(){
     _sock.Recieve((char*) &spell, 1);
     SPELL_TYPE spelltype = (SPELL_TYPE) spell;
     _runner.gtkNotifications.Queue(new PickedSpellGTKNotification(spelltype, true));
+    g_idle_add(GTKRunner::notification_check, &_runner);
 }
 
 void ClientLobbyManager::HandleUnpickedSpell(){
@@ -191,6 +199,7 @@ void ClientLobbyManager::HandleUnpickedSpell(){
     _sock.Recieve((char*) &spell, 1);
     SPELL_TYPE spelltype = (SPELL_TYPE) spell;
     _runner.gtkNotifications.Queue(new PickedSpellGTKNotification(spelltype, false));
+    g_idle_add(GTKRunner::notification_check, &_runner);
 }
 
 void ClientLobbyManager::HandleOtherPlayerPickedSpell(){
@@ -202,6 +211,7 @@ void ClientLobbyManager::HandleOtherPlayerPickedSpell(){
     auto it = this->GetOtherPlayer(pguid);
     (*it)->joinedLobby->PlayerPickSpell(*(*it), spelltype, true);
     _runner.gtkNotifications.Queue(new OtherPickedSpellGTKNotification(*(*it), spelltype, true));
+    g_idle_add(GTKRunner::notification_check, &_runner);
 }
 
 void ClientLobbyManager::HandleOtherPlayerUnpickedSpell(){
@@ -213,6 +223,7 @@ void ClientLobbyManager::HandleOtherPlayerUnpickedSpell(){
     auto it = this->GetOtherPlayer(pguid);
     (*it)->joinedLobby->PlayerPickSpell(*(*it), spelltype, false);
     _runner.gtkNotifications.Queue(new OtherPickedSpellGTKNotification(*(*it), spelltype, false));
+    g_idle_add(GTKRunner::notification_check, &_runner);
 }
 
 void ClientLobbyManager::HandleLoginSuccess(){
@@ -226,6 +237,7 @@ void ClientLobbyManager::HandleLoginSuccess(){
         std::string lobbyName = _sock.RecieveString();
         _lobbies.push_back(new Lobby(lobbyName, lobbyGuid));
         _runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*(_lobbies.back())));
+        g_idle_add(GTKRunner::notification_check, &_runner);
     }
 
     uint32_t playerAmount = -1;
@@ -254,4 +266,5 @@ void ClientLobbyManager::HandleLoginSuccess(){
     }
 
     _runner.gtkNotifications.Queue(new LogInSuccessGtkNotification(_lobbies));
+    g_idle_add(GTKRunner::notification_check, &_runner);
 }
