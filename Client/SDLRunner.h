@@ -19,11 +19,6 @@
 
 #define TITLE "Tower Defense"
 
-#define WINDOWWIDTH 640
-#define WINDOWHEIGHT 480
-
-#define MAPSIZE 7
-
 class SDLRunner {
 private:
     CommandDispatcher* _dispatcher;
