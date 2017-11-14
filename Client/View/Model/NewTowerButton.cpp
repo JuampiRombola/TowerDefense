@@ -20,5 +20,5 @@ void NewTowerButton::draw(int number) {
 
 void NewTowerButton::click() {
     command = element;
-    printf("Hice click en el boton de la torre de elemento %d\n", element);
+    printf("Clickeo en un towerbutton %d\n", element);
 }

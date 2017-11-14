@@ -30,7 +30,7 @@ void HudView::doMouseAction() {
 }
 
 void HudView::sendCommand(int x, int y) {
-    printf("Crear torre elemento %d en la posicion (%d, %d)\n",
+    printf("OPCODE %d en la posicion (%d, %d)\n",
            currentCommand, x, y);
     MapCommand *command = new MapCommand(currentCommand, x, y);
     dispatcher.QueueCommand(command);

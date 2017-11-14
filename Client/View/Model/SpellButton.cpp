@@ -22,5 +22,5 @@ void SpellButton::draw(int number) {
 
 void SpellButton::click() {
     command = type;
-    printf("Casteo un spell  %d\n", type);
+    printf("Clickeo un spellbutton  %d\n", type);
 }
