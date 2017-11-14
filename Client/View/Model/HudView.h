@@ -6,6 +6,7 @@
 #include "../Common/Renderer.h"
 #include "../Common/MousePosition.h"
 #include "../../include/NetCommands/CommandDispatcher.h"
+#include "../../include/NetCommands/MapCommand.h"
 #include "GameButtons.h"
 #include "ViewConstants.h"
 

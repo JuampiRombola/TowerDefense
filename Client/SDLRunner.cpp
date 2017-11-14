@@ -3,6 +3,8 @@
 #include "include/NotificationReciever.h"
 #include "include/ClientSocket.h"
 #include "View/Model/ModelView.h"
+#include "View/Model/ViewConstants.h"
+#include "View/Model/HudView.h"
 
 #define TITLE "Tower Defense"
 
@@ -69,10 +71,12 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     mv->createPortalEntrada(0, 0);
     mv->createPortalSalida(6, 6);
 
-    mv->createTower(1, TORRE_TIERRA, 2, 0);
+    /*mv->createTower(1, TORRE_TIERRA, 2, 0);
     mv->createTower(2, TORRE_AIRE, 2, 2);
     mv->createTower(3, TORRE_FUEGO, 1, 4);
-    mv->createTower(4, TORRE_AGUA, 4, 6);
+    mv->createTower(4, TORRE_AGUA, 4, 6);*/
+    HudView hudView(window, textureLoader, renderer, *_dispatcher);
+    hudView.addElementalButtons(ELEMENTAL_EARTH);
 
     Uint32 t1;
     Uint32 t2;
@@ -90,6 +94,12 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
             switch (event.type) {
                 case SDL_QUIT:
                     quit = true; break;
+                case SDL_MOUSEBUTTONDOWN:
+                    hudView.getMouseState();
+                    break;
+                case SDL_FINGERDOWN:
+                    hudView.getFingerState(event);
+                    break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
                         case SDLK_ESCAPE:
@@ -108,9 +118,11 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                             renderer.updateCamera(0, 1); break;
                     }
             }
+            hudView.doMouseAction();
         }
         renderer.clearRender();
         mv->draw(SDL_GetTicks());
+        hudView.draw();
         renderer.present();
         t2 = SDL_GetTicks();
         elapsedTime = t2 - t1 + delta;

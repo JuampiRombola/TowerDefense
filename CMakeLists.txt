@@ -170,9 +170,11 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/GameButtons.h
         Client/SDLRunner.h
         Client/SDLRunner.cpp
-        Client/src/NetCommands/NewTowerCommand.cpp
-        Client/include/NetCommands/NewTowerCommand.h
-        Common/Lock.cpp Common/Lock.h Client/View/Model/SpellButton.cpp Client/View/Model/SpellButton.h)
+        Common/Lock.cpp Common/Lock.h
+        Client/View/Model/SpellButton.cpp
+        Client/View/Model/SpellButton.h
+        Client/src/NetCommands/MapCommand.cpp
+        Client/include/NetCommands/MapCommand.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
