@@ -4,7 +4,7 @@
 
 UnitView::UnitView(int id, int key, TextureLoader &textures, 
                    Renderer &renderer) :
-        id(id), key(key), health(health),
+        id(id), key(key), health(10),
         cfg(textures.getConfig(key)),
         spriteWalking(textures.getTexture(key), renderer,
                       cfg["WALKING_W"].as<int>(),

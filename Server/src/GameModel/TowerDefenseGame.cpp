@@ -266,7 +266,7 @@ void TowerDefenseGame::Stop(){
 void TowerDefenseGame::_Run()
 {
 	static uint clockFrequency = 100;
-    std::this_thread::sleep_for (std::chrono::milliseconds(6000));
+    std::this_thread::sleep_for (std::chrono::milliseconds(20000));
     unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
 	unsigned long long timestamp = 0;
 	unsigned long long delta = 0;

@@ -46,7 +46,6 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     modelView.setMapEnvironment(GELIDO);
     modelView.setMapWidthHeight(MAPSIZE, MAPSIZE);
 
-    modelView.createPathTile(3, 6);
     modelView.createPathTile(3, 5);
     modelView.createPathTile(3, 4);
     modelView.createPathTile(3, 3);
@@ -59,6 +58,9 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     modelView.createStructureTile(5, 2);
     modelView.createStructureTile(5, 4);
     modelView.createStructureTile(5, 6);
+
+    modelView.createPortalEntrada(0, 2);
+    modelView.createPortalSalida(3, 5);
 
     HudView hudView(window, textureLoader, renderer, *_dispatcher);
     hudView.addElementalButtons(ELEMENTAL_EARTH);
