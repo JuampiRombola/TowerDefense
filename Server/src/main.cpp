@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 
     tfsv.RunServer();
 
-    std::cout << "TOWER DEFENSE SERVER RUNNING...\n" ;	
+    std::cout << "TOWER DEFENSE SERVER RUNNING...\n" ;
     char c = 0;
     while (c != 'q') std::cin.get(c);
 	return 0;

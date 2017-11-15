@@ -1,8 +1,8 @@
-unit_base_step_delay_ms: 5000
+unit_base_step_delay_ms: 3000
 towers:
  ground:
-  range: 1
-  cooldown_sec: 5
+  range: 4
+  cooldown_sec: 1
   damage: 20
   upgrade_range_increase: 2
   upgrade_range_mult: 500
@@ -11,9 +11,9 @@ towers:
   upgrade_damage_mult: 100
   upgrade_damage_base: 1.5
  fire:
-  range: 3
-  cooldown_sec: 3
-  target_damage: 6
+  range: 4
+  cooldown_sec: 4
+  target_damage: 20
   collateral_damage: 3
   collateral_range: 1
   upgrade_range_increase: 1
@@ -27,9 +27,9 @@ towers:
   upgrade_collateral_range_base: 2
   upgrade_collateral_range_mult: 500
  water:
-  range: 3
-  cooldown_sec: 3
-  damage: 4
+  range: 4
+  cooldown_sec: 4
+  damage: 20
   slow_percent: 25
   slow_duration_sec: 2
   upgrade_range_increase: 1
@@ -43,10 +43,10 @@ towers:
   upgrade_slow_mult: 100
   upgrade_slow_base: 2
  air:
-  range: 5
-  cooldown_sec: 5
+  range: 4
+  cooldown_sec: 10
   flying_target_damage: 10
-  non_flying_target_damage: 2
+  non_flying_target_damage: 5
   upgrade_range_increase: 1
   upgrade_range_mult: 100
   upgrade_range_base: 2 
@@ -67,6 +67,7 @@ spells:
  congelacion:
   duration_sec: 5
  ventisca:
+  damage: 10
   duration_sec: 5
   slow_percent: 25
   slow_duration_sec: 2
@@ -77,25 +78,20 @@ spells:
   max_damage: 50
 units:
  abmonible:
-  health_points: 200
+  health_points: 60
   speed: 1
-  flies: false
  demonio_verde:
-  health_points: 300
-  speed: 1
-  flies: false
+  health_points: 60
+  speed: 2
  halcon_sangriento:
-  health_points: 100
-  speed: 4
-  flies: true
+  health_points: 60
+  speed: 3
  hombre_cabra:
-  health_points: 99
-  speed: 10
-  flies: false
+  health_points: 60
+  speed: 4
  espectro:
-  health_points: 100
-  speed: 6
-  flies: true
+  health_points: 60
+  speed: 5
  no_muerto:
-  health_points: 20
-  flies: false
+  health_points: 60
+  speed: 6
