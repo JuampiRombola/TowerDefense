@@ -144,16 +144,20 @@ void NotificationReciever::_HandleProjectileFired(){
     _sock.Recieve((char*) &spelltype, 1);
     switch(spelltype){
         case SPELL_TYPE_WATER:
-            model_view->createShot(DISPARO_AGUA, x, y, tox, toy, delay_ms);
+			std::cout << "SHOTTTTTT WATER\n\n" << std::flush;
+			model_view->createShot(DISPARO_AGUA, x, y, tox, toy, delay_ms);
             break;
         case SPELL_TYPE_GROUND:
-            model_view->createShot(DISPARO_TIERRA, x, y, tox, toy, delay_ms);
+			std::cout << "SHOTTTTTT GROUND \n\n" << std::flush;
+			model_view->createShot(DISPARO_TIERRA, x, y, tox, toy, delay_ms);
             break;
         case SPELL_TYPE_FIRE:
-            model_view->createShot(DISPARO_FUEGO, x, y, tox, toy, delay_ms);
+			std::cout << "SHOTTTTTT FIRE\n\n" << std::flush;
+			model_view->createShot(DISPARO_FUEGO, x, y, tox, toy, delay_ms);
             break;
         case SPELL_TYPE_AIR:
-            model_view->createShot(DISPARO_AIRE, x, y, tox, toy, delay_ms);
+			std::cout << "SHOTTTTTT AIR\n\n" << std::flush;
+			model_view->createShot(DISPARO_AIRE, x, y, tox, toy, delay_ms);
             break;
     }
 }
@@ -195,7 +199,7 @@ void NotificationReciever::_HandleUnitPositionUpdate(){
     uint32_t delay_ms ;
     _sock.Recieve((char *) &delay_ms, 4);
 
-	if (tox > 10 || toy > 10)
+	if (tox > 15 || toy > 15)
 		return;
 	std::cout << "unit move x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
 
