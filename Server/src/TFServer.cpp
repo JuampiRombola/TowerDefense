@@ -77,7 +77,6 @@ void TFServer::_NotifyClients(){
 void TFServer::_NotifyGamePlayers(){
 	GameNotification* gameNoti = _gameNotifications.Dequeue();
 	while (gameNoti != nullptr){
-		std::cout << "GAME NOTIFICATION FLYING!\n" << std::flush;
 		gameNoti->Notify();
 		delete gameNoti;
 		gameNoti = _gameNotifications.Dequeue();

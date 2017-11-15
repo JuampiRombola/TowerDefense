@@ -11,7 +11,7 @@
 #define WINDOWHEIGHT 480
 #define FPS 40
 
-#define MAPSIZE 15
+#define MAPSIZE 9
 
 int main(int argc, char** argv) {
     bool quit = false;
@@ -50,78 +50,81 @@ int main(int argc, char** argv) {
     modelView.createPortalEntrada(0, 0);
     modelView.createPortalSalida(6, 6);
 */
+    modelView.createPathTile(0, 0);
+    modelView.createPathTile(0, 1);
+    modelView.createPathTile(0, 2);
     modelView.createPathTile(0, 3);
-    modelView.createPathTile(1, 3);
-    modelView.createPathTile(2, 3);
-    modelView.createPathTile(4, 3);
-    modelView.createPathTile(5, 3);
-    modelView.createPathTile(3, 3);
-    modelView.createPathTile(6, 3);
-    modelView.createPathTile(7, 3);
-    modelView.createPathTile(8, 3);
-    modelView.createPathTile(9, 3);
-    modelView.createPathTile(10, 3);
-    modelView.createPathTile(11, 3);
-    modelView.createPathTile(12, 3);
-    modelView.createPathTile(13, 3);
-    modelView.createPathTile(14, 3);
-
+    modelView.createPathTile(0, 4);
+    modelView.createPathTile(0, 5);
+    modelView.createPathTile(0, 6);
     modelView.createPathTile(0, 7);
-    modelView.createPathTile(1, 7);
-    modelView.createPathTile(2, 7);
-    modelView.createPathTile(3, 7);
-    modelView.createPathTile(4, 7);
-    modelView.createPathTile(5, 7);
-    modelView.createPathTile(6, 7);
-    modelView.createPathTile(7, 7);
-    modelView.createPathTile(8, 7);
-    modelView.createPathTile(9, 7);
-    modelView.createPathTile(10, 7);
-    modelView.createPathTile(11, 7);
-    modelView.createPathTile(12, 7);
-    modelView.createPathTile(13, 7);
-    modelView.createPathTile(14, 7);
+    modelView.createPathTile(0, 8);
 
-    modelView.createPathTile(0, 11);
-    modelView.createPathTile(1, 11);
-    modelView.createPathTile(2, 11);
-    modelView.createPathTile(3, 11);
-    modelView.createPathTile(4, 11);
-    modelView.createPathTile(5, 11);
-    modelView.createPathTile(6, 11);
-    modelView.createPathTile(7, 11);
-    modelView.createPathTile(8, 11);
-    modelView.createPathTile(9, 11);
-    modelView.createPathTile(10, 11);
-    modelView.createPathTile(11, 11);
-    modelView.createPathTile(12, 11);
-    modelView.createPathTile(13, 11);
-    modelView.createPathTile(14, 11);
+    modelView.createPathTile(2, 2);
+    modelView.createPathTile(2, 3);
+    modelView.createPathTile(2, 4);
+    modelView.createPathTile(2, 5);
+    modelView.createPathTile(2, 6);
+
+    modelView.createPathTile(8, 0);
+    modelView.createPathTile(8, 1);
+    modelView.createPathTile(8, 2);
+    modelView.createPathTile(8, 3);
+    modelView.createPathTile(8, 4);
+    modelView.createPathTile(8, 5);
+    modelView.createPathTile(8, 6);
+    modelView.createPathTile(8, 7);
+    modelView.createPathTile(8, 8);
+
+    modelView.createPathTile(6, 2);
+    modelView.createPathTile(6, 3);
+    modelView.createPathTile(6, 4);
+    modelView.createPathTile(6, 5);
+    modelView.createPathTile(6, 6);
+
+    modelView.createPathTile(1, 0);
+    modelView.createPathTile(2, 0);
+    modelView.createPathTile(3, 0);
+    modelView.createPathTile(4, 0);
+    modelView.createPathTile(5, 0);
+    modelView.createPathTile(6, 0);
+    modelView.createPathTile(7, 0);
+
+    modelView.createPathTile(3, 2);
+    modelView.createPathTile(4, 2);
+    modelView.createPathTile(5, 2);
+
+    modelView.createPathTile(1, 8);
+    modelView.createPathTile(2, 8);
+    modelView.createPathTile(3, 8);
+    modelView.createPathTile(4, 8);
+    modelView.createPathTile(5, 8);
+    modelView.createPathTile(6, 8);
+    modelView.createPathTile(7, 8);
+
+    modelView.createPathTile(3, 6);
+    modelView.createPathTile(4, 6);
+    modelView.createPathTile(5, 6);
 
     modelView.createStructureTile(1, 1);
-    modelView.createStructureTile(1, 5);
-    modelView.createStructureTile(1, 9);
-    modelView.createStructureTile(1, 13);
+    modelView.createStructureTile(7, 7);
+    modelView.createStructureTile(1, 7);
+    modelView.createStructureTile(7, 7);
 
-    modelView.createStructureTile(5, 1);
+    modelView.createStructureTile(3, 3);
     modelView.createStructureTile(5, 5);
-    modelView.createStructureTile(5, 9);
-    modelView.createStructureTile(5, 13);
+    modelView.createStructureTile(3, 5);
+    modelView.createStructureTile(5, 3);
 
-    modelView.createStructureTile(8, 1);
-    modelView.createStructureTile(8, 5);
-    modelView.createStructureTile(8, 9);
-    modelView.createStructureTile(8, 13);
+    modelView.createPortalSalida(0, 0);
+    modelView.createPortalSalida(2, 2);
+    modelView.createPortalEntrada(0, 1);
+    modelView.createPortalEntrada(2, 3);
 
-    modelView.createStructureTile(11, 1);
-    modelView.createStructureTile(11, 5);
-    modelView.createStructureTile(11, 9);
-    modelView.createStructureTile(11, 13);
-
-    modelView.createTower(1, TORRE_TIERRA, 2, 0);
-    modelView.createTower(2, TORRE_AIRE, 2, 2);
-    modelView.createTower(3, TORRE_FUEGO, 1, 4);
-    modelView.createTower(4, TORRE_AGUA, 4, 6);
+    //modelView.createTower(1, TORRE_TIERRA, 2, 0);
+    //modelView.createTower(2, TORRE_AIRE, 2, 2);
+    //modelView.createTower(3, TORRE_FUEGO, 1, 4);
+    //modelView.createTower(4, TORRE_AGUA, 4, 6);
 
     // Dispatcher
     SocketWrapper fd(0);

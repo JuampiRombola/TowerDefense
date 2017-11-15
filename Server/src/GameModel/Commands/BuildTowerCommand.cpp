@@ -40,8 +40,8 @@ bool BuildTowerCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueu
 
 		if (t != nullptr){
 			tile->PlaceTower(t);
-			std::cout << "TOWER PLACED\n" << std::flush;
 			TowerVM vm = t->GetViewModel();
+			std::cout << "TOWER PLACED at " <<vm.xPos << ", " << vm.yPos << "\n" << std::flush;
 			notifications.Queue(new TowerPlacedGameNotification(vm, game->GetPlayers()));
 			return true;
 		}

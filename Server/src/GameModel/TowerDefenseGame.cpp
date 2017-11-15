@@ -207,7 +207,8 @@ bool TowerDefenseGame::_Step(){
 
 	_steps = _steps + 1;
 
-	if (actualTs - ts > 4000){
+	uint32_t spawnrandomenemyevery_ms = 4000;
+	if (actualTs - ts > spawnrandomenemyevery_ms){
 		ts = actualTs;
 		_SpawnRandomEnemy();
 	}

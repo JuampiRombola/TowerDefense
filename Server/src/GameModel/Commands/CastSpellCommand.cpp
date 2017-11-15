@@ -34,8 +34,9 @@ bool CastSpellCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue
 }
 
 bool CastSpellCommand::_CastTerraforming(Map* map, TowerDefenseGame* game){
+	PathTile* pathtile = map->GetPathTile(_xPos, _yPos);
 	SolidGroundTile* tile = map->GetSolidGroundTile(_xPos, _yPos);
-	if (tile != nullptr)
+	if (tile != nullptr || pathtile != nullptr)
 		return false;
 	map->PlaceGroundTile(new SolidGroundTile(_xPos,_yPos));
 	game->notifications.Queue(new SpellCastedGameNotification(SPELL_TERRAFORMING, _xPos, _yPos,0,  game->GetPlayers() ));

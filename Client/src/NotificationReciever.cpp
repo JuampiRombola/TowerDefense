@@ -158,7 +158,6 @@ void NotificationReciever::_HandleSpellCasted(){
 			model_view->createSpell(TORNADO, x, y, duration_ms);
 			break;
 		case SPELL_RAYO:
-		std::cout << "\n\n\n LLEGO!!! \n\n" << std::flush;
 			model_view->createSpell(RAYO, x, y, duration_ms);
 			break;
 		case SPELL_FIREWALL:
@@ -237,7 +236,7 @@ void NotificationReciever::_HandleUnitPositionUpdate(){
     uint32_t delay_ms ;
     _sock.Recieve((char *) &delay_ms, 4);
 
-	if (tox > 10 || toy > 10)
+	if (tox > 15 || toy > 15)
 		return;
 	std::cout << "unit move x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
 

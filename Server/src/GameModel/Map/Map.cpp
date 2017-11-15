@@ -33,9 +33,6 @@ _projectiles()
 		}
 	}
 	//Armo un camino a mano
-
-
-
 	SolidGroundTile* t = new SolidGroundTile(5, 0);
 	PlaceGroundTile(t);
 	t = new SolidGroundTile(5, 2);
@@ -62,7 +59,6 @@ _projectiles()
 	PathTile* spawn1 = new PathTile(0, 2, this, p2);
 	_PlacePathTile(spawn1);
 	_SetSpawnTile(spawn1);
-
 }
 
 
@@ -158,9 +154,11 @@ std::vector<EnviormentUnit*> Map::GetUnitsInRadius(uint range, Tile* tile){
 	std::vector<EnviormentUnit*> units;
 
 	std::vector<PathTile*> tilesInRange = GetPathTilesInRange(tile, range);
+  //  std::cout << "tiles in range: " << tilesInRange.size() << "\n" << std::flush;
 
 	for (auto it = tilesInRange.begin(); it != tilesInRange.end(); ++it){
 		std::vector<EnviormentUnit*> unitsInTile = (*it)->GetUnits();
+//        std::cout << "units in tiles in range: " << tilesInRange.size() << "\n" << std::flush;
 		for (auto unitIt = unitsInTile.begin(); unitIt != unitsInTile.end(); ++unitIt){
 			units.push_back(*unitIt);
 		} 
@@ -198,7 +196,8 @@ void Map::Step(TowerDefenseGame& game){
 					_projectiles.push_back(p);
 					ProjectileVM vm = p->GetViewModel();
 					game.notifications.Queue(new ProjectileFiredGameNotification(vm, game.GetPlayers()));
-					std::cout << "TOWER FIRED\n" << std::flush;
+					std::cout << "TOWER FIRED @x: " << vm.fromXpos << ", @y: " << vm.fromYpos 
+                              << ", to x: " << vm.toXpos << ", to y: " << vm.toYpos << " \n" << std::flush;
 				}
 			} 
 		}
@@ -221,6 +220,7 @@ std::vector<PathTile*> Map::GetPathTilesInRange(Tile* tile, uint range){
 	std::vector<PathTile*> tiles;
 	int x = tile->GetXPos();
 	int y = tile->GetYPos();
+	std::cout << "x: " << x << ", y: " << y << '\n' << std::flush;
 	for (int i = -range; i <= (int) range; i++)
 	{
 		for (int j = -range; j <= (int) range; j++)
@@ -252,3 +252,54 @@ std::vector<Tower*> Map::GetTowers(){
 	}
 	return towers;
 }
+
+/*
+PathTile* end = new PathTile(6,6, this, nullptr);
+_PlacePathTile(end);
+_SetFinishTile(end);
+
+PathTile* p1 = new PathTile(6, 5, this, end);
+_PlacePathTile(p1);
+PathTile* p2 = new PathTile(5, 5, this, p1);
+_PlacePathTile(p2);
+p1 = new PathTile(4, 5, this, p2);
+_PlacePathTile(p1);
+p2 = new PathTile(3, 5, this, p1);
+_PlacePathTile(p2);
+p1 = new PathTile(2, 5, this, p2);
+_PlacePathTile(p1);
+p2 = new PathTile(2, 4, this, p1);
+_PlacePathTile(p2);
+p1 = new PathTile(2, 3, this, p2);
+_PlacePathTile(p1);
+p2 = new PathTile(3, 3, this, p1);
+_PlacePathTile(p2);
+p1 = new PathTile(3, 2, this, p2);
+_PlacePathTile(p1);
+p2 = new PathTile(3, 1, this, p1);
+_PlacePathTile(p2);
+p1 = new PathTile(2, 1, this, p2);
+_PlacePathTile(p1);
+p2 = new PathTile(1, 1, this, p1);
+_PlacePathTile(p2);
+p1 = new PathTile(1, 0, this, p2);
+_PlacePathTile(p1);
+PathTile* spawn1 = new PathTile(0,0, this, p1);
+_PlacePathTile(spawn1);
+_SetSpawnTile(spawn1);
+
+
+SolidGroundTile* solidGround = new SolidGroundTile(2, 0);
+PlaceGroundTile(solidGround);
+
+SolidGroundTile* solidGround1 = new SolidGroundTile(2, 2);
+PlaceGroundTile(solidGround1);
+
+SolidGroundTile* solidGround2 = new SolidGroundTile(1, 4);
+PlaceGroundTile(solidGround2);
+
+SolidGroundTile* solidGround3 = new SolidGroundTile(4, 6);
+PlaceGroundTile(solidGround3);
+
+SolidGroundTile* solidGround4 = new SolidGroundTile(3, 4);
+PlaceGroundTile(solidGround4);*/

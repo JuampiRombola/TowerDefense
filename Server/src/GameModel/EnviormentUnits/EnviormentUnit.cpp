@@ -46,7 +46,7 @@ void EnviormentUnit::PushBack(){
 
 	_position = _lastPosition;
 	_lastPosition = nullptr;
-	std::cout << "EnviormentUnit Pushed backed\n";
+	std::cout << "EnviormentUnit Pushed backed\n" << std::flush;
 	PrintDebug();
 }
 

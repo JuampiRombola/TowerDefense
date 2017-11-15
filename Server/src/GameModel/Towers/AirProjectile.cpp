@@ -10,7 +10,7 @@
 
 AirProjectile::AirProjectile
 (AirTower* origin, PathTile* target, uint flyingHitpoint, uint nonflyingHitpoints) :
- Projectile(origin, target, 50, flyingHitpoint), _nonFlyingHitPoints(nonflyingHitpoints)
+ Projectile(origin, target, 500, flyingHitpoint), _nonFlyingHitPoints(nonflyingHitpoints)
 {
 
 }
