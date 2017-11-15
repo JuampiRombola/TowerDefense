@@ -29,7 +29,7 @@ TowerDefenseGame::TowerDefenseGame(uint gameId,
 	_executedCommands(), _gameStateMutex(),
 	 _gameId(gameId),
 	_ended(false), _stopped(false), _steps(0), _enemyIdCounter(0), _units(),
-	_map(8, 8, "map.yaml"), notifications(notifications), _players(playersInGame)
+	_map(15, 15, "map.yaml"), notifications(notifications), _players(playersInGame)
 {
 	std::string ss("config.yaml");
 	GameCfg = new GameConfiguration(ss);
