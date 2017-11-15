@@ -24,17 +24,10 @@ void NewLobbyNotification::Notify(){
 	for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it){
 		PlayerProxy* p = *it;
 		uint8_t instruction = CREATE_LOBBY; ///New lobby
-		p->sock.Send((char*) &instruction, 1);
+		p->SendByte(instruction);
 		int32_t guid = _lobby.GUID();
-		p->sock.Send((char*) &guid, 4);
-
+		p->SendInt32(guid);
 		std::string lobbyName = _lobby.Name();
-		uint8_t lobbyNameSizeBuf = lobbyName.length();
-
-		p->sock.Send((char*) &lobbyNameSizeBuf, 1);
-		p->sock.Send(lobbyName.c_str(), lobbyName.length());
-		std::cout << "new lobby noti sent to player " << p->GUID() << " \n" << std::flush;
-
-
+		p->SendString(lobbyName);
 	}
 }

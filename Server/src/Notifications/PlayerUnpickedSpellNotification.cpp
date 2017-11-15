@@ -22,16 +22,16 @@ void PlayerUnpickedSpellNotification::Notify(){
 		PlayerProxy* p = *it;
 		if (p == &_player){
 			uint8_t ins = UNPICK_SPELL;
-			p->sock.Send((char*) &ins, 1);
+			p->SendByte(ins);
 			uint8_t spell = _spelltype;
-			p->sock.Send((char*) &spell, 1);
+			p->SendByte(spell);
 		} else {
 			uint32_t playerguid = _player.GUID();
 			uint8_t ins = PLAYER_UNPICKED_SPELL;
-			p->sock.Send((char*) &ins, 1);
+			p->SendByte(ins);
 			uint8_t spell = _spelltype;
-			p->sock.Send((char*) &spell, 1);
-			p->sock.Send((char*) &playerguid, 4);
+			p->SendByte(spell);
+			p->SendInt32(playerguid);
 		}
 	}
 }

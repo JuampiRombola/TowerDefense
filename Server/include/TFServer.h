@@ -62,6 +62,8 @@ private:
 	void _HandleLogin(PlayerProxy& player);
 	void _HandleGameCommand(PlayerProxy& player);
 	void _LaunchGame(Lobby& lobby);
+	void _Stop();
+
 
 public:
 //El constructor inicia el socket en modo servidor.
@@ -69,7 +71,6 @@ public:
 	~TFServer();
 	bool ReadyToAcceptConnections();
 	bool IsAcceptingConnections();
-	void Stop();
 	void RunServer();
 	void HandleConnection(PlayerProxy& player);
 };

@@ -16,14 +16,14 @@ void SpellCastedGameNotification::Notify() {
     for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); it++) {
         PlayerProxy *p = *it;
         int8_t game = GAME_OPCODE;
-        p->sock.Send((char *) &game, 1);
+        p->SendByte(game);
         int8_t opcode = CLIENT_CAST_SPELL;
         if (_type == SPELL_RAYO)
             std::cout << "\n\n SENDING RAyos \n\n" << std::flush;
-        p->sock.Send((char *) &opcode, 1);
-        p->sock.Send((char *) &_type, 1);
-        p->sock.Send((char *) &_x, 4);
-        p->sock.Send((char *) &_y, 4);
-        p->sock.Send((char *) &_duration_ms, 4);
+        p->SendByte(opcode);
+        p->SendByte(_type);
+        p->SendInt32(_x);
+        p->SendInt32(_y);
+        p->SendInt32(_duration_ms);
     }
 }

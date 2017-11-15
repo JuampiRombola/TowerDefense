@@ -16,5 +16,5 @@ void InvalidLogInNotification::SetPlayersToNotify(std::vector<PlayerProxy*>* pla
 
 void InvalidLogInNotification::Notify(){
 	uint8_t opcode = LOG_IN_FAILED;
-	_player.sock.Send((char*) &opcode, 1);
+	_player.SendByte(opcode);
 }

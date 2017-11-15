@@ -26,37 +26,37 @@ void LoggedInNotification::SetPlayersToNotify(std::vector<PlayerProxy*>* players
 
 void LoggedInNotification::Notify(){
 	uint8_t opcode = LOG_IN_SUCCESS;
-	_player.sock.Send((char*) &opcode, 1);
+	_player.SendByte(opcode);
 	/** Notifico a este jugador acerca de todos los lobbies y jugadores y sus relaciones */
 
 	uint32_t lobbyCount = _lobbies.size();
-	_player.sock.Send((char*) &lobbyCount, 4);
+	_player.SendInt32(lobbyCount);
 
 	for (auto it = _lobbies.begin(); it != _lobbies.end(); ++it){
 		uint32_t lobbyGuid = (*it)->GUID();
 		std::string name = (*it)->Name();
-		_player.sock.Send((char*) &lobbyGuid, 4);
-		_player.sock.SendString(name);
+		_player.SendInt32(lobbyGuid);
+		_player.SendString(name);
 	}
 
 	uint32_t playerAmount = _playersToNotify.size();
-	_player.sock.Send((char*) &playerAmount, 4);
+	_player.SendInt32(playerAmount);
 
 	for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it) {
 		uint32_t  playerGuid = (*it)->GUID();
 		std::string playerName = (*it)->Name();
-		_player.sock.Send((char*) &playerGuid, 4);
-		_player.sock.SendString(playerName);
+		_player.SendInt32(playerGuid);
+		_player.SendString(playerName);
 	}
 
 	uint32_t relationsAmount = _lobbies2playersGUIDS.size();
-	_player.sock.Send((char*) &relationsAmount, 4);
+	_player.SendInt32(relationsAmount);
 
 	for (auto it = _lobbies2playersGUIDS.begin(); it != _lobbies2playersGUIDS.end(); ++it){
 		uint32_t lobbyGuid = std::get<0>(*it);
 		uint32_t playerGuid = std::get<1>(*it);
-		_player.sock.Send((char*) &lobbyGuid, 4);
-		_player.sock.Send((char*) &playerGuid, 4);
+		_player.SendInt32(lobbyGuid);
+		_player.SendInt32(playerGuid);
 	}
 
 
@@ -64,11 +64,11 @@ void LoggedInNotification::Notify(){
 	uint8_t otherPlayersOpcode = PLAYER_JOIN;
 	for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it){
 		if((*it)->state != DEAD){
-			(*it)->sock.Send((char*) &otherPlayersOpcode, 1);
+			(*it)->SendByte(otherPlayersOpcode);
 			uint32_t id = _player.GUID();
-			(*it)->sock.Send((char*) &id, 4);
+			(*it)->SendInt32(id);
 			std::string pname = _player.Name();
-			(*it)->sock.SendString(pname);
+			(*it)->SendString(pname);
 		}
 	}
 }

@@ -10,7 +10,7 @@
 
 GroundProjectile::GroundProjectile
 (GroundTower* tower, PathTile* target, uint hitpoints) :
- Projectile(tower, target, 50, hitpoints)
+ Projectile(tower, target, 500, hitpoints)
 {
 
 }

@@ -25,9 +25,8 @@ void PlayerLeaveNotification::Notify(){
         PlayerProxy* p = *it;
 
         uint8_t opcode = PLAYER_LEAVE;
-        p->sock.Send((char*) &opcode, 1);
-
-        p->sock.Send((char*) &_playerGUID, 4);
+        p->SendByte(opcode);
+        p->SendInt32(_playerGUID);
 
     }
 }

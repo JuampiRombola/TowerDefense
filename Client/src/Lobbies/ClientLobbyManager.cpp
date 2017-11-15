@@ -42,6 +42,7 @@ void ClientLobbyManager::HandleLeaveLobby(){
 void ClientLobbyManager::HandleLobbyJoin(){
     uint32_t lobbyGuid = -1;
     _sock.Recieve((char*)&lobbyGuid, 4);
+    std::cout << "LOBBY JOINED: " << lobbyGuid << "\n" << std::flush;
     _joinedLobby = GetLobby(lobbyGuid);
 
 

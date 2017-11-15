@@ -21,5 +21,5 @@ void LeftLobbyNotification::SetPlayersToNotify(std::vector<PlayerProxy*>* player
 
 void LeftLobbyNotification::Notify(){
 	uint8_t ins = LEAVE_LOBBY;
-	_player.sock.Send((char*) &ins, 1);
+	_player.SendByte(ins);
 }

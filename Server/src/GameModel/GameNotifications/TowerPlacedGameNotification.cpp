@@ -16,13 +16,13 @@ void TowerPlacedGameNotification::Notify() {
     for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); it++) {
         PlayerProxy *p = *it;
         int8_t game = GAME_OPCODE;
-        p->sock.Send((char *) &game, 1);
+        p->SendByte(game);
         int8_t opcode = TOWER_PLACED;
-        p->sock.Send((char *) &opcode, 1);
+        p->SendByte(opcode);
         uint32_t x = vm.xPos;
-        p->sock.Send((char *) &x, 4);
+        p->SendInt32(x);
         uint32_t y = vm.yPos;
-        p->sock.Send((char *) &y, 4);
+        p->SendInt32(y);
         SPELL_TYPE type;
         switch (vm.type) {
             case Ground:
@@ -39,6 +39,6 @@ void TowerPlacedGameNotification::Notify() {
                 break;
         }
         uint8_t spelltype = type;
-        p->sock.Send((char *) &spelltype, 1);
+        p->SendByte(spelltype);
     }
 }

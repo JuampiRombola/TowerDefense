@@ -27,8 +27,7 @@ void LobbyManager::HandlePlayerIsReady(PlayerProxy &player){
 }
 
 void LobbyManager::HandlePlayerPickedSpell(PlayerProxy &player){
-	uint8_t spell;
-	player.sock.Recieve((char*) &spell, 1);
+	uint8_t spell = player.RecieveByte();
 	SPELL_TYPE type = (SPELL_TYPE )spell;
 	switch (type){
 		case SPELL_TYPE_WATER:
@@ -48,8 +47,7 @@ void LobbyManager::HandlePlayerPickedSpell(PlayerProxy &player){
 	}
 }
 void LobbyManager::HandlePlayerUnpickedSpell(PlayerProxy &player){
-	uint8_t spell;
-	player.sock.Recieve((char*) &spell, 1);
+	uint8_t spell = player.RecieveByte();
 	SPELL_TYPE type = (SPELL_TYPE )spell;
 	switch (type){
 		case SPELL_TYPE_WATER:
@@ -110,8 +108,7 @@ void LobbyManager::HandleLeaveLobby(PlayerProxy &player){
 
 void LobbyManager::HandleJoinLobby(PlayerProxy &player){
 	std::lock_guard<std::mutex> lock(_lobbiesMutex);
-	uint32_t lobbyguid = 1;
-	player.sock.Recieve((char*) &lobbyguid, 4);
+	uint32_t lobbyguid = player.RecieveInt32();
 
 	if (player.state != BROWSING_LOBBIES )
 		return;
@@ -136,7 +133,7 @@ void LobbyManager::HandleJoinLobby(PlayerProxy &player){
 
 void LobbyManager::HandleCreateNewLobby(PlayerProxy &player){
 	uint8_t lobbyNameSize;
-	std::string lobbyName = player.sock.RecieveString();
+	std::string lobbyName = player.RecieveString();
 	if (player.state == BROWSING_LOBBIES)
 		_CreateNewLobby(lobbyName);
 }

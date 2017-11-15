@@ -220,7 +220,6 @@ std::vector<PathTile*> Map::GetPathTilesInRange(Tile* tile, uint range){
 	std::vector<PathTile*> tiles;
 	int x = tile->GetXPos();
 	int y = tile->GetYPos();
-	std::cout << "x: " << x << ", y: " << y << '\n' << std::flush;
 	for (int i = -range; i <= (int) range; i++)
 	{
 		for (int j = -range; j <= (int) range; j++)

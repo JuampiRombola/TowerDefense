@@ -11,7 +11,7 @@
 FireProjectile::FireProjectile
 (FireTower* origin, PathTile* target, uint hitpoints, 
 	uint collateralRange, uint collateralDamage) :
- Projectile(origin, target, 50, hitpoints), _collateralRange(collateralRange),
+ Projectile(origin, target, 500, hitpoints), _collateralRange(collateralRange),
  _collateralDamage(collateralDamage)
 {
 

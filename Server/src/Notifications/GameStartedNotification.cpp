@@ -21,6 +21,6 @@ void GameStartedNotification::Notify(){
 	for (auto it = playersInLobby.begin(); it != playersInLobby.end(); ++it){
 		PlayerProxy* p = *it;
 		uint8_t ins = GAME_STARTED;
-		p->sock.Send((char*) &ins, 1);
+		p->SendByte(ins);
 	}
 }

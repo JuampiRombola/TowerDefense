@@ -10,7 +10,7 @@
 
 WaterProjectile::WaterProjectile
 (WaterTower* origin, PathTile* target, uint hitpoints, uint slowDuration_sec, uint slowPercent) :
- Projectile(origin, target, 50, hitpoints), _slowDuration_sec(slowDuration_sec), _slowPercent(slowPercent)
+ Projectile(origin, target, 500, hitpoints), _slowDuration_sec(slowDuration_sec), _slowPercent(slowPercent)
 {
 
 }

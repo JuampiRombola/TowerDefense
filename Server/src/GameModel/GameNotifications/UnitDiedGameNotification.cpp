@@ -16,10 +16,10 @@ void UnitDiedGameNotification::Notify() {
     for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); it++) {
         PlayerProxy *p = *it;
         int8_t game = GAME_OPCODE;
-        p->sock.Send((char *) &game, 1);
+        p->SendByte(game);
         int8_t opcode = UNIT_DIED;
-        p->sock.Send((char *) &opcode, 1);
+        p->SendByte(opcode);
         uint32_t unitid = vm.id;
-        p->sock.Send((char *) &unitid, 4);
+        p->SendInt32(unitid);
     }
 }

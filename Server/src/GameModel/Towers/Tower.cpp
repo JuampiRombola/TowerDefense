@@ -34,7 +34,6 @@ Projectile* Tower::Step(){
 		if (targetUnit != nullptr)
 			return _Fire(targetUnit);
 
-		std::cout << "projectile null \n" << std::flush;
 	}
 
 	return nullptr;
