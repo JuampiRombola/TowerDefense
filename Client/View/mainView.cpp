@@ -51,7 +51,6 @@ int main(int argc, char** argv) {
     modelView.createPortalSalida(6, 6);
 */
     modelView.createPathTile(0, 0);
-    modelView.createPathTile(0, 1);
     modelView.createPathTile(0, 2);
     modelView.createPathTile(0, 3);
     modelView.createPathTile(0, 4);
@@ -61,7 +60,6 @@ int main(int argc, char** argv) {
     modelView.createPathTile(0, 8);
 
     modelView.createPathTile(2, 2);
-    modelView.createPathTile(2, 3);
     modelView.createPathTile(2, 4);
     modelView.createPathTile(2, 5);
     modelView.createPathTile(2, 6);
@@ -109,7 +107,7 @@ int main(int argc, char** argv) {
     modelView.createStructureTile(1, 1);
     modelView.createStructureTile(7, 7);
     modelView.createStructureTile(1, 7);
-    modelView.createStructureTile(7, 7);
+    modelView.createStructureTile(7, 1);
 
     modelView.createStructureTile(3, 3);
     modelView.createStructureTile(5, 5);
@@ -118,8 +116,8 @@ int main(int argc, char** argv) {
 
     modelView.createPortalSalida(0, 0);
     modelView.createPortalSalida(2, 2);
-    modelView.createPortalEntrada(0, 1);
-    modelView.createPortalEntrada(2, 3);
+    modelView.createPortalEntrada(0, 2);
+    modelView.createPortalEntrada(2, 4);
 
     //modelView.createTower(1, TORRE_TIERRA, 2, 0);
     //modelView.createTower(2, TORRE_AIRE, 2, 2);

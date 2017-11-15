@@ -236,7 +236,7 @@ void NotificationReciever::_HandleUnitPositionUpdate(){
     uint32_t delay_ms ;
     _sock.Recieve((char *) &delay_ms, 4);
 
-	if (tox > 7 || toy > 7)
+	if (tox > 9 || toy > 9)
 		return;
 	std::cout << "unit move x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
 
