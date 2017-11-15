@@ -104,10 +104,10 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     modelView.createStructureTile(5, 9);
     modelView.createStructureTile(5, 13);
 
-    modelView.createStructureTile(8, 1);
-    modelView.createStructureTile(8, 5);
-    modelView.createStructureTile(8, 9);
-    modelView.createStructureTile(8, 13);
+    modelView.createStructureTile(9, 1);
+    modelView.createStructureTile(9, 5);
+    modelView.createStructureTile(9, 9);
+    modelView.createStructureTile(9, 13);
 
     modelView.createStructureTile(11, 1);
     modelView.createStructureTile(11, 5);
@@ -134,7 +134,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     Uint32 delta = 0;
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
-    
+
     while (!quit && _reciever->Running()) {
         t1 = SDL_GetTicks();
 
