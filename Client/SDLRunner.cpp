@@ -115,11 +115,11 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     modelView.createStructureTile(13, 13);
 
     modelView.createPortalEntrada(0, 3);
-    modelView.createPortalEntrada(0, 7);
+    modelView.createPortalEntrada(14, 7);
     modelView.createPortalEntrada(0, 11);
 
     modelView.createPortalSalida(14, 3);
-    modelView.createPortalSalida(14, 7);
+    modelView.createPortalSalida(0, 7);
     modelView.createPortalSalida(14, 11);
 
     HudView hudView(window, textureLoader, renderer, *_dispatcher);
