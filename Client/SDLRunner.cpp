@@ -109,10 +109,10 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     modelView.createStructureTile(9, 9);
     modelView.createStructureTile(9, 13);
 
-    modelView.createStructureTile(11, 1);
-    modelView.createStructureTile(11, 5);
-    modelView.createStructureTile(11, 9);
-    modelView.createStructureTile(11, 13);
+    modelView.createStructureTile(13, 1);
+    modelView.createStructureTile(13, 5);
+    modelView.createStructureTile(13, 9);
+    modelView.createStructureTile(13, 13);
 
     modelView.createPortalEntrada(0, 3);
     modelView.createPortalEntrada(0, 7);
