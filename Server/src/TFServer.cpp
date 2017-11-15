@@ -153,7 +153,7 @@ void TFServer::_HandleGameCommand(PlayerProxy& player){
     player.sock.Recieve((char*) &ins, 1);
 
     if (ins == CLIENT_CAST_SPELL){
-        uint8_t spelltype;
+		uint8_t spelltype;
         player.sock.Recieve((char*) &spelltype, 1);
 		uint32_t x;
 		player.sock.Recieve((char*) &x, 4);

@@ -126,36 +126,78 @@ void NotificationReciever::_HandleGameOpcode(){
 			_sock.Recieve((char *) &unitid, 4);
 			model_view->killUnit(unitid);
 			break;
+		case CLIENT_CAST_SPELL:
+			_HandleSpellCasted();
+			break;
     }
 }
 
+void NotificationReciever::_HandleSpellCasted(){
+	uint8_t spell;
+	_sock.Recieve((char *) &spell, 1);
+	uint32_t x;
+	_sock.Recieve((char *) &x, 4);
+	uint32_t y;
+	_sock.Recieve((char *) &y, 4);
+	uint32_t duration_ms;
+	_sock.Recieve((char *) &duration_ms, 4);
+	switch(spell){
+		case SPELL_TERRAFORMING:
+			model_view->createStructureTile(x, y);
+			break;
+		case SPELL_METEORITO:
+			model_view->createSpell(METEORITO, x, y, duration_ms);
+			break;
+		case SPELL_VENTISCA:
+			model_view->createSpell(VENTISCA, x, y, duration_ms);
+			break;
+		case SPELL_CONGELACION:
+			model_view->createSpell(CONGELACION, x, y, duration_ms);
+			break;
+		case SPELL_TORNADO:
+			model_view->createSpell(TORNADO, x, y, duration_ms);
+			break;
+		case SPELL_RAYO:
+		std::cout << "\n\n\n LLEGO!!! \n\n" << std::flush;
+			model_view->createSpell(RAYO, x, y, duration_ms);
+			break;
+		case SPELL_FIREWALL:
+			model_view->createSpell(FIREWALL, x, y, duration_ms);
+			break;
+		case SPELL_GRIETA:
+			model_view->createSpell(GRIETA, x, y, duration_ms);
+			break;
+	}
+}
+
+
 void NotificationReciever::_HandleProjectileFired(){
-    uint32_t x;
-    _sock.Recieve((char *) &x, 4);
-    uint32_t y;
-    _sock.Recieve((char *) &y, 4);
-    uint32_t tox;
-    _sock.Recieve((char *) &tox, 4);
-    uint32_t toy;
-    _sock.Recieve((char *) &toy, 4);
-    uint32_t delay_ms;
-    _sock.Recieve((char *) &delay_ms, 4);
-    uint8_t spelltype;
-    _sock.Recieve((char*) &spelltype, 1);
-    switch(spelltype){
-        case SPELL_TYPE_WATER:
-            model_view->createShot(DISPARO_AGUA, x, y, tox, toy, delay_ms);
-            break;
-        case SPELL_TYPE_GROUND:
-            model_view->createShot(DISPARO_TIERRA, x, y, tox, toy, delay_ms);
-            break;
-        case SPELL_TYPE_FIRE:
-            model_view->createShot(DISPARO_FUEGO, x, y, tox, toy, delay_ms);
-            break;
-        case SPELL_TYPE_AIR:
-            model_view->createShot(DISPARO_AIRE, x, y, tox, toy, delay_ms);
-            break;
-    }
+	uint32_t x;
+	_sock.Recieve((char *) &x, 4);
+	uint32_t y;
+	_sock.Recieve((char *) &y, 4);
+	uint32_t tox;
+	_sock.Recieve((char *) &tox, 4);
+	uint32_t toy;
+	_sock.Recieve((char *) &toy, 4);
+	uint32_t delay_ms;
+	_sock.Recieve((char *) &delay_ms, 4);
+	uint8_t spelltype;
+	_sock.Recieve((char*) &spelltype, 1);
+	switch(spelltype){
+		case SPELL_TYPE_WATER:
+			model_view->createShot(DISPARO_AGUA, x, y, tox, toy, delay_ms);
+			break;
+		case SPELL_TYPE_GROUND:
+			model_view->createShot(DISPARO_TIERRA, x, y, tox, toy, delay_ms);
+			break;
+		case SPELL_TYPE_FIRE:
+			model_view->createShot(DISPARO_FUEGO, x, y, tox, toy, delay_ms);
+			break;
+		case SPELL_TYPE_AIR:
+			model_view->createShot(DISPARO_AIRE, x, y, tox, toy, delay_ms);
+			break;
+	}
 }
 void NotificationReciever::_HandleTowerPlaced(){
     static int towerID = 1;

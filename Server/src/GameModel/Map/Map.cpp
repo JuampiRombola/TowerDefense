@@ -33,56 +33,36 @@ _projectiles()
 		}
 	}
 	//Armo un camino a mano
-	
-	PathTile* end = new PathTile(6,6, this, nullptr);
+
+
+
+	SolidGroundTile* t = new SolidGroundTile(5, 0);
+	PlaceGroundTile(t);
+	t = new SolidGroundTile(5, 2);
+	PlaceGroundTile(t);
+	t = new SolidGroundTile(5, 4);
+	PlaceGroundTile(t);	
+	t = new SolidGroundTile(5, 6);
+	PlaceGroundTile(t);
+	PathTile* end = new PathTile(3, 6, this, nullptr);
 	_PlacePathTile(end);
 	_SetFinishTile(end);
-	
-	PathTile* p1 = new PathTile(6, 5, this, end);
+	PathTile* p1 = new PathTile(3, 5, this, end);
 	_PlacePathTile(p1);
-	PathTile* p2 = new PathTile(5, 5, this, p1);
+	PathTile* p2 = new PathTile(3, 4, this, p1);
+	_PlacePathTile(p2);	
+	p1 = new PathTile(3, 3, this, p2);
+	_PlacePathTile(p1);
+	p2 = new PathTile(3, 2, this, p1);
 	_PlacePathTile(p2);
-	p1 = new PathTile(4, 5, this, p2);
+	p1 = new PathTile(2, 2, this, p2);
 	_PlacePathTile(p1);
-	p2 = new PathTile(3, 5, this, p1);
+	p2 = new PathTile(1, 2, this, p1);
 	_PlacePathTile(p2);
-	p1 = new PathTile(2, 5, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(2, 4, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(2, 3, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(3, 3, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(3, 2, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(3, 1, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(2, 1, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(1, 1, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(1, 0, this, p2);
-	_PlacePathTile(p1);
-	PathTile* spawn1 = new PathTile(0,0, this, p1);
+	PathTile* spawn1 = new PathTile(0, 2, this, p2);
 	_PlacePathTile(spawn1);
 	_SetSpawnTile(spawn1);
 
-	
-	SolidGroundTile* solidGround = new SolidGroundTile(2, 0);
-	PlaceGroundTile(solidGround);
-	
-	SolidGroundTile* solidGround1 = new SolidGroundTile(2, 2);
-	PlaceGroundTile(solidGround1);
-	
-	SolidGroundTile* solidGround2 = new SolidGroundTile(1, 4);
-	PlaceGroundTile(solidGround2);
-	
-	SolidGroundTile* solidGround3 = new SolidGroundTile(4, 6);
-	PlaceGroundTile(solidGround3);
-	
-	SolidGroundTile* solidGround4 = new SolidGroundTile(3, 4);
-	PlaceGroundTile(solidGround4);
 }
 
 

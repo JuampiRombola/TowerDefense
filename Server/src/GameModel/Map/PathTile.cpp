@@ -28,19 +28,19 @@ char PathTile::GetSymbol(){
 	return 'P';
 }
 
-void PathTile::Crack(uint seconds){
+void PathTile::Crack(uint time_ms){
 	_isCracked = true;
 	_lastCrackTimeStamp_ms = Helpers::MillisecondsTimeStamp();
-	_lastCrackDuration_ms = seconds * 1000;
+	_lastCrackDuration_ms = time_ms;
 	for (auto it = _units.begin(); it != _units.end(); ++it){
 		(*it)->Kill();
 	}
 }
 
-void PathTile::SetOnFire(uint seconds, uint fireDamage){
+void PathTile::SetOnFire(uint time_ms, uint fireDamage){
 	_isOnFire = true;
 	_lastFireTimeStamp_ms = Helpers::MillisecondsTimeStamp();
-	_lastFireDuration_ms = seconds * 1000;
+	_lastFireDuration_ms = time_ms;
 	_lastFireDamage = fireDamage;
 	for (auto it = _units.begin(); it != _units.end(); ++it){
 		(*it)->GetHit(_lastFireDamage);

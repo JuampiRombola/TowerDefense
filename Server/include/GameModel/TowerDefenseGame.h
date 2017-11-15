@@ -42,9 +42,17 @@ private:
 	Map _map;
 	std::thread _thread;
 	bool _Step();
-	void _SpawnEnemy();
+	void _SpawnRandomEnemy();
 	void _ExecuteCommands();
 	void _Run();
+
+	void _SpawnAbmonible();
+	void _SpawnHombreCabra();
+	void _SpawnHalconSangriento();
+	void _SpawnDemonioVerde();
+	void _SpawnNoMuerto();
+	void _SpawnEspectro();
+
 
 	std::vector<PlayerProxy*> _players;
 

@@ -64,15 +64,19 @@ void HudView::sendCommand(int x, int y) {
                 command = new ClientCastSpellCommand(SPELL_FIREWALL, x, y);
                 break;
             case CMD_VENTISCA:
+                std::cout << "\n\n CMD_VENTISCA " << std::flush;
                 command = new ClientCastSpellCommand(SPELL_VENTISCA, x, y);
                 break;
             case CMD_CONGELACION:
+                std::cout << "\n\n CMD_CONGELACION " << std::flush;
                 command = new ClientCastSpellCommand(SPELL_CONGELACION, x, y);
                 break;
             case CMD_TORNADO:
+                std::cout << "\n\n CMD_TORNADO " << std::flush;
                 command = new ClientCastSpellCommand(SPELL_TORNADO, x, y);
                 break;
             case CMD_RAYO:
+                std::cout << "\n\n CMD_RAYO " << std::flush;
                 command = new ClientCastSpellCommand(SPELL_RAYO, x, y);
                 break;
         }

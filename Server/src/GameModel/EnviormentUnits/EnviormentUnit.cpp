@@ -178,7 +178,7 @@ PathTile* EnviormentUnit::_GetNextTile(){
 		if (right != nullptr) possiblePaths.push_back(right);
 		if (left != nullptr) possiblePaths.push_back(left);
 		std::srand(std::time(0));
-		uint random_variable = (uint) std::rand() % possiblePaths.size();
+
 		if (possiblePaths.size() > 0)
 			return possiblePaths[random_variable];
 		return nullptr;

@@ -43,7 +43,6 @@ set(SOURCE_FILES_SERVER
         Server/include/TFServer.h
         Server/include/ThreadSafeQueue.h
         Server/include/GameModel/Commands/BuildTowerCommand.h
-        Server/include/GameModel/Commands/BuildTowerCommand.h
         Server/include/GameModel/Commands/CastSpellCommand.h
         Server/include/GameModel/Commands/Command.h
         Server/include/GameModel/Commands/UpgradeTowerCommand.h
@@ -97,6 +96,7 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/Helpers.h
         Server/include/GameModel/TowerDefenseGame.h
         Server/include/GameModel/GameNotifications/GameNotification.h
+        Server/include/GameModel/GameNotifications/SpellCastedGameNotification.h
         Server/include/GameModel/GameNotifications/UnitPositionGameNotification.h
         Server/include/GameModel/GameNotifications/UnitDiedGameNotification.h
         Server/include/GameModel/GameNotifications/TowerPlacedGameNotification.h
@@ -104,6 +104,7 @@ set(SOURCE_FILES_SERVER
         Server/src/GameModel/GameNotifications/UnitDiedGameNotification.cpp
         Server/src/GameModel/GameNotifications/UnitPositionGameNotification.cpp
         Server/src/GameModel/GameNotifications/TowerPlacedGameNotification.cpp
+        Server/src/GameModel/GameNotifications/SpellCastedGameNotification.cpp
         Server/src/GameModel/GameConfiguration.cpp
         Server/src/GameModel/TowerDefenseGame.cpp
         Server/src/GameModel/Towers/AirProjectile.cpp

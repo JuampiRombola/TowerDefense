@@ -12,7 +12,7 @@
 #define WINDOWHEIGHT 480
 #define FPS 40
 
-#define MAPSIZE 15
+#define MAPSIZE 7
 
 SDLRunner::SDLRunner() {
 
@@ -46,81 +46,19 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     modelView.setMapEnvironment(GELIDO);
     modelView.setMapWidthHeight(MAPSIZE, MAPSIZE);
 
-    modelView.createPathTile(0, 3);
-    modelView.createPathTile(1, 3);
-    modelView.createPathTile(2, 3);
-    modelView.createPathTile(4, 3);
-    modelView.createPathTile(5, 3);
+    modelView.createPathTile(3, 6);
+    modelView.createPathTile(3, 5);
+    modelView.createPathTile(3, 4);
     modelView.createPathTile(3, 3);
-    modelView.createPathTile(6, 3);
-    modelView.createPathTile(7, 3);
-    modelView.createPathTile(8, 3);
-    modelView.createPathTile(9, 3);
-    modelView.createPathTile(10, 3);
-    modelView.createPathTile(11, 3);
-    modelView.createPathTile(12, 3);
-    modelView.createPathTile(13, 3);
-    modelView.createPathTile(14, 3);
+    modelView.createPathTile(3, 2);
+    modelView.createPathTile(2, 2);
+    modelView.createPathTile(1, 2);
+    modelView.createPathTile(0, 2);
 
-    modelView.createPathTile(0, 7);
-    modelView.createPathTile(1, 7);
-    modelView.createPathTile(2, 7);
-    modelView.createPathTile(3, 7);
-    modelView.createPathTile(4, 7);
-    modelView.createPathTile(5, 7);
-    modelView.createPathTile(6, 7);
-    modelView.createPathTile(7, 7);
-    modelView.createPathTile(8, 7);
-    modelView.createPathTile(9, 7);
-    modelView.createPathTile(10, 7);
-    modelView.createPathTile(11, 7);
-    modelView.createPathTile(12, 7);
-    modelView.createPathTile(13, 7);
-    modelView.createPathTile(14, 7);
-
-    modelView.createPathTile(0, 11);
-    modelView.createPathTile(1, 11);
-    modelView.createPathTile(2, 11);
-    modelView.createPathTile(3, 11);
-    modelView.createPathTile(4, 11);
-    modelView.createPathTile(5, 11);
-    modelView.createPathTile(6, 11);
-    modelView.createPathTile(7, 11);
-    modelView.createPathTile(8, 11);
-    modelView.createPathTile(9, 11);
-    modelView.createPathTile(10, 11);
-    modelView.createPathTile(11, 11);
-    modelView.createPathTile(12, 11);
-    modelView.createPathTile(13, 11);
-    modelView.createPathTile(14, 11);
-
-    modelView.createStructureTile(1, 1);
-    modelView.createStructureTile(1, 5);
-    modelView.createStructureTile(1, 9);
-    modelView.createStructureTile(1, 13);
-
-    modelView.createStructureTile(5, 1);
-    modelView.createStructureTile(5, 5);
-    modelView.createStructureTile(5, 9);
-    modelView.createStructureTile(5, 13);
-
-    modelView.createStructureTile(9, 1);
-    modelView.createStructureTile(9, 5);
-    modelView.createStructureTile(9, 9);
-    modelView.createStructureTile(9, 13);
-
-    modelView.createStructureTile(13, 1);
-    modelView.createStructureTile(13, 5);
-    modelView.createStructureTile(13, 9);
-    modelView.createStructureTile(13, 13);
-
-    modelView.createPortalEntrada(0, 3);
-    modelView.createPortalEntrada(14, 7);
-    modelView.createPortalEntrada(0, 11);
-
-    modelView.createPortalSalida(14, 3);
-    modelView.createPortalSalida(0, 7);
-    modelView.createPortalSalida(14, 11);
+    modelView.createStructureTile(5, 0);
+    modelView.createStructureTile(5, 2);
+    modelView.createStructureTile(5, 4);
+    modelView.createStructureTile(5, 6);
 
     HudView hudView(window, textureLoader, renderer, *_dispatcher);
     hudView.addElementalButtons(ELEMENTAL_EARTH);

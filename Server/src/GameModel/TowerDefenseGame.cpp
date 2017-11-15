@@ -29,7 +29,7 @@ TowerDefenseGame::TowerDefenseGame(uint gameId,
 	_executedCommands(), _gameStateMutex(),
 	 _gameId(gameId),
 	_ended(false), _stopped(false), _steps(0), _enemyIdCounter(0), _units(),
-	_map(8, 8, "map.yaml"), notifications(notifications), _players(playersInGame)
+	_map(7, 7, "map.yaml"), notifications(notifications), _players(playersInGame)
 {
 	std::string ss("config.yaml");
 	GameCfg = new GameConfiguration(ss);
@@ -56,35 +56,7 @@ TowerDefenseGame::~TowerDefenseGame()
 }
 
 
-void TowerDefenseGame::_SpawnEnemy(){
-	//Por ahora solo tengo demonios verdes.
-	//aca iria la logica de que bicho sacar de manera random
-
-	// Para spawnear tiene que haber algun spawntile
-	// como lo elegimos el politica del juego
-	// por ahora agarro uno random :P
-	
-	static int i = 0;
-	i++;
-	if (i >= 3)
-		return;
-	static bool unooelotro = true;
-	if (unooelotro){unooelotro=false;return;
-		/*uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
-		PathTile* spawn = _map.GetRandomSpawnTile();
-		uint hombreCabraSpeed = GameCfg->Cfg["units"]["hombre_cabra"]["speed"].as<uint>();
-		uint hombreCabraStepDelay_ms = floor(unitbaseStepDelay_ms / hombreCabraSpeed);
-		uint hombreCabraHealthPoints = GameCfg->Cfg["units"]["hombre_cabra"]["health_points"].as<uint>();
-		EnviormentUnit* unit = new HombreCabra(++_enemyIdCounter, hombreCabraStepDelay_ms, hombreCabraHealthPoints, notifications);
-		_units.push_back(unit);
-		_map.PlaceUnit(unit, spawn);
-		UnitVM vm = unit->GetViewModel();
-		std::cout << "UNIT CREATEDDDDD\n" << std::flush;
-		notifications.Queue(new UnitCreatedGameNotification(vm, _players));
-		unooelotro =false;
-		return;*/
-	}
-	
+void TowerDefenseGame::_SpawnAbmonible(){
 	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
 	uint abmoniblespeed = GameCfg->Cfg["units"]["abmonible"]["speed"].as<uint>();
@@ -94,8 +66,99 @@ void TowerDefenseGame::_SpawnEnemy(){
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
-	std::cout << "UNIT CREATEDDDDD\n" << std::flush;
 	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+}
+void TowerDefenseGame::_SpawnHombreCabra(){
+	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
+	PathTile* spawn = _map.GetRandomSpawnTile();
+	uint hombreCabraSpeed = GameCfg->Cfg["units"]["hombre_cabra"]["speed"].as<uint>();
+	uint hombreCabraStepDelay_ms = floor(unitbaseStepDelay_ms / hombreCabraSpeed);
+	uint hombreCabraHealthPoints = GameCfg->Cfg["units"]["hombre_cabra"]["health_points"].as<uint>();
+	EnviormentUnit* unit = new HombreCabra(++_enemyIdCounter, hombreCabraStepDelay_ms, hombreCabraHealthPoints, notifications);
+	_units.push_back(unit);
+	_map.PlaceUnit(unit, spawn);
+	UnitVM vm = unit->GetViewModel();
+	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+}
+void TowerDefenseGame::_SpawnHalconSangriento(){
+	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
+	PathTile* spawn = _map.GetRandomSpawnTile();
+	uint speed = GameCfg->Cfg["units"]["halcon_sangriento"]["speed"].as<uint>();
+	uint stepDelay_ms = floor(unitbaseStepDelay_ms / speed);
+	uint hp = GameCfg->Cfg["units"]["halcon_sangriento"]["health_points"].as<uint>();
+	EnviormentUnit* unit = new HalconSangriento(++_enemyIdCounter, stepDelay_ms, hp, notifications);
+	_units.push_back(unit);
+	_map.PlaceUnit(unit, spawn);
+	UnitVM vm = unit->GetViewModel();
+	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+}
+void TowerDefenseGame::_SpawnDemonioVerde(){
+	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
+	PathTile* spawn = _map.GetRandomSpawnTile();
+	uint speed = GameCfg->Cfg["units"]["demonio_verde"]["speed"].as<uint>();
+	uint stepDelay_ms = floor(unitbaseStepDelay_ms / speed);
+	uint hp = GameCfg->Cfg["units"]["demonio_verde"]["health_points"].as<uint>();
+	EnviormentUnit* unit = new DemonioVerde(++_enemyIdCounter, stepDelay_ms, hp, notifications);
+	_units.push_back(unit);
+	_map.PlaceUnit(unit, spawn);
+	UnitVM vm = unit->GetViewModel();
+	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+}
+void TowerDefenseGame::_SpawnNoMuerto(){
+	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
+	PathTile* spawn = _map.GetRandomSpawnTile();
+	uint speed = GameCfg->Cfg["units"]["no_muerto"]["speed"].as<uint>();
+	uint stepDelay_ms = floor(unitbaseStepDelay_ms / speed);
+	uint hp = GameCfg->Cfg["units"]["no_muerto"]["health_points"].as<uint>();
+	EnviormentUnit* unit = new NoMuerto(++_enemyIdCounter, stepDelay_ms, hp, notifications);
+	_units.push_back(unit);
+	_map.PlaceUnit(unit, spawn);
+	UnitVM vm = unit->GetViewModel();
+	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+}
+void TowerDefenseGame::_SpawnEspectro(){
+	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
+	PathTile* spawn = _map.GetRandomSpawnTile();
+	uint speed = GameCfg->Cfg["units"]["espectro"]["speed"].as<uint>();
+	uint stepDelay_ms = floor(unitbaseStepDelay_ms / speed);
+	uint hp = GameCfg->Cfg["units"]["espectro"]["health_points"].as<uint>();
+	EnviormentUnit* unit = new Espectro(++_enemyIdCounter, stepDelay_ms, hp, notifications);
+	_units.push_back(unit);
+	_map.PlaceUnit(unit, spawn);
+	UnitVM vm = unit->GetViewModel();
+	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+}
+
+void TowerDefenseGame::_SpawnRandomEnemy(){
+	//Por ahora solo tengo demonios verdes.
+	//aca iria la logica de que bicho sacar de manera random
+
+	// Para spawnear tiene que haber algun spawntile
+	// como lo elegimos el politica del juego
+	// por ahora agarro uno random :P
+
+	uint random_variable = (uint) std::rand() % 6;
+
+	switch (random_variable){
+		case 0:
+			_SpawnAbmonible();
+			break;
+		case 1:
+			_SpawnDemonioVerde();
+			break;
+		case 2:
+			_SpawnEspectro();
+			break;
+		case 3:
+			_SpawnHalconSangriento();
+			break;
+		case 4:
+			_SpawnHombreCabra();
+			break;
+		case 5:
+			_SpawnNoMuerto();
+			break;
+	}
 }
 
 
@@ -146,7 +209,7 @@ bool TowerDefenseGame::_Step(){
 
 	if (actualTs - ts > 4000){
 		ts = actualTs;
-		_SpawnEnemy();
+		_SpawnRandomEnemy();
 	}
 
 	for (auto it = _units.begin(); it != _units.end(); ++it){

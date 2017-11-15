@@ -26,6 +26,7 @@ private:
     void _HandleUnitPositionUpdate();
     void _HandleUnitCreated();
 	void _HandleProjectileFired();
+	void _HandleSpellCasted();
 public:
 	NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner);
 	~NotificationReciever();

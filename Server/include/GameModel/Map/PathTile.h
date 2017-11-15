@@ -50,8 +50,8 @@ public:
 	std::vector<PathTile*> GetPossibleNextTiles(PathTile* from);
 	void UnitLeave(EnviormentUnit* unit);
 	void UnitEnter(EnviormentUnit* unit);
-	void Crack(uint seconds);
-	void SetOnFire(uint seconds, uint fireDamage);
+	void Crack(uint time_ms);
+	void SetOnFire(uint time_ms, uint fireDamage);
 	Map* GetMap();
 	void Ventisca(uint ventiscaDamage, uint ventiscaDuration_sec, uint slowDuration_sec, uint percentSlow);
 	void Tornado(uint tornadoMaxDamage, uint tornadoDuration_sec);
