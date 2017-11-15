@@ -87,6 +87,12 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                 case SDL_FINGERDOWN:
                     hudView.getFingerState(event);
                     break;
+                case SDL_MOUSEWHEEL:
+                    if (event.wheel.y == 1) //scroll up
+                        renderer.zoomIn();
+                    else
+                        renderer.zoomOut();
+                    break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
                         case SDLK_ESCAPE:
