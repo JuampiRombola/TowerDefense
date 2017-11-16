@@ -12,8 +12,9 @@
 #include "../../../include/GameModel/Commands/BuildTowerCommand.h"
 
 FireTower::FireTower(uint cooldown_ms, uint range, uint damage, 
-	SolidGroundTile* position, Map* map, uint collateralDamage, uint collateralRange)
-: Tower(cooldown_ms, range, damage, position, map), _collateralDamage(collateralDamage), _collateralRange(collateralRange) {}
+	SolidGroundTile* position, Map* map, uint collateralDamage, uint collateralRange,
+	uint projectile_ms_over_tile)
+: Tower(cooldown_ms, range, damage, position, map, projectile_ms_over_tile), _collateralDamage(collateralDamage), _collateralRange(collateralRange) {}
 
 FireTower::~FireTower(){}
 
@@ -24,7 +25,7 @@ void FireTower::PrintDebug(){
 }
 
 Projectile* FireTower::_BuildProjectile(PathTile* target){
-	return new FireProjectile(this, target, _damage, _collateralRange, _collateralDamage);
+	return new FireProjectile(this, target, _damage, _collateralRange, _collateralDamage, _projectile_ms_over_tile);
 }
 
 bool FireTower::Upgrade(const YAML::Node& cfg, UpgradeType type){

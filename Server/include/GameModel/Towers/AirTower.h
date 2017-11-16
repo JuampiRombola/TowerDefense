@@ -16,7 +16,9 @@ private:
 protected:
 	Projectile* _BuildProjectile(PathTile* target);
 public:
-	AirTower(uint cooldown_sec, uint range, uint damage, uint nonFlyingDamage, SolidGroundTile* position, Map* map);
+	AirTower(uint cooldown_sec, uint range, uint damage,
+			 uint nonFlyingDamage, SolidGroundTile* position, Map* map,
+			uint projectile_ms_over_tile);
 	~AirTower();
 	void PrintDebug();
 	bool Upgrade(const YAML::Node& cfg, UpgradeType type);

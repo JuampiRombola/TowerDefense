@@ -47,10 +47,10 @@ public:
 	void PlayerUnpickGround(PlayerProxy& player);
 
 	//Devuelve 0 si nadie eligio fuego.
-	uint32_t GetFirePlayerID();
-	uint32_t GetWaterPlayerID();
-	uint32_t GetAirPlayerID();
-	uint32_t GetGroundPlayerID();
+	PlayerProxy* GetFirePlayer();
+	PlayerProxy* GetWaterPlayer();
+	PlayerProxy * GetAirPlayer();
+	PlayerProxy * GetGroundPlayer();
 
 	bool GameEnabled();
 

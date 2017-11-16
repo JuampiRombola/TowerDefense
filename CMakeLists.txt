@@ -128,7 +128,7 @@ set(SOURCE_FILES_SERVER
         Server/src/GameModel/GameNotifications/GameOverGameNotification.cpp
         Server/include/GameModel/GameNotifications/GameOverGameNotification.h
         Server/src/GameModel/GameNotifications/ProjectileFiredGameNotification.cpp
-        Server/include/GameModel/GameNotifications/ProjectileFiredGameNotification.h)
+        Server/include/GameModel/GameNotifications/ProjectileFiredGameNotification.h Server/src/GameModel/ClientCooldownManager.cpp Server/include/GameModel/ClientCooldownManager.h)
 
 set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp

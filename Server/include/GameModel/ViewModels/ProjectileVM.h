@@ -5,8 +5,7 @@
 
 struct ProjectileVM {
   SPELL_TYPE type;
-  uint distanceToCover;
-  uint distanceCovered;
+  uint flight_duration_ms;
   uint fromXpos;
   uint fromYpos;
   uint toXpos;

@@ -22,6 +22,7 @@
 #include "../../include/GameModel/GameNotifications/UnitCreatedGameNotification.h"
 #include "../../include/GameModel/GameNotifications/GameOverGameNotification.h"
 #include "../../include/GameModel/GameNotifications/UnitDiedGameNotification.h"
+#include "../../include/GameModel/Commands/CastSpellCommand.h"
 
 TowerDefenseGame::TowerDefenseGame(uint gameId,
 	ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> playersInGame) :
@@ -33,7 +34,7 @@ TowerDefenseGame::TowerDefenseGame(uint gameId,
 {
 	std::string ss("config.yaml");
 	GameCfg = new GameConfiguration(ss);
-
+    _clientCooldownManager = new ClientCooldownManager(*GameCfg);
 //	mv->createTower(1, TORRE_TIERRA, 2, 0);
 //	mv->createTower(2, TORRE_AIRE, 2, 2);
 //	mv->createTower(3, TORRE_FUEGO, 1, 4);
@@ -53,6 +54,7 @@ TowerDefenseGame::~TowerDefenseGame()
 		delete *it;
 
 	delete GameCfg;
+    delete _clientCooldownManager;
 }
 
 
@@ -130,15 +132,7 @@ void TowerDefenseGame::_SpawnEspectro(){
 }
 
 void TowerDefenseGame::_SpawnRandomEnemy(){
-	//Por ahora solo tengo demonios verdes.
-	//aca iria la logica de que bicho sacar de manera random
-
-	// Para spawnear tiene que haber algun spawntile
-	// como lo elegimos el politica del juego
-	// por ahora agarro uno random :P
-
 	uint random_variable = (uint) std::rand() % 6;
-
 	switch (random_variable){
 		case 0:
 			_SpawnAbmonible();
@@ -165,6 +159,87 @@ void TowerDefenseGame::_SpawnRandomEnemy(){
 void TowerDefenseGame::QueueCommand(Command* command){
 	std::lock_guard<std::mutex> lock(_commandQueueMutex);
 	_commands.push(command);
+}
+
+void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_TYPE type, uint32_t x, uint32_t y){
+	//
+    switch(type){
+        case SPELL_GRIETA:
+            if (&player != _groundPlayer)
+                return;
+            if (!_clientCooldownManager->IsSpellReady(SPELL_GRIETA))
+				return;
+            break;
+        case SPELL_TORNADO:
+            if (&player != _airPlayer)
+                return;
+			if (!_clientCooldownManager->IsSpellReady(SPELL_TORNADO))
+				return;
+            break;
+        case SPELL_VENTISCA:
+            if (&player != _waterPlayer)
+                return;
+			if (!_clientCooldownManager->IsSpellReady(SPELL_VENTISCA))
+				return;
+            break;
+        case SPELL_CONGELACION:
+            if (&player != _waterPlayer)
+                return;
+			if (!_clientCooldownManager->IsSpellReady(SPELL_CONGELACION))
+				return;
+            break;
+        case SPELL_RAYO:
+            if (&player != _airPlayer)
+                return;
+			if (!_clientCooldownManager->IsSpellReady(SPELL_RAYO))
+				return;
+            break;
+        case SPELL_METEORITO:
+            if (&player != _firePlayer)
+                return;
+			if (!_clientCooldownManager->IsSpellReady(SPELL_METEORITO))
+				return;
+            break;
+        case SPELL_FIREWALL:
+            if (&player != _firePlayer)
+                return;
+			if (!_clientCooldownManager->IsSpellReady(SPELL_FIREWALL))
+				return;
+            break;
+        case SPELL_TERRAFORMING:
+            if (&player != _groundPlayer)
+                return;
+			if (!_clientCooldownManager->IsSpellReady(SPELL_TERRAFORMING))
+				return;
+            break;
+
+    }
+
+	QueueCommand(new CastSpellCommand(type, x, y));
+}
+
+void TowerDefenseGame::HandleClientBuildTowerCommand(PlayerProxy& player, SPELL_TYPE spelltype, uint32_t x, uint32_t y ){
+
+
+
+	switch(spelltype){
+		case SPELL_TYPE_GROUND:
+			if (_groundPlayer == &player && _clientCooldownManager->IsTowerPlacementReady(spelltype))
+				QueueCommand(new BuildTowerCommand(Ground , x, y));
+			break;
+		case SPELL_TYPE_FIRE:
+			if (_firePlayer == &player && _clientCooldownManager->IsTowerPlacementReady(spelltype))
+				QueueCommand(new BuildTowerCommand(Fire , x, y));
+			break;
+		case SPELL_TYPE_AIR:
+			if (_airPlayer == &player && _clientCooldownManager->IsTowerPlacementReady(spelltype))
+				QueueCommand(new BuildTowerCommand(Air , x, y));
+			break;
+		case SPELL_TYPE_WATER:
+			if (_waterPlayer == &player && _clientCooldownManager->IsTowerPlacementReady(spelltype))
+				QueueCommand(new BuildTowerCommand(Water , x, y));
+			break;
+	}
 }
 
 /*
@@ -253,8 +328,13 @@ bool TowerDefenseGame::Ended(){
 	return _ended;
 }
 
-void TowerDefenseGame::Run(){
-	_thread = std::thread(&TowerDefenseGame::_Run, this);
+void TowerDefenseGame::Run(PlayerProxy* fireplayer, PlayerProxy* airplayer, PlayerProxy* waterplayer, PlayerProxy* groundplayer){
+	_airPlayer = airplayer;
+    _waterPlayer = waterplayer;
+    _groundPlayer = groundplayer;
+    _firePlayer = fireplayer;
+
+    _thread = std::thread(&TowerDefenseGame::_Run, this);
 }
 
 void TowerDefenseGame::Stop(){
@@ -266,7 +346,7 @@ void TowerDefenseGame::Stop(){
 void TowerDefenseGame::_Run()
 {
 	static uint clockFrequency = 100;
-    std::this_thread::sleep_for (std::chrono::milliseconds(20000));
+    std::this_thread::sleep_for (std::chrono::milliseconds(10000));
     unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
 	unsigned long long timestamp = 0;
 	unsigned long long delta = 0;

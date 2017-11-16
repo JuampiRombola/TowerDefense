@@ -20,6 +20,7 @@ protected:
 	double _experience;
 	uint _damage;
 	uint _upgradeLevel;
+	uint _projectile_ms_over_tile;
 
 	Projectile*  _Fire(EnviormentUnit* target); 
 	bool _CanFire(); 
@@ -27,7 +28,7 @@ protected:
 
 	virtual Projectile* _BuildProjectile(PathTile* target) = 0;
 public:
-	Tower(uint cooldown_ms, uint range, uint damage, SolidGroundTile* position, Map* map);
+	Tower(uint cooldown_ms, uint range, uint damage, SolidGroundTile* position, Map* map, uint projectile_ms_over_tile);
 	virtual ~Tower();
 	Projectile* Step(); 
 	virtual void PrintDebug() = 0;

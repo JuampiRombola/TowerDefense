@@ -29,7 +29,7 @@ void ProjectileFiredGameNotification::Notify(){
         p->SendInt32(tox);
         uint32_t toy = vm.toYpos;
         p->SendInt32(toy);
-        uint32_t delay_ms = 500;
+        uint32_t delay_ms = vm.flight_duration_ms;
         p->SendInt32(delay_ms);
         uint8_t spelltype = vm.type;
         p->SendByte(spelltype);

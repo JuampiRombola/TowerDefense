@@ -12,8 +12,10 @@
 #include "../../../include/GameModel/ViewModels/TowerVM.h"
 
 
-GroundTower::GroundTower(uint cooldown_sec, uint range, uint damage, SolidGroundTile* position, Map* map)
-: Tower(cooldown_sec, range, damage, position, map) {}
+GroundTower::GroundTower(uint cooldown_sec, uint range,
+						 uint damage, SolidGroundTile* position, Map* map,
+						uint projectile_ms_over_tile)
+: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile) {}
 
 GroundTower::~GroundTower(){}
 
@@ -24,7 +26,7 @@ void GroundTower::PrintDebug(){
 }
 
 Projectile* GroundTower::_BuildProjectile(PathTile* target){
-	return new GroundProjectile(this, target, 10);
+	return new GroundProjectile(this, target, _damage, _projectile_ms_over_tile);
 }
 
 bool GroundTower::Upgrade(const YAML::Node& cfg, UpgradeType type){

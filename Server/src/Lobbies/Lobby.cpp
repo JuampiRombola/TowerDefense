@@ -33,6 +33,9 @@ uint Lobby::GUID(){
 }
 
 void Lobby::PlayerIsReady(PlayerProxy &player) {
+	if (_waterPlayer == nullptr || _firePlayer == nullptr || _airPlayer == nullptr || _groundPlayer == nullptr)
+		return;
+
 	std::vector<PlayerProxy*> playersAlreadyWithSpell = GetPlayersInLobbyWithSomeSpellSet();
 	if (std::find(playersAlreadyWithSpell.begin(), playersAlreadyWithSpell.end(), &player) == playersAlreadyWithSpell.end()){
 		//El jugador esta listo pero no eligio spell
@@ -42,13 +45,9 @@ void Lobby::PlayerIsReady(PlayerProxy &player) {
 	std::lock_guard<std::mutex> lock3(_playerSpellsSlotsMutex);
 
 	auto it = std::find(_readyPlayers.begin(), _readyPlayers.end(), &player);
-	if (it == _readyPlayers.end())
-		_readyPlayers.push_back(&player);
-	else
+	if (it != _readyPlayers.end())
 		return;
-
-
-
+	_readyPlayers.push_back(&player);
 	if (_readyPlayers.size() == playersAlreadyWithSpell.size()){
 		for (auto it = playersAlreadyWithSpell.begin(); it != playersAlreadyWithSpell.end(); it++){
 			_playingPlayers.push_back(*it);
@@ -59,7 +58,6 @@ void Lobby::PlayerIsReady(PlayerProxy &player) {
 		_gameEnabled = true;
 		_notifications.Queue(new GameStartedNotification(*this));
 	}
-
 }
 
 bool Lobby::GameEnabled(){
@@ -136,6 +134,8 @@ void Lobby::PlayerLeave(PlayerProxy& player){
 	_players.erase(it);
 	_notifications.Queue(new LeftLobbyNotification(player));
 	_notifications.Queue(new PlayerLeftLobbyNotification(*this, p->GUID()));
+
+	std::lock_guard<std::mutex> lock1(_playerSpellsSlotsMutex);
 
 	if (_firePlayer == &player){
 		_firePlayer = nullptr;
@@ -252,27 +252,19 @@ void Lobby::PlayerUnpickGround(PlayerProxy& player){
 	_notifications.Queue(new PlayerUnpickedSpellNotification(player, *this, SPELL_TYPE_GROUND));
 }
 
-uint32_t Lobby::GetFirePlayerID(){
+PlayerProxy * Lobby::GetFirePlayer(){
 	std::lock_guard<std::mutex> lock(_playerSpellsSlotsMutex);
-	if (_firePlayer != nullptr)
-		return _firePlayer->GUID();
-	return 0;
+	return _firePlayer;
 }
-uint32_t Lobby::GetWaterPlayerID(){
+PlayerProxy * Lobby::GetWaterPlayer(){
 	std::lock_guard<std::mutex> lock(_playerSpellsSlotsMutex);
-	if (_waterPlayer != nullptr)
-		return _waterPlayer->GUID();
-	return 0;
+	return _waterPlayer;
 }
-uint32_t Lobby::GetAirPlayerID(){
+PlayerProxy * Lobby::GetAirPlayer(){
 	std::lock_guard<std::mutex> lock(_playerSpellsSlotsMutex);
-	if (_airPlayer != nullptr)
-		return _airPlayer ->GUID();
-	return 0;
+	return _airPlayer;
 }
-uint32_t Lobby::GetGroundPlayerID(){
+PlayerProxy * Lobby::GetGroundPlayer(){
 	std::lock_guard<std::mutex> lock(_playerSpellsSlotsMutex);
-	if (_groundPlayer != nullptr)
-		return _groundPlayer->GUID();
-	return 0;
+	return _groundPlayer;
 }

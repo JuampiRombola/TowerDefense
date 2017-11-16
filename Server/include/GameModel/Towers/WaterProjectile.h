@@ -16,7 +16,8 @@ private:
 protected:
 	double _OnImpact();
 public:
-	WaterProjectile(WaterTower* origin, PathTile* target, uint hitpoints, uint slowDuration_sec, uint slowPercent);
+	WaterProjectile(WaterTower* origin, PathTile* target,
+					uint hitpoints, uint slowDuration_sec, uint slowPercent, uint speed_ms);
 	~WaterProjectile();
 	ProjectileVM GetViewModel();
 };

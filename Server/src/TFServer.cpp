@@ -22,40 +22,26 @@ _lobbyManager(_notifications), _server(service), _notifications(), _gameNotifica
 }
 
 TFServer::~TFServer(){
-	std::cout << "SHUTDOWN TF SERVER 1\n" << std::flush;
 	_Stop();
-	std::cout << "SHUTDOWN TF SERVER2 \n" << std::flush;
-
 	_notifications.Release();
-	std::cout << "SHUTDOWN TF SERVER3 \n" << std::flush;
-
 	_gameNotifications.Release();
-	std::cout << "SHUTDOWN TF SERVER 4\n" << std::flush;
 
 	if (_acceptorThread.joinable())
 		_acceptorThread.join();
-	std::cout << "SHUTDOWN TF SERVER 5\n" << std::flush;
 
 	if (_notificatorThread.joinable())
 		_notificatorThread.join();
-	std::cout << "SHUTDOWN TF SERVER6 \n" << std::flush;
 
 	if (_gameNotificatorThread.joinable())
 		_gameNotificatorThread.join();
-	std::cout << "SHUTDOWN TF SERVER 7\n" << std::flush;
 
 	for (auto it = _playerProxies.begin(); it != _playerProxies.end(); ++it)
 		delete (*it);
-	std::cout << "SHUTDOWN TF SERVER 8\n" << std::flush;
 
 	for (auto it = _connectionHandlers.begin(); it != _connectionHandlers.end(); ++it){
 		if ((*it).joinable())
 			(*it).join();
 	}
-	std::cout << "SHUTDOWN TF SERVER 9\n" << std::flush;
-
-
-
 }
 
 void TFServer::_AcceptConnections(){
@@ -168,28 +154,18 @@ void TFServer::_HandleGameCommand(PlayerProxy& player){
 		uint8_t spelltype = player.RecieveByte();
 		uint32_t x = player.RecieveInt32();
 		uint32_t y = player.RecieveInt32();
-		game->QueueCommand(new CastSpellCommand((CAST_SPELL_TYPE) spelltype, x, y));
+
+		game->HandleClientSpellCommand(player, (CAST_SPELL_TYPE) spelltype, x, y );
+
     }
 
 	if (ins == CLIENT_CREATE_TOWER){
 		uint8_t spelltype = player.RecieveByte();
 		uint32_t x = player.RecieveInt32();
 		uint32_t y = player.RecieveInt32();
-		std::cout << "CLIENT CREATED TOWER x: "<< x << " y: "<< y << " \n " << std::flush;
-		switch(spelltype){
-			case SPELL_TYPE_GROUND:
-				game->QueueCommand(new BuildTowerCommand(Ground , x, y));
-				break;
-			case SPELL_TYPE_FIRE:
-				game->QueueCommand(new BuildTowerCommand(Fire , x, y));
-				break;
-			case SPELL_TYPE_AIR:
-				game->QueueCommand(new BuildTowerCommand(Air , x, y));
-				break;
-			case SPELL_TYPE_WATER:
-				game->QueueCommand(new BuildTowerCommand(Water , x, y));
-				break;
-		}
+		game->HandleClientBuildTowerCommand(player, (SPELL_TYPE) spelltype, x, y);
+
+
 	}
 }
 
@@ -202,7 +178,7 @@ void TFServer::_LaunchGame(Lobby& lobby){
 		_player2game[(*it)] = game;
 	}
 
-	game->Run();
+	game->Run(lobby.GetFirePlayer(), lobby.GetAirPlayer(), lobby.GetWaterPlayer(), lobby.GetGroundPlayer());
 }
 
 

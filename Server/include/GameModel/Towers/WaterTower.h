@@ -19,7 +19,7 @@ protected:
 	Projectile* _BuildProjectile(PathTile* target);
 public:
 	WaterTower(uint cooldown_sec, uint range, uint damage, uint slowPercent, uint slowDuration_sec,
-	 SolidGroundTile* position, Map* map);
+	 SolidGroundTile* position, Map* map, uint projectile_ms_over_tile);
 	~WaterTower();
 	void PrintDebug();
 	bool Upgrade(const YAML::Node& cfg, UpgradeType type);

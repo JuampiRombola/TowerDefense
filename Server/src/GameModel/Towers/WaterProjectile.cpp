@@ -9,8 +9,8 @@
 #include "../../../include/GameModel/ViewModels/ProjectileVM.h"
 
 WaterProjectile::WaterProjectile
-(WaterTower* origin, PathTile* target, uint hitpoints, uint slowDuration_sec, uint slowPercent) :
- Projectile(origin, target, 500, hitpoints), _slowDuration_sec(slowDuration_sec), _slowPercent(slowPercent)
+(WaterTower* origin, PathTile* target, uint hitpoints, uint slowDuration_sec, uint slowPercent, uint speed_ms) :
+ Projectile(origin, target, speed_ms, hitpoints), _slowDuration_sec(slowDuration_sec), _slowPercent(slowPercent)
 {
 
 }
@@ -55,8 +55,7 @@ double WaterProjectile::_OnImpact(){
 ProjectileVM WaterProjectile::GetViewModel(){
 	ProjectileVM vm;
 	vm.type = SPELL_TYPE_WATER;
-	vm.distanceToCover = _distance;
-	vm.distanceCovered = _distanceCovered;
+	vm.flight_duration_ms = _distance * _ms_over_tile;
 	vm.fromXpos = _origin->GetPosition()->GetXPos();
 	vm.fromYpos = _origin->GetPosition()->GetYPos();
 	vm.toXpos = _target->GetXPos();

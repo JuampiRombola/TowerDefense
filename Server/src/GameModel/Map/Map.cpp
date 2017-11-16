@@ -302,8 +302,6 @@ void Map::Step(TowerDefenseGame& game){
 					_projectiles.push_back(p);
 					ProjectileVM vm = p->GetViewModel();
 					game.notifications.Queue(new ProjectileFiredGameNotification(vm, game.GetPlayers()));
-					std::cout << "TOWER FIRED @x: " << vm.fromXpos << ", @y: " << vm.fromYpos 
-                              << ", to x: " << vm.toXpos << ", to y: " << vm.toYpos << " \n" << std::flush;
 				}
 			} 
 		}
