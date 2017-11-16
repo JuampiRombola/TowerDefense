@@ -197,5 +197,47 @@ bool Editor::validate() {
         }
         ++hordaNro;
     }
+    if (map.getWidth() == 0) {
+        window.showErrorMessage("ERROR", "El ancho del mapa no puede ser cero");
+        return false;
+    }
+    if (map.getHeight() == 0) {
+        window.showErrorMessage("ERROR", "El alto del mapa no puede ser cero");
+        return false;
+    }
+    if (portales.empty()) {
+        window.showErrorMessage("ERROR", "El mapa no posee portales.");
+        return false;
+    }
+    std::set<std::pair<int, int>> pathSet = map.getPathsAsSet();
+    if (pathSet.empty()) {
+        window.showErrorMessage("ERROR", "El mapa no posee caminos.");
+        return false;
+    }
+    std::set<std::pair<int, int>> structureTileSet = map.getStructureTilesAsSet();
+    if (structureTileSet.empty()) {
+        window.showErrorMessage("ERROR", "El mapa no posee tierra firme.");
+        return false;
+    }
+    std::set<std::pair<int, int>> portalesEntrada;
+    std::set<std::pair<int, int>> portalesSalida;
+    for (auto &portal : portales) {
+        if (pathSet.count(
+                std::pair<int, int>(portal->getX(), portal->getY())) == 0) {
+            window.showErrorMessage("ERROR", "El portal que se encuentra en " +
+                                             std::to_string(portal->getX()) +
+                                             ", " +
+                                             std::to_string(portal->getY()) +
+                                             " debe estar sobre un camino.");
+            return false;
+        }
+        if (portal->getType() == "entrada")
+            portalesEntrada.emplace(portal->getX(), portal->getY());
+        else
+            portalesSalida.emplace(portal->getX(), portal->getY());
+    }
+    
+
+
     return true;
 }

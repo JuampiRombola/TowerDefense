@@ -155,3 +155,19 @@ std::string MapView::exportar() {
     }
     return mapToString.str();
 }
+
+std::set<std::pair<int, int>> MapView::getPathsAsSet() {
+    std::set<std::pair<int, int>> pathSet;
+    for (auto& pathTile : pathTiles) {
+        pathSet.emplace(pathTile.first, pathTile.second);
+    }
+    return pathSet;
+}
+
+std::set<std::pair<int, int>> MapView::getStructureTilesAsSet() {
+    std::set<std::pair<int, int>> structureTileSet;
+    for (auto& structureTile : structureTiles) {
+        structureTileSet.emplace(structureTile.first, structureTile.second);
+    }
+    return structureTileSet;
+}
