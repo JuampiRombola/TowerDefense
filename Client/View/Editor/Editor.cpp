@@ -4,9 +4,12 @@
 #include <ios>
 
 Editor::Editor(MapView &map, TextureLoader &textureLoader, Renderer &renderer,
-               std::string name) : superficie(PRADERA), map(map),
-                                   textureLoader(textureLoader),
-                                   renderer(renderer), nombre(name) {
+               std::string name, Window &window) : superficie(PRADERA),
+                                                   map(map),
+                                                   textureLoader(textureLoader),
+                                                   renderer(renderer),
+                                                   nombre(name),
+                                                   window(window) {
 };
 
 Editor::~Editor() {
@@ -47,8 +50,8 @@ void Editor::eliminarHorda(int hordaId) {
     hordas.erase(it);
 }
 
-unsigned int Editor::getCantidadEnemigosEnHorda(std::string enemigo, int
-hordaId) {
+unsigned int
+Editor::getCantidadEnemigosEnHorda(std::string enemigo, int hordaId) {
     for (auto &horda : hordas) {
         if (hordaId == horda.getId())
             return horda.getCantidadEnemigosDeTipo(enemigo);
@@ -57,12 +60,14 @@ hordaId) {
 }
 
 void Editor::exportar() {
+    if (!validate())
+        return;
     std::stringstream fileContent;
     fileContent << "nombre: " << nombre << "\n";
     fileContent << "superficie: " << superficie << "\n";
     fileContent << map.exportar();
     fileContent << "portales: \n";
-    for (auto& portal : portales) {
+    for (auto &portal : portales) {
         fileContent << " - tipo: " << portal->getType() << "\n";
         fileContent << "   x: " << portal->getX() << "\n";
         fileContent << "   y: " << portal->getY() << "\n";
@@ -174,4 +179,12 @@ void Editor::draw() {
     map.draw(ticks);
     for (auto &portal : portales)
         portal->draw(ticks);
+}
+
+bool Editor::validate() {
+    if (hordas.empty()) {
+        window.showErrorMessage("ERROR", "El mapa no posee hordas.");
+        return false;
+    }
+    return true;
 }
