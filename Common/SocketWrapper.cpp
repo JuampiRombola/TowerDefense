@@ -9,6 +9,8 @@
 SocketWrapper::SocketWrapper(int fd) :  _fd(fd) {}
 
 SocketWrapper::~SocketWrapper(){
+	std::cout << "BYTES SENT: " << _bytesSent << "\n" <<std::flush;
+	std::cout << "BYTES RECIEVED: " << _bytesRecieved << "\n" <<std::flush;
 	if (_fd > 0){
 		shutdown(_fd, SHUT_RDWR);
 		close(_fd);
@@ -31,7 +33,9 @@ bool SocketWrapper::Send(const char* buffer, size_t length){
 
 	if (sentBytes != length)
 		throw SocketConnectionException();
-	
+
+
+	_bytesSent +- sentBytes;
 	return true;
 }
 bool SocketWrapper::Recieve(char* buffer, size_t msgLen){
@@ -52,7 +56,8 @@ bool SocketWrapper::Recieve(char* buffer, size_t msgLen){
 
 	if (bytesRecieved != msgLen)
 		throw SocketConnectionException();
-	
+
+	_bytesRecieved += bytesRecieved;
 	return true;
 }
 

@@ -27,23 +27,13 @@ ClientCooldownManager::ClientCooldownManager(GameConfiguration& gameCfg)
      _groundTowerPlacedCooldown_sec = gameCfg.Cfg["towers"]["ground"]["place_cooldown_sec"].as<uint>();
 
      _rayoCooldown_sec = gameCfg.Cfg["spells"]["rayo"]["cast_cooldown_sec"].as<uint>();
-    std::cout << " CHAU 1" << std::flush;
-
     _ventiscaCooldown_sec = gameCfg.Cfg["spells"]["ventisca"]["cast_cooldown_sec"].as<uint>();
-
-    std::cout << " CHAU 2" << std::flush;
      _tornadoCooldown_sec = gameCfg.Cfg["spells"]["tornado"]["cast_cooldown_sec"].as<uint>();
-    std::cout << " CHAU 3" << std::flush;
      _firewallCooldown_sec = gameCfg.Cfg["spells"]["murodefuego"]["cast_cooldown_sec"].as<uint>();
-    std::cout << " CHAU4 " << std::flush;
      _meteoritoCooldown_sec = gameCfg.Cfg["spells"]["meteorito"]["cast_cooldown_sec"].as<uint>();
-    std::cout << " CHAU 5" << std::flush;
      _grietaCooldown_sec = gameCfg.Cfg["spells"]["grieta"]["cast_cooldown_sec"].as<uint>();
-    std::cout << " CHAU 6" << std::flush;
      _terraformingCooldown_sec = gameCfg.Cfg["spells"]["terraforming"]["cast_cooldown_sec"].as<uint>();
-    std::cout << " CHAU 7" << std::flush;
      _congelacionCooldown_sec = gameCfg.Cfg["spells"]["congelacion"]["cast_cooldown_sec"].as<uint>();
-    std::cout << " CHAU 8" << std::flush;
 }
 
 ClientCooldownManager::~ClientCooldownManager() {
