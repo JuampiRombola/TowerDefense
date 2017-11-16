@@ -37,6 +37,14 @@ unsigned int Horda::getCantidadEnemigosDeTipo(std::string enemigo) {
     return cantidadEnemigos[enemigo];
 }
 
+unsigned int Horda::getCantidadEnemigos() {
+    unsigned int cantidadTotal = 0;
+    for (std::pair<std::string, int> enemigo : cantidadEnemigos) {
+        cantidadTotal += enemigo.second;
+    }
+    return cantidadTotal;
+}
+
 void Horda::aumentarTiempo() {
     ++tiempo;
 }

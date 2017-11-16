@@ -18,6 +18,7 @@ public:
     void eliminarEnemigo(std::string enemigo);
     std::string exportar();
     unsigned int getCantidadEnemigosDeTipo(std::string enemigo);
+    unsigned int getCantidadEnemigos();
     void aumentarTiempo();
     void disminuirTiempo();
     int getTiempo();

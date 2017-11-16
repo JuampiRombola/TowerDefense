@@ -80,6 +80,7 @@ void Editor::exportar() {
     }
     File file(nombre + ".yaml");
     file.write(fileContent.str());
+    window.showErrorMessage("", "¡El mapa se exportó con éxito!");
 }
 
 void Editor::waitForPathTile() {
@@ -185,6 +186,16 @@ bool Editor::validate() {
     if (hordas.empty()) {
         window.showErrorMessage("ERROR", "El mapa no posee hordas.");
         return false;
+    }
+    int hordaNro = 1;
+    for (auto &horda : hordas) {
+        if (horda.getCantidadEnemigos() == 0) {
+            window.showErrorMessage("ERROR",
+                                    "La horda " + std::to_string(hordaNro) +
+                                    " no posee enemigos");
+            return false;
+        }
+        ++hordaNro;
     }
     return true;
 }
