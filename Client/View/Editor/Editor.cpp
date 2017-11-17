@@ -236,8 +236,75 @@ bool Editor::validate() {
         else
             portalesSalida.emplace(portal->getX(), portal->getY());
     }
-    
-
-
+    if (portalesEntrada.size() != portalesSalida.size()) {
+        window.showErrorMessage("ERROR", "La cantidad de portales de entrada "
+                "debe ser la misma que de salida.");
+        return false;
+    }
+    for (auto &portalEntrada : portalesEntrada) {
+        // Primero me fijo si el camino es de largo mayor a 1
+        std::set<std::pair<int, int>> posiblesAdyacentes;
+        posiblesAdyacentes.emplace(portalEntrada.first + 1,
+                                   portalEntrada.second);
+        posiblesAdyacentes.emplace(portalEntrada.first - 1,
+                                   portalEntrada.second);
+        posiblesAdyacentes.emplace(portalEntrada.first,
+                                   portalEntrada.second + 1);
+        posiblesAdyacentes.emplace(portalEntrada.first,
+                                   portalEntrada.second - 1);
+        std::set<std::pair<int, int>> adyacentes;
+        std::set_intersection(pathSet.begin(), pathSet.end(),
+                              posiblesAdyacentes.begin(),
+                              posiblesAdyacentes.end(),
+                              std::inserter(adyacentes, adyacentes.begin()));
+        if (adyacentes.size() != 1) {
+            window.showErrorMessage("ERROR", "Ocurrió un error al generar el "
+                    "camino. Recordá que: \n- No puede consistir de un solo "
+                    "tile\n- Debe empezar en un portal de salida y "
+                    "terminar en uno de llegada, sin cortarse, "
+                    "ramificarse ni juntarse.");
+            return false;
+        }
+        std::pair<int, int> tileAnterior;
+        std::pair<int, int> tileActual = portalEntrada;
+        std::pair<int, int> tileSiguiente = *(adyacentes.begin());
+        do {
+            // Valido que el tile tenga dos adyacentes. Por donde vengo, y el
+            // siguiente
+            tileAnterior = tileActual;
+            tileActual = tileSiguiente;
+            posiblesAdyacentes.clear();
+            adyacentes.clear();
+            posiblesAdyacentes.emplace(tileActual.first + 1,
+                                       tileActual.second);
+            posiblesAdyacentes.emplace(tileActual.first - 1,
+                                       tileActual.second);
+            posiblesAdyacentes.emplace(tileActual.first,
+                                       tileActual.second + 1);
+            posiblesAdyacentes.emplace(tileActual.first,
+                                       tileActual.second - 1);
+            std::set_intersection(pathSet.begin(), pathSet.end(),
+                                  posiblesAdyacentes.begin(),
+                                  posiblesAdyacentes.end(),
+                                  std::inserter(adyacentes, adyacentes.begin()));
+            for (auto& tileAdyacente : adyacentes) {
+                if (tileAdyacente != tileAnterior)
+                    tileSiguiente = tileAdyacente;
+            }
+        } while (adyacentes.size() == 2);
+        // Si tiene mas de dos adyacentes, se ramificó o se juntó. Error.
+        if (adyacentes.size() > 2) {
+            window.showErrorMessage("ERROR", "El camino no debe ramificarse "
+                    "ni juntarse.");
+            return false;
+        }
+        // Si no tiene más de dos adyacentes, terminó el camino. Tengo que
+        // estar sobre un portal de salida.
+        if (portalesSalida.count(tileActual) == 0) {
+            window.showErrorMessage("ERROR", "El camino debe finalizar en un "
+                    "portal de salida.");
+            return false;
+        }
+    }
     return true;
 }
