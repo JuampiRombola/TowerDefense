@@ -71,14 +71,15 @@
 #define HORDA_QUANTITY_PADDING HORDA_MODIFY_QUANTITY_PADDING + HORDA_MODIFY_QUANTITY_SIZE
 #define HORDA_TOTAL_ENEMIES 6
 #define HORDA_BUTTONS_PER_ENEMY 4
-#define HORDA_TOTAL_BUTTONS HORDA_BUTTONS_PER_ENEMY * (HORDA_TOTAL_ENEMIES + 1)
+#define HORDA_TOTAL_BUTTONS HORDA_BUTTONS_PER_ENEMY * (HORDA_TOTAL_ENEMIES + 1) + 1
  //El 1 es por los botones de tiempo
+ // El segundo 1 es por el botón de borrar horda
 
 #define ABMONIBLE_KEY "abmonible"
 #define ESPECTRO_KEY "espectro"
 #define DEMONIO_VERDE_KEY "demonio_verde"
 #define HALCON_SANGRIENTO_KEY "halcon_sangriento"
-#define NO_MUERTO_KEY "no_muerto_key"
+#define NO_MUERTO_KEY "no_muerto"
 #define HOMBRE_CABRA_KEY "hombre_cabra"
 
 #define SCROLL_UP_BUTTON_X 450
