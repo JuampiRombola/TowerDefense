@@ -16,7 +16,7 @@ public:
                             MousePosition &mousePosition, Renderer &renderer,
                             Editor &editor,
                             std::function<void(int)> deleteButtonsFn);
-    void draw(int number);
+    void draw(int number, int padding);
     bool belongsToHorda(int hordaNro);
 };
 

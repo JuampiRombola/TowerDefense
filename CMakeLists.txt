@@ -346,7 +346,11 @@ set(SOURCE_FILES_EDITOR
         Client/View/Model/PortalSalidaView.cpp
         Client/View/Model/PortalSalidaView.h
         Client/View/Model/TowerView.cpp
-        Client/View/Model/TowerView.h)
+        Client/View/Model/TowerView.h
+        Client/View/Editor/AumentarPaddingButton.cpp
+        Client/View/Editor/AumentarPaddingButton.h
+        Client/View/Editor/DisminuirPaddingButton.cpp
+        Client/View/Editor/DisminuirPaddingButton.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)

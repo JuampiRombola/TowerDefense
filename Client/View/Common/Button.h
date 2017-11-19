@@ -20,7 +20,7 @@ public:
 
     virtual ~Button();
 
-    virtual void draw(int number);
+    virtual void draw(int number, int padding);
 
     bool isClicked();
 

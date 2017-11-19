@@ -4,12 +4,13 @@
 #include "AgregarTierraFirmeButton.h"
 #include "AgregarPortalEntradaButton.h"
 #include "AgregarPortalSalidaButton.h"
+#include "DisminuirPaddingButton.h"
+#include "AumentarPaddingButton.h"
 
-EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
-                 TextureLoader &textureLoader) : mousePosition(mousePosition),
-                                                 renderer(renderer),
-                                                 editor(editor),
-                                                 textureLoader(textureLoader) {}
+EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer,
+                             Editor &editor, TextureLoader &textureLoader)
+        : mousePosition(mousePosition), padding(0), renderer(renderer),
+          editor(editor), textureLoader(textureLoader) {}
 
 
 EditorButtons::~EditorButtons() {
@@ -20,7 +21,7 @@ EditorButtons::~EditorButtons() {
 void EditorButtons::draw() {
     int i = 0;
     for (Image *image : images) {
-        image->draw(i);
+        image->draw(i, padding);
         i++;
     }
 }
@@ -73,49 +74,57 @@ void EditorButtons::addInitialButtons() {
 
     Image *button = new NuevaHordaButton(
             textureLoader.getTexture(AGREGAR_HORDA_BTN), mousePosition,
-            renderer, editor, std::bind(&EditorButtons::addEnemigosButton, this, _1));
+            renderer, editor,
+            std::bind(&EditorButtons::addEnemigosButton, this, _1));
     images.push_back(button);
 
-    Image *altoIcon = new Image(ALTO_BUTTON_X, ALTO_BUTTON_Y,
-                                ALTO_BUTTON_WIDTH, ALTO_BUTTON_HEIGHT,
+    Image *altoIcon = new Image(ALTO_BUTTON_X, ALTO_BUTTON_Y, ALTO_BUTTON_WIDTH,
+                                ALTO_BUTTON_HEIGHT,
                                 textureLoader.getTexture(ALTO_MAPA), renderer);
     images.push_back(altoIcon);
 
-    Image *aumentarAlto = new AumentarAltoMapaButton(textureLoader.getTexture
-                                                            (ENEMIGO_SUMA),
-                                                    mousePosition,
-                                                    renderer, editor);
+    Image *aumentarAlto = new AumentarAltoMapaButton(
+            textureLoader.getTexture(ENEMIGO_SUMA), mousePosition, renderer,
+            editor);
     images.push_back(aumentarAlto);
 
-    Image *disminuirAlto = new DisminuirAltoMapaButton(textureLoader.getTexture
-                                                               (ENEMIGO_RESTA),
-                                                       mousePosition,
-                                                       renderer, editor);
+    Image *disminuirAlto = new DisminuirAltoMapaButton(
+            textureLoader.getTexture(ENEMIGO_RESTA), mousePosition, renderer,
+            editor);
     images.push_back(disminuirAlto);
 
     Image *anchoIcon = new Image(ANCHO_BUTTON_X, ANCHO_BUTTON_Y,
-                                ANCHO_BUTTON_WIDTH, ANCHO_BUTTON_HEIGHT,
-                                textureLoader.getTexture(ANCHO_MAPA), renderer);
+                                 ANCHO_BUTTON_WIDTH, ANCHO_BUTTON_HEIGHT,
+                                 textureLoader.getTexture(ANCHO_MAPA),
+                                 renderer);
     images.push_back(anchoIcon);
 
 
-    Image *aumentarAncho = new AumentarAnchoMapaButton(textureLoader.getTexture
-                                                               (ENEMIGO_SUMA),
-                                                       mousePosition,
-                                                       renderer, editor);
+    Image *aumentarAncho = new AumentarAnchoMapaButton(
+            textureLoader.getTexture(ENEMIGO_SUMA), mousePosition, renderer,
+            editor);
     images.push_back(aumentarAncho);
 
-    Image *disminuirAncho = new DisminuirAnchoMapaButton(textureLoader.getTexture
-                                                                 (ENEMIGO_RESTA),
-                                                         mousePosition,
-                                                         renderer, editor);
+    Image *disminuirAncho = new DisminuirAnchoMapaButton(
+            textureLoader.getTexture(ENEMIGO_RESTA), mousePosition, renderer,
+            editor);
     images.push_back(disminuirAncho);
 
-    Image *saveButton = new GuardarButton(textureLoader.getTexture
-                                                  (SAVE_BUTTON),
-                                          mousePosition,
-                                          renderer, editor);
+    Image *saveButton = new GuardarButton(textureLoader.getTexture(SAVE_BUTTON),
+                                          mousePosition, renderer, editor);
     images.push_back(saveButton);
+
+    Image *scrollUp = new AumentarPaddingButton(padding,
+                                                textureLoader.getTexture(
+                                                        ARROW_UP_EDITOR),
+                                                mousePosition, renderer);
+    images.push_back(scrollUp);
+
+    Image *scrollDown = new DisminuirPaddingButton(padding,
+                                                   textureLoader.getTexture(
+                                                           ARROW_DOWN_EDITOR),
+                                                   mousePosition, renderer);
+    images.push_back(scrollDown);
 }
 
 void EditorButtons::addEnemigosButton(int horda) {
@@ -138,7 +147,8 @@ void EditorButtons::addEnemigosButton(int horda) {
     images.push_back(eliminarHordaButton);*/
 }
 
-void EditorButtons::addEnemigoButton(int horda, std::string enemigoKey, int texture) {
+void EditorButtons::addEnemigoButton(int horda, std::string enemigoKey,
+                                     int texture) {
     Image *enemigoImg = new EnemigoImage(horda,
                                          textureLoader.getTexture(texture),
                                          renderer);
@@ -165,25 +175,29 @@ void EditorButtons::addEnemigoButton(int horda, std::string enemigoKey, int text
 }
 
 void EditorButtons::addTiempoEntreHorda(int horda) {
-    Image *clockImg = new EnemigoImage(horda, textureLoader.getTexture
-            (CLOCK_EDITOR), renderer);
+    Image *clockImg = new EnemigoImage(horda,
+                                       textureLoader.getTexture(CLOCK_EDITOR),
+                                       renderer);
     images.push_back(clockImg);
 
-    Image *aumentarTiempo = new AumentarTiempoButton(horda, textureLoader.getTexture(
-            ENEMIGO_SUMA),
+    Image *aumentarTiempo = new AumentarTiempoButton(horda,
+                                                     textureLoader.getTexture(
+                                                             ENEMIGO_SUMA),
                                                      mousePosition, renderer,
                                                      editor);
     images.push_back(aumentarTiempo);
 
-    Image *disminuirTiempo = new DisminuirTiempoButton(horda, textureLoader.getTexture(
-            ENEMIGO_RESTA),
+    Image *disminuirTiempo = new DisminuirTiempoButton(horda,
+                                                       textureLoader.getTexture(
+                                                               ENEMIGO_RESTA),
                                                        mousePosition, renderer,
                                                        editor);
     images.push_back(disminuirTiempo);
 
     Image *contadorTiempo = new ContadorTiempoInput(horda,
-                                                    textureLoader.getTexture(FONT),
-                                                    renderer, editor);
+                                                    textureLoader.getTexture(
+                                                            FONT), renderer,
+                                                    editor);
     images.push_back(contadorTiempo);
 }
 
@@ -203,7 +217,7 @@ void EditorButtons::deleteButtonsOfHorda(int horda) {
     }
     std::cout << "Termino de deletear\n";*/
     auto it = images.begin();
-    for (auto& image : images) {
+    for (auto &image : images) {
         if (image->belongsToHorda(horda)) {
             delete *it;
             it = images.erase(it);

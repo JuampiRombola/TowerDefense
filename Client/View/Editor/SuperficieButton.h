@@ -15,7 +15,7 @@ public:
                          SDL_Texture *texture,
                          MousePosition &mousePosition,
                          Renderer &renderer, Editor &editor);
-    void draw(int number);
+    void draw(int number, int padding);
 };
 
 

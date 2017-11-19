@@ -54,7 +54,7 @@ bool GameButtons::isAnyClicked() {
 
 void GameButtons::draw() {
     for (auto &tower : towers)
-        tower->draw(0);
+        tower->draw(0, 0);
     for (auto &spell : spells)
-        spell->draw(0);
+        spell->draw(0, 0);
 }

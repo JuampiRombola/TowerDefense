@@ -12,10 +12,10 @@ NewTowerButton::NewTowerButton(Window &w, int element, int &cmd,
           transparency(button.x, button.y, button.w, button.h,
                        transp, renderer) {}
 
-void NewTowerButton::draw(int number) {
-    Button::draw(0);
+void NewTowerButton::draw(int number, int padding) {
+    Button::draw(0, 0);
     if (!this->wasLastClick())
-        transparency.draw(0);
+        transparency.draw(0, 0);
 }
 
 void NewTowerButton::click() {
