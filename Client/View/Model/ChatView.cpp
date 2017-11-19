@@ -2,7 +2,7 @@
 #include <SDL2/SDL_ttf.h>
 #include "ChatView.h"
 
-#define FONT_PATH "gillsansmt.ttf"
+#define FONT_PATH "../Client/View/gillsansmt.ttf"
 #define FONT_SIZE 18
 #define MAX_LENGTH 40
 
