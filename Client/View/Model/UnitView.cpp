@@ -60,7 +60,8 @@ void UnitView::draw(Uint32 ticks) {
         spriteWalking.setTimePerSprite(timePerPixel);
         spriteWalking.nextAndDraw(ticks);
     } else if (currentState == DYING) {
-        if (spriteDying.getCurrentSprite() == cfg["DYING_COLUMNS"].as<int>())
+        if ((spriteDying.getCurrentSprite() + 1)
+            == cfg["DYING_COLUMNS"].as<int>())
             currentState = DEAD;
         spriteDying.nextAndDraw(ticks);
     }
