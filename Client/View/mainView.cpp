@@ -4,6 +4,7 @@
 #include "Common/SpriteNamesConfig.h"
 #include "Model/ModelView.h"
 #include "Model/HudView.h"
+#include "Model/ChatView.h"
 
 #define TITLE "Tower Defense"
 
@@ -135,6 +136,8 @@ int main(int argc, char** argv) {
     hudView.addElementalButtons(ELEMENTAL_WATER);
     hudView.addElementalButtons(ELEMENTAL_AIR);
 
+    ChatView chat(window, renderer);
+
     Uint32 t1;
     Uint32 t2;
     Uint32 s = 1000 / FPS;
@@ -149,7 +152,8 @@ int main(int argc, char** argv) {
         while(SDL_PollEvent(&event)) {
 
             switch (event.type) {
-                case SDL_QUIT: quit = true; break;
+                case SDL_QUIT:
+                    quit = true; break;
                 case SDL_MOUSEBUTTONDOWN:
                     hudView.getMouseState();
                     break;
@@ -162,37 +166,36 @@ int main(int argc, char** argv) {
                     else
                         renderer.zoomOut();
                     break;
+                case SDL_TEXTINPUT: {
+                    if (chat.isActive()) {
+                        std::string text(event.text.text);
+                        chat.input(text);
+                    }
+                    break;
+                }
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
-                        case SDLK_ESCAPE: quit = true; break;
-                        case SDLK_i: renderer.zoomIn(); break;
-                        case SDLK_o: renderer.zoomOut(); break;
-                        case SDLK_d: modelView.killUnit(1); break;
-                        case SDLK_s: modelView.createShot(
-                                    DISPARO_TIERRA, 2, 0, 0, 0, 500);break;
-                        case SDLK_a: modelView.createSpell(
-                                    FIREWALL, 1, 1, 5000);break;
-                        case SDLK_q: modelView.createUnit(
-                                    ++idUnit, ABOMINABLE, 0, 0, 1, 0, 3000);
+                        case SDLK_RETURN:
+                            if (chat.isActive())
+                                chat.disable();
+                            else
+                                chat.enable();
                             break;
-                        case SDLK_z: modelView.moveUnit(1, 1, 0, 1, 1, 3000);
+                        case SDLK_BACKSPACE:
+                            if (chat.isActive())
+                                chat.erase();
                             break;
-                        case SDLK_x: modelView.moveUnit(1, 1, 1, 2, 1, 3000);
-                            break;
-                        case SDLK_c: modelView.moveUnit(1, 2, 1, 3, 1, 3000);
-                            break;
-                        case SDLK_v: modelView.moveUnit(1, 3, 1, 3, 2, 3000);
-                            break;
-                        case SDLK_b: modelView.moveUnit(1, 3, 2, 3, 3, 3000);
-                            break;
-                        case SDLK_n: modelView.moveUnit(1, 3, 3, 2, 3, 3000);
-                            break;
-                        case SDLK_m: modelView.moveUnit(1, 2, 3, 2, 4, 3000);
-                            break;
-                        case SDLK_LEFT: renderer.updateCamera(-1, 0); break;
-                        case SDLK_RIGHT: renderer.updateCamera(1, 0); break;
-                        case SDLK_UP: renderer.updateCamera(0, -1); break;
-                        case SDLK_DOWN: renderer.updateCamera(0, 1); break;
+                        case SDLK_ESCAPE:
+                            quit = true; break;
+                        case SDLK_LEFT:
+                            renderer.updateCamera(-1, 0); break;
+                        case SDLK_RIGHT:
+                            renderer.updateCamera(1, 0); break;
+                        case SDLK_UP:
+                            renderer.updateCamera(0, -1); break;
+                        case SDLK_DOWN:
+                            renderer.updateCamera(0, 1); break;
+                        default: break;
                     }
             }
             hudView.doMouseAction();
@@ -201,6 +204,7 @@ int main(int argc, char** argv) {
 
         modelView.draw(SDL_GetTicks());
         hudView.draw();
+        chat.draw();
 
         renderer.present();
 
