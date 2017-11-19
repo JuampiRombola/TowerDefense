@@ -1,0 +1,14 @@
+//
+// Created by tino on 19/11/17.
+//
+
+#ifndef TOWERDEFENSE_PLAYERLOADEDGAMECOMMAND_H
+#define TOWERDEFENSE_PLAYERLOADEDGAMECOMMAND_H
+
+
+class PlayerLoadedGameCommand {
+
+};
+
+
+#endif //TOWERDEFENSE_PLAYERLOADEDGAMECOMMAND_H
