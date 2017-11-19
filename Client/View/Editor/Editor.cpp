@@ -2,6 +2,7 @@
 #include <iostream>
 #include <bits/ios_base.h>
 #include <ios>
+#include <algorithm>
 
 Editor::Editor(MapView &map, TextureLoader &textureLoader, Renderer &renderer,
                std::string name, Window &window) : superficie(PRADERA),
