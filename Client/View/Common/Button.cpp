@@ -8,12 +8,12 @@ Button::Button(int posX, int posY, int width, int height,
 
 Button::~Button() = default;
 
-void Button::draw(int number) {
+void Button::draw(int number, int padding) {
     if (this->isClicked()) {
         this->click();
         mousePosition.deactivate();
     }
-    Image::draw(number);
+    Image::draw(number, 0);
 }
 
 bool Button::isClicked() {

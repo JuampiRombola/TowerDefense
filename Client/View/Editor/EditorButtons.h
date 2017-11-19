@@ -30,6 +30,7 @@ class EditorButtons {
 private:
     std::list<Image*> images;
     MousePosition &mousePosition;
+    unsigned int padding;
     Renderer &renderer;
     Editor& editor;
     TextureLoader &textureLoader;

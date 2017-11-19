@@ -5,7 +5,7 @@ Image::Image(int posX, int posY, int width, int height, SDL_Texture *texture,
                                    button(SDL_Rect{posX, posY, width,
                                                    height}) {}
 
-void Image::draw(int number) {
+void Image::draw(int number, int padding) {
     renderer.copyEuclidean(texture, &button);
 }
 

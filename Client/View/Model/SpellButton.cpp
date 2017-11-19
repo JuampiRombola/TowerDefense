@@ -14,10 +14,10 @@ SpellButton::SpellButton(Window &w, int type, int &cmd,
           transparency(button.x, button.y, button.w, button.h,
                        transp, renderer) {}
 
-void SpellButton::draw(int number) {
-    Button::draw(0);
+void SpellButton::draw(int number, int padding) {
+    Button::draw(0, 0);
     if (!this->wasLastClick())
-        transparency.draw(0);
+        transparency.draw(0, 0);
 }
 
 void SpellButton::click() {

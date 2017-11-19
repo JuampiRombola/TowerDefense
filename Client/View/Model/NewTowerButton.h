@@ -17,7 +17,7 @@ public:
     NewTowerButton(Window &w, int element, int &cmd, SDL_Texture *texture,
                    SDL_Texture *transp, MousePosition &mousePosition,
                    Renderer &renderer, int n);
-    void draw(int number) override;
+    void draw(int number, int padding) override;
     void click() override;
 };
 

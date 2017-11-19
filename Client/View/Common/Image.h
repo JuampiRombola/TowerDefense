@@ -13,7 +13,7 @@ protected:
 public:
     Image(int x, int y, int width, int height, SDL_Texture* texture,
           Renderer& renderer);
-    virtual void draw(int number);
+    virtual void draw(int number, int padding);
     virtual bool isClicked();
     virtual bool belongsToHorda(int horda);
     virtual ~Image();

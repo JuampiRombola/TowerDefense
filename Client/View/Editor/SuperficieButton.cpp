@@ -12,8 +12,8 @@ void SuperficieButton::click() {
     editor.setSuperficie(superficie);
 }
 
-void SuperficieButton::draw(int number) {
+void SuperficieButton::draw(int number, int padding) {
     button.x = number * SUPERFICIE_BUTTON_WIDTH;
-    Button::draw(number);
+    Button::draw(number, 0);
 }
 

@@ -11,10 +11,8 @@ private:
     void click();
 
 public:
-    AumentarAnchoMapaButton(SDL_Texture *texture,
-    MousePosition &mousePosition,
-            Renderer &renderer,
-    Editor &editor);
+    AumentarAnchoMapaButton(SDL_Texture *texture, MousePosition &mousePosition,
+                            Renderer &renderer, Editor &editor);
 };
 
 

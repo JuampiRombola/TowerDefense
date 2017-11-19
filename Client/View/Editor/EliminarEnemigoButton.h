@@ -19,7 +19,7 @@ public:
                               MousePosition &mousePosition,
                               Renderer &renderer,
                               Editor &editor);
-    void draw(int number);
+    void draw(int number, int padding);
     bool belongsToHorda(int hordaNro);
 };
 
