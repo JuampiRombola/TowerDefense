@@ -12,8 +12,10 @@
 #include "../../../include/GameModel/ViewModels/TowerVM.h"
 
 
-AirTower::AirTower(uint cooldown_sec, uint range, uint damage, uint nonflyingDamage, SolidGroundTile* position, Map* map)
-: Tower(cooldown_sec, range, damage, position, map), _nonFlyingDamage(nonflyingDamage) {}
+AirTower::AirTower(uint cooldown_sec, uint range, uint damage,
+                   uint nonflyingDamage, SolidGroundTile* position, Map* map,
+                    uint projectile_ms_over_tile)
+: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile), _nonFlyingDamage(nonflyingDamage) {}
 
 AirTower::~AirTower(){}
 
@@ -22,7 +24,7 @@ void AirTower::PrintDebug(){
 }
 
 Projectile* AirTower::_BuildProjectile(PathTile* target){
-	return new AirProjectile(this, target, _damage, _nonFlyingDamage);
+	return new AirProjectile(this, target, _damage, _nonFlyingDamage, _projectile_ms_over_tile);
 }
 
 bool AirTower::Upgrade(const YAML::Node& cfg, UpgradeType type){

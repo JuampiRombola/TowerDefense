@@ -14,7 +14,7 @@ private:
 protected:
 	double _OnImpact();
 public:
-	AirProjectile(AirTower* origin, PathTile* target, uint flyinghitpoints, uint nonflyingHitpoints);
+	AirProjectile(AirTower* origin, PathTile* target, uint flyinghitpoints, uint nonflyingHitpoints, uint speed_ms);
 	~AirProjectile();
 	ProjectileVM GetViewModel();
 };

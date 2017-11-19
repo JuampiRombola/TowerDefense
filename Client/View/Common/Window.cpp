@@ -27,3 +27,9 @@ int Window::getHeight() {
 SDL_Window *Window::getWindow() {
     return window;
 }
+
+void Window::showErrorMessage(const std::string &title, const std::string
+&description) {
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title.c_str(),
+                             description.c_str(), window);
+}

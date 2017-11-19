@@ -17,7 +17,7 @@
 #include "ViewModels/TowerVM.h"
 #include "GameNotifications/GameNotification.h"
 #include "../ThreadSafeQueue.h"
-
+#include "ClientCooldownManager.h"
 
 
 class TowerDefenseGame{
@@ -27,16 +27,12 @@ private:
 	std::queue<Command*> _commands;
 	std::mutex _executedCommandQueueMutex;
 	std::queue<Command*> _executedCommands;
-
 	std::mutex _gameStateMutex;
-
 	uint _gameId;
-
 	bool _ended;
 	bool _stopped;
 	uint _steps;	
 	uint _enemyIdCounter;
-
 	std::vector<EnviormentUnit*> _units;
 
 	Map _map;
@@ -45,6 +41,12 @@ private:
 	void _SpawnRandomEnemy();
 	void _ExecuteCommands();
 	void _Run();
+
+
+	PlayerProxy* _waterPlayer;
+	PlayerProxy* _airPlayer;
+	PlayerProxy* _firePlayer;
+	PlayerProxy* _groundPlayer;
 
 	void _SpawnAbmonible();
 	void _SpawnHombreCabra();
@@ -55,11 +57,12 @@ private:
 
 
 	std::vector<PlayerProxy*> _players;
+    ClientCooldownManager* _clientCooldownManager;
 
 public:
 	TowerDefenseGame(uint gameId, ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> _players);
 	~TowerDefenseGame();
-	void Run();
+	void Run(PlayerProxy* fireplayer, PlayerProxy* airplayer, PlayerProxy* waterplayer, PlayerProxy* groundplayer);
 	void Stop();
 	bool Ended();
 
@@ -81,6 +84,9 @@ public:
 	std::vector<PlayerProxy*> GetPlayers();
 
 	uint GetID();
+	void HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_TYPE spelltype, uint32_t x, uint32_t y );
+	void HandleClientBuildTowerCommand(PlayerProxy& player, SPELL_TYPE spelltype, uint32_t x, uint32_t y );
+
 };
 
 #endif

@@ -15,7 +15,7 @@ protected:
 	double _OnImpact();
 public:
 	FireProjectile(FireTower* origin, PathTile* target, 
-		uint hitpoints, uint collateralRange, uint collateralDamage);
+		uint hitpoints, uint collateralRange, uint collateralDamage, uint speed_ms);
 	~FireProjectile();
 	ProjectileVM GetViewModel();
 };

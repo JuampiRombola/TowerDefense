@@ -11,7 +11,7 @@ class GroundProjectile : public Projectile {
 protected:
 	double _OnImpact();
 public:
-	GroundProjectile(GroundTower* tower, PathTile* target, uint hitpoints);
+	GroundProjectile(GroundTower* tower, PathTile* target, uint hitpoints, uint speed_ms);
 	~GroundProjectile();
 	ProjectileVM GetViewModel();
 };

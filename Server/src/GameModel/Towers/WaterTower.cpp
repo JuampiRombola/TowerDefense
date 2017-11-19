@@ -12,8 +12,10 @@
 #include "../../../include/GameModel/Commands/UpgradeTowerCommand.h"
 
 
-WaterTower::WaterTower(uint cooldown_sec, uint range, uint damage, uint slowPercent, uint slowDuration_sec, SolidGroundTile* position, Map* map)
-: Tower(cooldown_sec, range, damage, position, map), _slowPercent(slowPercent), _slowDuration_sec(slowDuration_sec) {}
+WaterTower::WaterTower(uint cooldown_sec, uint range, uint damage,
+					   uint slowPercent, uint slowDuration_sec, SolidGroundTile* position, Map* map,
+						uint projectile_ms_over_tile)
+: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile), _slowPercent(slowPercent), _slowDuration_sec(slowDuration_sec) {}
 
 WaterTower::~WaterTower(){}
 
@@ -24,7 +26,7 @@ void WaterTower::PrintDebug(){
 }
 
 Projectile* WaterTower::_BuildProjectile(PathTile* target){
-	return new WaterProjectile(this, target, _damage, _slowDuration_sec, _slowPercent);
+	return new WaterProjectile(this, target, _damage, _slowDuration_sec, _slowPercent, _projectile_ms_over_tile);
 }
 
 bool WaterTower::Upgrade(const YAML::Node& cfg, UpgradeType type){

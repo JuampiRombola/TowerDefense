@@ -24,13 +24,22 @@ void LobbyJoinedNotification::Notify(){
 	_player.SendByte(ins);
 	_player.SendInt32(lobbyGUID);
 	//recordar que devuelve 0 si nadie eligio fuego.
-	uint32_t firepguid =_lobby.GetFirePlayerID();
+
+
+    PlayerProxy* p =_lobby.GetFirePlayer();
+	uint32_t firepguid = (p == nullptr) ? 0 : p->GUID();
 	_player.SendInt32(firepguid);
-	uint32_t waterpguid =_lobby.GetWaterPlayerID();
+
+    p = _lobby.GetWaterPlayer();
+	uint32_t waterpguid = (p == nullptr) ? 0 : p->GUID();
 	_player.SendInt32(waterpguid);
-	uint32_t airpguid =_lobby.GetAirPlayerID();
+
+    p = _lobby.GetAirPlayer();
+	uint32_t airpguid = (p == nullptr) ? 0 : p->GUID();
 	_player.SendInt32(airpguid);
-	uint32_t groundpguid =_lobby.GetGroundPlayerID();
+
+    p = _lobby.GetGroundPlayer();
+	uint32_t groundpguid = (p == nullptr) ? 0 : p->GUID();
 	_player.SendInt32(groundpguid);
 
 

@@ -9,8 +9,8 @@
 #include "../../../include/GameModel/Map/SolidGroundTile.h"
 
 AirProjectile::AirProjectile
-(AirTower* origin, PathTile* target, uint flyingHitpoint, uint nonflyingHitpoints) :
- Projectile(origin, target, 500, flyingHitpoint), _nonFlyingHitPoints(nonflyingHitpoints)
+(AirTower* origin, PathTile* target, uint flyingHitpoint, uint nonflyingHitpoints, uint speed_ms) :
+ Projectile(origin, target, speed_ms, flyingHitpoint), _nonFlyingHitPoints(nonflyingHitpoints)
 {
 
 }
@@ -55,8 +55,7 @@ double AirProjectile::_OnImpact(){
 ProjectileVM AirProjectile::GetViewModel(){
 	ProjectileVM vm;
 	vm.type = SPELL_TYPE_AIR;
-	vm.distanceToCover = _distance;
-	vm.distanceCovered = _distanceCovered;
+	vm.flight_duration_ms = _distance * _ms_over_tile;
 	vm.fromXpos = _origin->GetPosition()->GetXPos();
 	vm.fromYpos = _origin->GetPosition()->GetYPos();
 	vm.toXpos = _target->GetXPos();

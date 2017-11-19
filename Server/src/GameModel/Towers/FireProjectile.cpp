@@ -10,8 +10,8 @@
 
 FireProjectile::FireProjectile
 (FireTower* origin, PathTile* target, uint hitpoints, 
-	uint collateralRange, uint collateralDamage) :
- Projectile(origin, target, 500, hitpoints), _collateralRange(collateralRange),
+	uint collateralRange, uint collateralDamage, uint speed_ms) :
+ Projectile(origin, target, speed_ms, hitpoints), _collateralRange(collateralRange),
  _collateralDamage(collateralDamage)
 {
 
@@ -83,8 +83,7 @@ double FireProjectile::_OnImpact(){
 ProjectileVM FireProjectile::GetViewModel(){
 	ProjectileVM vm;
 	vm.type = SPELL_TYPE_FIRE;
-	vm.distanceToCover = _distance;
-	vm.distanceCovered = _distanceCovered;
+	vm.flight_duration_ms = _distance * _ms_over_tile;
 	vm.fromXpos = _origin->GetPosition()->GetXPos();
 	vm.fromYpos = _origin->GetPosition()->GetYPos();
 	vm.toXpos = _target->GetXPos();

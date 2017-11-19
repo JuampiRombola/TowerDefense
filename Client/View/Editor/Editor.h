@@ -21,11 +21,13 @@ private:
     int superficie;
     std::string nombre;
     MapView& map;
+    Window& window;
     std::list<PortalView*> portales;
     std::function<void(int, int)> mapFunction;
+    bool validate();
 public:
-    explicit Editor(MapView &map, TextureLoader &textureLoader,
-                        Renderer &renderer, std::string name);
+    explicit Editor(MapView &map, TextureLoader &textureLoader, Renderer &renderer,
+                        std::string name, Window &window);
     ~Editor();
     void setSuperficie(int superficie);
     void agregarEnemigo(int horda, std::string enemigo);

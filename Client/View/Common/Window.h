@@ -16,6 +16,8 @@ public:
     int getWidth();
     int getHeight();
     SDL_Window* getWindow();
+    void showErrorMessage(const std::string &title, const std::string
+        &description);
 };
 
 

@@ -11,6 +11,9 @@
 
 class SocketWrapper 
 {
+private:
+	unsigned long long _bytesSent = 0;
+	unsigned long long _bytesRecieved = 0;
 protected:
 	int _fd;
 public:

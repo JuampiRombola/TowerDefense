@@ -33,7 +33,8 @@ int main(int argc, char** argv) {
         salida.append(argv[1]);
     else
         salida.append(SALIDA_DEFAULT);
-    Editor editor(mapView, textureLoader, renderer, std::string(salida));
+    Editor editor(mapView, textureLoader, renderer, std::string(salida),
+                  window);
 
     EditorButtons buttons(mouse, renderer, editor, textureLoader);
     buttons.addInitialButtons();

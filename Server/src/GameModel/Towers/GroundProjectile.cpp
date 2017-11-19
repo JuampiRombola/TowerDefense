@@ -9,8 +9,8 @@
 #include "../../../include/GameModel/ViewModels/ProjectileVM.h"
 
 GroundProjectile::GroundProjectile
-(GroundTower* tower, PathTile* target, uint hitpoints) :
- Projectile(tower, target, 500, hitpoints)
+(GroundTower* tower, PathTile* target, uint hitpoints, uint speed_ms) :
+ Projectile(tower, target, speed_ms, hitpoints)
 {
 
 }
@@ -52,8 +52,7 @@ double GroundProjectile::_OnImpact(){
 ProjectileVM GroundProjectile::GetViewModel(){
 	ProjectileVM vm;
 	vm.type = SPELL_TYPE_GROUND;
-	vm.distanceToCover = _distance;
-	vm.distanceCovered = _distanceCovered;
+	vm.flight_duration_ms = _distance * _ms_over_tile;
 	vm.fromXpos = _origin->GetPosition()->GetXPos();
 	vm.fromYpos = _origin->GetPosition()->GetYPos();
 	vm.toXpos = _target->GetXPos();
