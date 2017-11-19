@@ -6,9 +6,15 @@
 #define TOWERDEFENSE_PLAYERLOADEDGAMECOMMAND_H
 
 
-class PlayerLoadedGameCommand {
+#include "NetCommand.h"
 
+class PlayerLoadedGameCommand : public NetCommand {
+public:
+    PlayerLoadedGameCommand();
+    ~PlayerLoadedGameCommand();
+    void SendCommand(SocketWrapper& sock);
 };
 
 
 #endif //TOWERDEFENSE_PLAYERLOADEDGAMECOMMAND_H
+

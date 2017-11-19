@@ -26,11 +26,12 @@
 
 TowerDefenseGame::TowerDefenseGame(uint gameId,
 	ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> playersInGame) :
-	_endedMutex(), _commandQueueMutex(), _commands(),_executedCommandQueueMutex(), 
+	_gameStartMutex(), _gameStartCondVariable(), _canGameStart(false),
+	_endedMutex(), _commandQueueMutex(), _commands(),_executedCommandQueueMutex(),
 	_executedCommands(), _gameStateMutex(),
 	 _gameId(gameId),
 	_ended(false), _stopped(false), _steps(0), _enemyIdCounter(0), _units(),
-	_map(9, 9, "map.yaml"), notifications(notifications), _players(playersInGame)
+	_map(9, 9, "map.yaml"), notifications(notifications), _players(playersInGame), _ingamePlayers()
 {
 	std::string ss("../config.yaml");
 	GameCfg = new GameConfiguration(ss);
@@ -218,10 +219,27 @@ void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_
 	QueueCommand(new CastSpellCommand(type, x, y));
 }
 
+
+void TowerDefenseGame::PlayerLoadedGame(PlayerProxy& player){
+    std::cout << "ABZ\n" << std::flush;
+	std::lock_guard<std::mutex> lock(_gameStartMutex);
+	std::cout << "ABZ\n" << std::flush;
+
+	auto it = std::find(_players.begin(), _players.end(), &player);
+
+	if (it != _players.end())
+		return;
+
+	_ingamePlayers.push_back(&player);
+
+	if (_players.size() == _ingamePlayers.size()){
+		std::cout << "abzentro\n" << std::flush;
+		_canGameStart = true;
+		_gameStartCondVariable.notify_one();
+	}
+}
+
 void TowerDefenseGame::HandleClientBuildTowerCommand(PlayerProxy& player, SPELL_TYPE spelltype, uint32_t x, uint32_t y ){
-
-
-
 	switch(spelltype){
 		case SPELL_TYPE_GROUND:
 			if (_groundPlayer == &player && _clientCooldownManager->IsTowerPlacementReady(spelltype))
@@ -345,8 +363,12 @@ void TowerDefenseGame::Stop(){
 
 void TowerDefenseGame::_Run()
 {
+	std::unique_lock<std::mutex> lock(_gameStartMutex);
+	while(!_canGameStart)
+		_gameStartCondVariable.wait(lock);
+
 	static uint clockFrequency = 100;
-    std::this_thread::sleep_for (std::chrono::milliseconds(20000));
+    //std::this_thread::sleep_for (std::chrono::milliseconds(20000));
     unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
 	unsigned long long timestamp = 0;
 	unsigned long long delta = 0;
@@ -371,7 +393,7 @@ void TowerDefenseGame::_Run()
 	std::cout << "GAME OVER! \n";
 }
 
-	std::vector<UnitVM> TowerDefenseGame::GetUnitViewModels(){
+std::vector<UnitVM> TowerDefenseGame::GetUnitViewModels(){
 	std::lock_guard<std::mutex> lock(_gameStateMutex);
 	std::vector<UnitVM> uVms;
 	for (auto it = _units.begin(); it != _units.end(); ++it){

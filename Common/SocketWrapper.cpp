@@ -35,7 +35,7 @@ bool SocketWrapper::Send(const char* buffer, size_t length){
 		throw SocketConnectionException();
 
 
-	_bytesSent +- sentBytes;
+	_bytesSent += sentBytes;
 	return true;
 }
 bool SocketWrapper::Recieve(char* buffer, size_t msgLen){

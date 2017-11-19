@@ -230,6 +230,7 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/include/Lobbies/Lobby.h
 
         Client/src/NetCommands/CommandDispatcher.cpp
+        Client/src/NetCommands/PlayerLoadedGameCommand.cpp
         Client/src/NetCommands/ClientCastSpellCommand.cpp
         Client/src/NetCommands/CreateLobbyCommand.cpp
         Client/src/NetCommands/JoinLobbyCommand.cpp
@@ -240,6 +241,7 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/NetCommands/PickSpellCommand.cpp
         Client/src/NetCommands/ClientBuildTowerCommand.cpp
 
+        Client/include/NetCommands/PlayerLoadedGameCommand.h
         Client/include/NetCommands/PickSpellCommand.h
         Client/include/NetCommands/ClientCastSpellCommand.h
         Client/include/NetCommands/ClientBuildTowerCommand.h
@@ -351,7 +353,7 @@ set(SOURCE_FILES_EDITOR
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
-add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp)
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/PlayerLoadedGameCommand.cpp Client/include/NetCommands/PlayerLoadedGameCommand.h)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
 
 
