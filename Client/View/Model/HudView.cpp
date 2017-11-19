@@ -6,7 +6,9 @@ HudView::HudView(Window &w, TextureLoader &tl, Renderer &r,
                  CommandDispatcher &cd) :
         textureLoader(tl), renderer(r), dispatcher(cd),
         mouse_y(-1), mousePosition(mouse_x, mouse_y),
-        buttons(w, mousePosition, r, tl, cd) {}
+        buttons(w, mousePosition, r, tl, cd) {
+    currentCommand = -1;
+}
 
 void HudView::getMouseState() {
     SDL_GetMouseState(&mouse_x, &mouse_y);
