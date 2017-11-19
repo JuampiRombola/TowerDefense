@@ -142,7 +142,7 @@ bool CastSpellCommand::_CastTornado(Map* map, TowerDefenseGame* game){
 }
 
 bool CastSpellCommand::_CastRayos(Map* map, TowerDefenseGame* game){
-	uint rayoMaxDamage = game->GameCfg->Cfg["spells"]["rayos"]["max_damage"].as<uint>();
+	uint rayoMaxDamage = game->GameCfg->Cfg["spells"]["rayo"]["max_damage"].as<uint>();
 	EnviormentUnit* unit = nullptr;
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
 	if (tile == nullptr)
