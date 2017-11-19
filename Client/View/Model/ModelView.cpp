@@ -3,6 +3,9 @@
 #include "PortalEntradaView.h"
 #include "PortalSalidaView.h"
 #include "../../../Common/Lock.h"
+#include "DepthLevelError.h"
+
+#define INVALID_INDEX "Se esta tratandod de acceder a una posicion invalida de DepthLevel"
 
 ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader) :
         renderer(renderer), textureLoader(textureLoader),
@@ -28,7 +31,9 @@ void ModelView::setMapWidthHeight(int w, int h) {
     map.setWidth(w);
     map.setHeight(h);
 
-    for (int i = 1; i < (w + h); ++i)
+    // Agrego 2 niveles de mas para dar la ilusion de que se
+    // pueda caminar hasta los bordes del mapa
+    for (int i = 0; i <= (w + h); ++i)
         depthLevels.push_back(new DepthLevel());
 }
 
@@ -49,7 +54,8 @@ void ModelView::createPortalEntrada(int x, int y) {
     PortalEntradaView *p = new PortalEntradaView(textureLoader, renderer);
     p->setXY(x, y);
     Lock(this->m);
-    depthLevels[(x + y)]->addPortalEntrada(p);
+    checkIndexDepthLevel(x+y+1);
+    depthLevels[x+y+1]->addPortalEntrada(p);
 }
 
 
@@ -57,7 +63,8 @@ void ModelView::createPortalSalida(int x, int y) {
     PortalSalidaView *p = new PortalSalidaView(textureLoader, renderer);
     p->setXY(x, y);
     Lock(this->m);
-    depthLevels[(x + y)]->addPortalSalida(p);
+    checkIndexDepthLevel(x+y+1);
+    depthLevels[x+y+1]->addPortalSalida(p);
 }
 
 void ModelView::createUnit(int id, int key,
@@ -65,23 +72,26 @@ void ModelView::createUnit(int id, int key,
     UnitView *unit = new UnitView(id, key, textureLoader, renderer);
     unit->move(x, y, toX, toY, t);
     Lock(this->m);
-    depthLevels[(x + y)]->addUnit(unit);
-    idDepthLevelsUnits[id] = x + y;
+    checkIndexDepthLevel(x+y+1);
+    depthLevels[x+y+1]->addUnit(unit);
+    idDepthLevelsUnits[id] = x + y + 1;
 }
 
 void ModelView::createTower(int id, int key, int x, int y) {
     TowerView *tower = new TowerView(id, key, textureLoader, renderer);
     tower->setXY(x, y);
     Lock(this->m);
-    depthLevels[(x + y)]->addTower(tower);
-    idDepthLevelsTowers[id] = x + y;
+    checkIndexDepthLevel(x+y+1);
+    depthLevels[x+y+1]->addTower(tower);
+    idDepthLevelsTowers[id] = x + y + 1;
 }
 
 void ModelView::createSpell(int key, int x, int y, Uint32 t) {
     SpellView *spell = new SpellView(key, textureLoader, renderer);
     spell->cast(x, y, t);
     Lock(this->m);
-    depthLevels[(x + y)]->addSpell(spell);
+    checkIndexDepthLevel(x+y+1);
+    depthLevels[x+y+1]->addSpell(spell);
 }
 
 void ModelView::createShot(int key, int x, int y, int toX, int toY, Uint32 t) {
@@ -93,17 +103,20 @@ void ModelView::createShot(int key, int x, int y, int toX, int toY, Uint32 t) {
 
 void ModelView::moveUnit(int id, int x, int y, int toX, int toY, Uint32 t) {
     Lock(this->m);
-    int levelIndex = idDepthLevelsUnits[id];
+    int levelIndex = idDepthLevelsUnits.at(id);
     UnitView *unit = depthLevels[levelIndex]->getUnit(id);
+    checkIndexDepthLevel(levelIndex);
     depthLevels[levelIndex]->removeUnit(id);
     unit->move(x, y, toX, toY, t);
-    depthLevels[(toX + toY)]->addUnit(unit);
-    idDepthLevelsUnits[id] = toX + toY;
+    checkIndexDepthLevel(toX+toY+1);
+    depthLevels[toX+toY+1]->addUnit(unit);
+    idDepthLevelsUnits[id] = toX + toY + 1;
 }
 
 void ModelView::killUnit(int id) {
     Lock(this->m);
-    int levelIndex = idDepthLevelsUnits[id];
+    int levelIndex = idDepthLevelsUnits.at(id);
+    checkIndexDepthLevel(levelIndex);
     UnitView *unit = depthLevels[levelIndex]->getUnit(id);
     unit->enableDying();
 }
@@ -131,4 +144,9 @@ void ModelView::draw(Uint32 time) {
     // Dibujo disparos
     for (auto shot : shots)
         shot->draw(time);
+}
+
+void ModelView::checkIndexDepthLevel(int key) {
+    if (key >= depthLevels.size() || key < 0)
+        throw DepthLevelError(INVALID_INDEX);
 }

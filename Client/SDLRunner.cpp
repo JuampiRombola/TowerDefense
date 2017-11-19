@@ -5,6 +5,7 @@
 #include "View/Model/ModelView.h"
 #include "View/Model/ViewConstants.h"
 #include "View/Model/HudView.h"
+#include "View/Model/ChatView.h"
 
 #define TITLE "Tower Defense"
 
@@ -121,6 +122,8 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     hudView.addElementalButtons(ELEMENTAL_WATER);
     hudView.addElementalButtons(ELEMENTAL_AIR);
 
+    ChatView chat(window, renderer);
+
     Uint32 t1;
     Uint32 t2;
     Uint32 s = 1000 / FPS;
@@ -148,14 +151,26 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                     else
                         renderer.zoomOut();
                     break;
+                case SDL_TEXTINPUT:
+                    if (chat.isActive()) {
+                        std::string text(event.text.text);
+                        chat.input(text);
+                    }
+                    break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
+                        case SDLK_RETURN:
+                            if (chat.isActive())
+                                chat.disable();
+                            else
+                                chat.enable();
+                            break;
+                        case SDLK_BACKSPACE:
+                            if (chat.isActive())
+                                chat.erase();
+                            break;
                         case SDLK_ESCAPE:
                             quit = true; break;
-                        case SDLK_i:
-                            renderer.zoomIn(); break;
-                        case SDLK_o:
-                            renderer.zoomOut(); break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
@@ -164,14 +179,19 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                             renderer.updateCamera(0, -1); break;
                         case SDLK_DOWN:
                             renderer.updateCamera(0, 1); break;
+                        default: break;
                     }
             }
             hudView.doMouseAction();
         }
         renderer.clearRender();
+
         modelView.draw(SDL_GetTicks());
         hudView.draw();
+        chat.draw();
+
         renderer.present();
+
         t2 = SDL_GetTicks();
         elapsedTime = t2 - t1 + delta;
         delayTime = s - elapsedTime;

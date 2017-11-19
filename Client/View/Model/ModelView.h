@@ -40,6 +40,9 @@ public:
     void createShot(int key, int x, int y, int toX, int toY, Uint32 t);
     void moveUnit(int id, int x, int y, int toX, int toY, Uint32 t);
     void killUnit(int id);
+
+private:
+    void checkIndexDepthLevel(int key);
 };
 
 
