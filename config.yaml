@@ -1,8 +1,8 @@
 unit_base_step_delay_ms: 3000
 towers:
  ground:
-  place_cooldown_sec: 10
-  projectile_ms_over_tile: 100
+  place_cooldown_sec: 3
+  projectile_ms_over_tile: 1
   range: 4
   cooldown_sec: 1
   damage: 20
@@ -13,8 +13,8 @@ towers:
   upgrade_damage_mult: 100
   upgrade_damage_base: 1.5
  fire:
-  place_cooldown_sec: 10
-  projectile_ms_over_tile: 100
+  place_cooldown_sec: 3
+  projectile_ms_over_tile: 1
   range: 4
   cooldown_sec: 4
   target_damage: 20
@@ -31,8 +31,8 @@ towers:
   upgrade_collateral_range_base: 2
   upgrade_collateral_range_mult: 500
  water:
-  place_cooldown_sec: 10
-  projectile_ms_over_tile: 100
+  place_cooldown_sec: 3
+  projectile_ms_over_tile: 1
   range: 4
   cooldown_sec: 4
   damage: 20
@@ -49,10 +49,10 @@ towers:
   upgrade_slow_mult: 100
   upgrade_slow_base: 2
  air:
-  place_cooldown_sec: 10
-  projectile_ms_over_tile: 100
+  place_cooldown_sec: 3
+  projectile_ms_over_tile: 1
   range: 4
-  cooldown_sec: 10
+  cooldown_sec: 2
   flying_target_damage: 10
   non_flying_target_damage: 5
   upgrade_range_increase: 1
@@ -95,20 +95,20 @@ spells:
   cast_cooldown_sec: 5
 units:
  abmonible:
-  health_points: 60
+  health_points: 10
   speed: 1
  demonio_verde:
-  health_points: 60
+  health_points: 10
   speed: 2
  halcon_sangriento:
-  health_points: 60
+  health_points: 10
   speed: 3
  hombre_cabra:
-  health_points: 60
+  health_points: 10
   speed: 4
  espectro:
-  health_points: 60
+  health_points: 10
   speed: 5
  no_muerto:
-  health_points: 60
+  health_points: 10
   speed: 6

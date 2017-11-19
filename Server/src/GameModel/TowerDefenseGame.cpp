@@ -221,19 +221,16 @@ void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_
 
 
 void TowerDefenseGame::PlayerLoadedGame(PlayerProxy& player){
-    std::cout << "ABZ\n" << std::flush;
 	std::lock_guard<std::mutex> lock(_gameStartMutex);
-	std::cout << "ABZ\n" << std::flush;
 
-	auto it = std::find(_players.begin(), _players.end(), &player);
+	auto it = std::find(_ingamePlayers.begin(), _ingamePlayers.end(), &player);
 
-	if (it != _players.end())
+	if (it != _ingamePlayers.end())
 		return;
 
 	_ingamePlayers.push_back(&player);
 
 	if (_players.size() == _ingamePlayers.size()){
-		std::cout << "abzentro\n" << std::flush;
 		_canGameStart = true;
 		_gameStartCondVariable.notify_one();
 	}
@@ -300,7 +297,7 @@ bool TowerDefenseGame::_Step(){
 
 	_steps = _steps + 1;
 
-	uint32_t spawnrandomenemyevery_ms = 4000;
+	uint32_t spawnrandomenemyevery_ms = 500;
 	if (actualTs - ts > spawnrandomenemyevery_ms){
 		ts = actualTs;
 		_SpawnRandomEnemy();
@@ -368,7 +365,7 @@ void TowerDefenseGame::_Run()
 		_gameStartCondVariable.wait(lock);
 
 	static uint clockFrequency = 100;
-    //std::this_thread::sleep_for (std::chrono::milliseconds(20000));
+    std::this_thread::sleep_for (std::chrono::milliseconds(5000));
     unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
 	unsigned long long timestamp = 0;
 	unsigned long long delta = 0;
