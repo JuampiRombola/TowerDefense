@@ -82,8 +82,8 @@ bool CastSpellCommand::_CastMeteorito(Map* map, TowerDefenseGame* game){
 }
 
 bool CastSpellCommand::_CastMuroDeFuego(Map* map, TowerDefenseGame* game){
-	uint fireDuration_sec = game->GameCfg->Cfg["spells"]["meteorito"]["damage"].as<uint>();
-	uint fireDamage = game->GameCfg->Cfg["spells"]["meteorito"]["damage"].as<uint>();
+	uint fireDuration_sec = game->GameCfg->Cfg["spells"]["murodefuego"]["duration_sec"].as<uint>();
+	uint fireDamage = game->GameCfg->Cfg["spells"]["murodefuego"]["damage"].as<uint>();
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
 	if (tile != nullptr){
 		tile->SetOnFire(fireDuration_sec * 1000, fireDamage);

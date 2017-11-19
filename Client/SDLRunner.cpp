@@ -6,6 +6,7 @@
 #include "View/Model/ViewConstants.h"
 #include "View/Model/HudView.h"
 #include "View/Model/ChatView.h"
+#include "include/NetCommands/PlayerLoadedGameCommand.h"
 
 #define TITLE "Tower Defense"
 
@@ -130,6 +131,8 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     Uint32 delta = 0;
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
+
+    dispatcher->QueueCommand(new PlayerLoadedGameCommand());
 
     while (!quit && _reciever->Running()) {
         t1 = SDL_GetTicks();

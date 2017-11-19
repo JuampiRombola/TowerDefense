@@ -22,6 +22,11 @@
 
 class TowerDefenseGame{
 private:
+	std::mutex _gameStartMutex;
+	std::condition_variable _gameStartCondVariable;
+	bool _canGameStart;
+
+
 	std::mutex _endedMutex;
 	std::mutex _commandQueueMutex;
 	std::queue<Command*> _commands;
@@ -57,6 +62,7 @@ private:
 
 
 	std::vector<PlayerProxy*> _players;
+	std::vector<PlayerProxy*> _ingamePlayers;
     ClientCooldownManager* _clientCooldownManager;
 
 public:
@@ -87,6 +93,8 @@ public:
 	void HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_TYPE spelltype, uint32_t x, uint32_t y );
 	void HandleClientBuildTowerCommand(PlayerProxy& player, SPELL_TYPE spelltype, uint32_t x, uint32_t y );
 
+
+	void PlayerLoadedGame(PlayerProxy& player);
 };
 
 #endif
