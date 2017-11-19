@@ -185,7 +185,7 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/SpellButton.cpp
         Client/View/Model/SpellButton.h
         Client/src/NetCommands/ClientBuildTowerCommand.cpp
-        Client/include/NetCommands/ClientBuildTowerCommand.h)
+        Client/include/NetCommands/ClientBuildTowerCommand.h Client/View/Model/ChatView.cpp Client/View/Model/ChatView.h Client/View/Model/DepthLevelError.cpp Client/View/Model/DepthLevelError.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -357,7 +357,8 @@ add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK
 
 INCLUDE(FindPkgConfig)
 pkg_search_module(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS})
+pkg_search_module(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
@@ -367,5 +368,5 @@ add_definitions(${GTK3_CFLAGS_OTHER})
 
 target_link_libraries(TowerDefenseServer yaml-cpp)
 target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES})
-target_link_libraries(TowerDefenseClient yaml-cpp X11 ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES})
-target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES})
+target_link_libraries(TowerDefenseClient yaml-cpp X11 ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES})
+target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES})
