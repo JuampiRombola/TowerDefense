@@ -32,7 +32,7 @@ TowerDefenseGame::TowerDefenseGame(uint gameId,
 	_ended(false), _stopped(false), _steps(0), _enemyIdCounter(0), _units(),
 	_map(9, 9, "map.yaml"), notifications(notifications), _players(playersInGame)
 {
-	std::string ss("config.yaml");
+	std::string ss("../config.yaml");
 	GameCfg = new GameConfiguration(ss);
     _clientCooldownManager = new ClientCooldownManager(*GameCfg);
 //	mv->createTower(1, TORRE_TIERRA, 2, 0);
@@ -346,7 +346,7 @@ void TowerDefenseGame::Stop(){
 void TowerDefenseGame::_Run()
 {
 	static uint clockFrequency = 100;
-    std::this_thread::sleep_for (std::chrono::milliseconds(10000));
+    std::this_thread::sleep_for (std::chrono::milliseconds(20000));
     unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
 	unsigned long long timestamp = 0;
 	unsigned long long delta = 0;
