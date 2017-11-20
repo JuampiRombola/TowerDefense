@@ -71,9 +71,10 @@
 #define HORDA_QUANTITY_PADDING HORDA_MODIFY_QUANTITY_PADDING + HORDA_MODIFY_QUANTITY_SIZE
 #define HORDA_TOTAL_ENEMIES 6
 #define HORDA_BUTTONS_PER_ENEMY 4
-#define HORDA_TOTAL_BUTTONS HORDA_BUTTONS_PER_ENEMY * (HORDA_TOTAL_ENEMIES + 1) + 1
+#define HORDA_TOTAL_BUTTONS HORDA_BUTTONS_PER_ENEMY * (HORDA_TOTAL_ENEMIES + 1) + 2
  //El 1 es por los botones de tiempo
- // El segundo 1 es por el botón de borrar horda
+ // El segundo 2 es por el botón de borrar horda y el indicador de numero de
+// horda
 
 #define ABMONIBLE_KEY "abmonible"
 #define ESPECTRO_KEY "espectro"

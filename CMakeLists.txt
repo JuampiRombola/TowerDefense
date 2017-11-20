@@ -352,7 +352,7 @@ set(SOURCE_FILES_EDITOR
         Client/View/Editor/AumentarPaddingButton.cpp
         Client/View/Editor/AumentarPaddingButton.h
         Client/View/Editor/DisminuirPaddingButton.cpp
-        Client/View/Editor/DisminuirPaddingButton.h Client/View/Editor/EditorValidationException.cpp Client/View/Editor/EditorValidationException.h)
+        Client/View/Editor/DisminuirPaddingButton.h Client/View/Editor/EditorValidationException.cpp Client/View/Editor/EditorValidationException.h Client/View/Editor/ContadorHordasInput.cpp Client/View/Editor/ContadorHordasInput.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
