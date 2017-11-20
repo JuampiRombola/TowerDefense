@@ -139,23 +139,6 @@ int MapView::getHeight() {
     return height;
 }
 
-std::string MapView::exportar() {
-    std::stringstream mapToString;
-    mapToString << "ancho: " << width << "\n";
-    mapToString << "alto: " << height << "\n";
-    mapToString << "caminos:\n";
-    for (auto& path : pathTiles) {
-        mapToString << " - x: " << path.first << "\n";
-        mapToString << "   y: " << path.second << "\n";
-    }
-    mapToString << "superficies:\n";
-    for (auto& structureTile : structureTiles) {
-        mapToString << " - x: " << structureTile.first << "\n";
-        mapToString << "   y: " << structureTile.second << "\n";
-    }
-    return mapToString.str();
-}
-
 std::set<std::pair<int, int>> MapView::getPathsAsSet() {
     std::set<std::pair<int, int>> pathSet;
     for (auto& pathTile : pathTiles) {
