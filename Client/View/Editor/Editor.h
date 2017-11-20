@@ -24,7 +24,8 @@ private:
     Window& window;
     std::list<PortalView*> portales;
     std::function<void(int, int)> mapFunction;
-    bool validate();
+    void validate();
+    std::string exportarMapa();
 public:
     explicit Editor(MapView &map, TextureLoader &textureLoader, Renderer &renderer,
                         std::string name, Window &window);

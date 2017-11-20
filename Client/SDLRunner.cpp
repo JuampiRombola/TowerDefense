@@ -123,7 +123,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     hudView.addElementalButtons(ELEMENTAL_WATER);
     hudView.addElementalButtons(ELEMENTAL_AIR);
 
-    ChatView chat(window, renderer);
+    ChatView chat(*_dispatcher, window, renderer, textureLoader);
 
     Uint32 t1;
     Uint32 t2;
@@ -160,7 +160,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                 case SDL_TEXTINPUT:
                     if (chat.isActive()) {
                         std::string text(event.text.text);
-                        chat.input(text);
+                        chat.newInput(text);
                     }
                     break;
                 case SDL_KEYDOWN:

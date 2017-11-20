@@ -35,7 +35,6 @@ public:
     int getWidth();
     void setHeight(int newHeight);
     int getHeight();
-    std::string exportar();
     std::set<std::pair<int, int>> getPathsAsSet();
     std::set<std::pair<int, int>> getStructureTilesAsSet();
 };

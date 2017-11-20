@@ -6,11 +6,12 @@
 #include "AgregarPortalSalidaButton.h"
 #include "DisminuirPaddingButton.h"
 #include "AumentarPaddingButton.h"
+#include "ContadorHordasInput.h"
 
 EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer,
                              Editor &editor, TextureLoader &textureLoader)
         : mousePosition(mousePosition), padding(0), renderer(renderer),
-          editor(editor), textureLoader(textureLoader) , hordaToDelete(-1){}
+          editor(editor), textureLoader(textureLoader), hordaToDelete(-1) {}
 
 
 EditorButtons::~EditorButtons() {
@@ -24,7 +25,7 @@ void EditorButtons::draw() {
         image->draw(i, padding);
         i++;
     }
-    if (hordaToDelete >= 0){
+    if (hordaToDelete >= 0) {
         for (auto it = images.begin(); it != images.end();) {
             if ((*it)->belongsToHorda(hordaToDelete)) {
                 delete *it;
@@ -140,6 +141,10 @@ void EditorButtons::addInitialButtons() {
 
 void EditorButtons::addEnemigosButton(int horda) {
     using namespace std::placeholders;
+    Image *contadorHorda = new ContadorHordasInput(horda,
+                                                  textureLoader.getTexture(
+                                                          FONT), renderer);
+    images.push_back(contadorHorda);
     addEnemigoButton(horda, ABMONIBLE_KEY, ABMONIBLE_EDITOR);
     addEnemigoButton(horda, ESPECTRO_KEY, ESPECTRO_EDITOR);
     addEnemigoButton(horda, DEMONIO_VERDE_KEY, DEMONIO_VERDE_EDITOR);
