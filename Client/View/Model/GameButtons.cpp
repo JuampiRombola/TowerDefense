@@ -1,5 +1,6 @@
 #include "GameButtons.h"
 #include "SpellButton.h"
+#include "UpRightButton.h"
 
 #define TRANSPARENCY 212
 #define BUTTONSOFFSET 200
@@ -9,19 +10,26 @@
 GameButtons::GameButtons(Window &w, MousePosition &mousePosition,
                          Renderer &renderer,
                          TextureLoader &textureLoader,
-                         CommandDispatcher &dispatcher) :
+                         CommandDispatcher &dispatcher, int &cmd) :
         window(w), mousePosition(mousePosition),
         renderer(renderer), textureLoader(textureLoader),
-        dispatcher(dispatcher) {}
+        dispatcher(dispatcher), cmd(cmd) {
+    barUpRight.push_back(new UpRightButton(window, CMD_PING, cmd,
+               textureLoader.getTexture(PING_BUTTON),
+               textureLoader.getTexture(TRANSPARENCY),
+               mousePosition, renderer, barUpRight.size() + 1));
+}
 
 GameButtons::~GameButtons() {
     for (auto &tower : towers)
         delete tower;
     for (auto &spell : spells)
         delete spell;
+    for (auto &element : barUpRight)
+        delete element;
 }
 
-void GameButtons::addTowerButtons(int key, int &cmd) {
+void GameButtons::addTowerButtons(int key) {
     towers.push_back(new NewTowerButton(window, key, cmd,
                      textureLoader.getTexture(key + BUTTONSOFFSET),
                      textureLoader.getTexture(TRANSPARENCY),
@@ -49,6 +57,10 @@ bool GameButtons::isAnyClicked() {
         if (spell->isClicked())
             return true;
     }
+    for (auto &button : barUpRight) {
+        if (button->isClicked())
+            return true;
+    }
     return false;
 }
 
@@ -57,4 +69,6 @@ void GameButtons::draw() {
         tower->draw(0, 0);
     for (auto &spell : spells)
         spell->draw(0, 0);
+    for (auto &button : barUpRight)
+        button->draw(0, 0);
 }

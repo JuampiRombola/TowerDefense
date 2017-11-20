@@ -195,7 +195,7 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/DepthLevelError.cpp
         Client/View/Model/DepthLevelError.h
         Client/View/Model/TextView.cpp
-        Client/View/Model/TextView.h)
+        Client/View/Model/TextView.h Client/View/Model/UpRightButton.cpp Client/View/Model/UpRightButton.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -369,7 +369,7 @@ set(SOURCE_FILES_EDITOR
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
-add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/PlayerLoadedGameCommand.cpp Client/include/NetCommands/PlayerLoadedGameCommand.h)
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/PlayerLoadedGameCommand.cpp Client/include/NetCommands/PlayerLoadedGameCommand.h Client/View/Model/UpRightButton.cpp Client/View/Model/UpRightButton.h)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
 
 

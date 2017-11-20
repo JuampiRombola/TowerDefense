@@ -187,6 +187,9 @@ int main(int argc, char** argv) {
                             break;
                         case SDLK_ESCAPE:
                             quit = true; break;
+                        case SDLK_a:
+                            modelView.createSpell(PING, 1, 1, 5000);
+                            break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:

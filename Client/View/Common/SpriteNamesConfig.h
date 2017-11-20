@@ -33,7 +33,8 @@
 #define VENTISCA 29
 #define TORNADO 30
 #define RAYO 31
-#define TOTAL 32
+#define PING 32
+#define TOTAL 33
 
 #define AGREGAR_HORDA_BTN 100
 #define ENEMIGO_SUMA 101
@@ -61,6 +62,7 @@
 #define INIT_HUD 200
 #define CHAT_BG 213
 #define CHAT_INPUT 214
-#define TOTAL_HUD 215
+#define PING_BUTTON 215
+#define TOTAL_HUD 216
 
 #endif //TOWERDEFENSE_SPRITENAMESCONFIG_H

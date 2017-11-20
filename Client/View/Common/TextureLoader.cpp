@@ -114,6 +114,8 @@ std::string TextureLoader::intToStringKey(int key) {
             return "TORNADO";
         case RAYO:
             return "RAYO";
+        case PING:
+            return "PING";
     }
 
 }

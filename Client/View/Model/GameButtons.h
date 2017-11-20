@@ -17,14 +17,17 @@ private:
     Renderer &renderer;
     TextureLoader &textureLoader;
     CommandDispatcher &dispatcher;
+    int &cmd;
     std::list<Image*> towers;
     std::list<Image*> spells;
+    std::list<Image*> barUpRight;
 
 public:
     GameButtons(Window &w, MousePosition &mousePosition, Renderer &renderer,
-                TextureLoader &textureLoader, CommandDispatcher &dispatcher);
+                TextureLoader &textureLoader, CommandDispatcher &dispatcher,
+                int &cmd);
     ~GameButtons();
-    void addTowerButtons(int key, int &cmd);
+    void addTowerButtons(int key);
     bool isAnyClicked();
     void draw();
 };

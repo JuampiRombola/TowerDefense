@@ -19,8 +19,8 @@ private:
     int mouse_x;
     int mouse_y;
     MousePosition mousePosition;
-    GameButtons buttons;
     int currentCommand;
+    GameButtons buttons;
 
 public:
     HudView(Window &w, TextureLoader &tl, Renderer &r,
