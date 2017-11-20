@@ -14,7 +14,7 @@ private:
     int cameraY; // y superior mostrado
     int paddingWidth;
     int paddingHeight;
-    int zoom;
+    double zoom;
     int windowWidth;
     int windowHeight;
 

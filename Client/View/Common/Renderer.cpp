@@ -73,13 +73,13 @@ void Renderer::updateCamera(int x, int y) {
 
     this->cameraX += (x * factor);
     if (cameraX < 0) cameraX = 0;
-    if (cameraX > (zoom * mapWidth + 2*PADDING - windowWidth))
-        cameraX = zoom * mapWidth + 2*PADDING - windowWidth;
+    if (cameraX > (ceil(zoom) * mapWidth + 2*PADDING - windowWidth))
+        cameraX = ceil(zoom) * mapWidth + 2*PADDING - windowWidth;
 
     this->cameraY += (y * factor);
     if (cameraY < 0) cameraY = 0;
-    if (cameraY > (zoom * mapHeight + 2*PADDING - windowHeight))
-        cameraY = zoom * mapHeight + 2*PADDING - windowHeight;
+    if (cameraY > (ceil(zoom) * mapHeight + 2*PADDING - windowHeight))
+        cameraY = ceil(zoom) * mapHeight + 2*PADDING - windowHeight;
 }
 
 SDL_Renderer *Renderer::getRenderer() {
@@ -95,14 +95,26 @@ int Renderer::cartesianToIsometricY(int x, int y) {
 }
 
 void Renderer::zoomIn() {
-    if (zoom < 5) {
+    if (zoom < 5 && zoom >= 1) {
         zoom += 1;
         cameraX += (windowWidth / 2 / zoom);
         cameraY += (windowHeight / 2 / zoom);
     }
+
+    if (zoom == 0.75)
+        zoom = 1;
+
+    if (zoom == 0.5)
+        zoom = 0.75;
 }
 
 void Renderer::zoomOut() {
+    if (zoom == 0.75)
+        zoom = 0.5;
+
+    if (zoom == 1)
+        zoom = 0.75;
+
     if (zoom > 1) {
         cameraX -= (windowWidth / 2 / zoom);
         cameraY -= (windowHeight / 2 / zoom);
