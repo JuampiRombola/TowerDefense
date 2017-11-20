@@ -89,5 +89,9 @@ enum CAST_SPELL_TYPE {
 #endif
 
 
+#define IN_GAME_CHAT_MESSAGE 209
+
+
+
 
 #endif

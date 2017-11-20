@@ -187,6 +187,10 @@ std::vector<Lobby*> ClientLobbyManager::GetLobbies(){
     return _lobbies;
 }
 
+std::string ClientLobbyManager::GetPlayerName(uint32_t guid){
+    OtherPlayer* p = *(GetOtherPlayer(guid));
+    return p->Name();
+}
 
 
 void ClientLobbyManager::HandlePickedSpell(){
@@ -239,6 +243,9 @@ void ClientLobbyManager::HandleOtherPlayerUnpickedSpell(){
 }
 
 void ClientLobbyManager::HandleLoginSuccess(){
+
+    _sock.Recieve((char*) &myGuid, 4);
+    myName = _sock.RecieveString();
 
     uint32_t lobbyCount = -1;
     _sock.Recieve((char*) &lobbyCount, 4);

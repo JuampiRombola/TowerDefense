@@ -27,6 +27,9 @@ void LoggedInNotification::SetPlayersToNotify(std::vector<PlayerProxy*>* players
 void LoggedInNotification::Notify(){
 	uint8_t opcode = LOG_IN_SUCCESS;
 	_player.SendByte(opcode);
+	_player.SendInt32(_player.GUID());
+	std::string pname = _player.Name();
+	_player.SendString(pname);
 	/** Notifico a este jugador acerca de todos los lobbies y jugadores y sus relaciones */
 
 	uint32_t lobbyCount = _lobbies.size();

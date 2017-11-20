@@ -98,6 +98,8 @@ public:
 
 	void PlayerLoadedGame(PlayerProxy& player);
 	void SendMapToPlayer(PlayerProxy& player);
+
+	void ChatMessageFrom(PlayerProxy& player);
 };
 
 #endif

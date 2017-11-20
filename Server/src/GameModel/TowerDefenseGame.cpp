@@ -25,6 +25,7 @@
 #include "../../include/GameModel/Commands/CastSpellCommand.h"
 #include "../../include/GameModel/GameNotifications/GameModelStartedRunningNotification.h"
 #include "../../include/GameModel/GameNotifications/MapTransferNotification.h"
+#include "../../include/GameModel/GameNotifications/ChatMessageNotification.h"
 
 TowerDefenseGame::TowerDefenseGame(uint gameId,
 	ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> playersInGame,
@@ -217,6 +218,13 @@ void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_
 void TowerDefenseGame::SendMapToPlayer(PlayerProxy& player){
 	notifications.Queue(new MapTransferNotification(_map, player));
 }
+
+void TowerDefenseGame::ChatMessageFrom(PlayerProxy& player){
+	std::string message = player.RecieveString();
+	notifications.Queue(new ChatMessageNotification(message, player, _players));
+}
+
+
 
 void TowerDefenseGame::PlayerLoadedGame(PlayerProxy& player){
 	std::lock_guard<std::mutex> lock(_gameStartMutex);

@@ -66,7 +66,6 @@ private:
 	void _LaunchGame(Lobby& lobby);
 	void _Stop();
 
-
 public:
 //El constructor inicia el socket en modo servidor.
 	explicit TFServer(std::string service);

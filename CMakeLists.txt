@@ -99,8 +99,10 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/GameNotifications/SpellCastedGameNotification.h
         Server/include/GameModel/GameNotifications/UnitPositionGameNotification.h
         Server/include/GameModel/GameNotifications/UnitDiedGameNotification.h
+        Server/include/GameModel/GameNotifications/ChatMessageNotification.h
         Server/include/GameModel/GameNotifications/TowerPlacedGameNotification.h
         Server/src/GameModel/GameNotifications/GameNotification.cpp
+        Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp
         Server/src/GameModel/GameNotifications/UnitDiedGameNotification.cpp
         Server/src/GameModel/GameNotifications/UnitPositionGameNotification.cpp
         Server/src/GameModel/GameNotifications/TowerPlacedGameNotification.cpp
@@ -132,7 +134,7 @@ set(SOURCE_FILES_SERVER
         Server/src/GameModel/ClientCooldownManager.cpp
         Server/include/GameModel/ClientCooldownManager.h
         Server/src/GameModel/GameNotifications/GameModelStartedRunningNotification.cpp
-        Server/include/GameModel/GameNotifications/GameModelStartedRunningNotification.h Server/src/GameModel/GameNotifications/MapTransferNotification.cpp Server/include/GameModel/GameNotifications/MapTransferNotification.h)
+        Server/include/GameModel/GameNotifications/GameModelStartedRunningNotification.h Server/src/GameModel/GameNotifications/MapTransferNotification.cpp Server/include/GameModel/GameNotifications/MapTransferNotification.h Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp Server/include/GameModel/GameNotifications/ChatMessageNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp
@@ -248,11 +250,13 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/NetCommands/LeaveLobbyCommand.cpp
         Client/src/NetCommands/LogInCommand.cpp
         Client/src/NetCommands/NetCommand.cpp
+        Client/src/NetCommands/ChatMessageCommand.cpp
         Client/src/NetCommands/PlayerIsReadyCommand.cpp
         Client/src/NetCommands/PickSpellCommand.cpp
         Client/src/NetCommands/ClientBuildTowerCommand.cpp
 
         Client/include/NetCommands/LoadMapCommand.h
+        Client/include/NetCommands/ChatMessageCommand.h
         Client/include/NetCommands/PlayerLoadedGameCommand.h
         Client/include/NetCommands/PickSpellCommand.h
         Client/include/NetCommands/ClientCastSpellCommand.h
@@ -371,7 +375,7 @@ set(SOURCE_FILES_EDITOR
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
-add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/PlayerLoadedGameCommand.cpp Client/include/NetCommands/PlayerLoadedGameCommand.h Client/src/NetCommands/LoadMapCommand.cpp Client/include/NetCommands/LoadMapCommand.h)
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/PlayerLoadedGameCommand.cpp Client/include/NetCommands/PlayerLoadedGameCommand.h Client/src/NetCommands/LoadMapCommand.cpp Client/include/NetCommands/LoadMapCommand.h Client/src/NetCommands/ChatMessageCommand.cpp Client/include/NetCommands/ChatMessageCommand.h)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
 
 

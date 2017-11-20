@@ -4,6 +4,7 @@
 #include "../Common/SpriteNamesConfig.h"
 #include "ViewConstants.h"
 #include "../../../Common/Lock.h"
+#include "../../include/NetCommands/ChatMessageCommand.h"
 
 #define FONT_PATH "../Resources/font.ttf"
 #define FONT_SIZE 10
@@ -55,22 +56,29 @@ ChatView::~ChatView() {
 }
 
 bool ChatView::isActive() {
+    Lock(this->mutex);
+
     return active;
 }
 
 void ChatView::enable() {
+    Lock(this->mutex);
+
     active = true;
     SDL_StartTextInput();
     dstRectIbeam.x = dstX - OFFSET_X_IBEAM;
 }
 
 void ChatView::disable() {
+    Lock(this->mutex);
+
     active = false;
     SDL_StopTextInput();
     if (!inputText.empty()) {
         // Reemplazar esta funcion por comando al servidor
         // dispatcher
-        this->addMessage(inputText);
+        this->dispatcher.QueueCommand(new ChatMessageCommand(inputText));
+        //this->addMessage(inputText);
     }
     inputText = "";
     if (input) delete input;
@@ -78,6 +86,8 @@ void ChatView::disable() {
 }
 
 void ChatView::erase() {
+    Lock(this->mutex);
+
     if (inputText.empty()) return;
     inputText.pop_back();
     if (inputText.empty())
@@ -86,6 +96,7 @@ void ChatView::erase() {
 }
 
 void ChatView::renderText() {
+    Lock(this->mutex);
     if (input) delete input;
     input = nullptr;
     if (inputText.empty()) return;
@@ -95,6 +106,8 @@ void ChatView::renderText() {
 }
 
 void ChatView::newInput(std::string &entry) {
+    Lock(this->mutex);
+    if (!active) return;
     if (inputText.size() >= MAX_LENGTH) return;
     inputText += entry;
     if (inputText.size() > MAX_LENGTH)
@@ -103,6 +116,8 @@ void ChatView::newInput(std::string &entry) {
 }
 
 void ChatView::draw() {
+    Lock(this->mutex);
+
     spriteBackground.drawEuclidian();
 
     if (active) {
@@ -119,6 +134,11 @@ void ChatView::draw() {
         (*it)->setDestXY(dstX, dstY-MSG_OFFSET-(TEXT_H * i++));
         (*it)->draw();
     }
+}
+
+void ChatView::MessageFrom(std::string &msg, std::string &playerName) {
+    std::string s = playerName + ": " + msg;
+    addMessage(s);
 }
 
 void ChatView::addMessage(std::string &m) {

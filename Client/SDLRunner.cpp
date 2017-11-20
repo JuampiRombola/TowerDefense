@@ -1,5 +1,6 @@
 #include "SDLRunner.h"
 #include "include/NetCommands/CommandDispatcher.h"
+#include "include/NetCommands/ChatMessageCommand.h"
 #include "include/NotificationReciever.h"
 #include "include/ClientSocket.h"
 #include "View/Model/ModelView.h"
@@ -25,9 +26,7 @@ SDLRunner::~SDLRunner() {
     delete _dispatcher;
     delete _reciever;
     delete _lobbyManager;
-    std::cout << "lobbymanager deleted\n" << std::flush;
     delete _sock;
-    std::cout << "sock deleted\n" << std::flush;
 }
 
 void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* reciever, ClientLobbyManager* lobbyManager, ClientSocket* sock)
@@ -44,10 +43,12 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     Renderer renderer(window, _mapWidth, _mapHeight);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
     ModelView modelView(renderer, textureLoader);
+    ChatView chat(*_dispatcher, window, renderer, textureLoader);
+
     _reciever->model_view =  &modelView;
+    _reciever->chat_view = &chat;
     _dispatcher->QueueCommand(new LoadMapCommand());
 
-    ChatView chat(*_dispatcher, window, renderer, textureLoader);
     modelView.setMapEnvironment(PRADERA);
     modelView.setMapWidthHeight(_mapWidth, _mapHeight);
 
@@ -95,12 +96,6 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                     else
                         renderer.zoomOut();
                     break;
-                case SDL_TEXTINPUT:
-                    if (chat.isActive()) {
-                        std::string text(event.text.text);
-                        chat.newInput(text);
-                    }
-                    break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
                         case SDLK_RETURN:
@@ -125,6 +120,16 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                             renderer.updateCamera(0, 1); break;
                         default: break;
                     }
+                    break;
+                case SDL_TEXTINPUT:
+                    if (chat.isActive() ) {
+                        std::string text(event.text.text);
+                        if (text[0] != '\n')
+                        {
+                            chat.newInput(text);
+                        }
+                    }
+                    break;
             }
             hudView.doMouseAction();
         }

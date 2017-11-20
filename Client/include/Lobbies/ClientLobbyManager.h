@@ -41,11 +41,13 @@ public:
 	void HandleOtherPlayerUnpickedSpell();
 
 	std::vector<Lobby*> GetLobbies();
-
+	std::string GetPlayerName(uint32_t guid);
 	bool fireHUDEnabled;
 	bool waterHUDEnabled;
 	bool airHUDEnabled;
 	bool groundHUDEnabled;
+	std::string myName;
+	uint32_t myGuid;
 };
 
 #endif

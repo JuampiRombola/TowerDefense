@@ -125,6 +125,21 @@ void NotificationReciever::RecieveNotifications(){
 					_dispatcher.Disable();
 				}
 				break;
+			case IN_GAME_CHAT_MESSAGE:
+			{
+				uint32_t pguid;
+				_sock.Recieve((char*) &pguid, 4);
+				std::string message = _sock.RecieveString();
+
+                if (pguid == _lobbyManager.myGuid){
+                    chat_view->MessageFrom(message, _lobbyManager.myName);
+                } else {
+                    std::string playerName = _lobbyManager.GetPlayerName(pguid);
+                    chat_view->MessageFrom(message, playerName);
+                }
+				break;
+			}
+
 			default:
 				std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << ", ( " << (int) opcode << ")\'" << std::flush;
 		}
@@ -271,11 +286,11 @@ void NotificationReciever::_HandleUnitPositionUpdate(){
     _sock.Recieve((char *) &toy, 4);
     uint32_t delay_ms ;
     _sock.Recieve((char *) &delay_ms, 4);
-	
+
 	std::cout << "unit move x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
 	if (tox == 0xFFFFFFFF || toy == 0xFFFFFFFF)
 		return;
-	
+
 	model_view->moveUnit(unitID, x, y, tox, toy, delay_ms);
 }
 void NotificationReciever::_HandleUnitCreated(){

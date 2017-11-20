@@ -102,6 +102,7 @@ void TFServer::_HandlePlayerLoadMap(PlayerProxy& player){
 }
 
 
+
 void TFServer::HandleConnection(PlayerProxy& player){
 	uint8_t opcode;
 	try
@@ -140,8 +141,10 @@ void TFServer::HandleConnection(PlayerProxy& player){
 					_HandlePlayerLoadMap(player);
 					break;
 				case CLIENT_LOADED_GAME:
-				std::cout << "CLIENT LOADED GAME \n " << std::flush;
 					_HandleClientLoadedGame(player);
+					break;
+				case IN_GAME_CHAT_MESSAGE:
+					_player2game[&player]->ChatMessageFrom(player);
 					break;
 				default:
 					std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << "'\n" << std::flush;
