@@ -9,12 +9,19 @@
 
 
 LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
-: _lobbiesMutex(), _lobbies(), _lobbyGUID(0), _notifications(notifications) {
-	
+: _lobbiesMutex(), _lobbies(), _lobbyGUID(0), _notifications(notifications), _mapCfgs()
+{
+	//Levantar de archivo todas las configuraciones de MAPA!!!
+	std::string uniquemapname = "mapa.yaml";
+	_mapCfgs.push_back(new GameConfiguration(uniquemapname));
 }
 
 LobbyManager::~LobbyManager(){
 	for (auto it = _lobbies.begin(); it != _lobbies.end(); ++it){
+		delete (*it);
+	}
+
+	for (auto it = _mapCfgs.begin(); it != _mapCfgs.end(); ++it){
 		delete (*it);
 	}
 }
@@ -147,10 +154,11 @@ void LobbyManager::_CreateNewLobby(std::string& lobbyName){
 	}
 
 	if (!found){
-		_lobbies.push_back(new Lobby(lobbyName, ++_lobbyGUID, _notifications));
+		Lobby* newLobby = new Lobby(lobbyName, ++_lobbyGUID, _notifications);
+		newLobby->MapCfg = *(_mapCfgs.begin());
+		_lobbies.push_back(newLobby);
 		Notification* noti = new NewLobbyNotification(*_lobbies.back());
 		_notifications.Queue(noti);
 		std::cout << "new lobby notification queed \n";
 	}
-
 }

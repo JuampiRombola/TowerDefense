@@ -17,8 +17,8 @@
 
 
 TFServer::TFServer(std::string service) : _playerGUID(1),_connectionHandlers(),_playerProxies(),
-_connectionHandlersMutex(), _acceptingConnsMutex(),  _playersProxiesMutex(), _gamesMutex(), _isAcceptingConnections(false),
-_lobbyManager(_notifications), _server(service), _notifications(), _gameNotifications(), _games(), _player2game() {
+ _connectionHandlersMutex(), _acceptingConnsMutex(),  _playersProxiesMutex(), _gamesMutex(), _isAcceptingConnections(false),
+ _lobbyManager(_notifications), _server(service), _notifications(), _gameNotifications(), _games(), _player2game() {
 }
 
 TFServer::~TFServer(){
@@ -97,6 +97,11 @@ void TFServer::_HandleClientLoadedGame(PlayerProxy& player){
 	game->PlayerLoadedGame(player);
 }
 
+void TFServer::_HandlePlayerLoadMap(PlayerProxy& player){
+	_player2game[&player]->SendMapToPlayer(player);
+}
+
+
 void TFServer::HandleConnection(PlayerProxy& player){
 	uint8_t opcode;
 	try
@@ -130,6 +135,9 @@ void TFServer::HandleConnection(PlayerProxy& player){
 					break;
 				case GAME_OPCODE:
 					_HandleGameCommand(player);
+					break;
+				case LOAD_MAP:
+					_HandlePlayerLoadMap(player);
 					break;
 				case CLIENT_LOADED_GAME:
 				std::cout << "CLIENT LOADED GAME \n " << std::flush;
@@ -188,7 +196,9 @@ void TFServer::_LaunchGame(Lobby& lobby){
 	static int gameId = 1;
 	std::lock_guard<std::mutex> lock(_gamesMutex);
 	std::vector<PlayerProxy*> playersInGame = lobby.GetPlayingPlayers();
-	TowerDefenseGame* game = new TowerDefenseGame(gameId++, _gameNotifications, playersInGame);
+
+
+	TowerDefenseGame* game = new TowerDefenseGame(gameId++, _gameNotifications, playersInGame, *(lobby.MapCfg));
 	for (auto it = playersInGame.begin(); it != playersInGame.end(); ++it){
 		_player2game[(*it)] = game;
 	}

@@ -8,8 +8,10 @@
 #define INVALID_INDEX "Se esta tratandod de acceder a una posicion invalida de DepthLevel"
 
 ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader) :
-        renderer(renderer), textureLoader(textureLoader),
-        map(0, 0, 0, renderer, textureLoader) {
+renderer(renderer), textureLoader(textureLoader),
+map(0, 0, 0, renderer, textureLoader), mapLoaded(false), mapLoadedMutex(), mapLoadedCondVariable()
+{
+
 }
 
 ModelView::~ModelView() {

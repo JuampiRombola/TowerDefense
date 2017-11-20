@@ -20,7 +20,9 @@
 
 
 ClientLobbyManager::ClientLobbyManager(SocketWrapper& _sock, GTKRunner& runner)
-: _sock(_sock), _lobbies(), _otherPlayers(), _joinedLobby(nullptr), _runner(runner) {
+: _sock(_sock), _lobbies(), fireHUDEnabled(false), waterHUDEnabled(false),
+ airHUDEnabled(false),  groundHUDEnabled(false),
+  _otherPlayers(), _joinedLobby(nullptr), _runner(runner) {
 
 }
 
@@ -191,6 +193,11 @@ void ClientLobbyManager::HandlePickedSpell(){
     uint8_t spell;
     _sock.Recieve((char*) &spell, 1);
     SPELL_TYPE spelltype = (SPELL_TYPE) spell;
+    groundHUDEnabled |= spelltype == SPELL_TYPE_GROUND;
+    fireHUDEnabled |= spelltype == SPELL_TYPE_FIRE;
+    waterHUDEnabled |= spelltype == SPELL_TYPE_WATER;
+    airHUDEnabled |= spelltype == SPELL_TYPE_AIR;
+
     _runner.gtkNotifications.Queue(new PickedSpellGTKNotification(spelltype, true));
     g_idle_add(GTKRunner::notification_check, &_runner);
 }
@@ -199,6 +206,10 @@ void ClientLobbyManager::HandleUnpickedSpell(){
     uint8_t spell;
     _sock.Recieve((char*) &spell, 1);
     SPELL_TYPE spelltype = (SPELL_TYPE) spell;
+    groundHUDEnabled &= spelltype != SPELL_TYPE_GROUND;
+    fireHUDEnabled &= spelltype != SPELL_TYPE_FIRE;
+    waterHUDEnabled &= spelltype != SPELL_TYPE_WATER;
+    airHUDEnabled &= spelltype != SPELL_TYPE_AIR;
     _runner.gtkNotifications.Queue(new PickedSpellGTKNotification(spelltype, false));
     g_idle_add(GTKRunner::notification_check, &_runner);
 }

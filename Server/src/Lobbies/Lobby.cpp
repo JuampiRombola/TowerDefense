@@ -16,7 +16,9 @@ Lobby::Lobby(std::string name, uint guid, ThreadSafeQueue<Notification*>& notifi
  : _playersMutex(), _playerSpellsSlotsMutex(),_readyPlayersMutex(), _gameEnabledMutex(), _guid(guid),
    _name(name), _players(), _notifications(notifications),
    _firePlayer(nullptr),_airPlayer(nullptr), _groundPlayer(nullptr),
-   _waterPlayer(nullptr), _readyPlayers(), _playingPlayers(), _gameEnabled(false){
+   _waterPlayer(nullptr), _readyPlayers(), _playingPlayers(), _gameEnabled(false)
+{
+
 }
 
 Lobby::~Lobby(){
@@ -56,7 +58,11 @@ void Lobby::PlayerIsReady(PlayerProxy &player) {
 
 		std::lock_guard<std::mutex> lock4(_gameEnabledMutex);
 		_gameEnabled = true;
-		_notifications.Queue(new GameStartedNotification(*this));
+
+		uint superficie = MapCfg->Cfg["superficie"].as<uint>();
+		uint width = MapCfg->Cfg["ancho"].as<uint>();
+		uint height = MapCfg->Cfg["alto"].as<uint>();
+		_notifications.Queue(new GameStartedNotification(*this, superficie, width, height));
 	}
 }
 

@@ -85,6 +85,9 @@ public:
     GtkCheckButton *check_water;
     gulong check_water_handler_id;
 
+    uint8_t MapSurface;
+    uint32_t MapWidth;
+    uint32_t MapHeight;
 
     void Run(int* argc, char***argv);
 

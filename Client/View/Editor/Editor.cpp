@@ -311,6 +311,8 @@ std::string Editor::exportarMapa() {
                                                     "portal de salida.");
         mapToString << " - x: " << tileActual.first << "\n";
         mapToString << "   y: " << tileActual.second << "\n";
+        mapToString << "   x_sig: -1\n";
+        mapToString << "   y_sig: -1\n";
     }
     return mapToString.str();
 }

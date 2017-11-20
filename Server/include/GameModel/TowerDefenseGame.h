@@ -66,9 +66,11 @@ private:
     ClientCooldownManager* _clientCooldownManager;
 
 public:
-	TowerDefenseGame(uint gameId, ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> _players);
+	TowerDefenseGame(uint gameId, ThreadSafeQueue<GameNotification*>& notifications,
+					 std::vector<PlayerProxy*> _players, GameConfiguration& mapCfg);
 	~TowerDefenseGame();
-	void Run(PlayerProxy* fireplayer, PlayerProxy* airplayer, PlayerProxy* waterplayer, PlayerProxy* groundplayer);
+	void Run(PlayerProxy* fireplayer, PlayerProxy* airplayer,
+			 PlayerProxy* waterplayer, PlayerProxy* groundplayer);
 	void Stop();
 	bool Ended();
 
@@ -95,6 +97,7 @@ public:
 
 
 	void PlayerLoadedGame(PlayerProxy& player);
+	void SendMapToPlayer(PlayerProxy& player);
 };
 
 #endif

@@ -24,28 +24,22 @@
 #include "../../include/GameModel/GameNotifications/UnitDiedGameNotification.h"
 #include "../../include/GameModel/Commands/CastSpellCommand.h"
 #include "../../include/GameModel/GameNotifications/GameModelStartedRunningNotification.h"
+#include "../../include/GameModel/GameNotifications/MapTransferNotification.h"
 
 TowerDefenseGame::TowerDefenseGame(uint gameId,
-	ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> playersInGame) :
+	ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> playersInGame,
+    GameConfiguration& mapCfg) :
 	_gameStartMutex(), _gameStartCondVariable(), _canGameStart(false),
 	_endedMutex(), _commandQueueMutex(), _commands(),_executedCommandQueueMutex(),
 	_executedCommands(), _gameStateMutex(),
 	 _gameId(gameId),
 	_ended(false), _stopped(false), _steps(0), _enemyIdCounter(0), _units(),
-	_map(9, 9, "map.yaml"), notifications(notifications), _players(playersInGame), _ingamePlayers()
+	_map(mapCfg.Cfg["ancho"].as<uint>(), mapCfg.Cfg["alto"].as<uint>(), mapCfg), notifications(notifications),
+	_players(playersInGame), _ingamePlayers()
 {
 	std::string ss("../config.yaml");
 	GameCfg = new GameConfiguration(ss);
     _clientCooldownManager = new ClientCooldownManager(*GameCfg);
-//	mv->createTower(1, TORRE_TIERRA, 2, 0);
-//	mv->createTower(2, TORRE_AIRE, 2, 2);
-//	mv->createTower(3, TORRE_FUEGO, 1, 4);
-//	mv->createTower(4, TORRE_AGUA, 4, 6);
-
-	//this->QueueCommand(new BuildTowerCommand(Ground, 2, 0));
-	//this->QueueCommand(new BuildTowerCommand(Air, 2, 2));
-	//this->QueueCommand(new BuildTowerCommand(Fire, 1, 4));
-	//this->QueueCommand(new BuildTowerCommand(Water, 4, 6));
 }
 
 TowerDefenseGame::~TowerDefenseGame()
@@ -220,6 +214,9 @@ void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_
 	QueueCommand(new CastSpellCommand(type, x, y));
 }
 
+void TowerDefenseGame::SendMapToPlayer(PlayerProxy& player){
+	notifications.Queue(new MapTransferNotification(_map, player));
+}
 
 void TowerDefenseGame::PlayerLoadedGame(PlayerProxy& player){
 	std::lock_guard<std::mutex> lock(_gameStartMutex);
@@ -288,7 +285,7 @@ bool TowerDefenseGame::_Step(){
 
 	_steps = _steps + 1;
 
-	uint32_t spawnrandomenemyevery_ms = 500;
+	uint32_t spawnrandomenemyevery_ms = GameCfg->Cfg["spawn_units_every_ms"].as<uint>();
 	if (actualTs - ts > spawnrandomenemyevery_ms){
 		ts = actualTs;
 		_SpawnRandomEnemy();

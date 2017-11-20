@@ -61,6 +61,7 @@ private:
 	void _SetIsAcceptingConnections();
 	void _HandleLogin(PlayerProxy& player);
 	void _HandleGameCommand(PlayerProxy& player);
+	void _HandlePlayerLoadMap(PlayerProxy& player);
 	void _HandleClientLoadedGame(PlayerProxy& player);
 	void _LaunchGame(Lobby& lobby);
 	void _Stop();

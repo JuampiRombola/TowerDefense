@@ -19,6 +19,8 @@ private:
 	std::vector<Lobby*> _lobbies;
 	uint _lobbyGUID;
 	ThreadSafeQueue<Notification*>& _notifications;
+	std::vector<GameConfiguration*> _mapCfgs;
+
 	void _CreateNewLobby(std::string& lobbyName);
 
 public:

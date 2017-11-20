@@ -2,6 +2,7 @@
 #define TOWERDEFENSE_DEPTHLEVEL_H
 
 #include <list>
+#include <mutex>
 #include "TowerView.h"
 #include "SpellView.h"
 #include "PortalView.h"
@@ -9,6 +10,9 @@
 
 class DepthLevel {
 private:
+    std::mutex _unitsMutex;
+    std::mutex _spellsMutex;
+    std::mutex _towersMutex;
     PortalView *portalEntrada;
     PortalView *portalSalida;
     std::list<SpellView *> spells;

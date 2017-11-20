@@ -1,3 +1,4 @@
+spawn_units_every_ms: 500
 unit_base_step_delay_ms: 3000
 towers:
  ground:

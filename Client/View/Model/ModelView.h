@@ -6,10 +6,10 @@
 #include "MapView.h"
 #include "DepthLevel.h"
 #include <mutex>
-
 #include <map>
 #include <list>
 #include <vector>
+#include <condition_variable>
 
 class ModelView {
 private:
@@ -41,6 +41,9 @@ public:
     void moveUnit(int id, int x, int y, int toX, int toY, Uint32 t);
     void killUnit(int id);
 
+    bool mapLoaded;
+    std::mutex mapLoadedMutex;
+    std::condition_variable mapLoadedCondVariable;
 private:
     void checkIndexDepthLevel(int key);
 };

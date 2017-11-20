@@ -132,7 +132,7 @@ set(SOURCE_FILES_SERVER
         Server/src/GameModel/ClientCooldownManager.cpp
         Server/include/GameModel/ClientCooldownManager.h
         Server/src/GameModel/GameNotifications/GameModelStartedRunningNotification.cpp
-        Server/include/GameModel/GameNotifications/GameModelStartedRunningNotification.h)
+        Server/include/GameModel/GameNotifications/GameModelStartedRunningNotification.h Server/src/GameModel/GameNotifications/MapTransferNotification.cpp Server/include/GameModel/GameNotifications/MapTransferNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp
@@ -240,6 +240,7 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/include/Lobbies/Lobby.h
 
         Client/src/NetCommands/CommandDispatcher.cpp
+        Client/src/NetCommands/LoadMapCommand.cpp
         Client/src/NetCommands/PlayerLoadedGameCommand.cpp
         Client/src/NetCommands/ClientCastSpellCommand.cpp
         Client/src/NetCommands/CreateLobbyCommand.cpp
@@ -251,6 +252,7 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/NetCommands/PickSpellCommand.cpp
         Client/src/NetCommands/ClientBuildTowerCommand.cpp
 
+        Client/include/NetCommands/LoadMapCommand.h
         Client/include/NetCommands/PlayerLoadedGameCommand.h
         Client/include/NetCommands/PickSpellCommand.h
         Client/include/NetCommands/ClientCastSpellCommand.h
@@ -369,7 +371,7 @@ set(SOURCE_FILES_EDITOR
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
-add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/PlayerLoadedGameCommand.cpp Client/include/NetCommands/PlayerLoadedGameCommand.h)
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/PlayerLoadedGameCommand.cpp Client/include/NetCommands/PlayerLoadedGameCommand.h Client/src/NetCommands/LoadMapCommand.cpp Client/include/NetCommands/LoadMapCommand.h)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
 
 
