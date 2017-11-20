@@ -57,3 +57,7 @@ int Sprite::getOffsetY() {
 void Sprite::setAlphaMod(Uint8 alpha) {
     SDL_SetTextureAlphaMod(texture, alpha);
 }
+
+void Sprite::drawEuclidian() {
+    renderer.copyEuclidean(texture, &srcRect, &dstRect);
+}

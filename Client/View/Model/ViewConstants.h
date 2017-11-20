@@ -13,6 +13,7 @@
 #define ELEMENTAL_AIR 3
 
 #define CMD_EARTH_TOWER 0
+
 #define CMD_FIRE_TOWER 1
 #define CMD_WATER_TOWER 2
 #define CMD_AIR_TOWER 3
