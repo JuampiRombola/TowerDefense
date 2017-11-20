@@ -14,6 +14,8 @@
 #define LOG_IN_FAILED 21
 #define LOG_IN_SUCCESS 22
 
+#define CLIENT_LOADED_GAME 23
+
 #define NEW_TOWER 30
 #define WATER_TOWER 31
 #define FIRE_TOWER 32

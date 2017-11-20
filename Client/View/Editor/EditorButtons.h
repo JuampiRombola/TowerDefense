@@ -36,6 +36,7 @@ private:
     TextureLoader &textureLoader;
     void addEnemigoButton(int horda, std::string enemigoKey, int texture);
     void addTiempoEntreHorda(int horda);
+    int hordaToDelete;
 public:
     EditorButtons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
                 TextureLoader &textureLoader);

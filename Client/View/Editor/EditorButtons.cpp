@@ -10,7 +10,7 @@
 EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer,
                              Editor &editor, TextureLoader &textureLoader)
         : mousePosition(mousePosition), padding(0), renderer(renderer),
-          editor(editor), textureLoader(textureLoader) {}
+          editor(editor), textureLoader(textureLoader) , hordaToDelete(-1){}
 
 
 EditorButtons::~EditorButtons() {
@@ -23,6 +23,17 @@ void EditorButtons::draw() {
     for (Image *image : images) {
         image->draw(i, padding);
         i++;
+    }
+    if (hordaToDelete >= 0){
+        for (auto it = images.begin(); it != images.end();) {
+            if ((*it)->belongsToHorda(hordaToDelete)) {
+                delete *it;
+                it = images.erase(it);
+            } else {
+                it++;
+            }
+        }
+        hordaToDelete = -1;
     }
 }
 
@@ -136,7 +147,7 @@ void EditorButtons::addEnemigosButton(int horda) {
     addEnemigoButton(horda, NO_MUERTO_KEY, NO_MUERTO_EDITOR);
     addEnemigoButton(horda, HOMBRE_CABRA_KEY, HOMBRE_CABRA_EDITOR);
     addTiempoEntreHorda(horda);
-    /*Image *eliminarHordaButton = new EliminarHordaButton(horda,
+    Image *eliminarHordaButton = new EliminarHordaButton(horda,
                                                          textureLoader.getTexture(
                                                                  ELIMINAR_HORDA_BTN),
                                                          mousePosition,
@@ -144,7 +155,7 @@ void EditorButtons::addEnemigosButton(int horda) {
                                                          std::bind(
                                                                  &EditorButtons::deleteButtonsOfHorda,
                                                                  this, _1));
-    images.push_back(eliminarHordaButton);*/
+    images.push_back(eliminarHordaButton);
 }
 
 void EditorButtons::addEnemigoButton(int horda, std::string enemigoKey,
@@ -202,29 +213,15 @@ void EditorButtons::addTiempoEntreHorda(int horda) {
 }
 
 void EditorButtons::deleteButtonsOfHorda(int horda) {
-    /*std::cout << "Hay " << images.size() << " images\n";
-    std::list<Image*> hordaImages;
-    auto itInicial = images.begin();
-    while (!(*itInicial)->belongsToHorda(horda))
-        ++itInicial;
-    auto itFinal = itInicial;
-    std::advance(itFinal, HORDA_TOTAL_BUTTONS);
-    hordaImages.splice(hordaImages.begin(), images, itInicial, itFinal);
-    std::cout << "Saco " << hordaImages.size() << " images\n";
-    std::cout << "Termina habiendo " << images.size() << " images\n";
-    for (Image* image : hordaImages) {
-        delete image;
-    }
-    std::cout << "Termino de deletear\n";*/
-    auto it = images.begin();
-    for (auto &image : images) {
-        if (image->belongsToHorda(horda)) {
+    /*for (auto it = images.begin(); it != images.end();) {
+        if ((*it)->belongsToHorda(horda)) {
             delete *it;
             it = images.erase(it);
         } else {
             it++;
         }
-    }
+    }*/
+    hordaToDelete = horda;
 }
 
 bool EditorButtons::isAnyClicked() {

@@ -92,9 +92,14 @@ void TFServer::RunServer(){
 }
 
 
+void TFServer::_HandleClientLoadedGame(PlayerProxy& player){
+	TowerDefenseGame* game = _player2game[&player];
+	game->PlayerLoadedGame(player);
+}
+
 void TFServer::HandleConnection(PlayerProxy& player){
 	uint8_t opcode;
-	try 
+	try
 	{
 		while (true){
 			opcode = player.RecieveByte();
@@ -126,6 +131,9 @@ void TFServer::HandleConnection(PlayerProxy& player){
 				case GAME_OPCODE:
 					_HandleGameCommand(player);
 					break;
+				case CLIENT_LOADED_GAME:
+					_HandleClientLoadedGame(player);
+					break;
 				default:
 					std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << "'\n" << std::flush;
 			}
@@ -142,14 +150,17 @@ void TFServer::HandleConnection(PlayerProxy& player){
 			playerProxy->state = DEAD;
 		}
 		std::cerr << e.what() << '\n';
-	}		
+	}
 }
 
-void TFServer::_HandleGameCommand(PlayerProxy& player){
-    TowerDefenseGame* game = _player2game[&player];
-    uint8_t ins = player.RecieveByte();
 
-    if (ins == CLIENT_CAST_SPELL){
+
+
+void TFServer::_HandleGameCommand(PlayerProxy& player){
+	TowerDefenseGame* game = _player2game[&player];
+	uint8_t ins = player.RecieveByte();
+
+	if (ins == CLIENT_CAST_SPELL){
 		std::cout << "CLIENT CASTED SPELL\n " << std::flush;
 		uint8_t spelltype = player.RecieveByte();
 		uint32_t x = player.RecieveInt32();
@@ -157,7 +168,7 @@ void TFServer::_HandleGameCommand(PlayerProxy& player){
 
 		game->HandleClientSpellCommand(player, (CAST_SPELL_TYPE) spelltype, x, y );
 
-    }
+	}
 
 	if (ins == CLIENT_CREATE_TOWER){
 		uint8_t spelltype = player.RecieveByte();
@@ -168,6 +179,9 @@ void TFServer::_HandleGameCommand(PlayerProxy& player){
 
 	}
 }
+
+
+
 
 void TFServer::_LaunchGame(Lobby& lobby){
 	static int gameId = 1;
