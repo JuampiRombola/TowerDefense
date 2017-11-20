@@ -185,7 +185,7 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/SpellButton.cpp
         Client/View/Model/SpellButton.h
         Client/src/NetCommands/ClientBuildTowerCommand.cpp
-        Client/include/NetCommands/ClientBuildTowerCommand.h Client/View/Model/ChatView.cpp Client/View/Model/ChatView.h Client/View/Model/DepthLevelError.cpp Client/View/Model/DepthLevelError.h)
+        Client/include/NetCommands/ClientBuildTowerCommand.h Client/View/Model/ChatView.cpp Client/View/Model/ChatView.h Client/View/Model/DepthLevelError.cpp Client/View/Model/DepthLevelError.h Client/View/Model/TextView.cpp Client/View/Model/TextView.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK

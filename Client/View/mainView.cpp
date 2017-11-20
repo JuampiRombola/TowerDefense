@@ -136,7 +136,7 @@ int main(int argc, char** argv) {
     hudView.addElementalButtons(ELEMENTAL_WATER);
     hudView.addElementalButtons(ELEMENTAL_AIR);
 
-    ChatView chat(window, renderer, textureLoader);
+    ChatView chat(cmdDispatcher, window, renderer, textureLoader);
 
     Uint32 t1;
     Uint32 t2;
@@ -169,7 +169,7 @@ int main(int argc, char** argv) {
                 case SDL_TEXTINPUT: {
                     if (chat.isActive()) {
                         std::string text(event.text.text);
-                        chat.input(text);
+                        chat.newInput(text);
                     }
                     break;
                 }
