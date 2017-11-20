@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "DepthLevel.h"
 
 DepthLevel::DepthLevel() : portalEntrada(nullptr), portalSalida(nullptr) {}
@@ -56,18 +57,33 @@ void DepthLevel::draw(Uint32 time) {
     if (portalEntrada) portalEntrada->draw(time);
 
     //Remuevo las unidades que ya estan muertas
-    auto it = units.begin();
-    while (it != units.end()) {
+   /* for (auto it = units.begin(); it != units.end(); ){
         if ((*it)->isDead()) {
             delete (*it);
             it = units.erase(it);
-        } else
+        } else {
+            (*it)->draw(time);
             ++it;
-    }
+        }
+    }*/
 
-    // Dibujo unidades
-    for (auto unit : units)
-        unit->draw(time);
+
+    units.erase(std::remove_if(units.begin(),
+                              units.end(),
+                              [](UnitView* x)
+                               
+                               {
+                                   if (x->isDead()){
+                                       delete x;
+                                       return true;
+                                   }
+                                   return false;}),
+               units.end());
+    
+    for (auto it = units.begin(); it != units.end(); ++it){
+        (*it)->draw(time);
+    }
+    
         
     // Dibujo torres
     for (auto tower : towers)

@@ -132,6 +132,7 @@ void TFServer::HandleConnection(PlayerProxy& player){
 					_HandleGameCommand(player);
 					break;
 				case CLIENT_LOADED_GAME:
+				std::cout << "CLIENT LOADED GAME \n " << std::flush;
 					_HandleClientLoadedGame(player);
 					break;
 				default:

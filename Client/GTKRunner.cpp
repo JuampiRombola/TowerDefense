@@ -166,8 +166,8 @@ void GTKRunner::connect_clicked(GtkWidget* widget, gpointer data){
     runner->sock = new ClientSocket(ip, port);
     if (runner->sock->Connected()){
         runner->lobbyManager = new ClientLobbyManager(*runner->sock, *runner);
-        runner->reciever = new NotificationReciever(*runner->sock, *runner->lobbyManager, *runner);
         runner->dispatcher = new CommandDispatcher(*runner->sock);
+        runner->reciever = new NotificationReciever(*runner->sock, *runner->lobbyManager, *runner, *(runner->dispatcher));
         runner->dispatcher->Run();
         runner->reciever->Run();
         gtk_widget_hide (GTK_WIDGET(runner->window_connect));

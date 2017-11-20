@@ -5,8 +5,8 @@
 #include "../include/GTKNotifications/GameStartedGTKNotification.h"
 #include "../View/Common/SpriteNamesConfig.h"
 
-NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner)
-: _sock(socket), _lobbyManager(lobbyManager),  _runner(runner), _stop(false) {
+NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner, CommandDispatcher& dispatcher)
+: _sock(socket), _lobbyManager(lobbyManager),  _runner(runner), _dispatcher(dispatcher), _stop(false) {
 	
 }
 
@@ -87,6 +87,9 @@ void NotificationReciever::RecieveNotifications(){
 			case GAME_OPCODE:
 				std::cout << "GAME_OPCODE::\n" << std::flush;
 				_HandleGameOpcode();
+				break;
+			case GAME_MODEL_STARTED_RUNNING:
+				_dispatcher.Enable();
 				break;
 			default:
 				std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << ", ( " << (int) opcode << ")\'" << std::flush;
