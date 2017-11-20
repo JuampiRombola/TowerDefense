@@ -10,6 +10,7 @@
 #include "SDLNotifications/SDLNotification.h"
 #include "NonBlockingThreadSafeQueue.h"
 #include "../View/Model/ModelView.h"
+#include "NetCommands/CommandDispatcher.h"
 
 class NotificationReciever : public std::thread
 {
@@ -19,6 +20,7 @@ private:
 	ClientLobbyManager& _lobbyManager;
 	std::thread _thread;
 	GTKRunner& _runner;
+	CommandDispatcher& _dispatcher;
 	bool _stop;
 	bool _Stop();
 	void _HandleGameOpcode();
@@ -28,7 +30,9 @@ private:
 	void _HandleProjectileFired();
 	void _HandleSpellCasted();
 public:
-	NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner);
+	NotificationReciever(SocketWrapper& socket,
+						 ClientLobbyManager& lobbyManager, GTKRunner& runner,
+						 CommandDispatcher& dispatcher);
 	~NotificationReciever();
 	void RecieveNotifications();
 	void Run();

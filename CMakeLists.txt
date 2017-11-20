@@ -128,7 +128,11 @@ set(SOURCE_FILES_SERVER
         Server/src/GameModel/GameNotifications/GameOverGameNotification.cpp
         Server/include/GameModel/GameNotifications/GameOverGameNotification.h
         Server/src/GameModel/GameNotifications/ProjectileFiredGameNotification.cpp
-        Server/include/GameModel/GameNotifications/ProjectileFiredGameNotification.h Server/src/GameModel/ClientCooldownManager.cpp Server/include/GameModel/ClientCooldownManager.h)
+        Server/include/GameModel/GameNotifications/ProjectileFiredGameNotification.h
+        Server/src/GameModel/ClientCooldownManager.cpp
+        Server/include/GameModel/ClientCooldownManager.h
+        Server/src/GameModel/GameNotifications/GameModelStartedRunningNotification.cpp
+        Server/include/GameModel/GameNotifications/GameModelStartedRunningNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp
@@ -185,7 +189,13 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/SpellButton.cpp
         Client/View/Model/SpellButton.h
         Client/src/NetCommands/ClientBuildTowerCommand.cpp
-        Client/include/NetCommands/ClientBuildTowerCommand.h Client/View/Model/ChatView.cpp Client/View/Model/ChatView.h Client/View/Model/DepthLevelError.cpp Client/View/Model/DepthLevelError.h Client/View/Model/TextView.cpp Client/View/Model/TextView.h)
+        Client/include/NetCommands/ClientBuildTowerCommand.h
+        Client/View/Model/ChatView.cpp
+        Client/View/Model/ChatView.h
+        Client/View/Model/DepthLevelError.cpp
+        Client/View/Model/DepthLevelError.h
+        Client/View/Model/TextView.cpp
+        Client/View/Model/TextView.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -265,7 +275,9 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/include/GTKNotifications/LogInFailedGtkNotification.h
         Client/src/GTKNotifications/LogInFailedGtkNotification.cpp
 
-        Client/include/NonBlockingThreadSafeQueue.h Client/src/GTKNotifications/PlayerJoinedLobbyGTKNotification.cpp Client/include/GTKNotifications/PlayerJoinedLobbyGTKNotification.h)
+        Client/include/NonBlockingThreadSafeQueue.h
+        Client/src/GTKNotifications/PlayerJoinedLobbyGTKNotification.cpp
+        Client/include/GTKNotifications/PlayerJoinedLobbyGTKNotification.h)
 
 
 set(SOURCE_FILES_EDITOR

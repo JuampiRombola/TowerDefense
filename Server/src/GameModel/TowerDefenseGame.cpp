@@ -23,6 +23,7 @@
 #include "../../include/GameModel/GameNotifications/GameOverGameNotification.h"
 #include "../../include/GameModel/GameNotifications/UnitDiedGameNotification.h"
 #include "../../include/GameModel/Commands/CastSpellCommand.h"
+#include "../../include/GameModel/GameNotifications/GameModelStartedRunningNotification.h"
 
 TowerDefenseGame::TowerDefenseGame(uint gameId,
 	ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> playersInGame) :
@@ -257,16 +258,6 @@ void TowerDefenseGame::HandleClientBuildTowerCommand(PlayerProxy& player, SPELL_
 	}
 }
 
-/*
-Command* TowerDefenseGame::GetExecutedCommand(){
-	std::lock_guard<std::mutex> lock(_executedCommandQueueMutex);
-	if (_executedCommands.size() == 0)
-		return nullptr;
-	
-	Command* c = _executedCommands.front();
-	_executedCommands.pop();
-	return c;
-}*/
 
 EnviormentUnit* TowerDefenseGame::GetUnit(uint id){
 	for(auto it = _units.begin(); it != _units.end(); ++it){
@@ -363,9 +354,13 @@ void TowerDefenseGame::_Run()
 	std::unique_lock<std::mutex> lock(_gameStartMutex);
 	while(!_canGameStart)
 		_gameStartCondVariable.wait(lock);
-
+    
 	static uint clockFrequency = 100;
     std::this_thread::sleep_for (std::chrono::milliseconds(5000));
+
+    notifications.Queue(new GameModelStartedRunningNotification(_players));
+
+
     unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
 	unsigned long long timestamp = 0;
 	unsigned long long delta = 0;

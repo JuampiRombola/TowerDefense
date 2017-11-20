@@ -131,9 +131,12 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     Uint32 delta = 0;
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
-
+    
+    
     dispatcher->QueueCommand(new PlayerLoadedGameCommand());
 
+    dispatcher->Disable();
+    
     while (!quit && _reciever->Running()) {
         t1 = SDL_GetTicks();
 

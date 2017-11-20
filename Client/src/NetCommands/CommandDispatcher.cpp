@@ -1,7 +1,7 @@
 #include "../../include/NetCommands/CommandDispatcher.h"
 
 CommandDispatcher::CommandDispatcher(SocketWrapper& socket) : 
-_sock(socket), _commands(), _queueLock(), _cv(), _stop(false) {
+_sock(socket), _commands(), _queueLock(), _isEnabledMutex(), _cv(), _stop(false), _isEnabled(true) {
 	
 }
 
@@ -23,9 +23,28 @@ void CommandDispatcher::DispatchCommands(){
 	}
 }
 
+void CommandDispatcher::Disable(){
+	std::lock_guard<std::mutex> lock1(_isEnabledMutex);
+	std::cout << "Dispatcher disabled\n" << std::flush;
+	_isEnabled = false;
+}
+
+void CommandDispatcher::Enable(){
+	std::lock_guard<std::mutex> lock1(_isEnabledMutex);
+	std::cout << "Dispatcher enabled\n" << std::flush;
+	_isEnabled = true;
+}
+
 void CommandDispatcher::QueueCommand(NetCommand* command){
 	if (command == nullptr)
 		return;
+
+	std::lock_guard<std::mutex> lock1(_isEnabledMutex);
+	if (!_isEnabled){
+        std::cout << "dumping command\n" << std::flush;
+		delete command;
+		return;
+	}
 
 	std::lock_guard<std::mutex> lock(_queueLock);
     _commands.push(command);
