@@ -20,7 +20,7 @@ void EliminarHordaButton::draw(int number, int padding) {
     div_t hordaNro = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
     if (hordaNro.quot < padding)
         return;
-    button.x = (HORDA_TOTAL_ENEMIES + 1) * HORDA_ENEMIGO_IMG_SIZE;
+    button.x = (HORDA_TOTAL_ENEMIES + 1) * HORDA_ENEMIGO_IMG_SIZE + HORDA_QUANTITY_WIDTH;
     button.y = HORDA_ENEMIGO_PADDING +
                (hordaNro.quot - padding) * HORDA_TOTAL_HEIGHT;
     Button::draw(number, 0);
