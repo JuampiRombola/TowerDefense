@@ -17,9 +17,9 @@
 #include "../Common/SpriteNamesConfig.h"
 #include "ContadorEnemigosInput.h"
 #include "EnemigoImage.h"
-#include "AumentarTiempoButton.h"
-#include "DisminuirTiempoButton.h"
-#include "ContadorTiempoInput.h"
+#include "AumentarTiempoHordaButton.h"
+#include "DisminuirTiempoHordaButton.h"
+#include "ContadorTiempoHordaInput.h"
 #include "AumentarAltoMapaButton.h"
 #include "AumentarAnchoMapaButton.h"
 #include "DisminuirAnchoMapaButton.h"
@@ -46,6 +46,8 @@ public:
     void addEnemigosButton(int horda);
     void deleteButtonsOfHorda(int horda);
     bool isAnyClicked();
+
+    void addTiempoEntreEnemigos(int horda);
 };
 
 

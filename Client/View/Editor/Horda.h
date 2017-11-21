@@ -9,7 +9,8 @@
 class Horda {
 private:
     int id;
-    int tiempo;
+    int tiempoEntreHordas;
+    int tiempoEntreEnemigos;
     std::map<std::string, unsigned int> cantidadEnemigos;
 public:
     explicit Horda(int id);
@@ -22,6 +23,9 @@ public:
     void aumentarTiempo();
     void disminuirTiempo();
     int getTiempo();
+    void aumentarTiempoEntreEnemigos();
+    void disminuirTiempoEntreEnemigos();
+    int getTiempoEntreEnemigos();
 };
 
 

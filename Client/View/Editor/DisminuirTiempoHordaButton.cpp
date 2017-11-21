@@ -1,18 +1,18 @@
 #include <stdlib.h>
-#include "DisminuirTiempoButton.h"
+#include "DisminuirTiempoHordaButton.h"
 
-DisminuirTiempoButton::DisminuirTiempoButton(int horda, SDL_Texture *texture,
+DisminuirTiempoHordaButton::DisminuirTiempoHordaButton(int horda, SDL_Texture *texture,
                                              MousePosition &mousePosition,
                                              Renderer &renderer, Editor &editor)
         : Button(0, 0, HORDA_MODIFY_QUANTITY_SIZE, HORDA_MODIFY_QUANTITY_SIZE,
                  texture, mousePosition, renderer), horda(horda),
           editor(editor) {}
 
-void DisminuirTiempoButton::click() {
+void DisminuirTiempoHordaButton::click() {
     editor.disminuirTiempoHorda(horda);
 }
 
-void DisminuirTiempoButton::draw(int number, int padding) {
+void DisminuirTiempoHordaButton::draw(int number, int padding) {
     div_t hordaNro = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
     if (hordaNro.quot < padding)
         return;
@@ -24,6 +24,6 @@ void DisminuirTiempoButton::draw(int number, int padding) {
 
 }
 
-bool DisminuirTiempoButton::belongsToHorda(int hordaId) {
+bool DisminuirTiempoHordaButton::belongsToHorda(int hordaId) {
     return horda == hordaId;
 }

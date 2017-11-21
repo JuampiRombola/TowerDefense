@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Horda.h"
 
-Horda::Horda(int id) : id(id), tiempo(0) {
+Horda::Horda(int id) : id(id), tiempoEntreHordas(0), tiempoEntreEnemigos(0) {
     cantidadEnemigos[ABMONIBLE_KEY] = 0;
     cantidadEnemigos[ESPECTRO_KEY] = 0;
     cantidadEnemigos[DEMONIO_VERDE_KEY] = 0;
@@ -26,10 +26,11 @@ void Horda::eliminarEnemigo(std::string enemigo) {
 
 std::string Horda::exportar() {
     std::stringstream msg;
-    msg << "tiempo: " << tiempo << "\n";
+    msg << "tiempo: " << tiempoEntreEnemigos << "\n";
     for (std::pair<std::string, int> enemigo : cantidadEnemigos) {
         msg << "   " << enemigo.first << ": " << enemigo.second << "\n";
     }
+    msg << "   tiempo_enemigos" << tiempoEntreHordas << "\n";
     return msg.str();
 }
 
@@ -46,15 +47,29 @@ unsigned int Horda::getCantidadEnemigos() {
 }
 
 void Horda::aumentarTiempo() {
-    ++tiempo;
+    ++tiempoEntreHordas;
 }
 
 void Horda::disminuirTiempo() {
-    if (tiempo == 0)
+    if (tiempoEntreHordas == 0)
         return;
-    --tiempo;
+    --tiempoEntreHordas;
 }
 
 int Horda::getTiempo() {
-    return tiempo;
+    return tiempoEntreHordas;
+}
+
+void Horda::aumentarTiempoEntreEnemigos() {
+    ++tiempoEntreEnemigos;
+}
+
+void Horda::disminuirTiempoEntreEnemigos() {
+    if (tiempoEntreEnemigos == 0)
+        return;
+    --tiempoEntreEnemigos;
+}
+
+int Horda::getTiempoEntreEnemigos() {
+    return tiempoEntreEnemigos;
 }

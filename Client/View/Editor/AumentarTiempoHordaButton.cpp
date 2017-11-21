@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include "AumentarTiempoButton.h"
+#include "AumentarTiempoHordaButton.h"
 
-AumentarTiempoButton::AumentarTiempoButton(int horda,
+AumentarTiempoHordaButton::AumentarTiempoHordaButton(int horda,
                                            SDL_Texture *texture,
                                            MousePosition &mousePosition,
                                            Renderer &renderer, Editor &editor)
@@ -9,11 +9,11 @@ AumentarTiempoButton::AumentarTiempoButton(int horda,
                  texture, mousePosition, renderer), horda(horda),
           editor(editor) {}
 
-void AumentarTiempoButton::click() {
+void AumentarTiempoHordaButton::click() {
     editor.aumentarTiempoHorda(horda);
 }
 
-void AumentarTiempoButton::draw(int number, int padding) {
+void AumentarTiempoHordaButton::draw(int number, int padding) {
     div_t hordaNro = div(number - TOTAL_MAIN_BUTTONS, HORDA_TOTAL_BUTTONS);
     if (hordaNro.quot < padding)
         return;
@@ -27,6 +27,6 @@ void AumentarTiempoButton::draw(int number, int padding) {
 
 }
 
-bool AumentarTiempoButton::belongsToHorda(int hordaId) {
+bool AumentarTiempoHordaButton::belongsToHorda(int hordaId) {
     return horda == hordaId;
 }
