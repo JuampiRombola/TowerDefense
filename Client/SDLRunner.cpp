@@ -124,10 +124,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                 case SDL_TEXTINPUT:
                     if (chat.isActive() ) {
                         std::string text(event.text.text);
-                        if (text[0] != '\n')
-                        {
-                            chat.newInput(text);
-                        }
+                        chat.newInput(text);
                     }
                     break;
             }

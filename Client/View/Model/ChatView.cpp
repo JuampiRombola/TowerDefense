@@ -116,8 +116,6 @@ void ChatView::newInput(std::string &entry) {
 }
 
 void ChatView::draw() {
-    Lock(this->mutex);
-
     spriteBackground.drawEuclidian();
 
     if (active) {
