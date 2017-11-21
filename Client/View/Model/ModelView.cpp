@@ -144,9 +144,23 @@ void ModelView::draw(Uint32 time) {
     // Dibujo disparos
     for (auto shot : shots)
         shot->draw(time);
+
+    // Remuevo los anuncios que terminaron. Dibujo los que no
+    for (auto it = announcements.begin(); it != announcements.end();) {
+        if ((*it).isActive()) {
+            (*it).draw();
+            ++it;
+        } else {
+            it = announcements.erase(it);
+        }
+    }
 }
 
 void ModelView::checkIndexDepthLevel(int key) {
     if (key >= depthLevels.size() || key < 0)
         throw DepthLevelError(INVALID_INDEX);
+}
+
+void ModelView::addAnnouncement(std::string announcement) {
+    announcements.emplace_back(announcement, renderer);
 }

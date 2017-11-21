@@ -205,7 +205,9 @@ set(SOURCE_FILES_CLIENT
         Client/src/NetCommands/LoadMapCommand.cpp
         Client/include/NetCommands/LoadMapCommand.h
         Client/src/NetCommands/ChatMessageCommand.cpp
-        Client/include/NetCommands/ChatMessageCommand.h)
+        Client/include/NetCommands/ChatMessageCommand.h
+        Client/View/Common/Announcement.cpp
+        Client/View/Common/Announcement.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK

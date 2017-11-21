@@ -28,7 +28,6 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
         spriteInput(tl.getTexture(CHAT_INPUT), r),
         textColor(SDL_Color{255, 255, 255, 0xFF}), active(false),
         dstX(PADDING_HUD * 4), dstY(window.getHeight() - CHAT_PAD) {
-    TTF_Init();
     font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 
     int chatY = window.getHeight() - CHAT_H - PADDING_HUD;
