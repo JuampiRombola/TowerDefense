@@ -3,9 +3,8 @@
 #include "../../../../Common/Protocolo.h"
 
 GameOverGameNotification::
-GameOverGameNotification(std::vector<PlayerProxy*> playersToNotify,
-                         bool playersWon)
-        : GameNotification(playersToNotify), _playersWon(playersWon)
+GameOverGameNotification(bool playersWon)
+        :  _playersWon(playersWon)
 {
 
 }
@@ -14,8 +13,8 @@ GameOverGameNotification::~GameOverGameNotification(){
 
 }
 
-void GameOverGameNotification::Notify() {
-    for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); it++) {
+void GameOverGameNotification::Notify(std::vector<PlayerProxy*> playersToNotify) {
+    for (auto it = playersToNotify.begin(); it != playersToNotify.end(); it++) {
         PlayerProxy *p = *it;
         int8_t game = GAME_OPCODE;
         p->SendByte(game);

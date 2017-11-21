@@ -16,7 +16,7 @@ private:
 public:
     MapTransferNotification(Map& map, PlayerProxy& player);
     ~MapTransferNotification();
-    void Notify();
+    void Notify(std::vector<PlayerProxy*> playersToNotify);
 };
 
 

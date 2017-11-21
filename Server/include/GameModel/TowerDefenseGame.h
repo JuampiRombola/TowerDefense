@@ -88,7 +88,7 @@ public:
 	uint GetID();
 	void HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_TYPE spelltype, uint32_t x, uint32_t y );
 	void HandleClientBuildTowerCommand(PlayerProxy& player, SPELL_TYPE spelltype, uint32_t x, uint32_t y );
-
+	void HandleClientUpgradeTowerCommand(uint x, uint y, UpgradeType type);
 
 	void PlayerLoadedGame(PlayerProxy& player);
 	void SendMapToPlayer(PlayerProxy& player);

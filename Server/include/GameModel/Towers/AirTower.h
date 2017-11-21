@@ -18,7 +18,7 @@ protected:
 public:
 	AirTower(uint cooldown_sec, uint range, uint damage,
 			 uint nonFlyingDamage, SolidGroundTile* position, Map* map,
-			uint projectile_ms_over_tile);
+			uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications);
 	~AirTower();
 	void PrintDebug();
 	bool Upgrade(const YAML::Node& cfg, UpgradeType type);

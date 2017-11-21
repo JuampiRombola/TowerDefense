@@ -13,7 +13,6 @@
 #include "../../../include/GameModel/Exceptions/NonPlacedUnitCannotStepException.h"
 #include "../../../include/GameModel/Exceptions/IncompletePathException.h"
 #include "../../../include/GameModel/Exceptions/UnitCannotMoveDiagonallyException.h"
-#include "../../../include/GameModel/TowerDefenseGame.h"
 
 EnviormentUnit::EnviormentUnit(uint id, uint stepDelay_ms, int healthpoints, ThreadSafeQueue<GameNotification*>& notifications): 
 _lastTimeStamp_ms(0), _lastSlowBeginTimeStamp_ms(0), _lastFreezeTimeStamp_ms(0),
@@ -79,7 +78,7 @@ void EnviormentUnit::Slow(uint slowSeconds, uint percentSlow){
 }
 
 
-void EnviormentUnit::Step(TowerDefenseGame& game){
+void EnviormentUnit::Step(){
 	if (!_alive || !_CanStep())
 		return;
 
@@ -96,7 +95,7 @@ void EnviormentUnit::Step(TowerDefenseGame& game){
 	_position = next;
 
 	UnitVM vm = GetViewModel();
-	_notifications.Queue(new UnitPositionGameNotification(vm, game.GetPlayers()));
+	_notifications.Queue(new UnitPositionGameNotification(vm));
 	PrintDebug();
 }
 

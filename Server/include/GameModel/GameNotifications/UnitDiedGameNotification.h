@@ -7,9 +7,9 @@
 class UnitDiedGameNotification : public GameNotification
 {
 public:
-	UnitDiedGameNotification(UnitVM& vm, std::vector<PlayerProxy*> playersToNotify);
+	UnitDiedGameNotification(UnitVM& vm );
 	~UnitDiedGameNotification();
-	void Notify();
+	void Notify(std::vector<PlayerProxy*> playersToNotify);
 	UnitVM vm;
 };
 

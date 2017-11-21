@@ -14,9 +14,9 @@ private:
     uint _hordeId;
     bool _started;
 public:
-    HordeUpdateGameNotification(uint hordeId, std::vector<PlayerProxy*> playerToNotify, bool started);
+    HordeUpdateGameNotification(uint hordeId, bool started);
     ~HordeUpdateGameNotification();
-    void Notify();
+    void Notify(std::vector<PlayerProxy *> playersToNotify);
 };
 
 

@@ -13,9 +13,9 @@ class GameOverGameNotification : public GameNotification
 private:
     bool _playersWon;
 public:
-    GameOverGameNotification(std::vector<PlayerProxy*> playersToNotify, bool playersWon);
+    GameOverGameNotification(bool playersWon);
     ~GameOverGameNotification();
-    void Notify();
+    void Notify(std::vector<PlayerProxy*> playersToNotify);
 };
 
 

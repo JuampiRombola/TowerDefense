@@ -14,8 +14,8 @@
 
 GroundTower::GroundTower(uint cooldown_sec, uint range,
 						 uint damage, SolidGroundTile* position, Map* map,
-						uint projectile_ms_over_tile)
-: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile) {}
+						uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications)
+: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile, notifications) {}
 
 GroundTower::~GroundTower(){}
 
@@ -78,5 +78,13 @@ TowerVM GroundTower::GetViewModel(){
 	vm.yPos = _position->GetYPos();
 	vm.experience = _experience;
 	vm.level = _upgradeLevel;
+	vm.collateral_range = -1;
+	vm.collateral_damage = -1;
+	vm.nonFlyingDamage = -1;
+	vm.range = _range;
+	vm.projectile_ms_over_tile = _projectile_ms_over_tile;
+	vm.slow_percent = -1;
+	vm.slow_seconds = -1;
+	vm.damage = _damage;
 	return vm;
 }

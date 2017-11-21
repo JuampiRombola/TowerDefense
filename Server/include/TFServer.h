@@ -45,19 +45,19 @@ private:
 
 	ServerSocket _server;
 	ThreadSafeQueue<Notification*> _notifications;
-	ThreadSafeQueue<GameNotification*> _gameNotifications;
-	std::vector<TowerDefenseGame*> _games;
 
 	std::thread _acceptorThread;
 	std::thread _notificatorThread;
-	std::thread _gameNotificatorThread;
+	std::vector<std::thread> _gameNotificatorThreads;
 
 
 	std::map<PlayerProxy*, TowerDefenseGame*> _player2game;
+	std::map<TowerDefenseGame*, ThreadSafeQueue<GameNotification*>*> _game2gameNotifications;
+
 
 	void _AcceptConnections();
 	void _NotifyClients();
-	void _NotifyGamePlayers();
+	void _NotifyGamePlayers(ThreadSafeQueue<GameNotification*>* queue, std::vector<PlayerProxy*> players);
 	void _SetIsAcceptingConnections();
 	void _HandleLogin(PlayerProxy& player);
 	void _HandleGameCommand(PlayerProxy& player);

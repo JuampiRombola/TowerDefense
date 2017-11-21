@@ -55,7 +55,7 @@ void HordeManager::Step() {
 
         _currentHorde = _hordes.front();
         _hordes.pop();
-        game->notifications.Queue(new HordeUpdateGameNotification(_currentHorde->Id(), game->GetPlayers(), true));
+        game->notifications.Queue(new HordeUpdateGameNotification(_currentHorde->Id(), true));
         isBegin = true;
     }
     unsigned long long actualTimeStamp = Helpers::MillisecondsTimeStamp();
@@ -63,7 +63,7 @@ void HordeManager::Step() {
     if (_currentHorde->IsFinished()){
         if (!_currentHorde->finishNotified){
             _currentHorde->finishNotified = true;
-            game->notifications.Queue(new HordeUpdateGameNotification(_currentHorde->Id(), game->GetPlayers(), false));
+            game->notifications.Queue(new HordeUpdateGameNotification(_currentHorde->Id(), false));
         }
         else if (actualTimeStamp - _timeStamp > timeToWaitBetweenHordes_ms){
             _timeStamp = actualTimeStamp;

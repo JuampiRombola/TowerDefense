@@ -7,7 +7,7 @@
 #include "../include/NetCommands/PlayerLoadedGameCommand.h"
 
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner, CommandDispatcher& dispatcher)
-: _sock(socket), _lobbyManager(lobbyManager),  _runner(runner), _dispatcher(dispatcher), _stop(false) {
+: _sock(socket), _lobbyManager(lobbyManager),  _runner(runner), _dispatcher(dispatcher), _stop(false), _towerCoordToId() {
 
 }
 
@@ -199,24 +199,91 @@ void NotificationReciever::_HandleGameOpcode(){
 			std::cout << "HORDE_ENDED::\n" << std::flush;
 			_HandleHordeEnded();
 			break;
+		case TOWER_GAINED_EXP:
+			std::cout << "TOWER_GAINED_EXP::\n" << std::flush;
+			_HandleTowerGainedExperience();
+			break;
+        case TOWER_UPGRADE:
+            std::cout << "TOWER_UPGRADE::\n" << std::flush;
+            _HandleTowerUpgrade();
+            break;
+    }
+}
+
+void NotificationReciever::_HandleTowerGainedExperience() {
+	uint32_t x;
+	uint32_t y;
+	uint32_t exp;
+	_sock.Recieve((char*)&x, 4);
+	_sock.Recieve((char*)&y, 4);
+	_sock.Recieve((char*)&exp, 4);
+
+	std::cout << "Tower @(" << x << ", " << y << ") now has "
+			  << exp << "xp\n" <<std::flush;
+
+	uint towerid = _towerCoordToId[std::pair<uint, uint>(x, y)];
+
+
+
+	///
+	//
+	//
+	//
+
+}
+
+void NotificationReciever::_HandleTowerUpgrade() {
+    uint32_t x;
+    uint32_t y;
+    uint32_t damage;
+    uint32_t range;
+    uint32_t projectile_ms_over_tile;
+    uint32_t level;
+
+    _sock.Recieve((char*) &x, 4);
+    _sock.Recieve((char*) &y, 4);
+	
+	uint towerId = _towerCoordToId[std::pair<uint, uint>(x, y)];
+	
+    _sock.Recieve((char*) &damage, 4);
+    _sock.Recieve((char*) &range, 4);
+    _sock.Recieve((char*) &projectile_ms_over_tile, 4);
+    _sock.Recieve((char*) &level, 4);
+	uint8_t type = -1;
+    _sock.Recieve((char*) &type, 1);
+    switch (type){
+        case SPELL_TYPE_FIRE:
+            uint32_t collateral_damage;
+            uint32_t collateral_range;
+            _sock.Recieve((char*)&collateral_damage, 4);
+            _sock.Recieve((char*)&collateral_range, 4);
+            break;
+        case SPELL_TYPE_WATER:
+            uint32_t slow_seconds;
+            uint32_t slow_percent;
+            _sock.Recieve((char*)&slow_seconds, 4);
+            _sock.Recieve((char*)&slow_percent, 4);
+            break;
+        case SPELL_TYPE_AIR:
+            uint32_t nonFlyingDamage;
+            _sock.Recieve((char*) &nonFlyingDamage, 4);
+            break;
+        case SPELL_TYPE_GROUND:
+            break;
     }
 }
 
 void NotificationReciever::_HandleHordeEnded() {
-	std::cout << "horda ended\n" << std::flush;
 	uint hordeId;
 	_sock.Recieve((char*) &hordeId, 4);
 	std::string s = "Horda " +  std::to_string(hordeId) + " superada!";
 	model_view->addAnnouncement(s);
-	std::cout << "horda ended1\n" << std::flush;
 }
 void NotificationReciever::_HandleHordeStarted() {
-	std::cout << "horda started\n" << std::flush;
 	uint hordeId;
 	_sock.Recieve((char*) &hordeId, 4);
 	std::string s = "Horda " +  std::to_string(hordeId) + " ha empezado!";
 	model_view->addAnnouncement(s);
-	std::cout << "horda started1\n" << std::flush;
 }
 
 void NotificationReciever::_HandleSpellCasted(){
@@ -291,14 +358,14 @@ void NotificationReciever::_HandleTowerPlaced(){
 	_sock.Recieve((char *) &x, 4);
 	uint32_t y;
 	_sock.Recieve((char *) &y, 4);
-	SPELL_TYPE type;
+	uint8_t type = -1;
 	_sock.Recieve((char *) &type, 1);
+	_towerCoordToId[std::pair<uint, uint>(x, y)] = towerID;
     switch (type) {
         case SPELL_TYPE_GROUND:
             model_view->createTower(towerID++, TORRE_TIERRA , x, y);
             break;
         case SPELL_TYPE_FIRE:
-			std::cout << "LLEGO NOTIFCACION TORRE FUEGO 123\n" << std::flush;
             model_view->createTower(towerID++, TORRE_FUEGO , x, y);
             break;
         case SPELL_TYPE_WATER:

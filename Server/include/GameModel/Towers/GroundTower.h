@@ -15,7 +15,7 @@ protected:
 	Projectile* _BuildProjectile(PathTile* target);
 public:
 	GroundTower(uint cooldown_sec, uint range, uint damage, SolidGroundTile* position, Map* map,
-	uint projectile_ms_over_tile);
+	uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications);
 	~GroundTower();
 	void PrintDebug();
 	bool Upgrade(const YAML::Node& cfg, UpgradeType type);

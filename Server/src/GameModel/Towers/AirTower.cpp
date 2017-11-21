@@ -14,8 +14,8 @@
 
 AirTower::AirTower(uint cooldown_sec, uint range, uint damage,
                    uint nonflyingDamage, SolidGroundTile* position, Map* map,
-                    uint projectile_ms_over_tile)
-: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile), _nonFlyingDamage(nonflyingDamage) {}
+                    uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications)
+: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile, notifications), _nonFlyingDamage(nonflyingDamage) {}
 
 AirTower::~AirTower(){}
 
@@ -28,6 +28,7 @@ Projectile* AirTower::_BuildProjectile(PathTile* target){
 }
 
 bool AirTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
+	std::lock_guard<std::mutex> lock(_expMutex);
 	switch (type){
 		case Range:
 			{
@@ -36,6 +37,7 @@ bool AirTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
 				double base = cfg["towers"]["air"]["upgrade_range_base"].as<double>();
 				double expRequired = pow(base, _upgradeLevel);
 				expRequired *= mult;
+
 				if (_experience >= expRequired){
 					_experience -= expRequired;
 					_range += rangeIncrease;
@@ -78,5 +80,13 @@ TowerVM AirTower::GetViewModel(){
 	vm.yPos = _position->GetYPos();
 	vm.experience = _experience;
 	vm.level = _upgradeLevel;
+	vm.nonFlyingDamage = _nonFlyingDamage;
+	vm.range = _range;
+	vm.projectile_ms_over_tile = _projectile_ms_over_tile;
+	vm.collateral_damage = -1;
+	vm.collateral_damage = -1;
+	vm.slow_percent = -1;
+	vm.slow_seconds = -1;
+	vm.damage = _damage;
 	return vm;
 }

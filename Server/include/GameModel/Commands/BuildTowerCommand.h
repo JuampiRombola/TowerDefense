@@ -21,6 +21,8 @@ private:
 	Tower* _BuildFireTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
 	Tower* _BuildWaterTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
 	Tower* _BuildAirTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
+
+	TowerDefenseGame* _game;
 public:
 	BuildTowerCommand(TowerType type, uint x, uint y);
 	~BuildTowerCommand();

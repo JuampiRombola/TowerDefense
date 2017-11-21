@@ -13,8 +13,8 @@
 
 FireTower::FireTower(uint cooldown_ms, uint range, uint damage, 
 	SolidGroundTile* position, Map* map, uint collateralDamage, uint collateralRange,
-	uint projectile_ms_over_tile)
-: Tower(cooldown_ms, range, damage, position, map, projectile_ms_over_tile), _collateralDamage(collateralDamage), _collateralRange(collateralRange) {}
+	uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications)
+: Tower(cooldown_ms, range, damage, position, map, projectile_ms_over_tile, notifications), _collateralDamage(collateralDamage), _collateralRange(collateralRange) {}
 
 FireTower::~FireTower(){}
 
@@ -91,5 +91,13 @@ TowerVM FireTower::GetViewModel(){
 	vm.yPos = _position->GetYPos();
 	vm.experience = _experience;
 	vm.level = _upgradeLevel;
+	vm.range = _range;
+	vm.projectile_ms_over_tile = _projectile_ms_over_tile;
+	vm.nonFlyingDamage = -1;
+	vm.collateral_damage = _collateralDamage;
+	vm.collateral_range = _collateralRange;
+	vm.slow_percent = -1;
+	vm.slow_seconds = -1;
+	vm.damage = _damage;
 	return vm;
 }

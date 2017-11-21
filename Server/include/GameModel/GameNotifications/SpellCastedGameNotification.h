@@ -15,9 +15,9 @@ private:
 	uint32_t _y;
 	uint32_t _duration_ms;
 public:
-	SpellCastedGameNotification(CAST_SPELL_TYPE type, uint32_t x, uint32_t y, uint32_t duration_ms, std::vector<PlayerProxy*> playersToNotify);
+	SpellCastedGameNotification(CAST_SPELL_TYPE type, uint32_t x, uint32_t y, uint32_t duration_ms);
 	~SpellCastedGameNotification();
-	void Notify();
+	void Notify(std::vector<PlayerProxy*> playersToNotify);
 	
 };
 

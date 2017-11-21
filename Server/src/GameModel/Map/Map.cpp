@@ -221,7 +221,7 @@ void Map::Step(TowerDefenseGame& game){
 				if (p != nullptr){
 					_projectiles.push_back(p);
 					ProjectileVM vm = p->GetViewModel();
-					game.notifications.Queue(new ProjectileFiredGameNotification(vm, game.GetPlayers()));
+					game.notifications.Queue(new ProjectileFiredGameNotification(vm));
 				}
 			} 
 		}

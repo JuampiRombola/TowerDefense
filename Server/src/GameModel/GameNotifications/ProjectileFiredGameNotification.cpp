@@ -5,8 +5,8 @@
 #include "../../../include/GameModel/GameNotifications/ProjectileFiredGameNotification.h"
 #include "../../../../Common/Protocolo.h"
 
-ProjectileFiredGameNotification::ProjectileFiredGameNotification(ProjectileVM vm, std::vector<PlayerProxy*> playersToNotify)
-: GameNotification(playersToNotify), vm(vm){
+ProjectileFiredGameNotification::ProjectileFiredGameNotification(ProjectileVM vm)
+: vm(vm){
 
 }
 
@@ -14,8 +14,8 @@ ProjectileFiredGameNotification::~ProjectileFiredGameNotification() {
 
 }
 
-void ProjectileFiredGameNotification::Notify(){
-    for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); it++) {
+void ProjectileFiredGameNotification::Notify(std::vector<PlayerProxy*> playersToNotify){
+    for (auto it = playersToNotify.begin(); it != playersToNotify.end(); it++) {
         PlayerProxy *p = *it;
         int8_t game = GAME_OPCODE;
         p->SendByte(game);

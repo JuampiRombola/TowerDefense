@@ -4,8 +4,8 @@
 #include "../../../include/GameModel/GameNotifications/UnitPositionGameNotification.h"
 #include "../../../../Common/Protocolo.h"
 
-UnitPositionGameNotification::UnitPositionGameNotification(UnitVM& viewmodel, std::vector<PlayerProxy*> playersToNotify)
-        : GameNotification(playersToNotify), vm(viewmodel){
+UnitPositionGameNotification::UnitPositionGameNotification(UnitVM& viewmodel)
+        : vm(viewmodel){
 
 }
 
@@ -14,8 +14,8 @@ UnitPositionGameNotification::~UnitPositionGameNotification(){
 
 }
 
-void UnitPositionGameNotification::Notify(){
-    for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); it++) {
+void UnitPositionGameNotification::Notify(std::vector<PlayerProxy*> playersToNotify){
+    for (auto it = playersToNotify.begin(); it != playersToNotify.end(); it++) {
         PlayerProxy *p = *it;
         int8_t game = GAME_OPCODE;
         p->SendByte(game);

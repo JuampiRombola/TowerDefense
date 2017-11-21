@@ -4,16 +4,16 @@
 #include "../../../include/GameModel/GameNotifications/TowerPlacedGameNotification.h"
 #include "../../../../Common/Protocolo.h"
 
-TowerPlacedGameNotification::TowerPlacedGameNotification(TowerVM& viewmodel, std::vector<PlayerProxy*> playersToNotify)
-        : GameNotification(playersToNotify), vm(viewmodel){
+TowerPlacedGameNotification::TowerPlacedGameNotification(TowerVM& viewmodel)
+        : GameNotification(), vm(viewmodel){
 }
 
 TowerPlacedGameNotification::~TowerPlacedGameNotification(){
 
 }
 
-void TowerPlacedGameNotification::Notify() {
-    for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); it++) {
+void TowerPlacedGameNotification::Notify(std::vector<PlayerProxy*> playersToNotify) {
+    for (auto it = playersToNotify.begin(); it != playersToNotify.end(); it++) {
         PlayerProxy *p = *it;
         int8_t game = GAME_OPCODE;
         p->SendByte(game);

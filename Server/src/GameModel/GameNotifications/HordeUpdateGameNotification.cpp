@@ -5,8 +5,8 @@
 #include "../../../include/GameModel/GameNotifications/HordeUpdateGameNotification.h"
 #include "../../../../Common/Protocolo.h"
 
-HordeUpdateGameNotification::HordeUpdateGameNotification(uint hordeId, std::vector<PlayerProxy *> playerToNotify, bool started)
-: GameNotification(playerToNotify), _hordeId(hordeId), _started(started)
+HordeUpdateGameNotification::HordeUpdateGameNotification(uint hordeId, bool started)
+:  _hordeId(hordeId), _started(started)
 {
 
 }
@@ -14,9 +14,9 @@ HordeUpdateGameNotification::HordeUpdateGameNotification(uint hordeId, std::vect
 HordeUpdateGameNotification::~HordeUpdateGameNotification() {
 
 }
-void HordeUpdateGameNotification::Notify() {
+void HordeUpdateGameNotification::Notify(std::vector<PlayerProxy *> playersToNotify) {
 
-    for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it){
+    for (auto it = playersToNotify.begin(); it != playersToNotify.end(); ++it){
         PlayerProxy* p = *it;
         uint opcode = GAME_OPCODE;
         uint ins = _started ? HORDE_STARTED : HORDE_ENDED;

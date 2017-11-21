@@ -13,9 +13,9 @@ private:
     PlayerProxy& _player;
     std::string _message;
 public:
-    ChatMessageNotification(std::string& message, PlayerProxy& player, std::vector<PlayerProxy*> playersToNotify);
+    ChatMessageNotification(std::string& message, PlayerProxy& player);
     ~ChatMessageNotification();
-    void Notify();
+    void Notify(std::vector<PlayerProxy *> playersToNotify);
 };
 
 

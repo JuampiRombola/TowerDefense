@@ -93,6 +93,16 @@ enum CAST_SPELL_TYPE {
 #define HORDE_STARTED 210
 #define HORDE_ENDED 211
 #define GAME_WON 212
+#define TOWER_GAINED_EXP 213
+
+enum UpgradeType {
+    Range = 214,
+    Damage = 215,
+    CollateralRange = 216,
+    Slow = 217 };
+
+#define TOWER_UPGRADE 218
+
 
 
 #endif

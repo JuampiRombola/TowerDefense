@@ -68,7 +68,7 @@ EnviormentUnit* TowerDefenseGame::SpawnAbmonible(){
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
-	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	notifications.Queue(new UnitCreatedGameNotification(vm));
 	return unit;
 }
 EnviormentUnit* TowerDefenseGame::SpawnHombreCabra(){
@@ -81,7 +81,7 @@ EnviormentUnit* TowerDefenseGame::SpawnHombreCabra(){
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
-	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	notifications.Queue(new UnitCreatedGameNotification(vm));
 	return unit;
 }
 EnviormentUnit* TowerDefenseGame::SpawnHalconSangriento(){
@@ -94,7 +94,7 @@ EnviormentUnit* TowerDefenseGame::SpawnHalconSangriento(){
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
-	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	notifications.Queue(new UnitCreatedGameNotification(vm));
 	return unit;
 }
 EnviormentUnit* TowerDefenseGame::SpawnDemonioVerde(){
@@ -107,7 +107,7 @@ EnviormentUnit* TowerDefenseGame::SpawnDemonioVerde(){
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
-	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	notifications.Queue(new UnitCreatedGameNotification(vm));
 	return unit;
 
 }
@@ -121,7 +121,7 @@ EnviormentUnit* TowerDefenseGame::SpawnNoMuerto(){
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
-	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	notifications.Queue(new UnitCreatedGameNotification(vm));
 	return unit;
 
 }
@@ -135,7 +135,7 @@ EnviormentUnit* TowerDefenseGame::SpawnEspectro(){
 	_units.push_back(unit);
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
-	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	notifications.Queue(new UnitCreatedGameNotification(vm));
 	return unit;
 }
 
@@ -170,7 +170,7 @@ void TowerDefenseGame::QueueCommand(Command* command){
 }
 
 void TowerDefenseGame::PlayersWon() {
-	notifications.Queue(new GameOverGameNotification(_players, true));
+	notifications.Queue(new GameOverGameNotification(true));
 	_ended = true;
 }
 
@@ -237,7 +237,7 @@ void TowerDefenseGame::SendMapToPlayer(PlayerProxy& player){
 
 void TowerDefenseGame::ChatMessageFrom(PlayerProxy& player){
 	std::string message = player.RecieveString();
-	notifications.Queue(new ChatMessageNotification(message, player, _players));
+	notifications.Queue(new ChatMessageNotification(message, player));
 }
 
 
@@ -256,6 +256,10 @@ void TowerDefenseGame::PlayerLoadedGame(PlayerProxy& player){
 		_canGameStart = true;
 		_gameStartCondVariable.notify_one();
 	}
+}
+
+void TowerDefenseGame::HandleClientUpgradeTowerCommand(uint x, uint y, UpgradeType type){
+	QueueCommand(new UpgradeTowerCommand(x, y, type));
 }
 
 void TowerDefenseGame::HandleClientBuildTowerCommand(PlayerProxy& player, SPELL_TYPE spelltype, uint32_t x, uint32_t y ){
@@ -308,18 +312,10 @@ bool TowerDefenseGame::_Step(){
 	_ExecuteCommands();
 
 	_steps = _steps + 1;
-
-	//uint32_t spawnrandomenemyevery_ms = GameCfg->Cfg["spawn_units_every_ms"].as<uint>();
-	//if (actualTs - ts > spawnrandomenemyevery_ms){
-	//	ts = actualTs;
-	//	_SpawnRandomEnemy();
-	//}
-
-	std::cout << "stepping units\n" <<std::flush;
+	
 	for (auto it = _units.begin(); it != _units.end(); ++it){
-		(*it)->Step(*this);
+		(*it)->Step();
 	}
-	std::cout << "stepping units1\n" <<std::flush;
 
 	_map.Step(*this);
 
@@ -327,15 +323,11 @@ bool TowerDefenseGame::_Step(){
     for (auto it = _units.begin(); it != _units.end(); ++it){
         if (!((*it)->IsAlive())){
             if (!(*it)->deathNotified){
-                std::cout << "NOTIFING DEAD UNIT\n";
                 UnitVM vm = (*it)->GetViewModel();
-                notifications.Queue(new UnitDiedGameNotification(vm, _players));
+                notifications.Queue(new UnitDiedGameNotification(vm));
                 _map.RemoveUnit(*it);
                 (*it)->deathNotified = true;
             }
-            //EnviormentUnit* unit = *it;
-            //_units.erase(it);
-            //delete unit;
         }
     }
 
@@ -349,7 +341,7 @@ bool TowerDefenseGame::_Step(){
 		for (auto it = endTiles.begin(); it != endTiles.end() && !_ended; ++it){
 			_ended |= (*it)->HasAnyUnit();
 			if (_ended){
-				notifications.Queue(new GameOverGameNotification(_players, false));
+				notifications.Queue(new GameOverGameNotification(false));
 			}
 		}
 	}
@@ -387,7 +379,7 @@ void TowerDefenseGame::_Run()
 	static uint clockFrequency = 100;
     std::this_thread::sleep_for (std::chrono::milliseconds(5000));
 
-    notifications.Queue(new GameModelStartedRunningNotification(_players));
+    notifications.Queue(new GameModelStartedRunningNotification());
 
 
     unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
