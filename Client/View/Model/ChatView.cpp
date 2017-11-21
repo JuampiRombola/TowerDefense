@@ -27,7 +27,7 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
         spriteBackground(tl.getTexture(CHAT_BG), r),
         spriteInput(tl.getTexture(CHAT_INPUT), r),
         textColor(SDL_Color{255, 255, 255, 0xFF}), active(false),
-        dstX(PADDING_HUD * 4), dstY(window.getHeight() - CHAT_PAD) {
+        dstX(PADDING_HUD * 4), dstY(window.getHeight() - CHAT_PAD), _messagesToAdd() {
     TTF_Init();
     font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 
@@ -62,23 +62,26 @@ bool ChatView::isActive() {
 }
 
 void ChatView::enable() {
+    SDL_StartTextInput();
+
     Lock(this->mutex);
 
     active = true;
-    SDL_StartTextInput();
     dstRectIbeam.x = dstX - OFFSET_X_IBEAM;
 }
 
 void ChatView::disable() {
+    SDL_StopTextInput();
+
     Lock(this->mutex);
 
     active = false;
-    SDL_StopTextInput();
     if (!inputText.empty()) {
         // Reemplazar esta funcion por comando al servidor
         // dispatcher
-        this->dispatcher.QueueCommand(new ChatMessageCommand(inputText));
-        //this->addMessage(inputText);
+        std::cout << "queieng msj\n"<<std::flush;
+       this->dispatcher.QueueCommand(new ChatMessageCommand(inputText));
+       //this->addMessage(inputText);
     }
     inputText = "";
     if (input) delete input;
@@ -116,6 +119,13 @@ void ChatView::newInput(std::string &entry) {
 }
 
 void ChatView::draw() {
+    std::string* s = _messagesToAdd.Dequeue();
+    while(s != nullptr){
+        addMessage((*s));
+        delete s;
+        s = _messagesToAdd.Dequeue();
+    }
+
     spriteBackground.drawEuclidian();
 
     if (active) {
@@ -135,8 +145,9 @@ void ChatView::draw() {
 }
 
 void ChatView::MessageFrom(std::string &msg, std::string &playerName) {
-    std::string s = playerName + ": " + msg;
-    addMessage(s);
+    std::string* s = new std::string(playerName + ": " + msg);
+    //addMessage(s);
+    _messagesToAdd.Queue(s);
 }
 
 void ChatView::addMessage(std::string &m) {

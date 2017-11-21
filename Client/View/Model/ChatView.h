@@ -8,6 +8,7 @@
 #include "../Common/Sprite.h"
 #include "TextView.h"
 #include "../../include/NetCommands/CommandDispatcher.h"
+#include "../../include/NonBlockingThreadSafeQueue.h"
 #include <list>
 #include <mutex>
 
@@ -29,6 +30,7 @@ private:
     const int dstY;
     std::list<TextView *> messages;
     std::mutex mutex;
+    NonBlockingThreadSafeQueue<std::string*> _messagesToAdd;
 
 public:
     ChatView(CommandDispatcher &d, Window &w, Renderer &r, TextureLoader &tl);
