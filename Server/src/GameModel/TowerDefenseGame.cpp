@@ -6,6 +6,7 @@
 #include <cmath>
 #include <mutex>
 
+#include "../../include/GameModel/Hordes/HordeManager.h"
 #include "../../include/GameModel/TowerDefenseGame.h"
 #include "../../include/GameModel/Map/Map.h"
 #include "../../include/GameModel/EnviormentUnits/DemonioVerde.h"
@@ -36,10 +37,12 @@ TowerDefenseGame::TowerDefenseGame(uint gameId,
 	 _gameId(gameId),
 	_ended(false), _stopped(false), _steps(0), _enemyIdCounter(0), _units(),
 	_map(mapCfg.Cfg["ancho"].as<uint>(), mapCfg.Cfg["alto"].as<uint>(), mapCfg), notifications(notifications),
-	_players(playersInGame), _ingamePlayers()
+	_players(playersInGame), _ingamePlayers(), _hordeManager(mapCfg)
 {
 	std::string ss("../config.yaml");
 	GameCfg = new GameConfiguration(ss);
+    _hordeManager.game = this;
+	_hordeManager.timeToWaitBetweenHordes_ms = GameCfg->Cfg["time_to_wait_between_hordes_ms"].as<uint>();
     _clientCooldownManager = new ClientCooldownManager(*GameCfg);
 }
 
@@ -55,7 +58,7 @@ TowerDefenseGame::~TowerDefenseGame()
 }
 
 
-void TowerDefenseGame::_SpawnAbmonible(){
+EnviormentUnit* TowerDefenseGame::SpawnAbmonible(){
 	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
 	uint abmoniblespeed = GameCfg->Cfg["units"]["abmonible"]["speed"].as<uint>();
@@ -66,8 +69,9 @@ void TowerDefenseGame::_SpawnAbmonible(){
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
 	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	return unit;
 }
-void TowerDefenseGame::_SpawnHombreCabra(){
+EnviormentUnit* TowerDefenseGame::SpawnHombreCabra(){
 	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
 	uint hombreCabraSpeed = GameCfg->Cfg["units"]["hombre_cabra"]["speed"].as<uint>();
@@ -78,8 +82,9 @@ void TowerDefenseGame::_SpawnHombreCabra(){
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
 	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	return unit;
 }
-void TowerDefenseGame::_SpawnHalconSangriento(){
+EnviormentUnit* TowerDefenseGame::SpawnHalconSangriento(){
 	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
 	uint speed = GameCfg->Cfg["units"]["halcon_sangriento"]["speed"].as<uint>();
@@ -90,8 +95,9 @@ void TowerDefenseGame::_SpawnHalconSangriento(){
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
 	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	return unit;
 }
-void TowerDefenseGame::_SpawnDemonioVerde(){
+EnviormentUnit* TowerDefenseGame::SpawnDemonioVerde(){
 	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
 	uint speed = GameCfg->Cfg["units"]["demonio_verde"]["speed"].as<uint>();
@@ -102,8 +108,10 @@ void TowerDefenseGame::_SpawnDemonioVerde(){
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
 	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	return unit;
+
 }
-void TowerDefenseGame::_SpawnNoMuerto(){
+EnviormentUnit* TowerDefenseGame::SpawnNoMuerto(){
 	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
 	uint speed = GameCfg->Cfg["units"]["no_muerto"]["speed"].as<uint>();
@@ -114,8 +122,10 @@ void TowerDefenseGame::_SpawnNoMuerto(){
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
 	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	return unit;
+
 }
-void TowerDefenseGame::_SpawnEspectro(){
+EnviormentUnit* TowerDefenseGame::SpawnEspectro(){
 	uint unitbaseStepDelay_ms = GameCfg->Cfg["unit_base_step_delay_ms"].as<uint>();
 	PathTile* spawn = _map.GetRandomSpawnTile();
 	uint speed = GameCfg->Cfg["units"]["espectro"]["speed"].as<uint>();
@@ -126,28 +136,29 @@ void TowerDefenseGame::_SpawnEspectro(){
 	_map.PlaceUnit(unit, spawn);
 	UnitVM vm = unit->GetViewModel();
 	notifications.Queue(new UnitCreatedGameNotification(vm, _players));
+	return unit;
 }
 
 void TowerDefenseGame::_SpawnRandomEnemy(){
 	uint random_variable = (uint) std::rand() % 6;
 	switch (random_variable){
 		case 0:
-			_SpawnAbmonible();
+            SpawnAbmonible();
 			break;
 		case 1:
-			_SpawnDemonioVerde();
+            SpawnDemonioVerde();
 			break;
 		case 2:
-			_SpawnEspectro();
+            SpawnEspectro();
 			break;
 		case 3:
-			_SpawnHalconSangriento();
+            SpawnHalconSangriento();
 			break;
 		case 4:
-			_SpawnHombreCabra();
+            SpawnHombreCabra();
 			break;
 		case 5:
-			_SpawnNoMuerto();
+            SpawnNoMuerto();
 			break;
 	}
 }
@@ -156,6 +167,11 @@ void TowerDefenseGame::_SpawnRandomEnemy(){
 void TowerDefenseGame::QueueCommand(Command* command){
 	std::lock_guard<std::mutex> lock(_commandQueueMutex);
 	_commands.push(command);
+}
+
+void TowerDefenseGame::PlayersWon() {
+	notifications.Queue(new GameOverGameNotification(_players, true));
+	_ended = true;
 }
 
 void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_TYPE type, uint32_t x, uint32_t y){
@@ -293,40 +309,48 @@ bool TowerDefenseGame::_Step(){
 
 	_steps = _steps + 1;
 
-	uint32_t spawnrandomenemyevery_ms = GameCfg->Cfg["spawn_units_every_ms"].as<uint>();
-	if (actualTs - ts > spawnrandomenemyevery_ms){
-		ts = actualTs;
-		_SpawnRandomEnemy();
-	}
+	//uint32_t spawnrandomenemyevery_ms = GameCfg->Cfg["spawn_units_every_ms"].as<uint>();
+	//if (actualTs - ts > spawnrandomenemyevery_ms){
+	//	ts = actualTs;
+	//	_SpawnRandomEnemy();
+	//}
 
+	std::cout << "stepping units\n" <<std::flush;
 	for (auto it = _units.begin(); it != _units.end(); ++it){
 		(*it)->Step(*this);
 	}
+	std::cout << "stepping units1\n" <<std::flush;
 
 	_map.Step(*this);
 
-	auto it = _units.begin();
-	if (it != _units.end()){
-		for (; it != _units.end();){
-			if (!((*it)->IsAlive())){
-				std::cout << "REMOVING DEAD UNIT\n";
-				UnitVM vm = (*it)->GetViewModel();
-				notifications.Queue(new UnitDiedGameNotification(vm, _players));
-				_map.RemoveUnit(*it);
-				EnviormentUnit* unit = *it;
-				_units.erase(it);
-				delete unit;
-			} else {
-				++it;
-			}
-		}
-	}
+
+    for (auto it = _units.begin(); it != _units.end(); ++it){
+        if (!((*it)->IsAlive())){
+            if (!(*it)->deathNotified){
+                std::cout << "NOTIFING DEAD UNIT\n";
+                UnitVM vm = (*it)->GetViewModel();
+                notifications.Queue(new UnitDiedGameNotification(vm, _players));
+                _map.RemoveUnit(*it);
+                (*it)->deathNotified = true;
+            }
+            //EnviormentUnit* unit = *it;
+            //_units.erase(it);
+            //delete unit;
+        }
+    }
+
+
+	_hordeManager.Step();
+
 
 	{
 		std::lock_guard<std::mutex> lock(_endedMutex);
 		std::vector<PathTile*> endTiles = _map.GetFinishTiles();
 		for (auto it = endTiles.begin(); it != endTiles.end() && !_ended; ++it){
-			_ended = (*it)->HasAnyUnit();
+			_ended |= (*it)->HasAnyUnit();
+			if (_ended){
+				notifications.Queue(new GameOverGameNotification(_players, false));
+			}
 		}
 	}
 
@@ -381,13 +405,6 @@ void TowerDefenseGame::_Run()
 			std::cout << "\n\nClock delayed " << diference * -1 << " ms\n\n" << std::flush;
 	}
 
-	notifications.Queue(new GameOverGameNotification(_players));
-	//
-	// Por ahora solo se puede perder.
-	// jeje que juego divertido.
-	//
-
-	std::cout << "GAME OVER! \n";
 }
 
 std::vector<UnitVM> TowerDefenseGame::GetUnitViewModels(){

@@ -124,7 +124,7 @@ void NotificationReciever::RecieveNotifications(){
 					_dispatcher.QueueCommand(new PlayerLoadedGameCommand());
 					_dispatcher.Disable();
                     model_view->addAnnouncement("Empezo el juego!!");
-				}
+                }
 				break;
 			case IN_GAME_CHAT_MESSAGE:
 			{
@@ -170,18 +170,53 @@ void NotificationReciever::_HandleGameOpcode(){
 			_HandleProjectileFired();
             break;
 		case GAME_OVER:
-			std::cout << "GAME_OVER::\n" << std::flush;
+            model_view->addAnnouncement("Defeat!");
+            std::this_thread::sleep_for (std::chrono::milliseconds(3000));
+            std::cout << "GAME_OVER::\n" << std::flush;
 			this->Stop();
             break;
-		case UNIT_DIED:
+        case GAME_WON:
+            model_view->addAnnouncement("Victory!");
+            std::this_thread::sleep_for (std::chrono::milliseconds(3000));
+            std::cout << "GAME_WON::\n" << std::flush;
+            this->Stop();
+            break;
+        case UNIT_DIED:
+			std::cout << "UNIT_DIED::\n" << std::flush;
 			uint32_t unitid;
 			_sock.Recieve((char *) &unitid, 4);
 			model_view->killUnit(unitid);
 			break;
 		case CLIENT_CAST_SPELL:
+			std::cout << "CLIENT_CAST_SPELL::\n" << std::flush;
 			_HandleSpellCasted();
 			break;
+		case HORDE_STARTED:
+			std::cout << "HORDE_STARTED::\n" << std::flush;
+			_HandleHordeStarted();
+			break;
+		case HORDE_ENDED:
+			std::cout << "HORDE_ENDED::\n" << std::flush;
+			_HandleHordeEnded();
+			break;
     }
+}
+
+void NotificationReciever::_HandleHordeEnded() {
+	std::cout << "horda ended\n" << std::flush;
+	uint hordeId;
+	_sock.Recieve((char*) &hordeId, 4);
+	std::string s = "Horda " +  std::to_string(hordeId) + " superada!";
+	model_view->addAnnouncement(s);
+	std::cout << "horda ended1\n" << std::flush;
+}
+void NotificationReciever::_HandleHordeStarted() {
+	std::cout << "horda started\n" << std::flush;
+	uint hordeId;
+	_sock.Recieve((char*) &hordeId, 4);
+	std::string s = "Horda " +  std::to_string(hordeId) + " ha empezado!";
+	model_view->addAnnouncement(s);
+	std::cout << "horda started1\n" << std::flush;
 }
 
 void NotificationReciever::_HandleSpellCasted(){

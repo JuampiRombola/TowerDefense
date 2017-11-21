@@ -20,7 +20,7 @@ _lastTimeStamp_ms(0), _lastSlowBeginTimeStamp_ms(0), _lastFreezeTimeStamp_ms(0),
  _alive(true), _id(id), _stepDelay(stepDelay_ms),
  _healthPoints(healthpoints), _position(nullptr), _lastPosition(nullptr), 
 _map(nullptr), _isSlowed(false), _isFrozen(false), _lastFreezeDuration_sec(0),
- _lastSlowDuration_sec(0), _activePercentSlow(1), _notifications(notifications)
+ _lastSlowDuration_sec(0), _activePercentSlow(1), _notifications(notifications), deathNotified(false)
 {
 
 }
@@ -80,7 +80,7 @@ void EnviormentUnit::Slow(uint slowSeconds, uint percentSlow){
 
 
 void EnviormentUnit::Step(TowerDefenseGame& game){
-	if (!_CanStep())
+	if (!_alive || !_CanStep())
 		return;
 
 	PathTile* next = _GetNextTile();

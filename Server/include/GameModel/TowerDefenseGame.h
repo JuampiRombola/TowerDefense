@@ -18,7 +18,7 @@
 #include "GameNotifications/GameNotification.h"
 #include "../ThreadSafeQueue.h"
 #include "ClientCooldownManager.h"
-
+#include "Hordes/HordeManager.h"
 
 class TowerDefenseGame{
 private:
@@ -53,17 +53,11 @@ private:
 	PlayerProxy* _firePlayer;
 	PlayerProxy* _groundPlayer;
 
-	void _SpawnAbmonible();
-	void _SpawnHombreCabra();
-	void _SpawnHalconSangriento();
-	void _SpawnDemonioVerde();
-	void _SpawnNoMuerto();
-	void _SpawnEspectro();
-
-
 	std::vector<PlayerProxy*> _players;
 	std::vector<PlayerProxy*> _ingamePlayers;
-    ClientCooldownManager* _clientCooldownManager;
+	HordeManager _hordeManager;
+
+	ClientCooldownManager* _clientCooldownManager;
 
 public:
 	TowerDefenseGame(uint gameId, ThreadSafeQueue<GameNotification*>& notifications,
@@ -100,6 +94,16 @@ public:
 	void SendMapToPlayer(PlayerProxy& player);
 
 	void ChatMessageFrom(PlayerProxy& player);
+
+    EnviormentUnit* SpawnAbmonible();
+	EnviormentUnit* SpawnHombreCabra();
+	EnviormentUnit* SpawnHalconSangriento();
+	EnviormentUnit* SpawnDemonioVerde();
+	EnviormentUnit* SpawnNoMuerto();
+	EnviormentUnit* SpawnEspectro();
+
+    void PlayersWon();
+
 };
 
 #endif

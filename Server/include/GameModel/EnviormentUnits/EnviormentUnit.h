@@ -54,6 +54,7 @@ public:
 	void Kill();
 	void Freeze(uint seconds);
 	virtual UnitVM GetViewModel() = 0;
+	bool deathNotified;
 };
 
 #endif

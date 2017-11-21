@@ -101,6 +101,10 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/GameNotifications/UnitDiedGameNotification.h
         Server/include/GameModel/GameNotifications/ChatMessageNotification.h
         Server/include/GameModel/GameNotifications/TowerPlacedGameNotification.h
+        Server/include/GameModel/Hordes/Horde.h
+        Server/src/GameModel/Hordes/Horde.cpp
+        Server/include/GameModel/Hordes/HordeManager.h
+        Server/src/GameModel/Hordes/HordeManager.cpp
         Server/src/GameModel/GameNotifications/GameNotification.cpp
         Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp
         Server/src/GameModel/GameNotifications/UnitDiedGameNotification.cpp
@@ -134,7 +138,13 @@ set(SOURCE_FILES_SERVER
         Server/src/GameModel/ClientCooldownManager.cpp
         Server/include/GameModel/ClientCooldownManager.h
         Server/src/GameModel/GameNotifications/GameModelStartedRunningNotification.cpp
-        Server/include/GameModel/GameNotifications/GameModelStartedRunningNotification.h Server/src/GameModel/GameNotifications/MapTransferNotification.cpp Server/include/GameModel/GameNotifications/MapTransferNotification.h Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp Server/include/GameModel/GameNotifications/ChatMessageNotification.h)
+        Server/include/GameModel/GameNotifications/GameModelStartedRunningNotification.h
+        Server/src/GameModel/GameNotifications/MapTransferNotification.cpp
+        Server/include/GameModel/GameNotifications/MapTransferNotification.h
+        Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp
+        Server/include/GameModel/GameNotifications/ChatMessageNotification.h
+        Server/src/GameModel/GameNotifications/HordeUpdateGameNotification.cpp
+        Server/include/GameModel/GameNotifications/HordeUpdateGameNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp

@@ -83,30 +83,13 @@ _projectiles()
 			_SetFinishTile(portal);
 	}
 
-/*
-
-	for (YAML::const_iterator it = g.Cfg["hordas"].begin();
-		 it != g.Cfg["hordas"].end(); ++it)
-
-	{
-		const YAML::Node& node = *it;
-
-		std::cout << "tiempo: " << node["tiempo"].as<uint>();
-		std::cout << "abmonible: " << node["abmonible"].as<uint>();
-		std::cout << "demonio_verde: " << node["demonio_verde"].as<uint>();
-		std::cout << "espectro: " << node["espectro"].as<uint>();
-		std::cout << "halcon_sangriento: " << node["halcon_sangriento"].as<uint>();
-		std::cout << "hombre_cabra: " << node["hombre_cabra"].as<uint>();
-		std::cout << "no_muerto: " << node["no_muerto"].as<uint>();
-	}
-*/
-
-
 }
 
 
 void Map::RemoveUnit(EnviormentUnit* unit){
-	unit->GetPosition()->UnitLeave(unit);
+	PathTile* u = unit->GetPosition();
+    if (u != nullptr)
+        u->UnitLeave(unit);
 }
 
 

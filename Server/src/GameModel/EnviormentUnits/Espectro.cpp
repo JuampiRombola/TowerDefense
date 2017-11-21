@@ -28,9 +28,9 @@ UnitVM Espectro::GetViewModel(){
 	UnitVM vm;
 	vm.unitType = UNIT_TYPE_Espectro;
 	vm.healthPoints = _healthPoints;
-	vm.xPos = _position->GetXPos();
-	vm.yPos = _position->GetYPos();
-	if (_position->next != nullptr){
+	vm.xPos = (_position != nullptr) ? _position->GetXPos() : -1;
+	vm.yPos = (_position != nullptr) ? _position->GetYPos() : -1;
+	if (_position != nullptr && _position->next != nullptr){
 		vm.nextXpos = _position->next->GetXPos();
 		vm.nextYpos = _position->next->GetYPos();
 	} else{

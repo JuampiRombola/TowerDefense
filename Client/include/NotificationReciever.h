@@ -30,6 +30,8 @@ private:
     void _HandleUnitCreated();
 	void _HandleProjectileFired();
 	void _HandleSpellCasted();
+	void _HandleHordeStarted();
+	void _HandleHordeEnded();
 public:
 	NotificationReciever(SocketWrapper& socket,
 						 ClientLobbyManager& lobbyManager, GTKRunner& runner,

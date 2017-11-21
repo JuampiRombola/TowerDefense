@@ -90,8 +90,9 @@ enum CAST_SPELL_TYPE {
 
 
 #define IN_GAME_CHAT_MESSAGE 209
-
-
+#define HORDE_STARTED 210
+#define HORDE_ENDED 211
+#define GAME_WON 212
 
 
 #endif
