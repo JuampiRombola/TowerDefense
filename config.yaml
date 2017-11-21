@@ -1,4 +1,5 @@
-unit_base_step_delay_ms: 3000
+spawn_units_every_ms: 500
+unit_base_step_delay_ms: 6000
 towers:
  ground:
   place_cooldown_sec: 3

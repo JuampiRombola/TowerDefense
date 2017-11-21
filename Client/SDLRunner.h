@@ -25,10 +25,14 @@ private:
     NotificationReciever* _reciever;
     ClientLobbyManager* _lobbyManager;
     ClientSocket* _sock;
+    uint8_t _mapSurface;
+    uint32_t _mapWidth;
+    uint32_t _mapHeight;
 public:
-    SDLRunner();
+    SDLRunner(uint8_t mapSurface, uint32_t mapWidth, uint32_t mapHeight);
     ~SDLRunner();
-    void Run(CommandDispatcher* dispatcher, NotificationReciever* reciever, ClientLobbyManager* lobbyManager, ClientSocket* sock);
+    void Run(CommandDispatcher* dispatcher, NotificationReciever* reciever,
+             ClientLobbyManager* lobbyManager, ClientSocket* sock);
 };
 
 #endif

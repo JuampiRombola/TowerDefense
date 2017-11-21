@@ -20,6 +20,7 @@ private:
 	Lobby* _joinedLobby;
 
 
+
 	std::vector<OtherPlayer*>::const_iterator  GetOtherPlayer(uint32_t guid);
 	Lobby* GetLobby(uint32_t guid);
 public:
@@ -40,6 +41,13 @@ public:
 	void HandleOtherPlayerUnpickedSpell();
 
 	std::vector<Lobby*> GetLobbies();
+	std::string GetPlayerName(uint32_t guid);
+	bool fireHUDEnabled;
+	bool waterHUDEnabled;
+	bool airHUDEnabled;
+	bool groundHUDEnabled;
+	std::string myName;
+	uint32_t myGuid;
 };
 
 #endif

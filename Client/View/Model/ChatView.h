@@ -41,6 +41,7 @@ public:
     void newInput(std::string &entry);
     void draw();
     void addMessage(std::string &msg);
+    void MessageFrom(std::string &msg, std::string &playerName);
 };
 
 

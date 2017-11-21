@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "../../../../Common/Protocolo.h"
 #include "../../../include/GameModel/Map/Map.h"
 #include "../../../include/GameModel/Exceptions/IncompletePathException.h"
 #include "../../../include/GameModel/Exceptions/TileCannotSpawnException.h"
@@ -18,152 +19,88 @@
 #include "../../../include/GameModel/TowerDefenseGame.h"
 #include "../../../include/GameModel/GameNotifications/ProjectileFiredGameNotification.h"
 
-Map::Map(uint rows, uint cols, std::string mapJsonConfig):
+Map::Map(uint rows, uint cols, GameConfiguration& mapCfg):
 _rows(rows), _cols(cols),
- _tiles(rows * cols), _spawnTiles(), _endTiles(),
-_pathTiles(cols, std::vector<PathTile*>(rows)), 
-_groundTiles(cols, std::vector<SolidGroundTile*>(rows)),
+_tiles(rows * cols), _spawnTiles(), _endTiles(),
+_pathTiles(rows, std::vector<PathTile*>(cols)),
+_groundTiles(rows, std::vector<SolidGroundTile*>(cols)),
 _projectiles()
 
 {
-	for (uint i = 0; i < cols; i++){
-		for (uint j = 0; j < rows; j++){
+
+	for (uint i = 0; i < rows; i++){
+		for (uint j = 0; j < cols; j++){
 			_pathTiles[i][j] = nullptr;
 			_groundTiles[i][j] = nullptr;
 		}
 	}
 
-	// Armo tierra firme
-	SolidGroundTile* t;
-	t = new SolidGroundTile(1, 1);
-	PlaceGroundTile(t);
-	t = new SolidGroundTile(7, 7);
-	PlaceGroundTile(t);
-	t = new SolidGroundTile(1, 7);
-	PlaceGroundTile(t);
-	t = new SolidGroundTile(7, 1);
-	PlaceGroundTile(t);
-	t = new SolidGroundTile(3, 3);
-	PlaceGroundTile(t);
-	t = new SolidGroundTile(5, 5);
-	PlaceGroundTile(t);
-	t = new SolidGroundTile(3, 5);
-	PlaceGroundTile(t);
-	t = new SolidGroundTile(5, 3);
-	PlaceGroundTile(t);
 
-	// Armo camino 1
-	PathTile* end;
-	PathTile* p1;
-	PathTile* p2;
-	PathTile* spawn;
+	for (YAML::const_iterator it = mapCfg.Cfg["superficies"].begin();
+		 it != mapCfg.Cfg["superficies"].end(); ++it)
 
-	end = new PathTile(0, 1, this, nullptr);
-	_PlacePathTile(end);
-	_SetFinishTile(end);
+	{
+		const YAML::Node& node = *it;
+		SolidGroundTile* tile = new SolidGroundTile(node["x"].as<uint>(), node["y"].as<uint>());
+		PlaceGroundTile(tile);
+	}
 
-	p1 = new PathTile(0, 2, this, end);
-	_PlacePathTile(p1);
-	p2 = new PathTile(0, 3, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(0, 4, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(0, 5, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(0, 6, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(0, 7, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(0, 8, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(1, 8, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(2, 8, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(3, 8, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(4, 8, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(5, 8, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(6, 8, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(7, 8, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(8, 8, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(8, 7, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(8, 6, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(8, 5, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(8, 4, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(8, 3, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(8, 2, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(8, 1, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(8, 0, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(7, 0, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(6, 0, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(5, 0, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(4, 0, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(3, 0, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(2, 0, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(1, 0, this, p1);
-	_PlacePathTile(p2);
 
-	spawn = new PathTile(0, 0, this, p2);
-	_PlacePathTile(spawn);
-	_SetSpawnTile(spawn);
+    std::vector<temp_pathTile> tempPathTiles;
 
-	// Armo camino 2
-	end = new PathTile(2, 3, this, nullptr);
-	_PlacePathTile(end);
-	_SetFinishTile(end);
+	for (YAML::const_iterator it = mapCfg.Cfg["caminos"].begin();
+         it != mapCfg.Cfg["caminos"].end() ; ++it)
+	{
+        const YAML::Node& node = *it;
+        temp_pathTile t;
+		t.x = node["x"].as<int>();
+		t.y = node["y"].as<int>();
+		t.xsig = node["x_sig"].as<int>();
+		t.ysig = node["y_sig"].as<int>();
+		tempPathTiles.push_back(t);
+	}
 
-	p1 = new PathTile(2, 4, this, end);
-	_PlacePathTile(p1);
-	p2 = new PathTile(2, 5, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(2, 6, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(3, 6, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(4, 6, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(5, 6, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(6, 6, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(6, 5, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(6, 4, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(6, 3, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(6, 2, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(5, 2, this, p1);
-	_PlacePathTile(p2);
-	p1 = new PathTile(4, 2, this, p2);
-	_PlacePathTile(p1);
-	p2 = new PathTile(3, 2, this, p1);
-	_PlacePathTile(p2);
+    PathTile* t = nullptr;
+    for (auto it = tempPathTiles.rbegin(); it != tempPathTiles.rend(); ++it ) {
+        uint xx = (*it).x;
+        uint yy = (*it).y;
+		t = new PathTile(xx, yy, this, t);
+		_PlacePathTile(t);
+    }
 
-	spawn = new PathTile(2, 2, this, p2);
-	_PlacePathTile(spawn);
-	_SetSpawnTile(spawn);
+
+	for (YAML::const_iterator it = mapCfg.Cfg["portales"].begin();
+		 it != mapCfg.Cfg["portales"].end(); ++it)
+
+	{
+		const YAML::Node& node = *it;
+		uint x = node["x"].as<uint>();
+		uint y = node["y"].as<uint>();
+		PathTile* portal = GetPathTile(x, y);
+		if (node["tipo"].as<std::string>() == "entrada")
+			_SetSpawnTile(portal);
+		else
+			_SetFinishTile(portal);
+	}
+
+/*
+
+	for (YAML::const_iterator it = g.Cfg["hordas"].begin();
+		 it != g.Cfg["hordas"].end(); ++it)
+
+	{
+		const YAML::Node& node = *it;
+
+		std::cout << "tiempo: " << node["tiempo"].as<uint>();
+		std::cout << "abmonible: " << node["abmonible"].as<uint>();
+		std::cout << "demonio_verde: " << node["demonio_verde"].as<uint>();
+		std::cout << "espectro: " << node["espectro"].as<uint>();
+		std::cout << "halcon_sangriento: " << node["halcon_sangriento"].as<uint>();
+		std::cout << "hombre_cabra: " << node["hombre_cabra"].as<uint>();
+		std::cout << "no_muerto: " << node["no_muerto"].as<uint>();
+	}
+*/
+
 
 }
 
@@ -184,16 +121,18 @@ void Map::PlaceGroundTile(SolidGroundTile* tile){
 }
 
 void Map::_PlacePathTile(PathTile* tile){
-	if (_pathTiles[tile->GetXPos()][tile->GetYPos()] != nullptr){
+	uint x = tile->GetXPos();
+	uint y = tile->GetYPos();
+	if (_pathTiles[x][y] != nullptr){
 		delete tile;
 		return;
 	}
 	_PlaceTile(tile);
-	_pathTiles[tile->GetXPos()][tile->GetYPos()] = tile;
+	_pathTiles[x][y] = tile;
 }
 
 void Map::_PlaceTile(Tile* tile){
-	if (tile->GetXPos() >= _cols || tile->GetYPos() >= _rows)
+	if (tile->GetXPos() >= _rows || tile->GetYPos() >= _cols)
 		throw TileIsOutOfBoundsException();
 
 	bool found = false;
@@ -223,7 +162,7 @@ Map::~Map()
 }
 
 PathTile* Map::GetPathTile(uint x, uint y){
-	if (x >= _cols || y >= _rows)
+	if (x >= _rows || y >= _cols)
 		return nullptr;
 	return _pathTiles[x][y];
 }
@@ -249,7 +188,7 @@ PathTile* Map::GetRandomSpawnTile(){
 }
 
 SolidGroundTile* Map::GetSolidGroundTile(uint x, uint y){
-	if (x >= _cols || y >= _rows)
+	if (x >= _rows || y >= _cols)
 		return nullptr;
 	return _groundTiles[x][y];
 }
@@ -260,11 +199,9 @@ std::vector<EnviormentUnit*> Map::GetUnitsInRadius(uint range, Tile* tile){
 	std::vector<EnviormentUnit*> units;
 
 	std::vector<PathTile*> tilesInRange = GetPathTilesInRange(tile, range);
-  //  std::cout << "tiles in range: " << tilesInRange.size() << "\n" << std::flush;
 
 	for (auto it = tilesInRange.begin(); it != tilesInRange.end(); ++it){
 		std::vector<EnviormentUnit*> unitsInTile = (*it)->GetUnits();
-//        std::cout << "units in tiles in range: " << tilesInRange.size() << "\n" << std::flush;
 		for (auto unitIt = unitsInTile.begin(); unitIt != unitsInTile.end(); ++unitIt){
 			units.push_back(*unitIt);
 		} 
@@ -343,8 +280,8 @@ std::vector<Projectile*> Map::GetProjectiles(){
 
 std::vector<Tower*> Map::GetTowers(){
 	std::vector<Tower*> towers;
-	for (uint i = 0; i < _cols; i++){
-		for (uint j = 0; j < _rows; j++){
+	for (uint i = 0; i < _rows; i++){
+		for (uint j = 0; j < _cols; j++){
 			SolidGroundTile* tile = GetSolidGroundTile(i, j);
 			if (tile != nullptr){
 				Tower* t = tile->GetTower();
@@ -356,84 +293,50 @@ std::vector<Tower*> Map::GetTowers(){
 	return towers;
 }
 
-/*
-PathTile* end = new PathTile(6,6, this, nullptr);
-_PlacePathTile(end);
-_SetFinishTile(end);
+void Map::TransferMapTo(PlayerProxy& player){
 
-PathTile* p1 = new PathTile(6, 5, this, end);
-_PlacePathTile(p1);
-PathTile* p2 = new PathTile(5, 5, this, p1);
-_PlacePathTile(p2);
-p1 = new PathTile(4, 5, this, p2);
-_PlacePathTile(p1);
-p2 = new PathTile(3, 5, this, p1);
-_PlacePathTile(p2);
-p1 = new PathTile(2, 5, this, p2);
-_PlacePathTile(p1);
-p2 = new PathTile(2, 4, this, p1);
-_PlacePathTile(p2);
-p1 = new PathTile(2, 3, this, p2);
-_PlacePathTile(p1);
-p2 = new PathTile(3, 3, this, p1);
-_PlacePathTile(p2);
-p1 = new PathTile(3, 2, this, p2);
-_PlacePathTile(p1);
-p2 = new PathTile(3, 1, this, p1);
-_PlacePathTile(p2);
-p1 = new PathTile(2, 1, this, p2);
-_PlacePathTile(p1);
-p2 = new PathTile(1, 1, this, p1);
-_PlacePathTile(p2);
-p1 = new PathTile(1, 0, this, p2);
-_PlacePathTile(p1);
-PathTile* spawn1 = new PathTile(0,0, this, p1);
-_PlacePathTile(spawn1);
-_SetSpawnTile(spawn1);
+	uint8_t mapOpcode = LOAD_MAP;
+	uint8_t pathOpcode = PATH_TILE;
+	uint8_t strucOpcode = STRUCTURE_TILE;
+	uint8_t spawnOpcode = SPAWN_TILE;
+	uint8_t finishOpcode = FINISH_TILE;
+
+	for (uint i = 0; i < _rows; i++){
+		for (uint j = 0; j < _cols; j++){
+			PathTile* t = _pathTiles[i][j];
+			if (t != nullptr){
+				player.SendByte(mapOpcode);
+				player.SendByte(pathOpcode);
+				player.SendInt32(t->GetXPos());
+				player.SendInt32(t->GetYPos());
+			}
+
+			SolidGroundTile* st = _groundTiles[i][j];
+			if (st != nullptr){
+				player.SendByte(mapOpcode);
+				player.SendByte(strucOpcode);
+				player.SendInt32(st->GetXPos());
+				player.SendInt32(st->GetYPos());
+			}
+		}
+	}
 
 
-SolidGroundTile* solidGround = new SolidGroundTile(2, 0);
-PlaceGroundTile(solidGround);
+	for (auto it = _spawnTiles.begin(); it != _spawnTiles.end(); ++it){
+		player.SendByte(mapOpcode);
+		player.SendByte(spawnOpcode);
+		player.SendInt32((*it)->GetXPos());
+		player.SendInt32((*it)->GetYPos());
+	}
 
-SolidGroundTile* solidGround1 = new SolidGroundTile(2, 2);
-PlaceGroundTile(solidGround1);
+	for (auto it = _endTiles.begin(); it != _endTiles.end(); ++it){
+		player.SendByte(mapOpcode);
+		player.SendByte(finishOpcode);
+		player.SendInt32((*it)->GetXPos());
+		player.SendInt32((*it)->GetYPos());
+	}
 
-SolidGroundTile* solidGround2 = new SolidGroundTile(1, 4);
-PlaceGroundTile(solidGround2);
+	uint8_t doneOpcode = MAP_FINISHED_LOADING;
+	player.SendByte(doneOpcode);
 
-SolidGroundTile* solidGround3 = new SolidGroundTile(4, 6);
-PlaceGroundTile(solidGround3);
-
-SolidGroundTile* solidGround4 = new SolidGroundTile(3, 4);
-PlaceGroundTile(solidGround4);*/
-
-/*
-//Armo un camino a mano
-SolidGroundTile* t = new SolidGroundTile(5, 0);
-PlaceGroundTile(t);
-t = new SolidGroundTile(5, 2);
-PlaceGroundTile(t);
-t = new SolidGroundTile(5, 4);
-PlaceGroundTile(t);
-t = new SolidGroundTile(5, 6);
-PlaceGroundTile(t);
-
-PathTile* end = new PathTile(3, 6, this, nullptr);
-_PlacePathTile(end);
-_SetFinishTile(end);
-PathTile* p1 = new PathTile(3, 5, this, end);
-_PlacePathTile(p1);
-PathTile* p2 = new PathTile(3, 4, this, p1);
-_PlacePathTile(p2);
-p1 = new PathTile(3, 3, this, p2);
-_PlacePathTile(p1);
-p2 = new PathTile(3, 2, this, p1);
-_PlacePathTile(p2);
-p1 = new PathTile(2, 2, this, p2);
-_PlacePathTile(p1);
-p2 = new PathTile(1, 2, this, p1);
-_PlacePathTile(p2);
-PathTile* spawn1 = new PathTile(0, 2, this, p2);
-_PlacePathTile(spawn1);
-_SetSpawnTile(spawn1);
- */
+}

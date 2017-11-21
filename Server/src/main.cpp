@@ -1,6 +1,5 @@
 #include <iostream>
 #include <thread>
-
 #include "../include/TFServer.h"
 
 int main(int argc, char** argv)

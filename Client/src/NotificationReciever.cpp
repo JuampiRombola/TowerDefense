@@ -4,6 +4,7 @@
 #include "../include/GTKNotifications/LogInFailedGtkNotification.h"
 #include "../include/GTKNotifications/GameStartedGTKNotification.h"
 #include "../View/Common/SpriteNamesConfig.h"
+#include "../include/NetCommands/PlayerLoadedGameCommand.h"
 
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner, CommandDispatcher& dispatcher)
 : _sock(socket), _lobbyManager(lobbyManager),  _runner(runner), _dispatcher(dispatcher), _stop(false) {
@@ -81,7 +82,14 @@ void NotificationReciever::RecieveNotifications(){
 				break;
 			case GAME_STARTED:
 				std::cout << "GAME_STARTED::\n" << std::flush;
-				_runner.gtkNotifications.Queue(new GameStartedGTKNotification());
+				uint32_t width;
+				uint32_t height;
+				uint8_t superficie;
+				_sock.Recieve((char*)&superficie, 1);
+				_sock.Recieve((char*)&width, 4);
+				_sock.Recieve((char*)&height, 4);
+
+				_runner.gtkNotifications.Queue(new GameStartedGTKNotification(superficie, width, height));
 				g_idle_add(GTKRunner::notification_check, &_runner);
 				break;
 			case GAME_OPCODE:
@@ -91,6 +99,47 @@ void NotificationReciever::RecieveNotifications(){
 			case GAME_MODEL_STARTED_RUNNING:
 				_dispatcher.Enable();
 				break;
+			case LOAD_MAP:
+				std::cout << "LOAD_MAP::\n" << std::flush;
+				uint8_t op;
+				_sock.Recieve((char*) &op, 1);
+				uint8_t x;
+				uint8_t y;
+				_sock.Recieve((char*) &x, 4);
+				_sock.Recieve((char*) &y, 4);
+				if (op == PATH_TILE)
+					model_view->createPathTile(x, y);
+				if (op == STRUCTURE_TILE)
+					model_view->createStructureTile(x, y);
+				if (op == SPAWN_TILE)
+					model_view->createPortalEntrada(x, y);
+				if (op == FINISH_TILE)
+					model_view->createPortalSalida(x, y);
+				break;
+			case MAP_FINISHED_LOADING:
+				{
+					std::lock_guard<std::mutex> lock(model_view->mapLoadedMutex);
+					model_view->mapLoaded = true;
+					model_view->mapLoadedCondVariable.notify_one();
+					_dispatcher.QueueCommand(new PlayerLoadedGameCommand());
+					_dispatcher.Disable();
+				}
+				break;
+			case IN_GAME_CHAT_MESSAGE:
+			{
+				uint32_t pguid;
+				_sock.Recieve((char*) &pguid, 4);
+				std::string message = _sock.RecieveString();
+
+                if (pguid == _lobbyManager.myGuid){
+                    chat_view->MessageFrom(message, _lobbyManager.myName);
+                } else {
+                    std::string playerName = _lobbyManager.GetPlayerName(pguid);
+                    chat_view->MessageFrom(message, playerName);
+                }
+				break;
+			}
+
 			default:
 				std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << ", ( " << (int) opcode << ")\'" << std::flush;
 		}
@@ -98,7 +147,6 @@ void NotificationReciever::RecieveNotifications(){
 	}
 
 }
-
 
 void NotificationReciever::_HandleGameOpcode(){
 	uint8_t opcode;
@@ -239,9 +287,9 @@ void NotificationReciever::_HandleUnitPositionUpdate(){
     uint32_t delay_ms ;
     _sock.Recieve((char *) &delay_ms, 4);
 
-	if (tox > 9 || toy > 9)
-		return;
 	std::cout << "unit move x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
+	if (tox == 0xFFFFFFFF || toy == 0xFFFFFFFF)
+		return;
 
 	model_view->moveUnit(unitID, x, y, tox, toy, delay_ms);
 }

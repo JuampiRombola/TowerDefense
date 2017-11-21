@@ -4,6 +4,15 @@
 #include <vector>
 #include <string>
 #include <mutex>
+#include <condition_variable>
+
+struct temp_pathTile {
+	uint x;
+	uint y;
+	uint xsig;
+	uint ysig;
+};
+
 
 class Tile;
 class Projectile;
@@ -11,6 +20,9 @@ class PathTile;
 class EnviormentUnit;
 
 #include "../Map/SolidGroundTile.h"
+#include "../GameConfiguration.h"
+#include "../../PlayerProxy.h"
+
 class TowerDefenseGame;
 
 class Map{
@@ -32,7 +44,7 @@ private:
 	void _SetSpawnTile(PathTile* tile);
 	void _SetFinishTile(PathTile* tile);
 public:
-	Map(uint rows, uint cols, std::string mapJsonConfig);
+	Map(uint rows, uint cols, GameConfiguration& mapCfg);
 	~Map();
 	void RemoveUnit(EnviormentUnit* unit);
 	void PlaceUnit(EnviormentUnit* unit, PathTile* tile);
@@ -46,6 +58,7 @@ public:
 	void Step(TowerDefenseGame& game);
 	std::vector<Projectile*> GetProjectiles();
 	std::vector<Tower*> GetTowers();
+	void TransferMapTo(PlayerProxy& player);
 };
 
 #endif
