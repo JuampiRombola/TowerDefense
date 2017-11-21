@@ -18,6 +18,7 @@ int main(int argc, char** argv) {
     bool quit = false;
     SDL_Event event{};
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
@@ -220,5 +221,6 @@ int main(int argc, char** argv) {
         } else
             delta = elapsedTime - s;
     }
+    TTF_Quit();
     SDL_Quit();
 }

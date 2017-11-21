@@ -46,7 +46,6 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
 
 ChatView::~ChatView() {
     TTF_CloseFont(font);
-    TTF_Quit();
     if (textureIbeam) SDL_DestroyTexture(textureIbeam);
     if (input) delete input;
 
@@ -136,8 +135,8 @@ void ChatView::draw() {
         if (inputText.size() >= MAX_LENGTH)
             renderer.copyEuclidean(textureIbeam, &dstRectIbeam);
     }
-    int i = 0;
     Lock(this->mutex);
+    int i = 0;
     for (auto it= messages.rbegin(); it != messages.rend(); ++it) {
         (*it)->setDestXY(dstX, dstY-MSG_OFFSET-(TEXT_H * i++));
         (*it)->draw();
@@ -146,7 +145,6 @@ void ChatView::draw() {
 
 void ChatView::MessageFrom(std::string &msg, std::string &playerName) {
     std::string* s = new std::string(playerName + ": " + msg);
-    //addMessage(s);
     _messagesToAdd.Queue(s);
 }
 
