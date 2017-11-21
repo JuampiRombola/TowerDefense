@@ -39,6 +39,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     bool quit = false;
     SDL_Event event{};
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, _mapWidth, _mapHeight);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
@@ -147,5 +148,6 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
         } else
             delta = elapsedTime - s;
     }
+    TTF_Quit();
     SDL_Quit();
 }

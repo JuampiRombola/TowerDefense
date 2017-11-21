@@ -34,7 +34,7 @@ void HudView::doMouseAction() {
 
     if (buttons.isAnyClicked())
         SDL_SetCursor(crosshair);
-    
+
     if (!buttons.isAnyClicked() && currentCommand != -1) {
         int tileX = renderer.pixelToCartesianX(mouse_x, mouse_y);
         int tileY = renderer.pixelToCartesianY(mouse_x, mouse_y);

@@ -26,9 +26,8 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
         dispatcher(d), window(w), renderer(r), input(nullptr),
         spriteBackground(tl.getTexture(CHAT_BG), r),
         spriteInput(tl.getTexture(CHAT_INPUT), r),
-        textColor(SDL_Color{255, 255, 255, 0xFF}), active(false),
+        textColor(SDL_Color{255, 255, 255}), active(false),
         dstX(PADDING_HUD * 4), dstY(window.getHeight() - CHAT_PAD) {
-    TTF_Init();
     font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 
     int chatY = window.getHeight() - CHAT_H - PADDING_HUD;
@@ -46,7 +45,6 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
 
 ChatView::~ChatView() {
     TTF_CloseFont(font);
-    TTF_Quit();
     if (textureIbeam) SDL_DestroyTexture(textureIbeam);
     if (input) delete input;
 
@@ -126,8 +124,8 @@ void ChatView::draw() {
         if (inputText.size() >= MAX_LENGTH)
             renderer.copyEuclidean(textureIbeam, &dstRectIbeam);
     }
-    int i = 0;
     Lock(this->mutex);
+    int i = 0;
     for (auto it= messages.rbegin(); it != messages.rend(); ++it) {
         (*it)->setDestXY(dstX, dstY-MSG_OFFSET-(TEXT_H * i++));
         (*it)->draw();
@@ -135,7 +133,7 @@ void ChatView::draw() {
 }
 
 void ChatView::MessageFrom(std::string &msg, std::string &playerName) {
-    std::string s = playerName + ": " + msg;
+    std::string s = playerName + ": " + msg + " ";
     addMessage(s);
 }
 
