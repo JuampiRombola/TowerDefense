@@ -7,7 +7,16 @@ HudView::HudView(Window &w, TextureLoader &tl, Renderer &r,
         textureLoader(tl), renderer(r), dispatcher(cd),
         mouse_y(-1), mousePosition(mouse_x, mouse_y),
         currentCommand(-1),
-        buttons(w, mousePosition, r, tl, cd, currentCommand) {}
+        buttons(w, mousePosition, r, tl, cd, currentCommand) {
+    arrow = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
+    crosshair = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
+}
+
+
+HudView::~HudView() {
+    if (arrow) SDL_FreeCursor(arrow);
+    if (crosshair) SDL_FreeCursor(crosshair);
+}
 
 void HudView::getMouseState() {
     SDL_GetMouseState(&mouse_x, &mouse_y);
@@ -23,12 +32,16 @@ void HudView::getFingerState(SDL_Event &event) {
 void HudView::doMouseAction() {
     if (!mousePosition.isActive()) return;
 
+    if (buttons.isAnyClicked())
+        SDL_SetCursor(crosshair);
+    
     if (!buttons.isAnyClicked() && currentCommand != -1) {
         int tileX = renderer.pixelToCartesianX(mouse_x, mouse_y);
         int tileY = renderer.pixelToCartesianY(mouse_x, mouse_y);
         this->sendCommand(tileX, tileY);
         mousePosition.deactivate();
         currentCommand = -1;
+        SDL_SetCursor(arrow);
     }
 }
 
@@ -93,4 +106,3 @@ void HudView::draw() {
 void HudView::addElementalButtons(int key) {
     buttons.addTowerButtons(key);
 }
-

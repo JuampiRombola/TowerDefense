@@ -21,10 +21,13 @@ private:
     MousePosition mousePosition;
     int currentCommand;
     GameButtons buttons;
+    SDL_Cursor *arrow;
+    SDL_Cursor *crosshair;
 
 public:
     HudView(Window &w, TextureLoader &tl, Renderer &r,
             CommandDispatcher &cd);
+    ~HudView();
     void getMouseState();
     void getFingerState(SDL_Event &event);
     void doMouseAction();

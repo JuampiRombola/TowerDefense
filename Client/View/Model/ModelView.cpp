@@ -8,18 +8,16 @@
 #define INVALID_INDEX "Se esta tratandod de acceder a una posicion invalida de DepthLevel"
 
 ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader) :
-renderer(renderer), textureLoader(textureLoader),
-map(0, 0, 0, renderer, textureLoader), mapLoaded(false), mapLoadedMutex(), mapLoadedCondVariable()
-{
-
-}
+        renderer(renderer), textureLoader(textureLoader),
+        map(0, 0, 0, renderer, textureLoader), mapLoaded(false),
+        mapLoadedMutex(), mapLoadedCondVariable() {}
 
 ModelView::~ModelView() {
     auto it = shots.begin();
     while (it != shots.end())
         delete (*it++);
 
-    for (unsigned int i = 0; i < depthLevels.size(); ++i){
+    for (unsigned int i = 0; i < depthLevels.size(); ++i) {
         delete depthLevels[i];
     }
 }
