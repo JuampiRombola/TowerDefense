@@ -23,7 +23,6 @@ private:
     std::vector<DepthLevel *> depthLevels;
     std::map<int, int> idDepthLevelsTowers;
     std::map<int, int> idDepthLevelsUnits;
-    std::list<Announcement*> announcements;
     Announcement* _currentAnnouncement;
     NonBlockingThreadSafeQueue<std::string*> newAnnouncementsMessages;
 public:
