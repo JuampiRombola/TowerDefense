@@ -207,7 +207,10 @@ set(SOURCE_FILES_CLIENT
         Client/src/NetCommands/ChatMessageCommand.cpp
         Client/include/NetCommands/ChatMessageCommand.h
         Client/View/Common/Announcement.cpp
-        Client/View/Common/Announcement.h)
+        Client/View/Common/Announcement.h
+        Client/View/Common/MusicLoader.cpp
+        Client/View/Common/MusicLoader.h
+        Client/View/Common/MusicNamesConfig.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -384,7 +387,10 @@ set(SOURCE_FILES_EDITOR
         Client/View/Editor/EditorValidationException.cpp
         Client/View/Editor/EditorValidationException.h
         Client/View/Editor/ContadorHordasInput.cpp
-        Client/View/Editor/ContadorHordasInput.h)
+        Client/View/Editor/ContadorHordasInput.h
+        Client/View/Common/MusicLoader.cpp
+        Client/View/Common/MusicLoader.h
+        Client/View/Common/MusicNamesConfig.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
@@ -396,7 +402,9 @@ add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK
 INCLUDE(FindPkgConfig)
 pkg_search_module(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 pkg_search_module(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
+pkg_search_module(SDL2MIXER REQUIRED SDL2_mixer>=2.0.0)
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS}
+        ${SDL2TTF_INCLUDE_DIRS} ${SDL2MIXER_INCLUDE_DIRS})
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
@@ -405,6 +413,6 @@ link_directories(${GTK3_LIBRARY_DIRS})
 add_definitions(${GTK3_CFLAGS_OTHER})
 
 target_link_libraries(TowerDefenseServer yaml-cpp)
-target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES})
-target_link_libraries(TowerDefenseClient yaml-cpp X11 ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES})
-target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES})
+target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES} ${SDL2MIXER_LIBRARIES})
+target_link_libraries(TowerDefenseClient yaml-cpp X11 ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})
+target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})

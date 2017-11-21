@@ -5,6 +5,7 @@
 #include "Model/ModelView.h"
 #include "Model/HudView.h"
 #include "Model/ChatView.h"
+#include "Common/MusicLoader.h"
 
 #define TITLE "Tower Defense"
 

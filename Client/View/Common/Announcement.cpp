@@ -26,5 +26,6 @@ bool Announcement::isActive() {
 }
 
 Announcement::~Announcement() {
+    if (texture) SDL_DestroyTexture(texture);
     TTF_CloseFont(font);
 }
