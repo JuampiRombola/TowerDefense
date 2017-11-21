@@ -8,7 +8,7 @@
 
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner, CommandDispatcher& dispatcher)
 : _sock(socket), _lobbyManager(lobbyManager),  _runner(runner), _dispatcher(dispatcher), _stop(false) {
-	
+
 }
 
 NotificationReciever::~NotificationReciever(){
@@ -123,6 +123,7 @@ void NotificationReciever::RecieveNotifications(){
 					model_view->mapLoadedCondVariable.notify_one();
 					_dispatcher.QueueCommand(new PlayerLoadedGameCommand());
 					_dispatcher.Disable();
+                    model_view->addAnnouncement("Empezo el juego!!");
 				}
 				break;
 			case IN_GAME_CHAT_MESSAGE:
