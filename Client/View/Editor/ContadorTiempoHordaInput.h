@@ -4,12 +4,12 @@
 #include "../Common/Text.h"
 #include "Editor.h"
 
-class ContadorTiempoInput : public Text {
+class ContadorTiempoHordaInput : public Text {
 private:
     int horda;
     Editor &editor;
 public:
-    ContadorTiempoInput(int horda, SDL_Texture *texture,
+    ContadorTiempoHordaInput(int horda, SDL_Texture *texture,
                           Renderer &renderer, Editor &editor);
 
     void draw(int number, int padding);

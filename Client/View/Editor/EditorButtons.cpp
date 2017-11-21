@@ -7,6 +7,9 @@
 #include "DisminuirPaddingButton.h"
 #include "AumentarPaddingButton.h"
 #include "ContadorHordasInput.h"
+#include "AumentarTiempoEnemigosButton.h"
+#include "DisminuirTiempoEnemigosButton.h"
+#include "ContadorTiempoEnemigosInput.h"
 
 EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer,
                              Editor &editor, TextureLoader &textureLoader)
@@ -142,8 +145,8 @@ void EditorButtons::addInitialButtons() {
 void EditorButtons::addEnemigosButton(int horda) {
     using namespace std::placeholders;
     Image *contadorHorda = new ContadorHordasInput(horda,
-                                                  textureLoader.getTexture(
-                                                          FONT), renderer);
+                                                   textureLoader.getTexture(
+                                                           FONT), renderer);
     images.push_back(contadorHorda);
     addEnemigoButton(horda, ABMONIBLE_KEY, ABMONIBLE_EDITOR);
     addEnemigoButton(horda, ESPECTRO_KEY, ESPECTRO_EDITOR);
@@ -151,6 +154,7 @@ void EditorButtons::addEnemigosButton(int horda) {
     addEnemigoButton(horda, HALCON_SANGRIENTO_KEY, HALCON_SANGRIENTO_EDITOR);
     addEnemigoButton(horda, NO_MUERTO_KEY, NO_MUERTO_EDITOR);
     addEnemigoButton(horda, HOMBRE_CABRA_KEY, HOMBRE_CABRA_EDITOR);
+    addTiempoEntreEnemigos(horda);
     addTiempoEntreHorda(horda);
     Image *eliminarHordaButton = new EliminarHordaButton(horda,
                                                          textureLoader.getTexture(
@@ -196,36 +200,57 @@ void EditorButtons::addTiempoEntreHorda(int horda) {
                                        renderer);
     images.push_back(clockImg);
 
-    Image *aumentarTiempo = new AumentarTiempoButton(horda,
-                                                     textureLoader.getTexture(
-                                                             ENEMIGO_SUMA),
-                                                     mousePosition, renderer,
-                                                     editor);
+    Image *aumentarTiempo = new AumentarTiempoHordaButton(horda,
+                                                          textureLoader.getTexture(
+                                                                  ENEMIGO_SUMA),
+                                                          mousePosition,
+                                                          renderer, editor);
     images.push_back(aumentarTiempo);
 
-    Image *disminuirTiempo = new DisminuirTiempoButton(horda,
-                                                       textureLoader.getTexture(
-                                                               ENEMIGO_RESTA),
-                                                       mousePosition, renderer,
-                                                       editor);
+    Image *disminuirTiempo = new DisminuirTiempoHordaButton(horda,
+                                                            textureLoader.getTexture(
+                                                                    ENEMIGO_RESTA),
+                                                            mousePosition,
+                                                            renderer, editor);
     images.push_back(disminuirTiempo);
 
-    Image *contadorTiempo = new ContadorTiempoInput(horda,
-                                                    textureLoader.getTexture(
-                                                            FONT), renderer,
-                                                    editor);
+    Image *contadorTiempo = new ContadorTiempoHordaInput(horda,
+                                                         textureLoader.getTexture(
+                                                                 FONT),
+                                                         renderer, editor);
     images.push_back(contadorTiempo);
 }
 
+void EditorButtons::addTiempoEntreEnemigos(int horda) {
+    Image *clockImg = new EnemigoImage(horda,
+                                       textureLoader.getTexture(CLOCK_EDITOR),
+                                       renderer);
+    images.push_back(clockImg);
+
+    Image *aumentarTiempo = new AumentarTiempoEnemigosButton(horda,
+                                                             textureLoader.getTexture(
+                                                                     ENEMIGO_SUMA),
+                                                             mousePosition,
+                                                             renderer, editor);
+    images.push_back(aumentarTiempo);
+
+    Image *disminuirTiempo = new DisminuirTiempoEnemigosButton(horda,
+                                                               textureLoader.getTexture(
+                                                                       ENEMIGO_RESTA),
+                                                               mousePosition,
+                                                               renderer,
+                                                               editor);
+    images.push_back(disminuirTiempo);
+
+    Image *contadorTiempo = new ContadorTiempoEnemigosInput(horda,
+                                                            textureLoader.getTexture(
+                                                                    FONT),
+                                                            renderer, editor);
+    images.push_back(contadorTiempo);
+
+}
+
 void EditorButtons::deleteButtonsOfHorda(int horda) {
-    /*for (auto it = images.begin(); it != images.end();) {
-        if ((*it)->belongsToHorda(horda)) {
-            delete *it;
-            it = images.erase(it);
-        } else {
-            it++;
-        }
-    }*/
     hordaToDelete = horda;
 }
 

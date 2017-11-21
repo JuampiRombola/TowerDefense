@@ -339,12 +339,12 @@ set(SOURCE_FILES_EDITOR
         Client/View/Editor/EnemigoImage.cpp
         Client/View/Editor/EnemigoImage.h
         Client/View/Editor/EditorConstants.h
-        Client/View/Editor/AumentarTiempoButton.cpp
-        Client/View/Editor/AumentarTiempoButton.h
-        Client/View/Editor/DisminuirTiempoButton.cpp
-        Client/View/Editor/DisminuirTiempoButton.h
-        Client/View/Editor/ContadorTiempoInput.cpp
-        Client/View/Editor/ContadorTiempoInput.h
+        Client/View/Editor/AumentarTiempoHordaButton.cpp
+        Client/View/Editor/AumentarTiempoHordaButton.h
+        Client/View/Editor/DisminuirTiempoHordaButton.cpp
+        Client/View/Editor/DisminuirTiempoHordaButton.h
+        Client/View/Editor/ContadorTiempoHordaInput.cpp
+        Client/View/Editor/ContadorTiempoHordaInput.h
         Client/View/Editor/AumentarAnchoMapaButton.cpp
         Client/View/Editor/AumentarAnchoMapaButton.h
         Client/View/Editor/AumentarAltoMapaButton.cpp
@@ -400,7 +400,13 @@ set(SOURCE_FILES_EDITOR
         Client/View/Editor/ContadorHordasInput.h
         Client/View/Common/MusicLoader.cpp
         Client/View/Common/MusicLoader.h
-        Client/View/Common/MusicNamesConfig.h)
+        Client/View/Common/MusicNamesConfig.h
+        Client/View/Editor/AumentarTiempoEnemigosButton.cpp
+        Client/View/Editor/AumentarTiempoEnemigosButton.h
+        Client/View/Editor/DisminuirTiempoEnemigosButton.cpp
+        Client/View/Editor/DisminuirTiempoEnemigosButton.h
+        Client/View/Editor/ContadorTiempoEnemigosInput.cpp
+        Client/View/Editor/ContadorTiempoEnemigosInput.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)

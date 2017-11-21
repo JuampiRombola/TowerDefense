@@ -161,6 +161,27 @@ int Editor::getTiempoHorda(int hordaId) {
     }
 }
 
+void Editor::aumentarTiempoEnemigo(int hordaId) {
+    for (auto &horda : hordas) {
+        if (hordaId == horda.getId())
+            horda.aumentarTiempoEntreEnemigos();
+    }
+}
+
+void Editor::disminuirTiempoEnemigo(int hordaId) {
+    for (auto &horda : hordas) {
+        if (hordaId == horda.getId())
+            horda.disminuirTiempoEntreEnemigos();
+    }
+}
+
+int Editor::getTiempoEnemigo(int hordaId) {
+    for (auto &horda : hordas) {
+        if (hordaId == horda.getId())
+            return horda.getTiempoEntreEnemigos();
+    }
+}
+
 void Editor::aumentarAltoMapa() {
     map.setHeight(map.getHeight() + 1);
 }

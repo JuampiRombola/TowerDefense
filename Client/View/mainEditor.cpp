@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
     SDL_Event event;
     SDL_Init(SDL_INIT_VIDEO);
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
+    SDL_SetWindowFullscreen(window.getWindow(), 0);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), EDITOR_MODE);
     MusicLoader musicLoader;

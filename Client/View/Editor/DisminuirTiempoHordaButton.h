@@ -4,7 +4,7 @@
 #include "../Common/Button.h"
 #include "Editor.h"
 
-class DisminuirTiempoButton : public Button {
+class DisminuirTiempoHordaButton : public Button {
 private:
     int horda;
     Editor &editor;
@@ -12,7 +12,7 @@ private:
     void click();
 
 public:
-    DisminuirTiempoButton(int horda,
+    DisminuirTiempoHordaButton(int horda,
                          SDL_Texture *texture,
                          MousePosition &mousePosition,
                          Renderer &renderer,
