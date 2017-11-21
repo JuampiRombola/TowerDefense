@@ -30,7 +30,7 @@ std::string Horda::exportar() {
     for (std::pair<std::string, int> enemigo : cantidadEnemigos) {
         msg << "   " << enemigo.first << ": " << enemigo.second << "\n";
     }
-    msg << "   tiempo_enemigos" << tiempoEntreHordas << "\n";
+    msg << "   tiempo_hordas: " << tiempoEntreHordas << "\n";
     return msg.str();
 }
 

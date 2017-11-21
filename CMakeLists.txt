@@ -400,7 +400,13 @@ set(SOURCE_FILES_EDITOR
         Client/View/Editor/ContadorHordasInput.h
         Client/View/Common/MusicLoader.cpp
         Client/View/Common/MusicLoader.h
-        Client/View/Common/MusicNamesConfig.h)
+        Client/View/Common/MusicNamesConfig.h
+        Client/View/Editor/AumentarTiempoEnemigosButton.cpp
+        Client/View/Editor/AumentarTiempoEnemigosButton.h
+        Client/View/Editor/DisminuirTiempoEnemigosButton.cpp
+        Client/View/Editor/DisminuirTiempoEnemigosButton.h
+        Client/View/Editor/ContadorTiempoEnemigosInput.cpp
+        Client/View/Editor/ContadorTiempoEnemigosInput.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)

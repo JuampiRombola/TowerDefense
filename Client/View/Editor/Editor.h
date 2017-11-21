@@ -48,6 +48,9 @@ public:
     void aumentarTiempoHorda(int hordaId);
     void disminuirTiempoHorda(int horda);
     int getTiempoHorda(int horda);
+    void aumentarTiempoEnemigo(int hordaId);
+    void disminuirTiempoEnemigo(int horda);
+    int getTiempoEnemigo(int horda);
     void aumentarAnchoMapa();
     void disminuirAnchoMapa();
     void aumentarAltoMapa();

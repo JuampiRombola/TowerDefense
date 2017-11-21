@@ -7,6 +7,9 @@
 #include "DisminuirPaddingButton.h"
 #include "AumentarPaddingButton.h"
 #include "ContadorHordasInput.h"
+#include "AumentarTiempoEnemigosButton.h"
+#include "DisminuirTiempoEnemigosButton.h"
+#include "ContadorTiempoEnemigosInput.h"
 
 EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer,
                              Editor &editor, TextureLoader &textureLoader)
@@ -142,8 +145,8 @@ void EditorButtons::addInitialButtons() {
 void EditorButtons::addEnemigosButton(int horda) {
     using namespace std::placeholders;
     Image *contadorHorda = new ContadorHordasInput(horda,
-                                                  textureLoader.getTexture(
-                                                          FONT), renderer);
+                                                   textureLoader.getTexture(
+                                                           FONT), renderer);
     images.push_back(contadorHorda);
     addEnemigoButton(horda, ABMONIBLE_KEY, ABMONIBLE_EDITOR);
     addEnemigoButton(horda, ESPECTRO_KEY, ESPECTRO_EDITOR);
@@ -198,23 +201,23 @@ void EditorButtons::addTiempoEntreHorda(int horda) {
     images.push_back(clockImg);
 
     Image *aumentarTiempo = new AumentarTiempoHordaButton(horda,
-                                                     textureLoader.getTexture(
-                                                             ENEMIGO_SUMA),
-                                                     mousePosition, renderer,
-                                                     editor);
+                                                          textureLoader.getTexture(
+                                                                  ENEMIGO_SUMA),
+                                                          mousePosition,
+                                                          renderer, editor);
     images.push_back(aumentarTiempo);
 
     Image *disminuirTiempo = new DisminuirTiempoHordaButton(horda,
-                                                       textureLoader.getTexture(
-                                                               ENEMIGO_RESTA),
-                                                       mousePosition, renderer,
-                                                       editor);
+                                                            textureLoader.getTexture(
+                                                                    ENEMIGO_RESTA),
+                                                            mousePosition,
+                                                            renderer, editor);
     images.push_back(disminuirTiempo);
 
     Image *contadorTiempo = new ContadorTiempoHordaInput(horda,
-                                                    textureLoader.getTexture(
-                                                            FONT), renderer,
-                                                    editor);
+                                                         textureLoader.getTexture(
+                                                                 FONT),
+                                                         renderer, editor);
     images.push_back(contadorTiempo);
 }
 
@@ -224,6 +227,26 @@ void EditorButtons::addTiempoEntreEnemigos(int horda) {
                                        renderer);
     images.push_back(clockImg);
 
+    Image *aumentarTiempo = new AumentarTiempoEnemigosButton(horda,
+                                                             textureLoader.getTexture(
+                                                                     ENEMIGO_SUMA),
+                                                             mousePosition,
+                                                             renderer, editor);
+    images.push_back(aumentarTiempo);
+
+    Image *disminuirTiempo = new DisminuirTiempoEnemigosButton(horda,
+                                                               textureLoader.getTexture(
+                                                                       ENEMIGO_RESTA),
+                                                               mousePosition,
+                                                               renderer,
+                                                               editor);
+    images.push_back(disminuirTiempo);
+
+    Image *contadorTiempo = new ContadorTiempoEnemigosInput(horda,
+                                                            textureLoader.getTexture(
+                                                                    FONT),
+                                                            renderer, editor);
+    images.push_back(contadorTiempo);
 
 }
 

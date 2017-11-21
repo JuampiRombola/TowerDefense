@@ -71,8 +71,8 @@
 #define HORDA_QUANTITY_PADDING HORDA_MODIFY_QUANTITY_PADDING + HORDA_MODIFY_QUANTITY_SIZE
 #define HORDA_TOTAL_ENEMIES 6
 #define HORDA_BUTTONS_PER_ENEMY 4
-#define HORDA_TOTAL_BUTTONS HORDA_BUTTONS_PER_ENEMY * (HORDA_TOTAL_ENEMIES + 1) + 2
- //El 1 es por los botones de tiempo
+#define HORDA_TOTAL_BUTTONS HORDA_BUTTONS_PER_ENEMY * (HORDA_TOTAL_ENEMIES + 2) + 2
+ //El 2 es por los botones de tiempo
  // El segundo 2 es por el botón de borrar horda y el indicador de numero de
 // horda
 
@@ -83,12 +83,12 @@
 #define NO_MUERTO_KEY "no_muerto"
 #define HOMBRE_CABRA_KEY "hombre_cabra"
 
-#define SCROLL_UP_BUTTON_X 450
+#define SCROLL_UP_BUTTON_X 525
 #define SCROLL_UP_BUTTON_Y 325
 #define SCROLL_UP_BUTTON_WIDTH 50
 #define SCROLL_UP_BUTTON_HEIGHT 50
 
-#define SCROLL_DOWN_BUTTON_X 450
+#define SCROLL_DOWN_BUTTON_X 525
 #define SCROLL_DOWN_BUTTON_Y 400
 #define SCROLL_DOWN_BUTTON_WIDTH 50
 #define SCROLL_DOWN_BUTTON_HEIGHT 50
