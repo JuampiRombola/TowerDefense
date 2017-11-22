@@ -12,6 +12,7 @@
 #define TOLERANCE 380
 
 Renderer::Renderer(Window &window, int mapWidth, int mapHeight) :
+        window(window),
         mapWidth(mapWidth*WIDTHFACTOR + mapHeight*WIDTHFACTOR - WIDTHFACTOR),
         mapHeight(this->mapWidth / 2),
         cameraX(0), cameraY(this->mapHeight/4),
@@ -156,4 +157,12 @@ void Renderer::setMapHeight(int mapW, int mapH, int newH) {
     mapHeight = mapWidth / 2;
     paddingWidth = newH * WIDTHFACTOR + PADDING;
     cameraX += (newH - mapH) * WIDTHFACTOR;
+}
+
+int Renderer::getWindowWidth() {
+    return window.getWidth();
+}
+
+int Renderer::getWindowHeight() {
+    return window.getHeight();
 }

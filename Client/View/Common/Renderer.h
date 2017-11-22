@@ -7,6 +7,7 @@
 
 class Renderer {
 private:
+    Window &window;
     SDL_Renderer *renderer;
     int mapWidth;
     int mapHeight;
@@ -43,6 +44,8 @@ public:
     int pixelToCartesianY(int x, int y);
     void setMapWidth(int mapH, int newW);
     void setMapHeight(int mapW, int mapH, int newH);
+    int getWindowWidth();
+    int getWindowHeight();
 };
 
 

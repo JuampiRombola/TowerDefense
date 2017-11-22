@@ -123,7 +123,7 @@ void NotificationReciever::RecieveNotifications(){
 					model_view->mapLoadedCondVariable.notify_one();
 					_dispatcher.QueueCommand(new PlayerLoadedGameCommand());
 					_dispatcher.Disable();
-                    model_view->addAnnouncement("Empezo el juego!!");
+                    model_view->addAnnouncement("Bienvenido a Tower Defense!");
                 }
 				break;
 			case IN_GAME_CHAT_MESSAGE:
