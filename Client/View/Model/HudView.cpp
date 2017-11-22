@@ -34,7 +34,6 @@ void HudView::getFingerState(SDL_Event &event) {
 
 void HudView::doMouseAction() {
     if (!mousePosition.isActive()) return;
-
     if (upgradeTarget && upgradeTarget->isClicked()) {
         upgradeTarget->onClick();
         SDL_SetCursor(arrow);
@@ -64,6 +63,8 @@ void HudView::doMouseAction() {
     }
 
     mousePosition.deactivate();
+    if (buttons.isAnyFakeClicked())
+        return;
     int isoX = renderer.pixelToCartesianX(mouse_x, mouse_y);
     int isoY = renderer.pixelToCartesianY(mouse_x, mouse_y);
     if (!model.isValidTile(isoX, isoY)) {

@@ -228,7 +228,7 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/InstantButton.cpp
         Client/View/Model/InstantButton.h
         Client/View/Model/UpgradeView.cpp
-        Client/View/Model/UpgradeView.h)
+        Client/View/Model/UpgradeView.h Client/View/Model/WaitActionButton.cpp Client/View/Model/WaitActionButton.h Client/View/Model/PadlockButton.cpp Client/View/Model/PadlockButton.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -396,8 +396,6 @@ set(SOURCE_FILES_EDITOR
         Client/View/Model/PortalEntradaView.h
         Client/View/Model/PortalSalidaView.cpp
         Client/View/Model/PortalSalidaView.h
-        Client/View/Model/TowerView.cpp
-        Client/View/Model/TowerView.h
         Client/View/Editor/AumentarPaddingButton.cpp
         Client/View/Editor/AumentarPaddingButton.h
         Client/View/Editor/DisminuirPaddingButton.cpp

@@ -1,6 +1,10 @@
 #include "GameButtons.h"
-#include "SpellButton.h"
 #include "UpRightButton.h"
+
+#define TOTAL_BUTTONS 13
+#define FIRST_BUTTON 12
+#define FIRST_SPELL_BUTTON 7
+#define BLANK_SPACE 8
 
 #define TRANSPARENCY 212
 #define BUTTONSOFFSET 200
@@ -11,11 +15,18 @@ GameButtons::GameButtons(Window &w, MousePosition &mousePosition,
                          Renderer &renderer,
                          TextureLoader &textureLoader, int &cmd) :
         window(w), mousePosition(mousePosition),
-        renderer(renderer), textureLoader(textureLoader), cmd(cmd) {
+        renderer(renderer), textureLoader(textureLoader), cmd(cmd),
+        decoTowers(textureLoader.getTexture(MARQUESINA), renderer),
+        decoSpells(textureLoader.getTexture(MARQUESINA), renderer) {
     barUpRight.push_back(new UpRightButton(window, CMD_PING, cmd,
                textureLoader.getTexture(PING_BUTTON),
                textureLoader.getTexture(TRANSPARENCY),
                mousePosition, renderer, barUpRight.size() + 1));
+    decoTowers.setSourceRect(0, 0, MARQUESINA_W, MARQUESINA_H);
+    decoSpells.setSourceRect(0, 0, MARQUESINA_W, MARQUESINA_H);
+    decoTowers.setDestRect(0, 0, MARQUESINA_W, MARQUESINA_H);
+    decoSpells.setDestRect(0, 0, MARQUESINA_W, MARQUESINA_H);
+    this->initFakeButtons();
 }
 
 GameButtons::~GameButtons() {
@@ -25,25 +36,36 @@ GameButtons::~GameButtons() {
         delete spell;
     for (auto &element : barUpRight)
         delete element;
+    for (auto &button : fakeButtons)
+        delete button;
 }
 
 void GameButtons::addTowerButtons(int key) {
-    towers.push_back(new NewTowerButton(window, key, cmd,
-                     textureLoader.getTexture(key + BUTTONSOFFSET),
-                     textureLoader.getTexture(TRANSPARENCY),
-                     mousePosition, renderer, towers.size() + 1));
+    WaitActionButton *b;
+    int y = window.getHeight() - PADDING_HUD - HUD_BUTTON_Y;
+    int towerX = static_cast<int>(window.getWidth() - PADDING_HUD -
+            (FIRST_BUTTON - towers.size()) * HUD_BUTTON_X);
+    b = new WaitActionButton(renderer, textureLoader, key + BUTTONSOFFSET,
+                         mousePosition, towerX, y,
+                         HUD_ICON_SIZE, HUD_ICON_SIZE, cmd);
+    towers.push_back(b);
+
+    int spellX = static_cast<int>(window.getWidth() - PADDING_HUD -
+            (FIRST_SPELL_BUTTON - spells.size()) * HUD_BUTTON_X);
     int spellKey = key + SPELLOFFSET_1 + 1*key;
-    spells.push_back(
-            new SpellButton(window, spellKey, cmd,
-                            textureLoader.getTexture(spellKey+BUTTONSOFFSET),
-                            textureLoader.getTexture(TRANSPARENCY),
-                            mousePosition, renderer, spells.size() + 1));
+
+    b = new WaitActionButton(renderer, textureLoader, spellKey+BUTTONSOFFSET,
+                             mousePosition, spellX, y,
+                             HUD_ICON_SIZE, HUD_ICON_SIZE, cmd);
+    spells.push_back(b);
+
+    spellX = static_cast<int>(window.getWidth() - PADDING_HUD -
+            (FIRST_SPELL_BUTTON - spells.size()) * HUD_BUTTON_X);
     spellKey = key + SPELLOFFSET_2 + 1*key;
-    spells.push_back(
-            new SpellButton(window, spellKey, cmd,
-                            textureLoader.getTexture(spellKey+BUTTONSOFFSET),
-                            textureLoader.getTexture(TRANSPARENCY),
-                            mousePosition, renderer, spells.size() + 1));
+    b = new WaitActionButton(renderer, textureLoader, spellKey+BUTTONSOFFSET,
+                             mousePosition, spellX, y,
+                             HUD_ICON_SIZE, HUD_ICON_SIZE, cmd);
+    spells.push_back(b);
 }
 
 bool GameButtons::isAnyClicked() {
@@ -63,10 +85,46 @@ bool GameButtons::isAnyClicked() {
 }
 
 void GameButtons::draw() {
-    for (auto &tower : towers)
-        tower->draw(0, 0);
-    for (auto &spell : spells)
-        spell->draw(0, 0);
+    decoTowers.drawEuclidian();
+    decoSpells.drawEuclidian();
     for (auto &button : barUpRight)
         button->draw(0, 0);
+    for (auto &fake : fakeButtons)
+        fake->draw();
+    for (auto &tower : towers)
+        tower->draw();
+    for (auto &spell : spells)
+        spell->draw();
+}
+
+void GameButtons::initFakeButtons() {
+    for (int i=0; i < TOTAL_BUTTONS; ++i) {
+        if (i == BLANK_SPACE) continue;
+
+        int x = window.getWidth() - PADDING_HUD - i*HUD_BUTTON_X;
+        int y = window.getHeight() - PADDING_HUD - HUD_BUTTON_Y;
+
+        if (i == 4) { // i==4 es la mitad de la barra de spells
+            decoSpells.setDestXY(x - MARQUESINA_OFFSET_X,
+                                 y - MARQUESINA_H);
+        }
+
+        if (i == 11) { // i==11 es la mitad de la barra de torres
+            decoTowers.setDestXY(x - MARQUESINA_OFFSET_X,
+                                 y - MARQUESINA_H);
+        }
+
+        fakeButtons.push_back(
+                new PadlockButton(renderer, textureLoader,
+                                  mousePosition, x, y,
+                                  HUD_ICON_SIZE, HUD_ICON_SIZE));
+    }
+}
+
+bool GameButtons::isAnyFakeClicked() {
+    for (auto &fake : fakeButtons) {
+        if (fake->isClicked())
+            return true;
+    }
+    return false;
 }
