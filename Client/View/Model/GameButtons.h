@@ -16,7 +16,6 @@ private:
     MousePosition &mousePosition;
     Renderer &renderer;
     TextureLoader &textureLoader;
-    CommandDispatcher &dispatcher;
     int &cmd;
     std::list<Image*> towers;
     std::list<Image*> spells;
@@ -24,8 +23,7 @@ private:
 
 public:
     GameButtons(Window &w, MousePosition &mousePosition, Renderer &renderer,
-                TextureLoader &textureLoader, CommandDispatcher &dispatcher,
-                int &cmd);
+                TextureLoader &textureLoader, int &cmd);
     ~GameButtons();
     void addTowerButtons(int key);
     bool isAnyClicked();

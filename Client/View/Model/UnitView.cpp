@@ -152,10 +152,6 @@ void UnitView::enableDying() {
     spriteDying.setOffsetXY(offsetX, offsetY);
 }
 
-std::string UnitView::onClick() {
-    return std::move(std::to_string(key) + " " + std::to_string(health));
-}
-
 int UnitView::getId() {
     return id;
 }

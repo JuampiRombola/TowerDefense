@@ -6,6 +6,7 @@ private:
     int &x;
     int &y;
     bool active;
+    bool marked;
 public:
     MousePosition(int &x, int&y);
     ~MousePosition();
@@ -14,6 +15,9 @@ public:
     bool isActive();
     void activate();
     void deactivate();
+    bool isMarked();
+    void activateMark();
+    void desactivateMark();
 };
 
 #endif //TOWERDEFENSE_MOUSEPOSITION_H

@@ -46,6 +46,8 @@ public:
     std::mutex mapLoadedMutex;
     std::condition_variable mapLoadedCondVariable;
     void addAnnouncement(std::string announcement);
+
+    TowerView *onClick(int x, int y);
 private:
     void checkIndexDepthLevel(int key);
 };

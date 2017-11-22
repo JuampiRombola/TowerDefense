@@ -34,7 +34,6 @@ public:
     void setXY(int x, int y) override;
     void move(int x, int y, int nextX, int nextY, Uint32 t);
     void enableDying();
-    std::string onClick() override;
     int getId();
     bool isDead();
 

@@ -61,3 +61,11 @@ void Sprite::setAlphaMod(Uint8 alpha) {
 void Sprite::drawEuclidian() {
     renderer.copyEuclidean(texture, &srcRect, &dstRect);
 }
+
+void Sprite::setSourceW(int w) {
+    srcRect.w = w;
+}
+
+void Sprite::setDestW(int w) {
+    dstRect.w = w;
+}

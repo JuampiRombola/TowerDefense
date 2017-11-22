@@ -3,11 +3,12 @@
 
 
 HudView::HudView(Window &w, TextureLoader &tl, Renderer &r,
-                 CommandDispatcher &cd) :
+                 CommandDispatcher &cd, ModelView &model) :
         textureLoader(tl), renderer(r), dispatcher(cd),
         mouse_y(-1), mousePosition(mouse_x, mouse_y),
         currentCommand(-1),
-        buttons(w, mousePosition, r, tl, cd, currentCommand) {
+        buttons(w, mousePosition, r, tl, currentCommand),
+        model(model), upgradeTarget(nullptr) {
     arrow = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
     crosshair = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 }
@@ -21,28 +22,66 @@ HudView::~HudView() {
 void HudView::getMouseState() {
     SDL_GetMouseState(&mouse_x, &mouse_y);
     mousePosition.activate();
+    mousePosition.desactivateMark();
 }
 
 void HudView::getFingerState(SDL_Event &event) {
     mouse_x = static_cast<int>(event.tfinger.x);
     mouse_y = static_cast<int>(event.tfinger.y);
     mousePosition.activate();
+    mousePosition.desactivateMark();
 }
 
 void HudView::doMouseAction() {
     if (!mousePosition.isActive()) return;
 
-    if (buttons.isAnyClicked())
+    if (upgradeTarget && upgradeTarget->isClicked()) {
+        upgradeTarget->onClick();
+        SDL_SetCursor(arrow);
+        if (currentCommand >= CMD_DAMAGE) {
+            //send Command Upgrade.type()
+            currentCommand = -1;
+            SDL_SetCursor(arrow);
+        }
+        mousePosition.deactivate();
+        return;
+    }
+
+    if (buttons.isAnyClicked()) {
         SDL_SetCursor(crosshair);
+        return;
+    }
 
     if (!buttons.isAnyClicked() && currentCommand != -1) {
         int tileX = renderer.pixelToCartesianX(mouse_x, mouse_y);
         int tileY = renderer.pixelToCartesianY(mouse_x, mouse_y);
-        this->sendCommand(tileX, tileY);
+        if (model.isValidTile(tileX, tileY))
+            this->sendCommand(tileX, tileY);
         mousePosition.deactivate();
         currentCommand = -1;
         SDL_SetCursor(arrow);
+        return;
     }
+
+    mousePosition.deactivate();
+    int isoX = renderer.pixelToCartesianX(mouse_x, mouse_y);
+    int isoY = renderer.pixelToCartesianY(mouse_x, mouse_y);
+    if (!model.isValidTile(isoX, isoY)) {
+        if (upgradeTarget) {
+            delete upgradeTarget;
+            upgradeTarget = nullptr;
+        }
+        return;
+    }
+    TowerView *target = model.onClick(isoX, isoY);
+    if (!target) {
+        if (upgradeTarget) {
+            delete upgradeTarget;
+            upgradeTarget = nullptr;
+        }
+        return;
+    }
+    this->updateTarget(target);
 }
 
 void HudView::sendCommand(int x, int y) {
@@ -101,8 +140,27 @@ void HudView::sendCommand(int x, int y) {
 
 void HudView::draw() {
     buttons.draw();
+    if (upgradeTarget)
+        upgradeTarget->draw();
 }
 
 void HudView::addElementalButtons(int key) {
     buttons.addTowerButtons(key);
+}
+
+void HudView::getMouseButtonDown() {
+    SDL_GetMouseState(&mouse_x, &mouse_y);
+    mousePosition.activateMark();
+}
+
+void HudView::getFingerButtonDown(SDL_Event &event) {
+    mouse_x = static_cast<int>(event.tfinger.x);
+    mouse_y = static_cast<int>(event.tfinger.y);
+    mousePosition.activateMark();
+}
+
+void HudView::updateTarget(TowerView *target) {
+    if (upgradeTarget) delete upgradeTarget;
+    upgradeTarget = new UpgradeView(renderer, textureLoader,
+                                    target, currentCommand, mousePosition);
 }

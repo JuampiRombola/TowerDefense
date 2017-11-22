@@ -30,3 +30,7 @@ bool Button::wasLastClick() {
              mousePosition.getPosY() < button.y ||
              mousePosition.getPosY() > (button.y + button.h));
 }
+
+bool Button::isMarked() {
+    return (this->wasLastClick() && mousePosition.isMarked());
+}

@@ -31,7 +31,7 @@ public:
     UnitView* getUnit(int id);
     void removeUnit(int id);
     void draw(Uint32 time);
-    std::string onCLick(int x, int y);
+    TowerView* onCLick(int x, int y);
 };
 
 

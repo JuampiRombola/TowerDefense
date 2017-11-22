@@ -207,7 +207,9 @@ set(SOURCE_FILES_CLIENT
         Client/src/NetCommands/ChatMessageCommand.cpp
         Client/include/NetCommands/ChatMessageCommand.h
         Client/View/Common/Announcement.cpp
-        Client/View/Common/Announcement.h)
+        Client/View/Common/Announcement.h
+        Client/View/Model/ProgressBarView.cpp
+        Client/View/Model/ProgressBarView.h Client/View/Model/GameButton.cpp Client/View/Model/GameButton.h Client/View/Model/InstantButton.cpp Client/View/Model/InstantButton.h Client/View/Model/UpgradeView.cpp Client/View/Model/UpgradeView.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK

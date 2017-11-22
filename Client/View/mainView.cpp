@@ -5,6 +5,10 @@
 #include "Model/ModelView.h"
 #include "Model/HudView.h"
 #include "Model/ChatView.h"
+#include "Model/ProgressBarView.h"
+#include "Model/GameButton.h"
+#include "Model/InstantButton.h"
+#include "Model/UpgradeView.h"
 
 #define TITLE "Tower Defense"
 
@@ -24,7 +28,7 @@ int main(int argc, char** argv) {
     TextureLoader textureLoader(renderer.getRenderer(), 0);
 
     ModelView modelView(renderer, textureLoader);
-    modelView.setMapEnvironment(DESIERTO);
+    modelView.setMapEnvironment(GELIDO);
     modelView.setMapWidthHeight(MAPSIZE, MAPSIZE);
     /*modelView.setMapWidthHeight(MAPSIZE, MAPSIZE);
     modelView.createPathTile(0, 0);
@@ -131,13 +135,25 @@ int main(int argc, char** argv) {
     CommandDispatcher cmdDispatcher(fd);
 
     // HUD
-    HudView hudView(window, textureLoader, renderer, cmdDispatcher);
+    HudView hudView(window, textureLoader, renderer, cmdDispatcher,modelView);
     hudView.addElementalButtons(ELEMENTAL_EARTH);
     hudView.addElementalButtons(ELEMENTAL_FIRE);
     hudView.addElementalButtons(ELEMENTAL_WATER);
     hudView.addElementalButtons(ELEMENTAL_AIR);
 
     ChatView chat(cmdDispatcher, window, renderer, textureLoader);
+
+    TowerView towerView(0, TORRE_FUEGO, textureLoader, renderer);
+
+    //int x = 0;
+    //int y = 0;
+    //MousePosition mp(x, y);
+
+    //UpgradeView uv(renderer, textureLoader, &towerView, x, mp);
+
+    modelView.createTower(1, TORRE_FUEGO, 1, 1);
+    modelView.createTower(2, TORRE_AGUA, 3, 3);
+    modelView.createTower(3, TORRE_TIERRA, 5, 5);
 
     Uint32 t1;
     Uint32 t2;
@@ -146,7 +162,7 @@ int main(int argc, char** argv) {
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
 
-    int idUnit = 0;
+    Uint32 part = 0;
     while (!quit) {
         t1 = SDL_GetTicks();
 
@@ -156,9 +172,15 @@ int main(int argc, char** argv) {
                 case SDL_QUIT:
                     quit = true; break;
                 case SDL_MOUSEBUTTONDOWN:
+                    hudView.getMouseButtonDown();
+                    break;
+                case SDL_MOUSEBUTTONUP:
                     hudView.getMouseState();
                     break;
                 case SDL_FINGERDOWN:
+                    hudView.getFingerButtonDown(event);
+                    break;
+                case SDL_FINGERUP:
                     hudView.getFingerState(event);
                     break;
                 case SDL_MOUSEWHEEL:
@@ -191,6 +213,11 @@ int main(int argc, char** argv) {
                         case SDLK_a:
                             modelView.createSpell(PING, 1, 1, 5000);
                             break;
+                        case SDLK_b:
+                            if (part >= 1200)
+                                part = 0;
+                            part += 50;
+                            break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
@@ -209,6 +236,7 @@ int main(int argc, char** argv) {
         modelView.draw(SDL_GetTicks());
         hudView.draw();
         chat.draw();
+        //uv.draw();
 
         renderer.present();
 

@@ -164,3 +164,8 @@ void ModelView::checkIndexDepthLevel(int key) {
 void ModelView::addAnnouncement(std::string announcement) {
     announcements.emplace_back(announcement, renderer);
 }
+
+TowerView *ModelView::onClick(int x, int y) {
+    Lock(this->m);
+    return depthLevels[(x+y+1)]->onCLick(x, y);
+}

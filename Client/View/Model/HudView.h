@@ -10,6 +10,8 @@
 #include "../../include/NetCommands/ClientCastSpellCommand.h"
 #include "GameButtons.h"
 #include "ViewConstants.h"
+#include "UpgradeView.h"
+#include "ModelView.h"
 
 class HudView {
 private:
@@ -23,10 +25,12 @@ private:
     GameButtons buttons;
     SDL_Cursor *arrow;
     SDL_Cursor *crosshair;
+    ModelView &model;
+    UpgradeView *upgradeTarget;
 
 public:
     HudView(Window &w, TextureLoader &tl, Renderer &r,
-            CommandDispatcher &cd);
+            CommandDispatcher &cd, ModelView &model);
     ~HudView();
     void getMouseState();
     void getFingerState(SDL_Event &event);
@@ -34,6 +38,9 @@ public:
     void sendCommand(int x, int y);
     void draw();
     void addElementalButtons(int key);
+    void getMouseButtonDown();
+    void getFingerButtonDown(SDL_Event &event);
+    void updateTarget(TowerView *target);
 
 };
 

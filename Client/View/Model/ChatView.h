@@ -44,6 +44,9 @@ public:
     void draw();
     void addMessage(std::string &msg);
     void MessageFrom(std::string &msg, std::string &playerName);
+
+private:
+    void initialMessages();
 };
 
 

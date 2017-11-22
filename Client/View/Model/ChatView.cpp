@@ -28,7 +28,6 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
         spriteInput(tl.getTexture(CHAT_INPUT), r),
         textColor(SDL_Color{255, 255, 255, 0xFF}), active(false),
         dstX(PADDING_HUD * 4), dstY(window.getHeight() - CHAT_PAD), _messagesToAdd() {
-    TTF_Init();
     font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 
     int chatY = window.getHeight() - CHAT_H - PADDING_HUD;
@@ -42,6 +41,7 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
     dstRectIbeam = { dstX - OFFSET_X_IBEAM, dstY - OFFSET_Y_IBEAM,
                      t->w, t->h + OFFSET_Y_IBEAM};
     SDL_FreeSurface(t);
+    this->initialMessages();
 }
 
 ChatView::~ChatView() {
@@ -78,9 +78,9 @@ void ChatView::disable() {
     if (!inputText.empty()) {
         // Reemplazar esta funcion por comando al servidor
         // dispatcher
-        std::cout << "queieng msj\n"<<std::flush;
-       this->dispatcher.QueueCommand(new ChatMessageCommand(inputText));
-       //this->addMessage(inputText);
+        //std::cout << "queieng msj\n"<<std::flush;
+        this->dispatcher.QueueCommand(new ChatMessageCommand(inputText));
+        //this->addMessage(inputText);
     }
     inputText = "";
     if (input) delete input;
@@ -161,4 +161,18 @@ void ChatView::addMessage(std::string &m) {
         t = new TextView(renderer, font, msg, textColor);
         messages.push_back(t);
     }
+}
+
+void ChatView::initialMessages() {
+    std::string m = "Bienvenido a Tower Defense v1.0";
+    std::string i = "Para usar chat presiona Enter";
+    std::string s = " ";
+    addMessage(m);
+    addMessage(i);
+    addMessage(s);
+    addMessage(s);
+    addMessage(s);
+    addMessage(s);
+    addMessage(s);
+    addMessage(s);
 }

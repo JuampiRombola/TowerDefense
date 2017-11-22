@@ -25,6 +25,8 @@ public:
     bool isClicked();
 
     bool wasLastClick();
+
+    bool isMarked();
 };
 
 #endif //TOWERDEFENSE_BUTTON_H

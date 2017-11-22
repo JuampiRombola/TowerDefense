@@ -9,11 +9,9 @@
 
 GameButtons::GameButtons(Window &w, MousePosition &mousePosition,
                          Renderer &renderer,
-                         TextureLoader &textureLoader,
-                         CommandDispatcher &dispatcher, int &cmd) :
+                         TextureLoader &textureLoader, int &cmd) :
         window(w), mousePosition(mousePosition),
-        renderer(renderer), textureLoader(textureLoader),
-        dispatcher(dispatcher), cmd(cmd) {
+        renderer(renderer), textureLoader(textureLoader), cmd(cmd) {
     barUpRight.push_back(new UpRightButton(window, CMD_PING, cmd,
                textureLoader.getTexture(PING_BUTTON),
                textureLoader.getTexture(TRANSPARENCY),

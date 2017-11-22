@@ -28,4 +28,9 @@
 
 #define CMD_PING 12
 
+#define CMD_DAMAGE 13
+#define CMD_RANGE 14
+#define CMD_IMPACT 15
+#define CMD_FREEZE 16
+
 #endif //TOWERDEFENSE_VIEWCONSTANTS_H

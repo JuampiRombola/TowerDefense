@@ -128,29 +128,12 @@ void DepthLevel::draw(Uint32 time) {
     if (portalSalida) portalSalida->draw(time);
 }
 
-std::string DepthLevel::onCLick(int x, int y) {
-    std::string result;
-    {
-        std::lock_guard<std::mutex> lock(_towersMutex);
-        for (auto tower : towers) {
-            if (tower->getX() == x) {
-                result.append(tower->onClick());
-                return std::move(result);
-            }
-        }
+TowerView* DepthLevel::onCLick(int x, int y) {
+    std::lock_guard<std::mutex> lock(_towersMutex);
+    for (auto tower : towers) {
+        if (tower->getX() == x)
+            return tower;
     }
-
-
-    {
-        std::lock_guard<std::mutex> lock(_unitsMutex);
-        for (auto unit : units) {
-            if (unit->getX() == x) {
-                if (!result.empty())
-                    result.append(",");
-                result.append(unit->onClick());
-            }
-        }
-    }
-
-    return std::move(result);
+    return nullptr;
 }
+

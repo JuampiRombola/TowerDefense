@@ -53,7 +53,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     modelView.setMapEnvironment(PRADERA);
     modelView.setMapWidthHeight(_mapWidth, _mapHeight);
 
-    HudView hudView(window, textureLoader, renderer, *_dispatcher);
+    HudView hudView(window, textureLoader, renderer, *_dispatcher, modelView);
 
     if (_lobbyManager->groundHUDEnabled)
         hudView.addElementalButtons(ELEMENTAL_EARTH);
@@ -86,11 +86,13 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                 case SDL_QUIT:
                     quit = true; break;
                 case SDL_MOUSEBUTTONDOWN:
-                    hudView.getMouseState();
-                    break;
+                    hudView.getMouseButtonDown(); break;
+                case SDL_MOUSEBUTTONUP:
+                    hudView.getMouseState(); break;
                 case SDL_FINGERDOWN:
-                    hudView.getFingerState(event);
-                    break;
+                    hudView.getFingerButtonDown(event); break;
+                case SDL_FINGERUP:
+                    hudView.getFingerState(event); break;
                 case SDL_MOUSEWHEEL:
                     if (event.wheel.y == 1) //scroll up
                         renderer.zoomIn();

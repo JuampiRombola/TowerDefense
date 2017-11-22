@@ -26,6 +26,8 @@ public:
     void setSourceRect(int x, int y, int w, int h);
     void setDestRect(int x, int y, int w, int h);
     void setOffsetXY(int x, int y);
+    void setSourceW(int w);
+    void setDestW(int w);
     void setTexture(SDL_Texture *newTexture);
     int getOffsetX();
     int getOffsetY();
