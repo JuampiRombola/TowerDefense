@@ -110,6 +110,7 @@ void LobbyManager::HandleLeaveLobby(PlayerProxy &player){
 	Lobby* lobbyleft = player.lobby;
 
 	player.lobby->PlayerLeave(player);
+	player.state = BROWSING_LOBBIES;
 	player.lobby = nullptr;
 }
 
@@ -117,7 +118,7 @@ void LobbyManager::HandleJoinLobby(PlayerProxy &player){
 	std::lock_guard<std::mutex> lock(_lobbiesMutex);
 	uint32_t lobbyguid = player.RecieveInt32();
 
-	if (player.state != BROWSING_LOBBIES )
+	if ( player.state != BROWSING_LOBBIES )
 		return;
 
 	bool found = false;
