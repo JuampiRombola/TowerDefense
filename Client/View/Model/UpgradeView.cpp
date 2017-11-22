@@ -2,18 +2,17 @@
 #include "ViewConstants.h"
 #include "../Common/SpriteNamesConfig.h"
 
-#define UPGRADE_BG_W 300
-#define UPGRADE_BG_H 200
+#define UPGRADE_BG_W 264
+#define UPGRADE_BG_H 170
 
-#define START_X_ICON 30
-#define START_Y_ICON 105
-#define PADLOCK_X 210
+#define START_X_ICON 22
+#define START_Y_ICON 80
 
 #define PADLOCK_W 64
 #define PADLOCK_H 76
 
 #define UPGRADE_ICON_SIZE 50
-#define PADDING_ICON 40
+#define PADDING_ICON 30
 
 #define FONT_UPGRD "../Resources/font.ttf"
 #define FONT_UPGRD_SIZE 10
@@ -24,14 +23,14 @@
 #define MSG_IMPACTO "Alcance de impacto: "
 #define MSG_FREEZE "Ralentizado: "
 
-#define MSG_EXP_X 32
-#define MSG_EXP_Y 40
-#define MSG_DAMAGE_X 32
-#define MSG_DAMAGE_Y 60
-#define MSG_RANGE_X 122
-#define MSG_RANGE_Y 60
-#define MSG_IMPACT_X 32
-#define MSG_IMPACT_Y 80
+#define MSG_EXP_X 25
+#define MSG_EXP_Y 35
+#define MSG_DAMAGE_X 25
+#define MSG_DAMAGE_Y 50
+#define MSG_RANGE_X 114
+#define MSG_RANGE_Y 50
+#define MSG_IMPACT_X 25
+#define MSG_IMPACT_Y 65
 
 #define INDEX_DAMAGE 0
 #define INDEX_RANGE 1
@@ -42,7 +41,8 @@ UpgradeView::UpgradeView(Renderer &r, TextureLoader &tl,
         renderer(r), tl(tl), tower(t), cmd(command), mousePosition(mp),
         background(PADDING_HUD, PADDING_HUD, UPGRADE_BG_W, UPGRADE_BG_H,
         tl.getTexture(UPGRADE_BACKGROUND), renderer),
-        padlock(PADLOCK_X, START_Y_ICON, PADLOCK_W,
+        padlock(START_X_ICON + 2*UPGRADE_ICON_SIZE
+                + 2*PADDING_ICON, START_Y_ICON, PADLOCK_W,
                 PADLOCK_H, tl.getTexture(CANDADO), renderer),
         textColor(SDL_Color{255, 255, 255, 0xFF}) {
     font = TTF_OpenFont(FONT_UPGRD, FONT_UPGRD_SIZE);
