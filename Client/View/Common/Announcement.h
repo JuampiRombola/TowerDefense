@@ -21,6 +21,7 @@ public:
     Announcement(std::string &text, Renderer &renderer);
     void draw();
     bool isActive();
+    void Disable();
     ~Announcement();
 };
 

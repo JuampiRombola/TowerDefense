@@ -7,9 +7,9 @@
 class TowerPlacedGameNotification : public GameNotification
 {
 public:
-	TowerPlacedGameNotification(TowerVM& vm, std::vector<PlayerProxy*> playersToNotify);
+	TowerPlacedGameNotification(TowerVM& vm);
 	~TowerPlacedGameNotification();
-	void Notify();
+	void Notify(std::vector<PlayerProxy*> playersToNotify);
 	TowerVM vm;
 };
 

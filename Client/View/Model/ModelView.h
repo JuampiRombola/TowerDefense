@@ -6,6 +6,7 @@
 #include "MapView.h"
 #include "DepthLevel.h"
 #include "../Common/Announcement.h"
+#include "../../include/NonBlockingThreadSafeQueue.h"
 #include <mutex>
 #include <map>
 #include <list>
@@ -22,7 +23,8 @@ private:
     std::vector<DepthLevel *> depthLevels;
     std::map<int, int> idDepthLevelsTowers;
     std::map<int, int> idDepthLevelsUnits;
-    std::list<Announcement> announcements;
+    Announcement* _currentAnnouncement;
+    NonBlockingThreadSafeQueue<std::string*> newAnnouncementsMessages;
 public:
     ModelView(Renderer &renderer, TextureLoader &textureLoader);
     ~ModelView();

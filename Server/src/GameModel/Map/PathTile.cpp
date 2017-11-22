@@ -32,9 +32,6 @@ void PathTile::Crack(uint time_ms){
 	_isCracked = true;
 	_lastCrackTimeStamp_ms = Helpers::MillisecondsTimeStamp();
 	_lastCrackDuration_ms = time_ms;
-	for (auto it = _units.begin(); it != _units.end(); ++it){
-		(*it)->Kill();
-	}
 }
 
 void PathTile::SetOnFire(uint time_ms, uint fireDamage){
@@ -177,7 +174,7 @@ void PathTile::UnitEnter(EnviormentUnit* unit){
 		throw UnitIsAlreadyOnThisTileException();
 
 	unsigned long long ts_ms = Helpers::MillisecondsTimeStamp();
-	if (_isCracked){
+	if (_isCracked && !unit->Flies()){
 		uint delta_ms = ts_ms - _lastCrackTimeStamp_ms;
 		if (delta_ms > _lastCrackDuration_ms){
 			_isCracked = false;
@@ -234,6 +231,7 @@ void PathTile::UnitLeave(EnviormentUnit* unit){
 	auto it = std::find(_units.begin(), _units.end(), unit);
 	if (it != _units.end()){
 		_units.erase(it);
+		unit->SetPosition(nullptr, _map); 
 	}
 	else
 		throw UnitIsNotOnThisTileException();

@@ -237,7 +237,7 @@ void ClientLobbyManager::HandleOtherPlayerUnpickedSpell(){
     _sock.Recieve((char*) &pguid, 4);
     SPELL_TYPE spelltype = (SPELL_TYPE) spell;
     auto it = this->GetOtherPlayer(pguid);
-    (*it)->joinedLobby->PlayerPickSpell(*(*it), spelltype, false);
+    //(*it)->joinedLobby->PlayerPickSpell(*(*it), spelltype, false);
     _runner.gtkNotifications.Queue(new OtherPickedSpellGTKNotification(*(*it), spelltype, false));
     g_idle_add(GTKRunner::notification_check, &_runner);
 }

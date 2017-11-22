@@ -25,6 +25,11 @@ bool Announcement::isActive() {
     return (SDL_GetTicks() - ticks) < 3000;
 }
 
-Announcement::~Announcement() {
+void Announcement::Disable(){
+    if (texture) SDL_DestroyTexture(texture);
     TTF_CloseFont(font);
+}
+
+Announcement::~Announcement() {
+
 }

@@ -10,9 +10,9 @@
 
 class GameModelStartedRunningNotification : public GameNotification {
 public:
-    GameModelStartedRunningNotification(std::vector<PlayerProxy*> playersToNotify);
+    GameModelStartedRunningNotification();
     ~GameModelStartedRunningNotification();
-    void Notify();
+    void Notify(std::vector<PlayerProxy *> playersToNotify);
 };
 
 

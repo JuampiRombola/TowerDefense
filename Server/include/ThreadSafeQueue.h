@@ -4,8 +4,6 @@
 #include <queue>
 #include <mutex>
 #include <condition_variable>
-#include "Notifications/Notification.h"
-#include "GameModel/GameNotifications/GameNotification.h"
 
 template <class T>
 class ThreadSafeQueue
@@ -54,11 +52,13 @@ public:
 
 #ifndef __GAME_NOTIFICATION_QUEUE__
 #define __GAME_NOTIFICATION_QUEUE__
+class GameNotification;
 template class ThreadSafeQueue<GameNotification*>;
 #endif
 
 #ifndef __NOTIFICATION_QUEUE__
 #define __NOTIFICATION_QUEUE__
+class Notification;
 template class ThreadSafeQueue<Notification*>;
 #endif
 

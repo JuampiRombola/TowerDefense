@@ -101,6 +101,10 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/GameNotifications/UnitDiedGameNotification.h
         Server/include/GameModel/GameNotifications/ChatMessageNotification.h
         Server/include/GameModel/GameNotifications/TowerPlacedGameNotification.h
+        Server/include/GameModel/Hordes/Horde.h
+        Server/src/GameModel/Hordes/Horde.cpp
+        Server/include/GameModel/Hordes/HordeManager.h
+        Server/src/GameModel/Hordes/HordeManager.cpp
         Server/src/GameModel/GameNotifications/GameNotification.cpp
         Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp
         Server/src/GameModel/GameNotifications/UnitDiedGameNotification.cpp
@@ -134,7 +138,13 @@ set(SOURCE_FILES_SERVER
         Server/src/GameModel/ClientCooldownManager.cpp
         Server/include/GameModel/ClientCooldownManager.h
         Server/src/GameModel/GameNotifications/GameModelStartedRunningNotification.cpp
-        Server/include/GameModel/GameNotifications/GameModelStartedRunningNotification.h Server/src/GameModel/GameNotifications/MapTransferNotification.cpp Server/include/GameModel/GameNotifications/MapTransferNotification.h Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp Server/include/GameModel/GameNotifications/ChatMessageNotification.h)
+        Server/include/GameModel/GameNotifications/GameModelStartedRunningNotification.h
+        Server/src/GameModel/GameNotifications/MapTransferNotification.cpp
+        Server/include/GameModel/GameNotifications/MapTransferNotification.h
+        Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp
+        Server/include/GameModel/GameNotifications/ChatMessageNotification.h
+        Server/src/GameModel/GameNotifications/HordeUpdateGameNotification.cpp
+        Server/include/GameModel/GameNotifications/HordeUpdateGameNotification.h Server/src/GameModel/GameNotifications/TowerGainedExperienceGameNotification.cpp Server/include/GameModel/GameNotifications/TowerGainedExperienceGameNotification.h Server/src/GameModel/GameNotifications/TowerUpgradedGameNotification.cpp Server/include/GameModel/GameNotifications/TowerUpgradedGameNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp
@@ -208,8 +218,17 @@ set(SOURCE_FILES_CLIENT
         Client/include/NetCommands/ChatMessageCommand.h
         Client/View/Common/Announcement.cpp
         Client/View/Common/Announcement.h
+        Client/View/Common/MusicLoader.cpp
+        Client/View/Common/MusicLoader.h
+        Client/View/Common/MusicNamesConfig.h
         Client/View/Model/ProgressBarView.cpp
-        Client/View/Model/ProgressBarView.h Client/View/Model/GameButton.cpp Client/View/Model/GameButton.h Client/View/Model/InstantButton.cpp Client/View/Model/InstantButton.h Client/View/Model/UpgradeView.cpp Client/View/Model/UpgradeView.h)
+        Client/View/Model/ProgressBarView.h
+        Client/View/Model/GameButton.cpp
+        Client/View/Model/GameButton.h
+        Client/View/Model/InstantButton.cpp
+        Client/View/Model/InstantButton.h
+        Client/View/Model/UpgradeView.cpp
+        Client/View/Model/UpgradeView.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -328,12 +347,12 @@ set(SOURCE_FILES_EDITOR
         Client/View/Editor/EnemigoImage.cpp
         Client/View/Editor/EnemigoImage.h
         Client/View/Editor/EditorConstants.h
-        Client/View/Editor/AumentarTiempoButton.cpp
-        Client/View/Editor/AumentarTiempoButton.h
-        Client/View/Editor/DisminuirTiempoButton.cpp
-        Client/View/Editor/DisminuirTiempoButton.h
-        Client/View/Editor/ContadorTiempoInput.cpp
-        Client/View/Editor/ContadorTiempoInput.h
+        Client/View/Editor/AumentarTiempoHordaButton.cpp
+        Client/View/Editor/AumentarTiempoHordaButton.h
+        Client/View/Editor/DisminuirTiempoHordaButton.cpp
+        Client/View/Editor/DisminuirTiempoHordaButton.h
+        Client/View/Editor/ContadorTiempoHordaInput.cpp
+        Client/View/Editor/ContadorTiempoHordaInput.h
         Client/View/Editor/AumentarAnchoMapaButton.cpp
         Client/View/Editor/AumentarAnchoMapaButton.h
         Client/View/Editor/AumentarAltoMapaButton.cpp
@@ -386,19 +405,30 @@ set(SOURCE_FILES_EDITOR
         Client/View/Editor/EditorValidationException.cpp
         Client/View/Editor/EditorValidationException.h
         Client/View/Editor/ContadorHordasInput.cpp
-        Client/View/Editor/ContadorHordasInput.h)
+        Client/View/Editor/ContadorHordasInput.h
+        Client/View/Common/MusicLoader.cpp
+        Client/View/Common/MusicLoader.h
+        Client/View/Common/MusicNamesConfig.h
+        Client/View/Editor/AumentarTiempoEnemigosButton.cpp
+        Client/View/Editor/AumentarTiempoEnemigosButton.h
+        Client/View/Editor/DisminuirTiempoEnemigosButton.cpp
+        Client/View/Editor/DisminuirTiempoEnemigosButton.h
+        Client/View/Editor/ContadorTiempoEnemigosInput.cpp
+        Client/View/Editor/ContadorTiempoEnemigosInput.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
-add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp )
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/UpgradeTowerNetCommand.cpp Client/include/NetCommands/UpgradeTowerNetCommand.h)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
 
 
 INCLUDE(FindPkgConfig)
 pkg_search_module(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 pkg_search_module(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
+pkg_search_module(SDL2MIXER REQUIRED SDL2_mixer>=2.0.0)
+include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS}
+        ${SDL2TTF_INCLUDE_DIRS} ${SDL2MIXER_INCLUDE_DIRS})
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
@@ -407,6 +437,6 @@ link_directories(${GTK3_LIBRARY_DIRS})
 add_definitions(${GTK3_CFLAGS_OTHER})
 
 target_link_libraries(TowerDefenseServer yaml-cpp)
-target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES})
-target_link_libraries(TowerDefenseClient yaml-cpp X11 ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES})
-target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES})
+target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES} ${SDL2MIXER_LIBRARIES})
+target_link_libraries(TowerDefenseClient yaml-cpp X11 ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})
+target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})

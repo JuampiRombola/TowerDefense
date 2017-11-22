@@ -53,14 +53,20 @@ public:
     NotificationReciever* reciever;
     CommandDispatcher* dispatcher;
 
-    GtkWindow *window_connect;
-    GtkWindow *window_login;
-    GtkWindow *window_lobbies;
-    GtkWindow *window_lobby;
+    GtkWindow *window_global;
+    //GtkWindow *window_connect;
+    //GtkWindow *window_login;
+    //GtkWindow *window_lobbies;
+    //GtkWindow *window_lobby;
+
+    GtkGrid* grid_login;
+    GtkGrid* grid_connect;
+    GtkGrid* grid_lobbies;
+    GtkGrid* grid_lobby;
+    GtkBox* box1;
 
     void InitLobbyPlayersTreeView();
     void InitLobbiesTreeView();
-    void CreateAndShowLobbyWindow();
     GtkTreeView *treeview_lobbies;
     GtkTreeView *treeview_lobbyPlayers;
 

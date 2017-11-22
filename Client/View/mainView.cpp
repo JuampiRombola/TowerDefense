@@ -5,10 +5,7 @@
 #include "Model/ModelView.h"
 #include "Model/HudView.h"
 #include "Model/ChatView.h"
-#include "Model/ProgressBarView.h"
-#include "Model/GameButton.h"
-#include "Model/InstantButton.h"
-#include "Model/UpgradeView.h"
+#include "Common/MusicLoader.h"
 
 #define TITLE "Tower Defense"
 
@@ -145,11 +142,6 @@ int main(int argc, char** argv) {
 
     TowerView towerView(0, TORRE_FUEGO, textureLoader, renderer);
 
-    //int x = 0;
-    //int y = 0;
-    //MousePosition mp(x, y);
-
-    //UpgradeView uv(renderer, textureLoader, &towerView, x, mp);
 
     modelView.createTower(1, TORRE_FUEGO, 1, 1);
     modelView.createTower(2, TORRE_AGUA, 3, 3);
@@ -236,7 +228,6 @@ int main(int argc, char** argv) {
         modelView.draw(SDL_GetTicks());
         hudView.draw();
         chat.draw();
-        //uv.draw();
 
         renderer.present();
 

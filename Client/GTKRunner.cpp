@@ -134,6 +134,10 @@ void GTKRunner::joinLobby_clicked(GtkWidget* widget, gpointer data){
 }
 
 void GTKRunner::leaveLobby_clicked(GtkWidget* widget, gpointer data){
+    GTKRunner* runner = (GTKRunner*) data;
+
+    runner->dispatcher->QueueCommand(new LeaveLobbyCommand());
+
 
 }
 void GTKRunner::lobbyReady_clicked(GtkWidget* widget, gpointer data){
@@ -150,7 +154,7 @@ void GTKRunner::login_clicked(GtkWidget* widget, gpointer data){
 
 void GTKRunner::MessageBox(std::string s){
     GtkDialogFlags flags;
-    auto dialog = gtk_message_dialog_new (this->window_login,
+    auto dialog = gtk_message_dialog_new (this->window_global,
                                           flags,
                                           GTK_MESSAGE_ERROR,
                                           GTK_BUTTONS_CLOSE,
@@ -170,8 +174,11 @@ void GTKRunner::connect_clicked(GtkWidget* widget, gpointer data){
         runner->reciever = new NotificationReciever(*runner->sock, *runner->lobbyManager, *runner, *(runner->dispatcher));
         runner->dispatcher->Run();
         runner->reciever->Run();
-        gtk_widget_hide (GTK_WIDGET(runner->window_connect));
-        gtk_widget_show (GTK_WIDGET(runner->window_login));
+        g_object_ref(runner->grid_connect);
+        gtk_container_remove(GTK_CONTAINER(runner->box1), GTK_WIDGET(runner->grid_connect));
+        gtk_container_add(GTK_CONTAINER(runner->box1), GTK_WIDGET(runner->grid_login));
+        //gtk_widget_hide (GTK_WIDGET(runner->window_connect));
+        //gtk_widget_show (GTK_WIDGET(runner->window_login));
         std::cout << "Connect Succesful" << "  \n" ;
     }
     else
@@ -186,8 +193,7 @@ GTKRunner::GTKRunner() : OK (false) {
 
 GTKRunner::~GTKRunner() {
     if (!OK){
-        reciever->Stop();
-        dispatcher->Stop();
+        delete sock;
         delete reciever;
         delete dispatcher;
         delete lobbyManager;
@@ -268,32 +274,7 @@ void GTKRunner::InitLobbyPlayersTreeView()
     g_object_unref (store);
 }
 
-void GTKRunner::CreateAndShowLobbyWindow(){
-    GtkBuilder* Lobbybuilder = gtk_builder_new ();
-    gtk_builder_add_from_file (Lobbybuilder, "../Client/Lobby.glade", NULL);
-    this->window_lobby = GTK_WINDOW(gtk_builder_get_object (Lobbybuilder, "window_lobby"));
-    this->check_air = GTK_CHECK_BUTTON(gtk_builder_get_object (Lobbybuilder, "check_air"));
-    this->check_fire = GTK_CHECK_BUTTON(gtk_builder_get_object (Lobbybuilder, "check_fire"));
-    this->check_ground = GTK_CHECK_BUTTON(gtk_builder_get_object (Lobbybuilder, "check_ground"));
-    this->check_water = GTK_CHECK_BUTTON(gtk_builder_get_object (Lobbybuilder, "check_water"));
 
-    this->check_air_handler_id = g_signal_connect (this->check_air, "toggled", G_CALLBACK(GTKRunner::_AirCheckboxToggled), this);
-    this->check_ground_handler_id = g_signal_connect (this->check_ground, "toggled", G_CALLBACK(GTKRunner::_GroundCheckboxToggled), this);
-    this->check_fire_handler_id = g_signal_connect (this->check_fire, "toggled", G_CALLBACK(GTKRunner::_FireCheckboxToggled), this);
-    this->check_water_handler_id = g_signal_connect (this->check_water, "toggled", G_CALLBACK(GTKRunner::_WaterCheckboxToggled), this);
-
-    g_signal_connect (this->window_lobby, "destroy", G_CALLBACK(GTKRunner::_LobbyWindowClosed), this);
-    GtkWidget* button_leaveLobby = GTK_WIDGET (gtk_builder_get_object (Lobbybuilder, "button_leaveLobby"));
-    GtkWidget* button_lobbyReady = GTK_WIDGET (gtk_builder_get_object (Lobbybuilder, "button_lobbyReady"));
-    g_signal_connect (button_leaveLobby, "clicked", G_CALLBACK(GTKRunner::leaveLobby_clicked), this);
-    g_signal_connect (button_lobbyReady, "clicked", G_CALLBACK(GTKRunner::lobbyReady_clicked), this);
-    this->treeview_lobbyPlayers = GTK_TREE_VIEW(gtk_builder_get_object(Lobbybuilder, "treeview_lobbyPlayers"));
-    this->label_lobbyname = GTK_LABEL(gtk_builder_get_object(Lobbybuilder, "label_lobbyname"));
-    this->InitLobbyPlayersTreeView();
-    gtk_builder_connect_signals (Lobbybuilder, NULL);
-    gtk_widget_show (GTK_WIDGET(this->window_lobby));
-    g_object_unref (G_OBJECT (Lobbybuilder));
-}
 
 void GTKRunner::Run(int* argc, char***argv){
     GtkBuilder      *builder;
@@ -302,13 +283,22 @@ void GTKRunner::Run(int* argc, char***argv){
 
     builder = gtk_builder_new ();
     gtk_builder_add_from_file (builder, "../Client/Launcher.glade", NULL);
-    this->window_connect = GTK_WINDOW(gtk_builder_get_object (builder, "window_connect"));
-    this->window_login = GTK_WINDOW(gtk_builder_get_object (builder, "window_login"));
-    this->window_lobbies = GTK_WINDOW(gtk_builder_get_object (builder, "window_lobbies"));
-    g_signal_connect (this->window_connect, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
-    g_signal_connect (this->window_login, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
-    g_signal_connect (this->window_lobbies, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
+
+    this->window_global = GTK_WINDOW(gtk_builder_get_object (builder, "window_global"));
+    //this->window_connect = GTK_WINDOW(gtk_builder_get_object (builder, "window_connect"));
+    //this->window_login = GTK_WINDOW(gtk_builder_get_object (builder, "window_login"));
+    //this->window_lobbies = GTK_WINDOW(gtk_builder_get_object (builder, "window_lobbies"));
+    //g_signal_connect (this->window_connect, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
+    g_signal_connect (this->window_global, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
+    //g_signal_connect (this->window_login, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
+    //g_signal_connect (this->window_lobbies, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
     //g_signal_connect (this->window_lobby, "destroy", G_CALLBACK(GTKRunner::_LobbyWindowClosed), this);
+
+    this->grid_connect = GTK_GRID(gtk_builder_get_object(builder, "grid_connect"));
+    this->grid_login = GTK_GRID(gtk_builder_get_object(builder, "grid_login"));
+    this->grid_lobbies = GTK_GRID(gtk_builder_get_object(builder, "grid_lobbies"));
+    this->grid_lobby = GTK_GRID(gtk_builder_get_object(builder, "grid_lobby"));
+    this->box1 = GTK_BOX(gtk_builder_get_object(builder, "box1"));
 
     GtkWidget* button_connect = GTK_WIDGET (gtk_builder_get_object (builder, "button_connect"));
     GtkWidget* button_login = GTK_WIDGET (gtk_builder_get_object (builder, "button_login"));
@@ -330,10 +320,40 @@ void GTKRunner::Run(int* argc, char***argv){
 
     this->InitLobbiesTreeView();
 
-    //liststore = GTK_LIST_STORE(gtk_builder_get_object(builder, "liststore1"));
+    this->check_air = GTK_CHECK_BUTTON(gtk_builder_get_object (builder, "check_air"));
+    this->check_fire = GTK_CHECK_BUTTON(gtk_builder_get_object (builder, "check_fire"));
+    this->check_ground = GTK_CHECK_BUTTON(gtk_builder_get_object (builder, "check_ground"));
+    this->check_water = GTK_CHECK_BUTTON(gtk_builder_get_object (builder, "check_water"));
+
+    this->check_air_handler_id = g_signal_connect (this->check_air, "toggled", G_CALLBACK(GTKRunner::_AirCheckboxToggled), this);
+    this->check_ground_handler_id = g_signal_connect (this->check_ground, "toggled", G_CALLBACK(GTKRunner::_GroundCheckboxToggled), this);
+    this->check_fire_handler_id = g_signal_connect (this->check_fire, "toggled", G_CALLBACK(GTKRunner::_FireCheckboxToggled), this);
+    this->check_water_handler_id = g_signal_connect (this->check_water, "toggled", G_CALLBACK(GTKRunner::_WaterCheckboxToggled), this);
+
+    GtkWidget* button_leaveLobby = GTK_WIDGET (gtk_builder_get_object (builder, "button_leaveLobby"));
+    GtkWidget* button_lobbyReady = GTK_WIDGET (gtk_builder_get_object (builder, "button_lobbyReady"));
+    g_signal_connect (button_leaveLobby, "clicked", G_CALLBACK(GTKRunner::leaveLobby_clicked), this);
+    g_signal_connect (button_lobbyReady, "clicked", G_CALLBACK(GTKRunner::lobbyReady_clicked), this);
+    this->treeview_lobbyPlayers = GTK_TREE_VIEW(gtk_builder_get_object(builder, "treeview_lobbyPlayers"));
+    this->label_lobbyname = GTK_LABEL(gtk_builder_get_object(builder, "label_lobbyname"));
+    this->InitLobbyPlayersTreeView();
+
+    
+    
+
 
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
-    gtk_widget_show (GTK_WIDGET(this->window_connect));
+
+
+
+    gtk_window_set_default_size(GTK_WINDOW(this->window_global), 640, 360);
+    g_object_ref(this->grid_login);
+    g_object_ref(this->grid_lobbies);
+    g_object_ref(this->grid_lobby);
+    gtk_container_remove(GTK_CONTAINER(this->box1), GTK_WIDGET(this->grid_login));
+    gtk_container_remove(GTK_CONTAINER(this->box1), GTK_WIDGET(this->grid_lobbies));
+    gtk_container_remove(GTK_CONTAINER(this->box1), GTK_WIDGET(this->grid_lobby));
+    gtk_widget_show (GTK_WIDGET(this->window_global));
     gtk_main ();
 }

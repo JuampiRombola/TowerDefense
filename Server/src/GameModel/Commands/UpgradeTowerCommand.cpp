@@ -6,6 +6,7 @@
 #include "../../../include/GameModel/Map/Map.h"
 #include <yaml-cpp/yaml.h>
 #include "../../../include/GameModel/ViewModels/CommandVM.h"
+#include "../../../include/GameModel/GameNotifications/TowerUpgradedGameNotification.h"
 
 
 UpgradeTowerCommand::UpgradeTowerCommand(uint x, uint y, UpgradeType type):
@@ -19,8 +20,13 @@ bool UpgradeTowerCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQu
 		return false;
 
 	Tower* t = tile->GetTower();
-	if (t != nullptr)
-		return t->Upgrade(game->GameCfg->Cfg, _type);
+	if (t == nullptr)
+		return false;
+
+	if (t->Upgrade(game->GameCfg->Cfg, _type)){
+		TowerVM vm = t->GetViewModel();
+		game->notifications.Queue(new TowerUpgradedGameNotification(vm));
+	}
 
 	return false;
 }

@@ -30,6 +30,12 @@ private:
     void _HandleUnitCreated();
 	void _HandleProjectileFired();
 	void _HandleSpellCasted();
+	void _HandleTowerGainedExperience();
+	void _HandleHordeStarted();
+    void _HandleTowerUpgrade();
+    void _HandleHordeEnded();
+
+	std::map<std::pair<uint, uint>, uint> _towerCoordToId;
 public:
 	NotificationReciever(SocketWrapper& socket,
 						 ClientLobbyManager& lobbyManager, GTKRunner& runner,

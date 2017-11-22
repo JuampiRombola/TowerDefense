@@ -14,8 +14,8 @@
 
 WaterTower::WaterTower(uint cooldown_sec, uint range, uint damage,
 					   uint slowPercent, uint slowDuration_sec, SolidGroundTile* position, Map* map,
-						uint projectile_ms_over_tile)
-: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile), _slowPercent(slowPercent), _slowDuration_sec(slowDuration_sec) {}
+						uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications)
+: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile, notifications), _slowPercent(slowPercent), _slowDuration_sec(slowDuration_sec) {}
 
 WaterTower::~WaterTower(){}
 
@@ -95,6 +95,14 @@ TowerVM WaterTower::GetViewModel(){
 	vm.yPos = _position->GetYPos();
 	vm.experience = _experience;
 	vm.level = _upgradeLevel;
+	vm.collateral_range = -1;
+	vm.collateral_damage = -1;
+	vm.nonFlyingDamage = -1;
+	vm.range = _range;
+	vm.projectile_ms_over_tile = _projectile_ms_over_tile;
+	vm.slow_percent = _slowPercent;
+	vm.slow_seconds = _slowDuration_sec;
+	vm.damage = _damage;
 	return vm;
 }
 

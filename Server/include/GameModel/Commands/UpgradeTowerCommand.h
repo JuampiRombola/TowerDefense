@@ -3,11 +3,11 @@
 
 #include "../Commands/Command.h"
 #include "yaml-cpp/yaml.h"
+#include "../../../../Common/Protocolo.h"
 
 class Map;
 class TowerDefenseGame;
 
-enum UpgradeType { Range, Damage, CollateralRange, Slow };
 
 class UpgradeTowerCommand : public Command {
 private:

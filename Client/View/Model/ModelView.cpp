@@ -10,7 +10,7 @@
 ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader) :
         renderer(renderer), textureLoader(textureLoader),
         map(0, 0, 0, renderer, textureLoader), mapLoaded(false),
-        mapLoadedMutex(), mapLoadedCondVariable() {}
+        mapLoadedMutex(), mapLoadedCondVariable(), _currentAnnouncement(nullptr) {}
 
 ModelView::~ModelView() {
     auto it = shots.begin();
@@ -122,6 +122,73 @@ void ModelView::killUnit(int id) {
 }
 
 void ModelView::draw(Uint32 time) {
+
+    // Dibujo mapa
+    {
+        Lock(this->m);
+        map.draw(time);
+    }
+
+    {
+        Lock(this->m);
+        //Dibujo por niveles
+        for (auto depthLevel : depthLevels)
+            depthLevel->draw(SDL_GetTicks());
+    }
+
+
+    {
+        Lock(this->m);
+        // Remuevo disparos terminados
+        auto it = shots.begin();
+        while (it != shots.end()) {
+            if ((*it)->hasFinished()) {
+                delete (*it);
+                it = shots.erase(it);
+            } else
+                ++it;
+        }
+
+        // Dibujo disparos
+        for (auto shot : shots)
+            shot->draw(time);
+    }
+
+
+    {
+        std::string* a = newAnnouncementsMessages.Dequeue();
+        if (a != nullptr){
+            auto annaun = new Announcement(*a, renderer);
+            delete a;
+            
+            if (_currentAnnouncement != nullptr){
+                _currentAnnouncement->Disable();
+                delete _currentAnnouncement;
+            }
+            _currentAnnouncement = annaun;
+            //announcements.push_back(a);
+            //a = newAnnouncementsMessages.Dequeue();
+        }
+        
+        Lock(this->m);
+        if (_currentAnnouncement != nullptr && _currentAnnouncement->isActive()){
+            _currentAnnouncement->draw();
+        }
+        // Remuevo los anuncios que terminaron. Dibujo los que no
+        //for (auto it = announcements.begin(); it != announcements.end();) {
+          //  if ((*it)->isActive()) {
+            //    (*it)->draw();
+              //  ++it;
+            //} else {
+             //   (*it)->Disable();
+              //  delete (*it);
+               // it = announcements.erase(it);
+            //}
+        
+    }
+
+
+    /*
     Lock(this->m);
 
     // Dibujo mapa
@@ -145,15 +212,18 @@ void ModelView::draw(Uint32 time) {
     for (auto shot : shots)
         shot->draw(time);
 
+
     // Remuevo los anuncios que terminaron. Dibujo los que no
     for (auto it = announcements.begin(); it != announcements.end();) {
-        if ((*it).isActive()) {
-            (*it).draw();
+        if ((*it)->isActive()) {
+            (*it)->draw();
             ++it;
         } else {
+            (*it)->Disable();
+            delete (*it);
             it = announcements.erase(it);
         }
-    }
+    }*/
 }
 
 void ModelView::checkIndexDepthLevel(int key) {
@@ -162,7 +232,10 @@ void ModelView::checkIndexDepthLevel(int key) {
 }
 
 void ModelView::addAnnouncement(std::string announcement) {
-    announcements.emplace_back(announcement, renderer);
+    newAnnouncementsMessages.Queue(new std::string(announcement));
+    //Lock(this->m);
+    //Announcement* a = new Announcement(announcement, renderer);
+    //announcements.emplace_back(a);
 }
 
 TowerView *ModelView::onClick(int x, int y) {

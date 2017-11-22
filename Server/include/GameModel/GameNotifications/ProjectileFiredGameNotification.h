@@ -14,9 +14,9 @@ class ProjectileFiredGameNotification : public GameNotification
 private:
     ProjectileVM vm;
 public:
-    ProjectileFiredGameNotification(ProjectileVM vm, std::vector<PlayerProxy*> playersToNotify);
+    ProjectileFiredGameNotification(ProjectileVM vm);
     ~ProjectileFiredGameNotification();
-    void Notify();
+    void Notify(std::vector<PlayerProxy*> playersToNotify);
 };
 
 

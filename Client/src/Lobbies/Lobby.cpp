@@ -81,6 +81,14 @@ void Lobby::PlayerLeave(OtherPlayer &player){
 	auto it = GetOtherPlayer(player.GUID());
 	_players.erase(it);
 	player.joinedLobby = nullptr;
+	if (_waterPlayer == &player)
+		_waterPlayer = nullptr;
+	if (_groundPlayer == &player)
+		_groundPlayer = nullptr;
+	if (_firePlayer == &player)
+		_firePlayer = nullptr;
+	if (_airPlayer == &player)
+		_airPlayer = nullptr;
 }
 
 std::vector<OtherPlayer*> Lobby::GetOtherPlayersInLobby(){

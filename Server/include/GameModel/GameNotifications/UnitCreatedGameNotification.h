@@ -11,9 +11,9 @@
 class UnitCreatedGameNotification : public GameNotification
 {
 public:
-    UnitCreatedGameNotification(UnitVM& viewmodel, std::vector<PlayerProxy*> playersToNotify);
+    UnitCreatedGameNotification(UnitVM& viewmodel);
     ~UnitCreatedGameNotification();
-    void Notify();
+    void Notify(std::vector<PlayerProxy*> playersToNotify);
     UnitVM vm;
 };
 

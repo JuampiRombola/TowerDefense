@@ -9,6 +9,7 @@
 #include "View/Model/ChatView.h"
 #include "include/NetCommands/PlayerLoadedGameCommand.h"
 #include "include/NetCommands/LoadMapCommand.h"
+#include "View/Common/MusicLoader.h"
 
 #define TITLE "Tower Defense"
 
@@ -38,13 +39,15 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
 
     bool quit = false;
     SDL_Event event{};
-    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
     TTF_Init();
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, _mapWidth, _mapHeight);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
     ModelView modelView(renderer, textureLoader);
     ChatView chat(*_dispatcher, window, renderer, textureLoader);
+    MusicLoader musicLoader;
+    musicLoader.playMusic();
 
     _reciever->model_view =  &modelView;
     _reciever->chat_view = &chat;

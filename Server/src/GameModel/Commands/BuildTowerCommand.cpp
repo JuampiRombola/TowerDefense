@@ -10,6 +10,7 @@
 #include "../../../include/GameModel/TowerDefenseGame.h"
 #include <yaml-cpp/yaml.h>
 #include "../../../include/GameModel/GameNotifications/TowerPlacedGameNotification.h"
+#include "../../../include/GameModel/GameNotifications/TowerUpgradedGameNotification.h"
 
 
 BuildTowerCommand::BuildTowerCommand(TowerType type, uint x, uint y):
@@ -20,6 +21,7 @@ BuildTowerCommand::~BuildTowerCommand(){}
 bool BuildTowerCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications){
 	std::cout << "EXECUTINGG TOWER BUILD COMMAND\n" << std::flush;
 	SolidGroundTile* tile = map->GetSolidGroundTile(_xPos ,_yPos);
+	_game = game;
 	if (tile != nullptr && !tile->HasTower()){
 		Tower* t = nullptr;
 
@@ -42,7 +44,8 @@ bool BuildTowerCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueu
 			tile->PlaceTower(t);
 			TowerVM vm = t->GetViewModel();
 			std::cout << "TOWER PLACED at " <<vm.xPos << ", " << vm.yPos << "\n" << std::flush;
-			notifications.Queue(new TowerPlacedGameNotification(vm, game->GetPlayers()));
+			notifications.Queue(new TowerPlacedGameNotification(vm));
+			notifications.Queue(new TowerUpgradedGameNotification(vm));
 			return true;
 		}
 	}
@@ -54,7 +57,7 @@ Tower* BuildTowerCommand::_BuildGroundTower(Map* map, SolidGroundTile* tile, con
 	uint range = cfg["towers"]["ground"]["range"].as<uint>();
 	uint damage = cfg["towers"]["ground"]["damage"].as<uint>();
 	uint projectile_ms_over_tile = cfg["towers"]["ground"]["projectile_ms_over_tile"].as<uint>();
-	return new GroundTower(cooldown_sec * 1000, range, damage, tile, map, projectile_ms_over_tile);
+	return new GroundTower(cooldown_sec * 1000, range, damage, tile, map, projectile_ms_over_tile, _game->notifications);
 }
 
 Tower* BuildTowerCommand::_BuildFireTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg){
@@ -64,7 +67,7 @@ Tower* BuildTowerCommand::_BuildFireTower(Map* map, SolidGroundTile* tile, const
 	uint collateralRange = cfg["towers"]["fire"]["collateral_range"].as<uint>();
 	uint collateralDamage = cfg["towers"]["fire"]["collateral_damage"].as<uint>();
 	uint projectile_ms_over_tile = cfg["towers"]["fire"]["projectile_ms_over_tile"].as<uint>();
-	return new FireTower(cooldown_sec * 1000, range, damage, tile, map, collateralDamage, collateralRange, projectile_ms_over_tile);
+	return new FireTower(cooldown_sec * 1000, range, damage, tile, map, collateralDamage, collateralRange, projectile_ms_over_tile, _game->notifications);
 }
 
 Tower* BuildTowerCommand::_BuildWaterTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg){
@@ -74,7 +77,7 @@ Tower* BuildTowerCommand::_BuildWaterTower(Map* map, SolidGroundTile* tile, cons
 	uint slowPercent = cfg["towers"]["water"]["slow_percent"].as<uint>();
 	uint slowDuration_sec = cfg["towers"]["water"]["slow_duration_sec"].as<uint>();
 	uint projectile_ms_over_tile = cfg["towers"]["water"]["projectile_ms_over_tile"].as<uint>();
-	return new WaterTower(cooldown_sec * 1000, range, damage, slowPercent, slowDuration_sec, tile, map, projectile_ms_over_tile);
+	return new WaterTower(cooldown_sec * 1000, range, damage, slowPercent, slowDuration_sec, tile, map, projectile_ms_over_tile, _game->notifications);
 }
 
 Tower* BuildTowerCommand::_BuildAirTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg){
@@ -83,7 +86,7 @@ Tower* BuildTowerCommand::_BuildAirTower(Map* map, SolidGroundTile* tile, const 
 	uint flyingTargetDamage = cfg["towers"]["air"]["flying_target_damage"].as<uint>();
 	uint nonFlyingTargetDamage = cfg["towers"]["air"]["non_flying_target_damage"].as<uint>();
 	uint projectile_ms_over_tile = cfg["towers"]["air"]["projectile_ms_over_tile"].as<uint>();
-	return new AirTower(cooldown_sec * 1000, range, flyingTargetDamage, nonFlyingTargetDamage, tile, map, projectile_ms_over_tile);
+	return new AirTower(cooldown_sec * 1000, range, flyingTargetDamage, nonFlyingTargetDamage, tile, map, projectile_ms_over_tile, _game->notifications);
 }
 
 

@@ -6,7 +6,7 @@
 
 
 MapTransferNotification::MapTransferNotification(Map &map, PlayerProxy &player)
-: GameNotification(std::vector<PlayerProxy*>()), _map(map), _player(player)
+: _map(map), _player(player)
 {
 
 }
@@ -14,6 +14,6 @@ MapTransferNotification::~MapTransferNotification() {
 
 }
 
-void MapTransferNotification::Notify() {
+void MapTransferNotification::Notify(std::vector<PlayerProxy*> playersToNotify) {
     _map.TransferMapTo(_player);
 }

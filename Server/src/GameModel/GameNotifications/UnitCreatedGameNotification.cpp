@@ -5,8 +5,8 @@
 #include <iostream>
 #include "../../../include/GameModel/GameNotifications/UnitCreatedGameNotification.h"
 
-UnitCreatedGameNotification::UnitCreatedGameNotification(UnitVM& viewmodel, std::vector<PlayerProxy*> playersToNotify)
-: GameNotification(playersToNotify), vm(viewmodel)
+UnitCreatedGameNotification::UnitCreatedGameNotification(UnitVM& viewmodel)
+: vm(viewmodel)
 {
 
 }
@@ -15,8 +15,8 @@ UnitCreatedGameNotification::~UnitCreatedGameNotification(){
 
 }
 
-void UnitCreatedGameNotification::Notify(){
-    for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); it++) {
+void UnitCreatedGameNotification::Notify(std::vector<PlayerProxy*> playersToNotify){
+    for (auto it = playersToNotify.begin(); it != playersToNotify.end(); it++) {
         PlayerProxy *p = *it;
         int8_t game = GAME_OPCODE;
         p->SendByte(game);

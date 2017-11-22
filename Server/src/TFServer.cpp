@@ -18,13 +18,19 @@
 
 TFServer::TFServer(std::string service) : _playerGUID(1),_connectionHandlers(),_playerProxies(),
  _connectionHandlersMutex(), _acceptingConnsMutex(),  _playersProxiesMutex(), _gamesMutex(), _isAcceptingConnections(false),
- _lobbyManager(_notifications), _server(service), _notifications(), _gameNotifications(), _games(), _player2game() {
+ _lobbyManager(_notifications), _server(service), _notifications(), _gameNotificatorThreads(), _player2game(), _game2gameNotifications() {
 }
 
 TFServer::~TFServer(){
 	_Stop();
 	_notifications.Release();
-	_gameNotifications.Release();
+
+	for (auto it=_game2gameNotifications.begin();
+		it!=_game2gameNotifications.end(); ++it){
+		it->second->Release();
+		delete it->second;
+		delete it->first;
+	}
 
 	if (_acceptorThread.joinable())
 		_acceptorThread.join();
@@ -32,8 +38,13 @@ TFServer::~TFServer(){
 	if (_notificatorThread.joinable())
 		_notificatorThread.join();
 
-	if (_gameNotificatorThread.joinable())
-		_gameNotificatorThread.join();
+	for (auto it = _gameNotificatorThreads.begin(); it != _gameNotificatorThreads.end(); ++it){
+		if ((*it).joinable()){
+			(*it).join();
+		}
+	}
+
+
 
 	for (auto it = _playerProxies.begin(); it != _playerProxies.end(); ++it)
 		delete (*it);
@@ -73,12 +84,12 @@ void TFServer::_NotifyClients(){
 	}
 }
 
-void TFServer::_NotifyGamePlayers(){
-	GameNotification* gameNoti = _gameNotifications.Dequeue();
+void TFServer::_NotifyGamePlayers(ThreadSafeQueue<GameNotification*>* queue, std::vector<PlayerProxy*> players){
+	GameNotification* gameNoti = queue->Dequeue();
 	while (gameNoti != nullptr){
-		gameNoti->Notify();
+		gameNoti->Notify(players);
 		delete gameNoti;
-		gameNoti = _gameNotifications.Dequeue();
+		gameNoti = queue->Dequeue();
 	}
 }
 
@@ -88,7 +99,6 @@ void TFServer::_NotifyGamePlayers(){
 void TFServer::RunServer(){
 	_acceptorThread = std::thread(&TFServer::_AcceptConnections, this);
 	_notificatorThread = std::thread(&TFServer::_NotifyClients, this);
-	_gameNotificatorThread = std::thread(&TFServer::_NotifyGamePlayers, this);
 }
 
 
@@ -182,6 +192,13 @@ void TFServer::_HandleGameCommand(PlayerProxy& player){
 
 	}
 
+	if (ins == TOWER_UPGRADE){
+		UpgradeType type = (UpgradeType) player.RecieveByte();
+		uint x = player.RecieveInt32();
+		uint y = player.RecieveInt32();
+		game->HandleClientUpgradeTowerCommand(x, y, type);
+	}
+
 	if (ins == CLIENT_CREATE_TOWER){
 		uint8_t spelltype = player.RecieveByte();
 		uint32_t x = player.RecieveInt32();
@@ -200,12 +217,14 @@ void TFServer::_LaunchGame(Lobby& lobby){
 	std::lock_guard<std::mutex> lock(_gamesMutex);
 	std::vector<PlayerProxy*> playersInGame = lobby.GetPlayingPlayers();
 
-
-	TowerDefenseGame* game = new TowerDefenseGame(gameId++, _gameNotifications, playersInGame, *(lobby.MapCfg));
+	ThreadSafeQueue<GameNotification*>* notiqueue = new ThreadSafeQueue<GameNotification*>();
+	TowerDefenseGame* game = new TowerDefenseGame(gameId++, *notiqueue, playersInGame, *(lobby.MapCfg));
+	_game2gameNotifications[game] = notiqueue;
 	for (auto it = playersInGame.begin(); it != playersInGame.end(); ++it){
 		_player2game[(*it)] = game;
 	}
 
+	_gameNotificatorThreads.emplace_back(std::thread(&TFServer::_NotifyGamePlayers, this, notiqueue, playersInGame));
 	game->Run(lobby.GetFirePlayer(), lobby.GetAirPlayer(), lobby.GetWaterPlayer(), lobby.GetGroundPlayer());
 }
 

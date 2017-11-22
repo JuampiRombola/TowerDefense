@@ -5,12 +5,10 @@
 
 class GameNotification
 {
-protected:
-	std::vector<PlayerProxy*> _playersToNotify;
 public:
-	GameNotification(std::vector<PlayerProxy*> playersToNotify);
+	GameNotification();
 	virtual ~GameNotification();
-	virtual void Notify() = 0;
+	virtual void Notify(std::vector<PlayerProxy*> playersToNotify) = 0;
 
 };
 
