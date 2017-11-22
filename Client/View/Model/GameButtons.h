@@ -9,6 +9,8 @@
 #include "NewTowerButton.h"
 #include "../Common/SpriteNamesConfig.h"
 #include "../../include/NetCommands/CommandDispatcher.h"
+#include "PadlockButton.h"
+#include "WaitActionButton.h"
 
 class GameButtons {
 private:
@@ -17,9 +19,12 @@ private:
     Renderer &renderer;
     TextureLoader &textureLoader;
     int &cmd;
-    std::list<Image*> towers;
-    std::list<Image*> spells;
+    std::list<WaitActionButton*> towers;
+    std::list<WaitActionButton*> spells;
     std::list<Image*> barUpRight;
+    std::list<PadlockButton *> fakeButtons;
+    Sprite decoTowers;
+    Sprite decoSpells;
 
 public:
     GameButtons(Window &w, MousePosition &mousePosition, Renderer &renderer,
@@ -27,7 +32,9 @@ public:
     ~GameButtons();
     void addTowerButtons(int key);
     bool isAnyClicked();
+    bool isAnyFakeClicked();
     void draw();
+    void initFakeButtons();
 };
 
 
