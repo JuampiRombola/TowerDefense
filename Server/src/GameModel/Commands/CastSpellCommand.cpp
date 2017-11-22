@@ -11,11 +11,11 @@
 #include "../../../include/GameModel/ViewModels/CommandVM.h"
 #include "../../../include/GameModel/GameNotifications/SpellCastedGameNotification.h"
 
-CastSpellCommand::CastSpellCommand(CAST_SPELL_TYPE spell, uint x, uint y):
- _xPos(x), _yPos(y), _unitId(-1), _spell(spell) {}
+CastSpellCommand::CastSpellCommand(CAST_SPELL_TYPE spell, uint x, uint y, uint cooldown_ms):
+ _cooldown_ms(cooldown_ms), _xPos(x), _yPos(y), _unitId(-1), _spell(spell) {}
 
-CastSpellCommand::CastSpellCommand(CAST_SPELL_TYPE spell, uint unitId):
- _xPos(-1), _yPos(-1), _unitId(unitId), _spell(spell) {}
+CastSpellCommand::CastSpellCommand(CAST_SPELL_TYPE spell, uint unitId, uint cooldown_ms):
+ _cooldown_ms(cooldown_ms), _xPos(-1), _yPos(-1), _unitId(unitId), _spell(spell) {}
 
 CastSpellCommand::~CastSpellCommand(){}
 
@@ -29,6 +29,7 @@ bool CastSpellCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue
 		case SPELL_VENTISCA: return _CastVentisca(map, game);
 		case SPELL_TORNADO: return _CastTornado(map, game);
 		case SPELL_RAYO: return _CastRayos(map, game);
+		case SPELL_PING: return _CastPing(map, game);
 		default: return false;
 	}
 }
@@ -39,7 +40,7 @@ bool CastSpellCommand::_CastTerraforming(Map* map, TowerDefenseGame* game){
 	if (tile != nullptr || pathtile != nullptr)
 		return false;
 	map->PlaceGroundTile(new SolidGroundTile(_xPos,_yPos));
-	game->notifications.Queue(new SpellCastedGameNotification(SPELL_TERRAFORMING, _xPos, _yPos,0));
+	game->notifications.Queue(new SpellCastedGameNotification(SPELL_TERRAFORMING, _xPos, _yPos,0, _cooldown_ms));
 	return true;
 }
 
@@ -49,7 +50,7 @@ bool CastSpellCommand::_CastGrieta(Map* map, TowerDefenseGame* game){
 		uint32_t time_ms = game->GameCfg->Cfg["spells"]["grieta"]["duration_sec"].as<uint>();
 		time_ms *= 1000;
 		tile->Crack(time_ms);
-		game->notifications.Queue(new SpellCastedGameNotification(SPELL_GRIETA, _xPos, _yPos, time_ms ));
+		game->notifications.Queue(new SpellCastedGameNotification(SPELL_GRIETA, _xPos, _yPos, time_ms, _cooldown_ms ));
 		return true;
 	}
 	return false;
@@ -75,7 +76,7 @@ bool CastSpellCommand::_CastMeteorito(Map* map, TowerDefenseGame* game){
 				}
 			}
 		}
-		game->notifications.Queue(new SpellCastedGameNotification(SPELL_METEORITO, _xPos, _yPos, 1500 ));
+		game->notifications.Queue(new SpellCastedGameNotification(SPELL_METEORITO, _xPos, _yPos, 1500, _cooldown_ms ));
 		return true;
 	}
 	return false;
@@ -87,7 +88,7 @@ bool CastSpellCommand::_CastMuroDeFuego(Map* map, TowerDefenseGame* game){
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
 	if (tile != nullptr){
 		tile->SetOnFire(fireDuration_sec * 1000, fireDamage);
-		game->notifications.Queue(new SpellCastedGameNotification(SPELL_FIREWALL, _xPos, _yPos, fireDuration_sec * 1000 ));
+		game->notifications.Queue(new SpellCastedGameNotification(SPELL_FIREWALL, _xPos, _yPos, fireDuration_sec * 1000, _cooldown_ms ));
 		return true;
 	}
 	return false;
@@ -109,7 +110,7 @@ bool CastSpellCommand::_CastCongelacion(Map* map, TowerDefenseGame* game){
 
 	if (unit != nullptr){
 		unit->Freeze(freezeDurationSec);
-		game->notifications.Queue(new SpellCastedGameNotification(SPELL_CONGELACION, _xPos, _yPos, freezeDurationSec * 1000 ));
+		game->notifications.Queue(new SpellCastedGameNotification(SPELL_CONGELACION, _xPos, _yPos, freezeDurationSec * 1000 , _cooldown_ms));
 		return true;
 	}
 	return false;
@@ -123,7 +124,7 @@ bool CastSpellCommand::_CastVentisca(Map* map, TowerDefenseGame* game){
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
 	if (tile != nullptr){
 		tile->Ventisca(ventiscaDamage, ventiscaDuration_sec, slowDuration_sec, percentSlow);
-		game->notifications.Queue(new SpellCastedGameNotification(SPELL_VENTISCA, _xPos, _yPos, ventiscaDuration_sec * 1000 ));
+		game->notifications.Queue(new SpellCastedGameNotification(SPELL_VENTISCA, _xPos, _yPos, ventiscaDuration_sec * 1000, _cooldown_ms ));
 		return true;
 	}
 	return false;
@@ -135,7 +136,7 @@ bool CastSpellCommand::_CastTornado(Map* map, TowerDefenseGame* game){
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
 	if (tile != nullptr){
 		tile->Tornado(tornadoMaxDamage, tornadoDuration_sec);
-		game->notifications.Queue(new SpellCastedGameNotification(SPELL_TORNADO, _xPos, _yPos, tornadoDuration_sec * 1000));
+		game->notifications.Queue(new SpellCastedGameNotification(SPELL_TORNADO, _xPos, _yPos, tornadoDuration_sec * 1000, _cooldown_ms));
 		return true;
 	}
 	return false;
@@ -158,25 +159,14 @@ bool CastSpellCommand::_CastRayos(Map* map, TowerDefenseGame* game){
 		std::srand(std::time(0));
 		uint randomDamage = (uint) std::rand() % rayoMaxDamage;
 		unit->GetHit(randomDamage);
-		game->notifications.Queue(new SpellCastedGameNotification(SPELL_RAYO, _xPos, _yPos, 2000));
+		game->notifications.Queue(new SpellCastedGameNotification(SPELL_RAYO, _xPos, _yPos, 2000, _cooldown_ms));
 		return true;
 	}
 	return false;
 }
 
-
-/*
-CommandVM CastSpellCommand::GetViewModel(){
-	CommandVM vm;
-	vm.type = CastSpell;
-	vm.spellType = _spell;
-
-	if (_unitId == -1){
-		vm.xPos = _xPos;
-		vm.yPos = _yPos;
-	} else {
-		vm.unitId = _unitId;
-	}
-	return vm;
-
-}*/
+bool CastSpellCommand::_CastPing(Map* map, TowerDefenseGame* game){
+	if (!map->AreCoordinatesInsideMap(_xPos, _yPos))
+		return false;
+	game->notifications.Queue(new SpellCastedGameNotification(SPELL_PING, _xPos, _yPos, 2000, _cooldown_ms));
+}

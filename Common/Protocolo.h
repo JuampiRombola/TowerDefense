@@ -84,25 +84,25 @@ enum CAST_SPELL_TYPE {
     SPELL_CONGELACION = 205,
     SPELL_VENTISCA = 206,
     SPELL_TORNADO = 207,
-    SPELL_RAYO = 208
+    SPELL_RAYO = 208,
+    SPELL_PING = 209
 } ;
 #endif
 
 
-#define IN_GAME_CHAT_MESSAGE 209
-#define HORDE_STARTED 210
-#define HORDE_ENDED 211
-#define GAME_WON 212
-#define TOWER_GAINED_EXP 213
+#define IN_GAME_CHAT_MESSAGE 210
+#define HORDE_STARTED 211
+#define HORDE_ENDED 212
+#define GAME_WON 213
+#define TOWER_GAINED_EXP 214
 
 enum UpgradeType {
-    Range = 214,
-    Damage = 215,
-    CollateralRange = 216,
-    Slow = 217 };
+    Range = 215,
+    Damage = 216,
+    CollateralRange = 217,
+    Slow = 218 };
 
-#define TOWER_UPGRADE 218
-
+#define TOWER_UPGRADE 219
 
 
 #endif

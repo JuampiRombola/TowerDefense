@@ -176,6 +176,7 @@ void TowerDefenseGame::PlayersWon() {
 
 void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_TYPE type, uint32_t x, uint32_t y){
 	//
+	uint cooldown_ms = _clientCooldownManager->GetSpellCooldown_ms(type);
     switch(type){
         case SPELL_GRIETA:
             if (&player != _groundPlayer)
@@ -225,10 +226,13 @@ void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_
 			if (!_clientCooldownManager->IsSpellReady(SPELL_TERRAFORMING))
 				return;
             break;
-
+		case SPELL_PING:
+			if (!_clientCooldownManager->IsPingForPlayerReady(player))
+				return;
+			cooldown_ms = _clientCooldownManager->GetPingCooldown();
     }
 
-	QueueCommand(new CastSpellCommand(type, x, y));
+	QueueCommand(new CastSpellCommand(type, x, y, cooldown_ms));
 }
 
 void TowerDefenseGame::SendMapToPlayer(PlayerProxy& player){

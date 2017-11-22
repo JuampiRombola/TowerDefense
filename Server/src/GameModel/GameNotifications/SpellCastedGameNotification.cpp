@@ -2,8 +2,8 @@
 #include <iostream>
 #include "../../../include/GameModel/GameNotifications/SpellCastedGameNotification.h"
 
-SpellCastedGameNotification::SpellCastedGameNotification(CAST_SPELL_TYPE type, uint32_t x, uint32_t y, uint32_t duration_ms)
-        : GameNotification(), _type(type), _x(x), _y(y), _duration_ms(duration_ms)
+SpellCastedGameNotification::SpellCastedGameNotification(CAST_SPELL_TYPE type, uint32_t x, uint32_t y, uint32_t duration_ms, uint32_t cooldown_ms)
+        : GameNotification(), _cooldown_ms(cooldown_ms), _type(type), _x(x), _y(y), _duration_ms(duration_ms)
 {
 
 }
@@ -25,5 +25,6 @@ void SpellCastedGameNotification::Notify(std::vector<PlayerProxy*> playersToNoti
         p->SendInt32(_x);
         p->SendInt32(_y);
         p->SendInt32(_duration_ms);
+        p->SendInt32(_cooldown_ms);
     }
 }

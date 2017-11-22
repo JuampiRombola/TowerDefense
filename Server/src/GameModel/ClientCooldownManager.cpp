@@ -6,6 +6,7 @@
 #include "../../include/GameModel/ClientCooldownManager.h"
 
 ClientCooldownManager::ClientCooldownManager(GameConfiguration& gameCfg)
+
 :
  _lastFireTowerPlacedTimeStamp_ms(0),
  _lastWaterTowerPlacedTimeStamp_ms(0),
@@ -18,7 +19,10 @@ ClientCooldownManager::ClientCooldownManager(GameConfiguration& gameCfg)
  _lastMeteoritoTimeStamp_ms(0),
  _lastGrietaTimeStamp_ms(0),
  _lastTerraformingTimeStamp_ms(0),
- _lastCongelacionTimeStamp_ms(0)
+ _lastCongelacionTimeStamp_ms(0),
+ _pingLastTimeStamps(),
+ _pingCooldown_sec(0)
+
 {
 
      _fireTowerPlacedCooldown_sec = gameCfg.Cfg["towers"]["fire"]["place_cooldown_sec"].as<uint>();
@@ -111,6 +115,51 @@ bool ClientCooldownManager::IsSpellReady(CAST_SPELL_TYPE type){
     }
     return false;
 }
+
+
+
+uint ClientCooldownManager::GetPingCooldown(){
+    return _pingCooldown_sec;
+}
+
+uint ClientCooldownManager::GetSpellCooldown_ms(CAST_SPELL_TYPE type){
+    switch (type){
+        case SPELL_GRIETA:
+            return _grietaCooldown_sec * 1000;
+        case SPELL_TORNADO:
+            return _tornadoCooldown_sec * 1000;
+        case SPELL_TERRAFORMING:
+            return _terraformingCooldown_sec * 1000;
+        case SPELL_CONGELACION:
+            return _congelacionCooldown_sec * 1000;
+        case SPELL_RAYO:
+            return _rayoCooldown_sec * 1000;
+        case SPELL_VENTISCA:
+            return _ventiscaCooldown_sec * 1000;
+        case SPELL_METEORITO:
+            return _meteoritoCooldown_sec * 1000;
+        case SPELL_FIREWALL:
+            return _firewallCooldown_sec * 1000;
+    }
+    return 0;
+}
+
+bool ClientCooldownManager::IsPingForPlayerReady(PlayerProxy& player){
+    unsigned long long actual_ts = Helpers::MillisecondsTimeStamp();
+    if (_pingLastTimeStamps.count(&player)){
+        unsigned long long ts = _pingLastTimeStamps[&player];
+        if (actual_ts - ts > _pingCooldown_sec){
+            _pingLastTimeStamps[&player] = actual_ts;
+            return true;
+        }
+    } else {
+        _pingLastTimeStamps[&player] = actual_ts;
+        return true;
+    }
+    return false;
+}
+
+
 
 bool ClientCooldownManager::IsTowerPlacementReady(SPELL_TYPE type){
     uint cooldown_ms;

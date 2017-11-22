@@ -59,6 +59,7 @@ public:
 	std::vector<Projectile*> GetProjectiles();
 	std::vector<Tower*> GetTowers();
 	void TransferMapTo(PlayerProxy& player);
+	bool AreCoordinatesInsideMap(uint x, uint y);
 };
 
 #endif

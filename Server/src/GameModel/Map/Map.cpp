@@ -276,6 +276,10 @@ std::vector<Tower*> Map::GetTowers(){
 	return towers;
 }
 
+bool Map::AreCoordinatesInsideMap(uint x, uint y){
+	return (x < _rows && y < _cols);
+}
+
 void Map::TransferMapTo(PlayerProxy& player){
 
 	uint8_t mapOpcode = LOAD_MAP;

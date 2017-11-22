@@ -293,8 +293,10 @@ void NotificationReciever::_HandleSpellCasted(){
 	_sock.Recieve((char *) &x, 4);
 	uint32_t y;
 	_sock.Recieve((char *) &y, 4);
-	uint32_t duration_ms;
-	_sock.Recieve((char *) &duration_ms, 4);
+    uint32_t duration_ms;
+    _sock.Recieve((char *) &duration_ms, 4);
+    uint32_t cooldown_ms;
+    _sock.Recieve((char *) &cooldown_ms, 4);
 	switch(spell){
 		case SPELL_TERRAFORMING:
 			model_view->createStructureTile(x, y);
@@ -319,6 +321,9 @@ void NotificationReciever::_HandleSpellCasted(){
 			break;
 		case SPELL_GRIETA:
 			model_view->createSpell(GRIETA, x, y, duration_ms);
+			break;
+		case SPELL_PING:
+			model_view->createSpell(PING, x, y, duration_ms);
 			break;
 	}
 }

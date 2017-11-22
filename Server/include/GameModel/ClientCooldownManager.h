@@ -8,6 +8,7 @@
 
 #include "../../../Common/Protocolo.h"
 #include "GameConfiguration.h"
+#include "../PlayerProxy.h"
 
 class ClientCooldownManager {
 private:
@@ -25,6 +26,7 @@ private:
     unsigned long long _lastTerraformingTimeStamp_ms;
     unsigned long long _lastCongelacionTimeStamp_ms;
 
+
     uint _fireTowerPlacedCooldown_sec;
     uint _waterTowerPlacedCooldown_sec;
     uint _airTowerPlacedCooldown_sec;
@@ -39,6 +41,9 @@ private:
     uint _terraformingCooldown_sec;
     uint _congelacionCooldown_sec;
 
+    std::map<PlayerProxy*, unsigned long long> _pingLastTimeStamps;
+    uint _pingCooldown_sec;
+
 
 public:
     ClientCooldownManager(GameConfiguration& gameCfg);
@@ -46,6 +51,13 @@ public:
 
     bool IsSpellReady(CAST_SPELL_TYPE type);
     bool IsTowerPlacementReady(SPELL_TYPE type);
+
+    uint GetPingCooldown();
+    bool IsPingForPlayerReady(PlayerProxy& player);
+    uint GetSpellCooldown_ms(CAST_SPELL_TYPE type);
+
+
+
 };
 
 
