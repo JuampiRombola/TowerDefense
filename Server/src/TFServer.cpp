@@ -144,6 +144,9 @@ void TFServer::HandleConnection(PlayerProxy& player){
 				case UNPICK_SPELL:
 					_lobbyManager.HandlePlayerUnpickedSpell(player);
 					break;
+				case PICK_MAP:
+					_lobbyManager.HandlePickMap(player);
+					break;
 				case GAME_OPCODE:
 					_HandleGameCommand(player);
 					break;

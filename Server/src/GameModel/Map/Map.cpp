@@ -19,7 +19,7 @@
 #include "../../../include/GameModel/TowerDefenseGame.h"
 #include "../../../include/GameModel/GameNotifications/ProjectileFiredGameNotification.h"
 
-Map::Map(uint rows, uint cols, GameConfiguration& mapCfg):
+Map::Map(uint rows, uint cols, Configuration& mapCfg):
 _rows(rows), _cols(cols),
 _tiles(rows * cols), _spawnTiles(), _endTiles(),
 _pathTiles(rows, std::vector<PathTile*>(cols)),

@@ -7,7 +7,7 @@
 
 
 #include "../../../Common/Protocolo.h"
-#include "GameConfiguration.h"
+#include "Configuration.h"
 #include "../PlayerProxy.h"
 
 class ClientCooldownManager {
@@ -46,7 +46,7 @@ private:
 
 
 public:
-    ClientCooldownManager(GameConfiguration& gameCfg);
+    ClientCooldownManager(Configuration& gameCfg);
     ~ClientCooldownManager();
 
     bool IsSpellReady(CAST_SPELL_TYPE type);

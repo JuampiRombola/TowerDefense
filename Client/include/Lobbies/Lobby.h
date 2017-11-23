@@ -44,7 +44,7 @@ public:
 	bool GroundIsPicked();
 	bool AirIsPicked();
 
-
+	uint32_t pickedMapId;
 
 };
 

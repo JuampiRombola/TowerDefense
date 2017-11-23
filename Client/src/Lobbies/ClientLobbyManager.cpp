@@ -17,12 +17,14 @@
 #include "../../include/GTKNotifications/LogInSuccessGtkNotification.h"
 #include "../../include/GTKNotifications/PickedSpellGTKNotification.h"
 #include "../../include/GTKNotifications/OtherPickedSpellGTKNotification.h"
+#include "../../../Server/include/Lobbies/Lobby.h"
+#include "../../include/GTKNotifications/LobbyPickedMapGTKNotification.h"
 
 
 ClientLobbyManager::ClientLobbyManager(SocketWrapper& _sock, GTKRunner& runner)
 : _sock(_sock), _lobbies(), fireHUDEnabled(false), waterHUDEnabled(false),
  airHUDEnabled(false),  groundHUDEnabled(false),
-  _otherPlayers(), _joinedLobby(nullptr), _runner(runner) {
+  _otherPlayers(), _joinedLobby(nullptr), _maps(), _runner(runner) {
 
 }
 
@@ -242,6 +244,23 @@ void ClientLobbyManager::HandleOtherPlayerUnpickedSpell(){
     g_idle_add(GTKRunner::notification_check, &_runner);
 }
 
+void ClientLobbyManager::HandleMapPicked() {
+    uint32_t mapid = -1;
+    _sock.Recieve((char*) &mapid,  4);
+    uint32_t lobbyid = -1;
+    _sock.Recieve((char*) &lobbyid,  4);
+    Lobby* l = GetLobby(lobbyid);
+    for (auto it = _maps.begin(); it != _maps.end(); ++it){
+        std::tuple<std::string, uint32_t> tup = *it;
+        if (std::get<1>(tup) == mapid){
+            l->pickedMapId = mapid;
+            _runner.gtkNotifications.Queue(new LobbyPickedMapGTKNotification(lobbyid, mapid));
+            g_idle_add(GTKRunner::notification_check, &_runner);
+        }
+    }
+
+}
+
 void ClientLobbyManager::HandleLoginSuccess(){
 
     _sock.Recieve((char*) &myGuid, 4);
@@ -282,6 +301,17 @@ void ClientLobbyManager::HandleLoginSuccess(){
         auto itPlayer = GetOtherPlayer(playerGuid);
 
         l->PlayerJoin(*(*itPlayer));
+    }
+
+
+    uint32_t mapsAmount = -1;
+    _sock.Recieve((char*) &mapsAmount, 4);
+    for (int i = 0; i < mapsAmount; i++){
+        uint32_t mapId = -1;
+        _sock.Recieve((char*) &mapId, 4);
+        std::string mapname = _sock.RecieveString();
+        auto tup = std::tuple<std::string, uint32_t>(mapname, mapId);
+        _maps.push_back(tup);
     }
 
     _runner.gtkNotifications.Queue(new LogInSuccessGtkNotification(_lobbies));

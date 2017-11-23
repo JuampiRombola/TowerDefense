@@ -5,7 +5,7 @@
 #include "../../include/GameModel/Helpers.h"
 #include "../../include/GameModel/ClientCooldownManager.h"
 
-ClientCooldownManager::ClientCooldownManager(GameConfiguration& gameCfg)
+ClientCooldownManager::ClientCooldownManager(Configuration& gameCfg)
 
 :
  _lastFireTowerPlacedTimeStamp_ms(0),

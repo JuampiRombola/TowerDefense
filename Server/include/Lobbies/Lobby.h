@@ -7,7 +7,7 @@
 #include "../PlayerProxy.h"
 #include "../ThreadSafeQueue.h"
 #include "../Notifications/Notification.h"
-#include "../GameModel/GameConfiguration.h"
+#include "../GameModel/Configuration.h"
 
 class Lobby 
 {
@@ -58,7 +58,7 @@ public:
     std::vector<PlayerProxy*> GetPlayersInLobbyWithSomeSpellSet();
     std::vector<PlayerProxy*> GetPlayingPlayers();
 
-	GameConfiguration* MapCfg;
+	Configuration* MapCfg;
 
 };
 

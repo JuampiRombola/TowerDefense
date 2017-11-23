@@ -68,6 +68,10 @@ void NotificationReciever::RecieveNotifications(){
 				std::cout << "UNPICK_SPELL::\n" << std::flush;
 				_lobbyManager.HandleUnpickedSpell();
 				break;
+			case PICK_MAP:
+				std::cout << "PICK_MAP::\n" << std::flush;
+				_lobbyManager.HandleMapPicked();
+                break;
 			case PLAYER_PICKED_SPELL:
 				std::cout << "PLAYER_PICKED_SPELL::\n" << std::flush;
 				_lobbyManager.HandleOtherPlayerPickedSpell();
@@ -223,12 +227,6 @@ void NotificationReciever::_HandleTowerGainedExperience() {
 
 	uint towerid = _towerCoordToId[std::pair<uint, uint>(x, y)];
 
-
-
-	///
-	//
-	//
-	//
 
 }
 

@@ -103,6 +103,6 @@ enum UpgradeType {
     Slow = 218 };
 
 #define TOWER_UPGRADE 219
-
+#define PICK_MAP 220
 
 #endif

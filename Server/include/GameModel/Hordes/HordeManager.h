@@ -8,7 +8,7 @@
 #include <queue>
 #include "Horde.h"
 #include "../Helpers.h"
-#include "../GameConfiguration.h"
+#include "../Configuration.h"
 #include "../GameNotifications/GameNotification.h"
 #include "../../ThreadSafeQueue.h"
 class TowerDefenseGame;
@@ -19,7 +19,7 @@ private:
     unsigned long long _timeStamp;
     Horde* _currentHorde;
 public:
-    HordeManager(GameConfiguration& mapCfg);
+    HordeManager(Configuration& mapCfg);
     ~HordeManager();
     void AddHorde(Horde* horde);
     void Step();

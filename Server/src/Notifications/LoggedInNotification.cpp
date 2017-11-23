@@ -6,8 +6,9 @@
 
 LoggedInNotification::LoggedInNotification(PlayerProxy& player,
 										   std::vector<Lobby*>& lobbies,
-										   std::vector<std::tuple< uint32_t , uint32_t>>& lobbies2playersGUIDS)
-		: _player(player), _lobbies(lobbies), _lobbies2playersGUIDS(lobbies2playersGUIDS) {
+										   std::vector<std::tuple< uint32_t , uint32_t>>& lobbies2playersGUIDS,
+										   std::vector<std::tuple< std::string , uint32_t>>& mapCfgs)
+		: _player(player), _lobbies(lobbies), _lobbies2playersGUIDS(lobbies2playersGUIDS), _mapCfgs(mapCfgs) {
 	
 }
 
@@ -62,6 +63,18 @@ void LoggedInNotification::Notify(){
 		_player.SendInt32(playerGuid);
 	}
 
+	/** Notifico a este cliente acerca de los mapas disponibles **/
+	uint32_t mapsAmount = _mapCfgs.size();
+	_player.SendInt32(mapsAmount);
+	for (auto it = _mapCfgs.begin(); it != _mapCfgs.end(); ++it){
+		std::tuple<std::string, uint32_t> t = *it;
+		std::string mapname = std::get<0>(t);
+		uint32_t mapid = std::get<1>(t);
+		_player.SendInt32(mapid);
+		_player.SendString(mapname);
+	}
+
+
 
 	/** Notifico a todos los otros jugadores que entro este jugadopr */
 	uint8_t otherPlayersOpcode = PLAYER_JOIN;
@@ -74,4 +87,7 @@ void LoggedInNotification::Notify(){
 			(*it)->SendString(pname);
 		}
 	}
+
+
+
 }
