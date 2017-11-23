@@ -25,6 +25,8 @@ public:
     bool isActive();
     void Disable();
     ~Announcement();
+private:
+    void createTexture();
 };
 
 

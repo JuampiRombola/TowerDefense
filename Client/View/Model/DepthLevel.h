@@ -7,17 +7,16 @@
 #include "SpellView.h"
 #include "PortalView.h"
 #include "UnitView.h"
+#include "ShotView.h"
 
 class DepthLevel {
 private:
-    std::mutex _unitsMutex;
-    std::mutex _spellsMutex;
-    std::mutex _towersMutex;
     PortalView *portalEntrada;
     PortalView *portalSalida;
     std::list<SpellView *> spells;
     std::list<TowerView *> towers;
     std::list<UnitView *> units;
+    std::list<ShotView *> shots;
     
 public:
     DepthLevel();
@@ -27,6 +26,7 @@ public:
     void addSpell(SpellView *spell);
     void addTower(TowerView *tower);
     void addUnit(UnitView *unit);
+    void addShot(ShotView *shot);
     TowerView* getTower(int id);
     UnitView* getUnit(int id);
     void removeUnit(int id);

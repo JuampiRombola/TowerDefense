@@ -19,7 +19,6 @@ private:
     TextureLoader &textureLoader;
     MapView map;
     std::mutex m;
-    std::list<ShotView *> shots;
     std::vector<DepthLevel *> depthLevels;
     std::map<int, int> idDepthLevelsTowers;
     std::map<int, int> idDepthLevelsUnits;
@@ -52,6 +51,7 @@ public:
     TowerView *onClick(int x, int y);
 private:
     void checkIndexDepthLevel(int key);
+    void createAnnounce();
 };
 
 

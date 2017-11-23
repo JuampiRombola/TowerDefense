@@ -13,13 +13,8 @@ ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader) :
         mapLoadedMutex(), mapLoadedCondVariable(), _currentAnnouncement(nullptr) {}
 
 ModelView::~ModelView() {
-    auto it = shots.begin();
-    while (it != shots.end())
-        delete (*it++);
-
-    for (unsigned int i = 0; i < depthLevels.size(); ++i) {
+    for (unsigned int i = 0; i < depthLevels.size(); ++i)
         delete depthLevels[i];
-    }
 }
 
 
@@ -74,6 +69,7 @@ void ModelView::createUnit(int id, int key,
     Lock(this->m);
     checkIndexDepthLevel(x+y+1);
     depthLevels[x+y+1]->addUnit(unit);
+    //std::cout<<"Pongo una unidad en el DEPTHLEVEL: ("<<x<<","<<y<<"\n"<<std::flush;
     idDepthLevelsUnits[id] = x + y + 1;
 }
 
@@ -98,7 +94,10 @@ void ModelView::createShot(int key, int x, int y, int toX, int toY, Uint32 t) {
     ShotView *shot = new ShotView(key, textureLoader, renderer);
     shot->shoot(x, y, toX, toY, t);
     Lock(this->m);
-    shots.push_back(shot);
+    int index = x+y+1;
+    if ((toX + toY) < (x + y))
+        index = x+y;
+    depthLevels[index]->addShot(shot);
 }
 
 void ModelView::moveUnit(int id, int x, int y, int toX, int toY, Uint32 t) {
@@ -108,9 +107,9 @@ void ModelView::moveUnit(int id, int x, int y, int toX, int toY, Uint32 t) {
     checkIndexDepthLevel(levelIndex);
     depthLevels[levelIndex]->removeUnit(id);
     unit->move(x, y, toX, toY, t);
-    checkIndexDepthLevel(toX+toY+1);
-    depthLevels[toX+toY+1]->addUnit(unit);
-    idDepthLevelsUnits[id] = toX + toY + 1;
+    checkIndexDepthLevel(x+y+1);
+    depthLevels[x+y+1]->addUnit(unit);
+    idDepthLevelsUnits[id] = x + y + 1;
 }
 
 void ModelView::killUnit(int id) {
@@ -122,73 +121,6 @@ void ModelView::killUnit(int id) {
 }
 
 void ModelView::draw(Uint32 time) {
-
-    // Dibujo mapa
-    {
-        Lock(this->m);
-        map.draw(time);
-    }
-
-    {
-        Lock(this->m);
-        //Dibujo por niveles
-        for (auto depthLevel : depthLevels)
-            depthLevel->draw(SDL_GetTicks());
-    }
-
-
-    {
-        Lock(this->m);
-        // Remuevo disparos terminados
-        auto it = shots.begin();
-        while (it != shots.end()) {
-            if ((*it)->hasFinished()) {
-                delete (*it);
-                it = shots.erase(it);
-            } else
-                ++it;
-        }
-
-        // Dibujo disparos
-        for (auto shot : shots)
-            shot->draw(time);
-    }
-
-
-    {
-        std::string* a = newAnnouncementsMessages.Dequeue();
-        if (a != nullptr){
-            auto annaun = new Announcement(*a, renderer);
-            delete a;
-            
-            if (_currentAnnouncement != nullptr){
-                _currentAnnouncement->Disable();
-                delete _currentAnnouncement;
-            }
-            _currentAnnouncement = annaun;
-            //announcements.push_back(a);
-            //a = newAnnouncementsMessages.Dequeue();
-        }
-        
-        Lock(this->m);
-        if (_currentAnnouncement != nullptr && _currentAnnouncement->isActive()){
-            _currentAnnouncement->draw();
-        }
-        // Remuevo los anuncios que terminaron. Dibujo los que no
-        //for (auto it = announcements.begin(); it != announcements.end();) {
-          //  if ((*it)->isActive()) {
-            //    (*it)->draw();
-              //  ++it;
-            //} else {
-             //   (*it)->Disable();
-              //  delete (*it);
-               // it = announcements.erase(it);
-            //}
-        
-    }
-
-
-    /*
     Lock(this->m);
 
     // Dibujo mapa
@@ -198,32 +130,10 @@ void ModelView::draw(Uint32 time) {
     for (auto depthLevel : depthLevels)
         depthLevel->draw(SDL_GetTicks());
 
-    // Remuevo disparos terminados
-    auto it = shots.begin();
-    while (it != shots.end()) {
-        if ((*it)->hasFinished()) {
-            delete (*it);
-            it = shots.erase(it);
-        } else
-            ++it;
-    }
-
-    // Dibujo disparos
-    for (auto shot : shots)
-        shot->draw(time);
-
-
-    // Remuevo los anuncios que terminaron. Dibujo los que no
-    for (auto it = announcements.begin(); it != announcements.end();) {
-        if ((*it)->isActive()) {
-            (*it)->draw();
-            ++it;
-        } else {
-            (*it)->Disable();
-            delete (*it);
-            it = announcements.erase(it);
-        }
-    }*/
+    //Dibujo anuncios
+    this->createAnnounce();
+    if (_currentAnnouncement && _currentAnnouncement->isActive())
+        _currentAnnouncement->draw();
 }
 
 void ModelView::checkIndexDepthLevel(int key) {
@@ -233,12 +143,23 @@ void ModelView::checkIndexDepthLevel(int key) {
 
 void ModelView::addAnnouncement(std::string announcement) {
     newAnnouncementsMessages.Queue(new std::string(announcement));
-    //Lock(this->m);
-    //Announcement* a = new Announcement(announcement, renderer);
-    //announcements.emplace_back(a);
 }
 
 TowerView *ModelView::onClick(int x, int y) {
     Lock(this->m);
     return depthLevels[(x+y+1)]->onCLick(x, y);
+}
+
+void ModelView::createAnnounce() {
+    std::string* a = newAnnouncementsMessages.Dequeue();
+    if (a != nullptr) {
+        auto annaun = new Announcement(*a, renderer);
+        delete a;
+
+        if (_currentAnnouncement != nullptr){
+            _currentAnnouncement->Disable();
+            delete _currentAnnouncement;
+        }
+        _currentAnnouncement = annaun;
+    }
 }
