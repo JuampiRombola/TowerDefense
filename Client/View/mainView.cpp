@@ -16,7 +16,6 @@
 #define MAPSIZE 9
 
 int main(int argc, char** argv) {
-    bool quit = false;
     SDL_Event event{};
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
@@ -128,7 +127,7 @@ int main(int argc, char** argv) {
     //modelView.createTower(4, TORRE_AGUA, 4, 6);
 
     // Dispatcher
-    SocketWrapper fd(0);
+    SocketWrapper fd(-1);
     CommandDispatcher cmdDispatcher(fd);
 
     // HUD
@@ -155,14 +154,15 @@ int main(int argc, char** argv) {
     Uint32 delayTime = 0;
 
     Uint32 part = 0;
-    while (!quit) {
+    while (!hudView.exitActive()) {
         t1 = SDL_GetTicks();
 
         while(SDL_PollEvent(&event)) {
 
             switch (event.type) {
                 case SDL_QUIT:
-                    quit = true; break;
+                    hudView.enableExitView();
+                    break;
                 case SDL_MOUSEBUTTONDOWN:
                     hudView.getMouseButtonDown();
                     break;
@@ -201,7 +201,11 @@ int main(int argc, char** argv) {
                                 chat.erase();
                             break;
                         case SDLK_ESCAPE:
-                            quit = true; break;
+                            if (hudView.isExitViewEnable())
+                                hudView.disableExitView();
+                            else
+                                hudView.enableExitView();
+                            break;
                         case SDLK_a:
                             modelView.createSpell(PING, 1, 1, 5000);
                             break;

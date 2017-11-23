@@ -20,7 +20,7 @@ private:
     int &cmd;
     std::list<WaitActionButton*> towers;
     std::list<WaitActionButton*> spells;
-    std::list<Image*> barUpRight;
+    std::vector<Image*> barUpRight;
     std::list<PadlockButton*> fakeButtons;
     Sprite decoTowers;
     Sprite decoSpells;
@@ -34,6 +34,7 @@ public:
     bool isAnyFakeClicked();
     void draw();
     void initFakeButtons();
+    bool exitClicked();
 };
 
 

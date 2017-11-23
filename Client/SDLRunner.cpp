@@ -37,7 +37,6 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     _reciever = reciever;
     _sock = sock;
 
-    bool quit = false;
     SDL_Event event{};
     SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
     TTF_Init();
@@ -80,14 +79,15 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
         modelView.mapLoadedCondVariable.wait(lock);
 
 
-    while (!quit && _reciever->Running()) {
+    while (!hudView.exitActive()) {
         t1 = SDL_GetTicks();
 
         while(SDL_PollEvent(&event)) {
 
             switch (event.type) {
                 case SDL_QUIT:
-                    quit = true; break;
+                    hudView.enableExitView();
+                    break;
                 case SDL_MOUSEBUTTONDOWN:
                     hudView.getMouseButtonDown(); break;
                 case SDL_MOUSEBUTTONUP:
@@ -115,7 +115,11 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                                 chat.erase();
                             break;
                         case SDLK_ESCAPE:
-                            quit = true; break;
+                            if (hudView.isExitViewEnable())
+                                hudView.disableExitView();
+                            else
+                                hudView.enableExitView();
+                            break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:

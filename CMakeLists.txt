@@ -224,7 +224,7 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/InstantButton.cpp
         Client/View/Model/InstantButton.h
         Client/View/Model/UpgradeView.cpp
-        Client/View/Model/UpgradeView.h Client/View/Model/WaitActionButton.cpp Client/View/Model/WaitActionButton.h Client/View/Model/PadlockButton.cpp Client/View/Model/PadlockButton.h)
+        Client/View/Model/UpgradeView.h Client/View/Model/WaitActionButton.cpp Client/View/Model/WaitActionButton.h Client/View/Model/PadlockButton.cpp Client/View/Model/PadlockButton.h Client/View/Model/ExitView.cpp Client/View/Model/ExitView.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK

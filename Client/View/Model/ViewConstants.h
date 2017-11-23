@@ -38,6 +38,6 @@
 #define CMD_IMPACT 15
 #define CMD_FREEZE 16
 
-#define CMD_EXIT 20
+#define CMD_EXIT -1
 
 #endif //TOWERDEFENSE_VIEWCONSTANTS_H

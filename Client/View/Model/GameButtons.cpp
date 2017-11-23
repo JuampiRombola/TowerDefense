@@ -12,6 +12,9 @@
 #define SPELLOFFSET_1 4
 #define SPELLOFFSET_2 5
 
+#define INDEX_EXIT 0
+#define INDEX_PING 1
+
 GameButtons::GameButtons(Window &w, MousePosition &mousePosition,
                          Renderer &renderer,
                          TextureLoader &textureLoader, int &cmd) :
@@ -82,11 +85,7 @@ bool GameButtons::isAnyClicked() {
         if (spell->isClicked())
             return true;
     }
-    for (auto &button : barUpRight) {
-        if (button->isClicked())
-            return true;
-    }
-    return false;
+    return (barUpRight[INDEX_PING]->isClicked());
 }
 
 void GameButtons::draw() {
@@ -132,4 +131,8 @@ bool GameButtons::isAnyFakeClicked() {
             return true;
     }
     return false;
+}
+
+bool GameButtons::exitClicked() {
+    return (barUpRight[INDEX_EXIT]->isClicked());
 }
