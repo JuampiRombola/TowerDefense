@@ -27,6 +27,12 @@ enum LobbyPlayersListEnum {
     LOBBY_PLAYERS_N_COLUMNS
 };
 
+enum MapComboBoxListEnum {
+    COLUMN_MAP_NAME,
+    COLUMN_MAP_ID,
+    MAP_COMBO_BOX_N_COLUMNS
+};
+
 class GTKRunner {
 private:
     static void _LobbyWindowClosed(GtkWidget* widget, gpointer data);
@@ -35,6 +41,7 @@ private:
     static void connect_clicked(GtkWidget* widget, gpointer data);
     static void login_clicked(GtkWidget* widget, gpointer data);
     static void leaveLobby_clicked(GtkWidget* widget, gpointer data);
+    static void map_combobox_selection_changed(GtkWidget* widget, gpointer data);
     static void lobbyReady_clicked(GtkWidget* widget, gpointer data);
 
     static void _AirCheckboxToggled(GtkWidget* widget, gpointer data);
@@ -42,6 +49,9 @@ private:
     static void _FireCheckboxToggled(GtkWidget* widget, gpointer data);
     static void _WaterCheckboxToggled(GtkWidget* widget, gpointer data);
 
+    void _InitLobbyPlayersTreeView();
+    void _InitLobbiesTreeView();
+    void _InitMapsComboBox();
 
 public:
     GTKRunner();
@@ -54,10 +64,6 @@ public:
     CommandDispatcher* dispatcher;
 
     GtkWindow *window_global;
-    //GtkWindow *window_connect;
-    //GtkWindow *window_login;
-    //GtkWindow *window_lobbies;
-    //GtkWindow *window_lobby;
 
     GtkGrid* grid_login;
     GtkGrid* grid_connect;
@@ -65,10 +71,9 @@ public:
     GtkGrid* grid_lobby;
     GtkBox* box1;
 
-    void InitLobbyPlayersTreeView();
-    void InitLobbiesTreeView();
     GtkTreeView *treeview_lobbies;
     GtkTreeView *treeview_lobbyPlayers;
+
 
     GtkLabel* label_lobbyname;
 
@@ -76,6 +81,9 @@ public:
     void MessageBox(std::string s);
 
     ClientSocket* sock;
+
+    GtkComboBox *combobox_maps;
+    gulong combo_box_maps_changed_handler_id;
 
     GtkEntry *entry_ip;
     GtkEntry *entry_port;
@@ -90,7 +98,6 @@ public:
     gulong check_air_handler_id;
     GtkCheckButton *check_water;
     gulong check_water_handler_id;
-
     uint8_t MapSurface;
     uint32_t MapWidth;
     uint32_t MapHeight;

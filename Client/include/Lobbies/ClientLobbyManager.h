@@ -16,8 +16,6 @@ private:
 	SocketWrapper& _sock;
 	std::vector<Lobby*> _lobbies;
 	std::vector<OtherPlayer*> _otherPlayers;
-	Lobby* _joinedLobby;
-	std::vector<std::tuple<std::string, uint32_t>> _maps;
 	GTKRunner& _runner;
 
 
@@ -49,6 +47,9 @@ public:
 	bool groundHUDEnabled;
 	std::string myName;
 	uint32_t myGuid;
+	std::vector<std::tuple<std::string, uint32_t>> maps;
+	Lobby* joinedLobby;
+
 };
 
 #endif

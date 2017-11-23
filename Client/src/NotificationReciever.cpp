@@ -22,135 +22,142 @@ void NotificationReciever::Run(){
 }
 
 void NotificationReciever::RecieveNotifications(){
-	uint8_t opcode;
-	while (!_Stop()){
-		std::cout << " CHECK \n" << std::flush;
-		_sock.Recieve((char*) &opcode, 1);
-		std::cout << " RUN \n" << std::flush;
-		switch (opcode){
-			case CREATE_LOBBY:
-				std::cout << "CREATE_LOBBY::\n" << std::flush;
-				_lobbyManager.HandleNewLobbyNotification();
-				break;
-			case JOIN_LOBBY:
-				std::cout << "JOIN_LOBBY::\n" << std::flush;
-				_lobbyManager.HandleLobbyJoin();
-				break;
-			case LEAVE_LOBBY:
-				std::cout << "LEAVE_LOBBY::\n" << std::flush;
-				_lobbyManager.HandleLeaveLobby();
-				break;
-			case PLAYER_LEFT_LOBBY:
-				std::cout << "PLAYER_LEFT_LOBBY::\n" << std::flush;
-				_lobbyManager.HandlePlayerLeftLobby();
-				break;
-			case PLAYER_JOINED_LOBBY:
-				std::cout << "PLAYER_JOINED_LOBBY::\n" << std::flush;
-				_lobbyManager.HandlePlayerJoinedLobby();
-				break;
-			case PLAYER_JOIN:
-				std::cout << "PLAYER_JOIN::\n" << std::flush;
-				_lobbyManager.HandlePlayerJoin();
-				break;
-			case PLAYER_LEAVE:
-				std::cout << "PLAYER_LEAVE::\n" << std::flush;
-				_lobbyManager.HandlePlayerLeave();
-				break;
-			case LOG_IN_SUCCESS:
-				std::cout << "LOG_IN_SUCCESS::\n" << std::flush;
-				_lobbyManager.HandleLoginSuccess();
-				break;
-			case PICK_SPELL:
-				std::cout << "PICK_SPELL::\n" << std::flush;
-				_lobbyManager.HandlePickedSpell();
-				break;
-			case UNPICK_SPELL:
-				std::cout << "UNPICK_SPELL::\n" << std::flush;
-				_lobbyManager.HandleUnpickedSpell();
-				break;
-			case PICK_MAP:
-				std::cout << "PICK_MAP::\n" << std::flush;
-				_lobbyManager.HandleMapPicked();
-                break;
-			case PLAYER_PICKED_SPELL:
-				std::cout << "PLAYER_PICKED_SPELL::\n" << std::flush;
-				_lobbyManager.HandleOtherPlayerPickedSpell();
-				break;
-			case PLAYER_UNPICKED_SPELL:
-				std::cout << "PLAYER_UNPICKED_SPELL::\n" << std::flush;
-				_lobbyManager.HandleOtherPlayerUnpickedSpell();
-				break;
-			case LOG_IN_FAILED:
-                _runner.gtkNotifications.Queue(new LogInFailedGtkNotification());
-				g_idle_add(GTKRunner::notification_check, &_runner);
-				break;
-			case GAME_STARTED:
-				std::cout << "GAME_STARTED::\n" << std::flush;
-				uint32_t width;
-				uint32_t height;
-				uint8_t superficie;
-				_sock.Recieve((char*)&superficie, 1);
-				_sock.Recieve((char*)&width, 4);
-				_sock.Recieve((char*)&height, 4);
+    try
+    {
+        uint8_t opcode;
+        while (!_Stop()){
+            std::cout << " CHECK \n" << std::flush;
+            _sock.Recieve((char*) &opcode, 1);
+            std::cout << " RUN \n" << std::flush;
+            switch (opcode){
+                case CREATE_LOBBY:
+                    std::cout << "CREATE_LOBBY::\n" << std::flush;
+                    _lobbyManager.HandleNewLobbyNotification();
+                    break;
+                case JOIN_LOBBY:
+                    std::cout << "JOIN_LOBBY::\n" << std::flush;
+                    _lobbyManager.HandleLobbyJoin();
+                    break;
+                case LEAVE_LOBBY:
+                    std::cout << "LEAVE_LOBBY::\n" << std::flush;
+                    _lobbyManager.HandleLeaveLobby();
+                    break;
+                case PLAYER_LEFT_LOBBY:
+                    std::cout << "PLAYER_LEFT_LOBBY::\n" << std::flush;
+                    _lobbyManager.HandlePlayerLeftLobby();
+                    break;
+                case PLAYER_JOINED_LOBBY:
+                    std::cout << "PLAYER_JOINED_LOBBY::\n" << std::flush;
+                    _lobbyManager.HandlePlayerJoinedLobby();
+                    break;
+                case PLAYER_JOIN:
+                    std::cout << "PLAYER_JOIN::\n" << std::flush;
+                    _lobbyManager.HandlePlayerJoin();
+                    break;
+                case PLAYER_LEAVE:
+                    std::cout << "PLAYER_LEAVE::\n" << std::flush;
+                    _lobbyManager.HandlePlayerLeave();
+                    break;
+                case LOG_IN_SUCCESS:
+                    std::cout << "LOG_IN_SUCCESS::\n" << std::flush;
+                    _lobbyManager.HandleLoginSuccess();
+                    break;
+                case PICK_SPELL:
+                    std::cout << "PICK_SPELL::\n" << std::flush;
+                    _lobbyManager.HandlePickedSpell();
+                    break;
+                case UNPICK_SPELL:
+                    std::cout << "UNPICK_SPELL::\n" << std::flush;
+                    _lobbyManager.HandleUnpickedSpell();
+                    break;
+                case PICK_MAP:
+                    std::cout << "PICK_MAP::\n" << std::flush;
+                    _lobbyManager.HandleMapPicked();
+                    break;
+                case PLAYER_PICKED_SPELL:
+                    std::cout << "PLAYER_PICKED_SPELL::\n" << std::flush;
+                    _lobbyManager.HandleOtherPlayerPickedSpell();
+                    break;
+                case PLAYER_UNPICKED_SPELL:
+                    std::cout << "PLAYER_UNPICKED_SPELL::\n" << std::flush;
+                    _lobbyManager.HandleOtherPlayerUnpickedSpell();
+                    break;
+                case LOG_IN_FAILED:
+                    _runner.gtkNotifications.Queue(new LogInFailedGtkNotification());
+                    g_idle_add(GTKRunner::notification_check, &_runner);
+                    break;
+                case GAME_STARTED:
+                    std::cout << "GAME_STARTED::\n" << std::flush;
+                    uint32_t width;
+                    uint32_t height;
+                    uint8_t superficie;
+                    _sock.Recieve((char*)&superficie, 1);
+                    _sock.Recieve((char*)&width, 4);
+                    _sock.Recieve((char*)&height, 4);
 
-				_runner.gtkNotifications.Queue(new GameStartedGTKNotification(superficie, width, height));
-				g_idle_add(GTKRunner::notification_check, &_runner);
-				break;
-			case GAME_OPCODE:
-				std::cout << "GAME_OPCODE::\n" << std::flush;
-				_HandleGameOpcode();
-				break;
-			case GAME_MODEL_STARTED_RUNNING:
-				_dispatcher.Enable();
-				break;
-			case LOAD_MAP:
-				std::cout << "LOAD_MAP::\n" << std::flush;
-				uint8_t op;
-				_sock.Recieve((char*) &op, 1);
-				uint8_t x;
-				uint8_t y;
-				_sock.Recieve((char*) &x, 4);
-				_sock.Recieve((char*) &y, 4);
-				if (op == PATH_TILE)
-					model_view->createPathTile(x, y);
-				if (op == STRUCTURE_TILE)
-					model_view->createStructureTile(x, y);
-				if (op == SPAWN_TILE)
-					model_view->createPortalEntrada(x, y);
-				if (op == FINISH_TILE)
-					model_view->createPortalSalida(x, y);
-				break;
-			case MAP_FINISHED_LOADING:
-				{
-					std::lock_guard<std::mutex> lock(model_view->mapLoadedMutex);
-					model_view->mapLoaded = true;
-					model_view->mapLoadedCondVariable.notify_one();
-					_dispatcher.QueueCommand(new PlayerLoadedGameCommand());
-					_dispatcher.Disable();
+                    _runner.gtkNotifications.Queue(new GameStartedGTKNotification(superficie, width, height));
+                    g_idle_add(GTKRunner::notification_check, &_runner);
+                    break;
+                case GAME_OPCODE:
+                    std::cout << "GAME_OPCODE::\n" << std::flush;
+                    _HandleGameOpcode();
+                    break;
+                case GAME_MODEL_STARTED_RUNNING:
+                    _dispatcher.Enable();
+                    break;
+                case LOAD_MAP:
+                    std::cout << "LOAD_MAP::\n" << std::flush;
+                    uint8_t op;
+                    _sock.Recieve((char*) &op, 1);
+                    uint8_t x;
+                    uint8_t y;
+                    _sock.Recieve((char*) &x, 4);
+                    _sock.Recieve((char*) &y, 4);
+                    if (op == PATH_TILE)
+                        model_view->createPathTile(x, y);
+                    if (op == STRUCTURE_TILE)
+                        model_view->createStructureTile(x, y);
+                    if (op == SPAWN_TILE)
+                        model_view->createPortalEntrada(x, y);
+                    if (op == FINISH_TILE)
+                        model_view->createPortalSalida(x, y);
+                    break;
+                case MAP_FINISHED_LOADING:
+                {
+                    std::lock_guard<std::mutex> lock(model_view->mapLoadedMutex);
+                    model_view->mapLoaded = true;
+                    model_view->mapLoadedCondVariable.notify_one();
+                    _dispatcher.QueueCommand(new PlayerLoadedGameCommand());
+                    _dispatcher.Disable();
                     model_view->addAnnouncement("Bienvenido a Tower Defense!");
                 }
-				break;
-			case IN_GAME_CHAT_MESSAGE:
-			{
-				uint32_t pguid;
-				_sock.Recieve((char*) &pguid, 4);
-				std::string message = _sock.RecieveString();
+                    break;
+                case IN_GAME_CHAT_MESSAGE:
+                {
+                    uint32_t pguid;
+                    _sock.Recieve((char*) &pguid, 4);
+                    std::string message = _sock.RecieveString();
 
-                if (pguid == _lobbyManager.myGuid){
-                    chat_view->MessageFrom(message, _lobbyManager.myName);
-                } else {
-                    std::string playerName = _lobbyManager.GetPlayerName(pguid);
-                    chat_view->MessageFrom(message, playerName);
+                    if (pguid == _lobbyManager.myGuid){
+                        chat_view->MessageFrom(message, _lobbyManager.myName);
+                    } else {
+                        std::string playerName = _lobbyManager.GetPlayerName(pguid);
+                        chat_view->MessageFrom(message, playerName);
+                    }
+                    break;
                 }
-				break;
-			}
 
-			default:
-				std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << ", ( " << (int) opcode << ")\'" << std::flush;
-		}
-		std::cout << " OUT \n" << std::flush;
-	}
-
+                default:
+                    std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << ", ( " << (int) opcode << ")\'" << std::flush;
+            }
+            std::cout << " OUT \n" << std::flush;
+        }
+    }catch(const std::exception& e)
+    {
+        _runner.OK = false;
+        GTKRunner::ShutdownGTK();
+        std::cerr << e.what() << std::endl;
+    }
 }
 
 void NotificationReciever::_HandleGameOpcode(){
