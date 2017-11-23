@@ -6,7 +6,7 @@
 #include "Model/HudView.h"
 #include "Model/ChatView.h"
 #include "Common/MusicLoader.h"
-#include "Model/MouseMovement.h"
+#include "Common/MouseMovement.h"
 
 #define TITLE "Tower Defense"
 

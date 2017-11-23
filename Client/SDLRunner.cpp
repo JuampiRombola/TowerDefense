@@ -10,7 +10,7 @@
 #include "include/NetCommands/PlayerLoadedGameCommand.h"
 #include "include/NetCommands/LoadMapCommand.h"
 #include "View/Common/MusicLoader.h"
-#include "View/Model/MouseMovement.h"
+#include "View/Common/MouseMovement.h"
 
 #define TITLE "Tower Defense"
 

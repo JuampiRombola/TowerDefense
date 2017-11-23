@@ -2,7 +2,7 @@
 #define TOWERDEFENSE_MOUSEMOVEMENT_H
 
 
-#include "../Common/Renderer.h"
+#include "Renderer.h"
 
 class MouseMovement {
 private:
