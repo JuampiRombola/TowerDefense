@@ -2,8 +2,7 @@
 #include <algorithm>
 #include "DepthLevel.h"
 
-DepthLevel::DepthLevel()  : _unitsMutex(), _spellsMutex(), _towersMutex(),
-                            portalEntrada(nullptr), portalSalida(nullptr) {}
+DepthLevel::DepthLevel()  : portalEntrada(nullptr), portalSalida(nullptr) {}
 
 DepthLevel::~DepthLevel() {
     if (portalEntrada) delete portalEntrada;
@@ -18,6 +17,9 @@ DepthLevel::~DepthLevel() {
     auto it3 = units.begin();
     while (it3 != units.end())
         delete (*it3++);
+    auto it4 = shots.begin();
+    while (it4 != shots.end())
+        delete (*it4++);
 }
 
 void DepthLevel::addPortalEntrada(PortalView *portal) {
@@ -29,34 +31,32 @@ void DepthLevel::addPortalSalida(PortalView *portal) {
 }
 
 void DepthLevel::addSpell(SpellView *spell) {
-    std::lock_guard<std::mutex> lock(_spellsMutex);
     spells.push_back(spell);
 }
 
 void DepthLevel::addTower(TowerView *tower) {
-    std::lock_guard<std::mutex> lock(_towersMutex);
     towers.push_back(tower);
 }
 
 void DepthLevel::addUnit(UnitView *unit) {
-    std::lock_guard<std::mutex> lock(_unitsMutex);
     units.push_back(unit);
 }
 
+void DepthLevel::addShot(ShotView *shot) {
+    shots.push_back(shot);
+}
+
 TowerView *DepthLevel::getTower(int id) {
-    std::lock_guard<std::mutex> lock(_towersMutex);
     for (auto tower : towers)
         if (tower->getId() == id) return tower;
 }
 
 UnitView *DepthLevel::getUnit(int id) {
-    std::lock_guard<std::mutex> lock(_unitsMutex);
     for (auto unit : units)
         if (unit->getId() == id) return unit;
 }
 
 void DepthLevel::removeUnit(int id) {
-    std::lock_guard<std::mutex> lock(_unitsMutex);
     units.remove_if([&id] (UnitView *unit) {return unit->getId() == id;});
 }
 
@@ -64,7 +64,16 @@ void DepthLevel::draw(Uint32 time) {
     if (portalEntrada) portalEntrada->draw(time);
 
     //Remuevo las unidades que ya estan muertas
-   /* for (auto it = units.begin(); it != units.end(); ){
+    auto it1 = units.begin();
+    while (it1 != units.end()) {
+        if ((*it1)->isDead()) {
+            delete (*it1);
+            it1 = units.erase(it1);
+        } else
+            ++it1;
+    }
+
+    /*for (auto it = units.begin(); it != units.end();) {
         if ((*it)->isDead()) {
             delete (*it);
             it = units.erase(it);
@@ -74,66 +83,62 @@ void DepthLevel::draw(Uint32 time) {
         }
     }*/
 
-    {    
-        std::lock_guard<std::mutex> lock(_unitsMutex);
 
-        units.erase(std::remove_if(units.begin(),
-                                  units.end(),
-                                  [](UnitView* x)
-                                   
-                                   {
-                                       if (x->isDead()){
-                                           delete x;
-                                           return true;
-                                       }
-                                       return false;}),
-                   units.end());
-        
+    /*units.erase(std::remove_if(units.begin(),
+                               units.end(),
+                               [](UnitView* x) {
+                                   if (x->isDead()){
+                                       delete x;
+                                       return true;
+                                   }
+                                   return false;}),
+                units.end());
+     */
     
-        for (auto it = units.begin(); it != units.end(); ++it){
-            UnitView* u = *it;
-            u->draw(time);
-        }
-
-    }
-    
-    {
-        std::lock_guard<std::mutex> lock(_towersMutex);
-
-        // Dibujo torres
-        for (auto tower : towers)
-            tower->draw(time); 
+    for (auto it = units.begin(); it != units.end(); ++it){
+        UnitView* u = *it;
+        u->draw(time);
     }
 
+    // Dibujo torres
+    for (auto tower : towers)
+        tower->draw(time);
     
     // Remuevo los spells que terminaron
-    
-    {
-        std::lock_guard<std::mutex> lock(_spellsMutex);
-        auto it2 = spells.begin();
-        while (it2 != spells.end()) {
-            if ((*it2)->hasFinished()) {
-                delete (*it2);
-                it2 = spells.erase(it2);
-            } else
-                ++it2;
-        }
-
-        // Dibujo spells
-        for (auto spell : spells)
-            spell->draw(time);
+    auto it2 = spells.begin();
+    while (it2 != spells.end()) {
+        if ((*it2)->hasFinished()) {
+            delete (*it2);
+            it2 = spells.erase(it2);
+        } else
+            ++it2;
     }
 
-    
+    // Dibujo spells
+    for (auto spell : spells)
+        spell->draw(time);
+
+    // Remuevo disparos terminados
+    auto it = shots.begin();
+    while (it != shots.end()) {
+        if ((*it)->hasFinished()) {
+            delete (*it);
+            it = shots.erase(it);
+        } else
+            ++it;
+    }
+
+    // Dibujo disparos
+    for (auto shot : shots)
+        shot->draw(time);
+
     if (portalSalida) portalSalida->draw(time);
 }
 
 TowerView* DepthLevel::onCLick(int x, int y) {
-    std::lock_guard<std::mutex> lock(_towersMutex);
     for (auto tower : towers) {
         if (tower->getX() == x)
             return tower;
     }
     return nullptr;
 }
-
