@@ -92,7 +92,7 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/Towers/Tower.h
         Server/include/GameModel/Towers/WaterTower.h
         Server/include/GameModel/Towers/WaterProjectile.h
-        Server/include/GameModel/GameConfiguration.h
+        Server/include/GameModel/Configuration.h
         Server/include/GameModel/Helpers.h
         Server/include/GameModel/TowerDefenseGame.h
         Server/include/GameModel/GameNotifications/GameNotification.h
@@ -111,7 +111,7 @@ set(SOURCE_FILES_SERVER
         Server/src/GameModel/GameNotifications/UnitPositionGameNotification.cpp
         Server/src/GameModel/GameNotifications/TowerPlacedGameNotification.cpp
         Server/src/GameModel/GameNotifications/SpellCastedGameNotification.cpp
-        Server/src/GameModel/GameConfiguration.cpp
+        Server/src/GameModel/Configuration.cpp
         Server/src/GameModel/TowerDefenseGame.cpp
         Server/src/GameModel/Towers/AirProjectile.cpp
         Server/src/GameModel/Towers/AirTower.cpp
@@ -144,7 +144,7 @@ set(SOURCE_FILES_SERVER
         Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp
         Server/include/GameModel/GameNotifications/ChatMessageNotification.h
         Server/src/GameModel/GameNotifications/HordeUpdateGameNotification.cpp
-        Server/include/GameModel/GameNotifications/HordeUpdateGameNotification.h Server/src/GameModel/GameNotifications/TowerGainedExperienceGameNotification.cpp Server/include/GameModel/GameNotifications/TowerGainedExperienceGameNotification.h Server/src/GameModel/GameNotifications/TowerUpgradedGameNotification.cpp Server/include/GameModel/GameNotifications/TowerUpgradedGameNotification.h)
+        Server/include/GameModel/GameNotifications/HordeUpdateGameNotification.h Server/src/GameModel/GameNotifications/TowerGainedExperienceGameNotification.cpp Server/include/GameModel/GameNotifications/TowerGainedExperienceGameNotification.h Server/src/GameModel/GameNotifications/TowerUpgradedGameNotification.cpp Server/include/GameModel/GameNotifications/TowerUpgradedGameNotification.h Server/src/Notifications/MapPickedNotification.cpp Server/include/Notifications/MapPickedNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/View/Common/Window.cpp
@@ -257,8 +257,10 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/GTKNotifications/NewLobbyGTKNotification.cpp
         Client/src/GTKNotifications/GameStartedGTKNotification.cpp
         Client/src/GTKNotifications/PlayerLeftLobbyGTKNotification.cpp
+        Client/src/GTKNotifications/LobbyPickedMapGTKNotification.cpp
         Client/src/NotificationReciever.cpp
 
+        Client/include/GTKNotifications/LobbyPickedMapGTKNotification.h
         Client/include/SDLNotifications/SDLNotification.h
         Client/include/GTKNotifications/JoinedLobbyGTKNotification.h
         Client/include/GTKNotifications/PickedSpellGTKNotification.h
@@ -423,7 +425,7 @@ set(SOURCE_FILES_EDITOR
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
-add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/UpgradeTowerNetCommand.cpp Client/include/NetCommands/UpgradeTowerNetCommand.h)
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/UpgradeTowerNetCommand.cpp Client/include/NetCommands/UpgradeTowerNetCommand.h Client/src/GTKNotifications/LobbyPickedMapGTKNotification.cpp Client/include/GTKNotifications/LobbyPickedMapGTKNotification.h)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
 
 

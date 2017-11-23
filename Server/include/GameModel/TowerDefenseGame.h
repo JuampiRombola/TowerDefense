@@ -11,7 +11,7 @@
 #include "EnviormentUnits/EnviormentUnit.h"
 #include "Towers/Projectile.h"
 #include "Commands/Command.h"
-#include "GameConfiguration.h"
+#include "Configuration.h"
 #include "ViewModels/UnitVM.h"
 #include "ViewModels/ProjectileVM.h"
 #include "ViewModels/TowerVM.h"
@@ -61,7 +61,7 @@ private:
 
 public:
 	TowerDefenseGame(uint gameId, ThreadSafeQueue<GameNotification*>& notifications,
-					 std::vector<PlayerProxy*> _players, GameConfiguration& mapCfg);
+					 std::vector<PlayerProxy*> _players, Configuration& mapCfg);
 	~TowerDefenseGame();
 	void Run(PlayerProxy* fireplayer, PlayerProxy* airplayer,
 			 PlayerProxy* waterplayer, PlayerProxy* groundplayer);
@@ -77,7 +77,7 @@ public:
 	// del juego
 	Command* GetExecutedCommand();
 	EnviormentUnit* GetUnit(uint id);
-	GameConfiguration* GameCfg;
+	Configuration* GameCfg;
 	ThreadSafeQueue<GameNotification*>& notifications;
 
 	std::vector<UnitVM> GetUnitViewModels();
@@ -103,6 +103,8 @@ public:
 	EnviormentUnit* SpawnEspectro();
 
     void PlayersWon();
+
+
 
 };
 

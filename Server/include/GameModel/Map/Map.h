@@ -20,7 +20,7 @@ class PathTile;
 class EnviormentUnit;
 
 #include "../Map/SolidGroundTile.h"
-#include "../GameConfiguration.h"
+#include "../Configuration.h"
 #include "../../PlayerProxy.h"
 
 class TowerDefenseGame;
@@ -44,7 +44,7 @@ private:
 	void _SetSpawnTile(PathTile* tile);
 	void _SetFinishTile(PathTile* tile);
 public:
-	Map(uint rows, uint cols, GameConfiguration& mapCfg);
+	Map(uint rows, uint cols, Configuration& mapCfg);
 	~Map();
 	void RemoveUnit(EnviormentUnit* unit);
 	void PlaceUnit(EnviormentUnit* unit, PathTile* tile);
@@ -59,6 +59,7 @@ public:
 	std::vector<Projectile*> GetProjectiles();
 	std::vector<Tower*> GetTowers();
 	void TransferMapTo(PlayerProxy& player);
+	bool AreCoordinatesInsideMap(uint x, uint y);
 };
 
 #endif

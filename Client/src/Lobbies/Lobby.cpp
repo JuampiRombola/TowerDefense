@@ -5,7 +5,7 @@
 
 
 Lobby::Lobby(std::string& name, uint guid) : _name(name), _guid(guid), _players(), _otherPlayersMutex(),
-_airPlayer(nullptr), _waterPlayer(nullptr), _firePlayer(nullptr), _groundPlayer(nullptr)
+_airPlayer(nullptr), _waterPlayer(nullptr), _firePlayer(nullptr), _groundPlayer(nullptr), pickedMapId(0)
 {
 	std::cout << "Lobby created: id " << guid << ", name " << name << '\n' << std::flush;
 }

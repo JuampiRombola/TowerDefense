@@ -6,14 +6,27 @@
 #include "../../include/Exceptions/PlayerStateInLobbyAndHasNoLobbySet.h"
 #include "../../include/Exceptions/InvalidSpellTypeException.h"
 #include "../../include/Notifications/LoggedInNotification.h"
+#include "../../include/Notifications/MapPickedNotification.h"
 
 
 LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
 : _lobbiesMutex(), _lobbies(), _lobbyGUID(0), _notifications(notifications), _mapCfgs()
 {
 	//Levantar de archivo todas las configuraciones de MAPA!!!
-	std::string uniquemapname = "mapa.yaml";
-	_mapCfgs.push_back(new GameConfiguration(uniquemapname));
+	int id = 1;
+	std::string maps_path("mapas");
+	DIR *dir = opendir(maps_path.c_str());
+	if(dir){
+		dirent *entry;
+		while((entry = readdir(dir))!= nullptr){
+            std::string mapname = std::string(entry->d_name);
+            if (mapname != ".." && mapname != "."){
+                std::string s = maps_path + '/' + mapname;
+                _mapCfgs.push_back(new Configuration(s, id++, mapname));
+            }
+		}
+		closedir(dir);
+	}
 }
 
 LobbyManager::~LobbyManager(){
@@ -53,6 +66,22 @@ void LobbyManager::HandlePlayerPickedSpell(PlayerProxy &player){
 			throw InvalidSpellTypeException();
 	}
 }
+
+
+void LobbyManager::HandlePickMap(PlayerProxy &player){
+	uint32_t mapid = player.RecieveInt32();
+	for (auto it = _mapCfgs.begin(); it != _mapCfgs.end(); ++it){
+		Configuration* mapcfg = *it;
+		if (mapcfg->Id() == mapid){
+			player.lobby->MapCfg = mapcfg;
+			_notifications.Queue(new MapPickedNotification(mapcfg->Id(), player.lobby->GUID()));
+		}
+	}
+}
+
+
+
+
 void LobbyManager::HandlePlayerUnpickedSpell(PlayerProxy &player){
 	uint8_t spell = player.RecieveByte();
 	SPELL_TYPE type = (SPELL_TYPE )spell;
@@ -95,7 +124,13 @@ void LobbyManager::HandleLogin(PlayerProxy &player){
 
 	int debug = lobbies2playersGUIDS.size();
 
-	_notifications.Queue(new LoggedInNotification(player, lobbies, lobbies2playersGUIDS));
+	std::vector<std::tuple<std::string, uint32_t >> mapConfigs;
+	for (auto it = _mapCfgs.begin(); it != _mapCfgs.end(); ++it){
+		std::tuple<std::string , uint32_t > tup = std::tuple<std::string, uint32_t >((*it)->Name(), (*it)->Id());
+		mapConfigs.push_back(tup);
+	}
+
+	_notifications.Queue(new LoggedInNotification(player, lobbies, lobbies2playersGUIDS, mapConfigs));
 
 }
 
@@ -156,7 +191,6 @@ void LobbyManager::_CreateNewLobby(std::string& lobbyName){
 
 	if (!found){
 		Lobby* newLobby = new Lobby(lobbyName, ++_lobbyGUID, _notifications);
-		newLobby->MapCfg = *(_mapCfgs.begin());
 		_lobbies.push_back(newLobby);
 		Notification* noti = new NewLobbyNotification(*_lobbies.back());
 		_notifications.Queue(noti);

@@ -18,7 +18,7 @@
 #include "../../include/GameModel/EnviormentUnits/EnviormentUnit.h"
 #include "../../include/GameModel/Towers/Tower.h"
 #include "../../include/GameModel/Towers/GroundTower.h"
-#include "../../include/GameModel/GameConfiguration.h"
+#include "../../include/GameModel/Configuration.h"
 #include "../../include/GameModel/Helpers.h"
 #include "../../include/GameModel/GameNotifications/UnitCreatedGameNotification.h"
 #include "../../include/GameModel/GameNotifications/GameOverGameNotification.h"
@@ -30,7 +30,7 @@
 
 TowerDefenseGame::TowerDefenseGame(uint gameId,
 	ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> playersInGame,
-    GameConfiguration& mapCfg) :
+    Configuration& mapCfg) :
 	_gameStartMutex(), _gameStartCondVariable(), _canGameStart(false),
 	_endedMutex(), _commandQueueMutex(), _commands(),_executedCommandQueueMutex(),
 	_executedCommands(), _gameStateMutex(),
@@ -40,7 +40,7 @@ TowerDefenseGame::TowerDefenseGame(uint gameId,
 	_players(playersInGame), _ingamePlayers(), _hordeManager(mapCfg)
 {
 	std::string ss("../config.yaml");
-	GameCfg = new GameConfiguration(ss);
+	GameCfg = new Configuration(ss, 0 ,"Game");
     _hordeManager.game = this;
 	_hordeManager.timeToWaitBetweenHordes_ms = GameCfg->Cfg["time_to_wait_between_hordes_ms"].as<uint>();
     _clientCooldownManager = new ClientCooldownManager(*GameCfg);
@@ -176,6 +176,7 @@ void TowerDefenseGame::PlayersWon() {
 
 void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_TYPE type, uint32_t x, uint32_t y){
 	//
+	uint cooldown_ms = _clientCooldownManager->GetSpellCooldown_ms(type);
     switch(type){
         case SPELL_GRIETA:
             if (&player != _groundPlayer)
@@ -225,10 +226,13 @@ void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_
 			if (!_clientCooldownManager->IsSpellReady(SPELL_TERRAFORMING))
 				return;
             break;
-
+		case SPELL_PING:
+			if (!_clientCooldownManager->IsPingForPlayerReady(player))
+				return;
+			cooldown_ms = _clientCooldownManager->GetPingCooldown();
     }
 
-	QueueCommand(new CastSpellCommand(type, x, y));
+	QueueCommand(new CastSpellCommand(type, x, y, cooldown_ms));
 }
 
 void TowerDefenseGame::SendMapToPlayer(PlayerProxy& player){

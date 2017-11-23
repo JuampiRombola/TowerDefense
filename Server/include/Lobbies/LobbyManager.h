@@ -11,7 +11,9 @@
 #include "../Lobbies/Lobby.h"
 #include "../Notifications/NewLobbyNotification.h"
 #include <mutex>
-
+#include <algorithm>
+#include <string>
+#include <dirent.h>
 class LobbyManager 
 {
 private:
@@ -19,10 +21,8 @@ private:
 	std::vector<Lobby*> _lobbies;
 	uint _lobbyGUID;
 	ThreadSafeQueue<Notification*>& _notifications;
-	std::vector<GameConfiguration*> _mapCfgs;
-
+	std::vector<Configuration*> _mapCfgs;
 	void _CreateNewLobby(std::string& lobbyName);
-
 public:
 	LobbyManager(ThreadSafeQueue<Notification*>& notifications);
 	~LobbyManager();
@@ -34,7 +34,7 @@ public:
 	void HandlePlayerIsReady(PlayerProxy &player);
 	void HandlePlayerPickedSpell(PlayerProxy &player);
 	void HandlePlayerUnpickedSpell(PlayerProxy &player);
-
+	void HandlePickMap(PlayerProxy &player);
 };
 
 #endif

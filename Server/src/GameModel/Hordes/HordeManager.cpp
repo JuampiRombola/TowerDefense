@@ -7,7 +7,7 @@
 #include "../../../include/GameModel/GameNotifications/HordeUpdateGameNotification.h"
 
 
-HordeManager::HordeManager(GameConfiguration& mapCfg)
+HordeManager::HordeManager(Configuration& mapCfg)
         : _hordes(), _timeStamp(0), _currentHorde(nullptr) {
 
     int i = 1;

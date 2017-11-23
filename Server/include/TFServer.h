@@ -54,7 +54,6 @@ private:
 	std::map<PlayerProxy*, TowerDefenseGame*> _player2game;
 	std::map<TowerDefenseGame*, ThreadSafeQueue<GameNotification*>*> _game2gameNotifications;
 
-
 	void _AcceptConnections();
 	void _NotifyClients();
 	void _NotifyGamePlayers(ThreadSafeQueue<GameNotification*>* queue, std::vector<PlayerProxy*> players);

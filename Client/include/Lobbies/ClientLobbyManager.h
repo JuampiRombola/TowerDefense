@@ -16,9 +16,9 @@ private:
 	SocketWrapper& _sock;
 	std::vector<Lobby*> _lobbies;
 	std::vector<OtherPlayer*> _otherPlayers;
-	GTKRunner& _runner;
 	Lobby* _joinedLobby;
-
+	std::vector<std::tuple<std::string, uint32_t>> _maps;
+	GTKRunner& _runner;
 
 
 	std::vector<OtherPlayer*>::const_iterator  GetOtherPlayer(uint32_t guid);
@@ -39,6 +39,7 @@ public:
 	void HandleUnpickedSpell();
 	void HandleOtherPlayerPickedSpell();
 	void HandleOtherPlayerUnpickedSpell();
+	void HandleMapPicked();
 
 	std::vector<Lobby*> GetLobbies();
 	std::string GetPlayerName(uint32_t guid);
