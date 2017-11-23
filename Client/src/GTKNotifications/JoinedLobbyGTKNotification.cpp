@@ -39,7 +39,9 @@ void JoinedLobbyGUINotification::Execute(GTKRunner& runner){
 	g_signal_handler_unblock(runner.check_water, runner.check_water_handler_id);
 
 
-
+	g_signal_handler_block(runner.combobox_maps, runner.combo_box_maps_changed_handler_id);
+	gtk_combo_box_set_active(runner.combobox_maps, _lobby.pickedMapId);
+	g_signal_handler_unblock(runner.combobox_maps, runner.combo_box_maps_changed_handler_id);
 
 
 	std::vector<OtherPlayer*> players = _lobby.GetOtherPlayersInLobby();

@@ -6,6 +6,7 @@
 #include "include/NetCommands/LeaveLobbyCommand.h"
 #include "include/NetCommands/PlayerIsReadyCommand.h"
 #include "include/NetCommands/PickSpellCommand.h"
+#include "include/NetCommands/PickMapCommand.h"
 #include <iostream>
 #include <gtk/gtk.h>
 
@@ -152,6 +153,20 @@ void GTKRunner::login_clicked(GtkWidget* widget, gpointer data){
     runner->dispatcher->QueueCommand(new LogInCommand(s));
 }
 
+
+void GTKRunner::map_combobox_selection_changed(GtkWidget *widget, gpointer data) {
+    GTKRunner* runner = (GTKRunner*) data;
+    uint i = gtk_combo_box_get_active(runner->combobox_maps);
+    runner->dispatcher->QueueCommand(new PickMapCommand(i));
+    g_signal_handler_block(widget, runner->combo_box_maps_changed_handler_id);
+    gtk_combo_box_set_active(runner->combobox_maps, -1);
+    g_signal_handler_unblock(widget, runner->combo_box_maps_changed_handler_id);
+
+}
+
+
+
+
 void GTKRunner::MessageBox(std::string s){
     GtkDialogFlags flags;
     auto dialog = gtk_message_dialog_new (this->window_global,
@@ -177,9 +192,6 @@ void GTKRunner::connect_clicked(GtkWidget* widget, gpointer data){
         g_object_ref(runner->grid_connect);
         gtk_container_remove(GTK_CONTAINER(runner->box1), GTK_WIDGET(runner->grid_connect));
         gtk_container_add(GTK_CONTAINER(runner->box1), GTK_WIDGET(runner->grid_login));
-        //gtk_widget_hide (GTK_WIDGET(runner->window_connect));
-        //gtk_widget_show (GTK_WIDGET(runner->window_login));
-        std::cout << "Connect Succesful" << "  \n" ;
     }
     else
     {
@@ -213,7 +225,7 @@ gboolean GTKRunner::notification_check(gpointer data){
 }
 
 
-void GTKRunner::InitLobbiesTreeView()
+void GTKRunner::_InitLobbiesTreeView()
 {
     GtkCellRenderer     *renderer;
 
@@ -240,7 +252,7 @@ void GTKRunner::InitLobbiesTreeView()
     g_object_unref (store);
 }
 
-void GTKRunner::InitLobbyPlayersTreeView()
+void GTKRunner::_InitLobbyPlayersTreeView()
 {
     GtkCellRenderer     *renderer;
 
@@ -275,6 +287,19 @@ void GTKRunner::InitLobbyPlayersTreeView()
 }
 
 
+void GTKRunner::_InitMapsComboBox() {
+    //auto store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_UINT);
+    auto store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_UINT);
+
+    gtk_combo_box_set_model (this->combobox_maps, GTK_TREE_MODEL(store));
+
+    GtkCellRenderer* column =  gtk_cell_renderer_text_new();
+    gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(this->combobox_maps), column, TRUE);
+    gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(this->combobox_maps), column,
+                                   "text", 0, NULL);
+    g_object_unref (store);
+}
+
 
 void GTKRunner::Run(int* argc, char***argv){
     GtkBuilder      *builder;
@@ -285,14 +310,7 @@ void GTKRunner::Run(int* argc, char***argv){
     gtk_builder_add_from_file (builder, "../Client/Launcher.glade", NULL);
 
     this->window_global = GTK_WINDOW(gtk_builder_get_object (builder, "window_global"));
-    //this->window_connect = GTK_WINDOW(gtk_builder_get_object (builder, "window_connect"));
-    //this->window_login = GTK_WINDOW(gtk_builder_get_object (builder, "window_login"));
-    //this->window_lobbies = GTK_WINDOW(gtk_builder_get_object (builder, "window_lobbies"));
-    //g_signal_connect (this->window_connect, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
     g_signal_connect (this->window_global, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
-    //g_signal_connect (this->window_login, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
-    //g_signal_connect (this->window_lobbies, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);
-    //g_signal_connect (this->window_lobby, "destroy", G_CALLBACK(GTKRunner::_LobbyWindowClosed), this);
 
     this->grid_connect = GTK_GRID(gtk_builder_get_object(builder, "grid_connect"));
     this->grid_login = GTK_GRID(gtk_builder_get_object(builder, "grid_login"));
@@ -318,7 +336,7 @@ void GTKRunner::Run(int* argc, char***argv){
 
     this->treeview_lobbies = GTK_TREE_VIEW(gtk_builder_get_object(builder, "treeview_lobbies"));
 
-    this->InitLobbiesTreeView();
+    this->_InitLobbiesTreeView();
 
     this->check_air = GTK_CHECK_BUTTON(gtk_builder_get_object (builder, "check_air"));
     this->check_fire = GTK_CHECK_BUTTON(gtk_builder_get_object (builder, "check_fire"));
@@ -336,11 +354,11 @@ void GTKRunner::Run(int* argc, char***argv){
     g_signal_connect (button_lobbyReady, "clicked", G_CALLBACK(GTKRunner::lobbyReady_clicked), this);
     this->treeview_lobbyPlayers = GTK_TREE_VIEW(gtk_builder_get_object(builder, "treeview_lobbyPlayers"));
     this->label_lobbyname = GTK_LABEL(gtk_builder_get_object(builder, "label_lobbyname"));
-    this->InitLobbyPlayersTreeView();
+    this->_InitLobbyPlayersTreeView();
+    this->combobox_maps = GTK_COMBO_BOX(gtk_builder_get_object(builder, "combobox_maps"));
 
-    
-    
-
+    this->combo_box_maps_changed_handler_id = g_signal_connect (this->combobox_maps, "changed", G_CALLBACK(GTKRunner::map_combobox_selection_changed), this);
+    _InitMapsComboBox();
 
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));

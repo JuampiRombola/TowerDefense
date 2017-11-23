@@ -24,7 +24,7 @@
 ClientLobbyManager::ClientLobbyManager(SocketWrapper& _sock, GTKRunner& runner)
 : _sock(_sock), _lobbies(), fireHUDEnabled(false), waterHUDEnabled(false),
  airHUDEnabled(false),  groundHUDEnabled(false),
-  _otherPlayers(), _joinedLobby(nullptr), _maps(), _runner(runner) {
+  _otherPlayers(), maps(), _runner(runner), joinedLobby(nullptr) {
 
 }
 
@@ -38,7 +38,7 @@ ClientLobbyManager::~ClientLobbyManager(){
 }
 
 void ClientLobbyManager::HandleLeaveLobby(){
-    _joinedLobby = nullptr;
+    joinedLobby = nullptr;
     _runner.gtkNotifications.Queue(new LeftLobbyGTKNotification());
     g_idle_add(GTKRunner::notification_check, &_runner);
 }
@@ -47,7 +47,7 @@ void ClientLobbyManager::HandleLobbyJoin(){
     uint32_t lobbyGuid = -1;
     _sock.Recieve((char*)&lobbyGuid, 4);
     std::cout << "LOBBY JOINED: " << lobbyGuid << "\n" << std::flush;
-    _joinedLobby = GetLobby(lobbyGuid);
+    joinedLobby = GetLobby(lobbyGuid);
 
 
     uint32_t firepguid;
@@ -55,7 +55,7 @@ void ClientLobbyManager::HandleLobbyJoin(){
     if (firepguid > 0){
         auto it = GetOtherPlayer(firepguid);
         OtherPlayer* p = *it;
-        _joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_FIRE, true);
+        joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_FIRE, true);
     }
     
     uint32_t waterpguid;
@@ -63,7 +63,7 @@ void ClientLobbyManager::HandleLobbyJoin(){
     if (waterpguid > 0){
         auto it = GetOtherPlayer(waterpguid);
         OtherPlayer* p = *it;
-        _joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_WATER, true);
+        joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_WATER, true);
     }
     
     uint32_t airpguid;
@@ -71,7 +71,7 @@ void ClientLobbyManager::HandleLobbyJoin(){
     if (airpguid > 0){
         auto it = GetOtherPlayer(airpguid);
         OtherPlayer* p = *it;
-        _joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_AIR, true);
+        joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_AIR, true);
     }
     
     uint32_t groundpguid;
@@ -79,10 +79,10 @@ void ClientLobbyManager::HandleLobbyJoin(){
     if (groundpguid > 0){
         auto it = GetOtherPlayer(groundpguid);
         OtherPlayer* p = *it;
-        _joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_GROUND, true);
+        joinedLobby->PlayerPickSpell(*p, SPELL_TYPE_GROUND, true);
     }    
     
-    _runner.gtkNotifications.Queue(new JoinedLobbyGUINotification(*_joinedLobby));
+    _runner.gtkNotifications.Queue(new JoinedLobbyGUINotification(*joinedLobby));
     g_idle_add(GTKRunner::notification_check, &_runner);
 }
 
@@ -142,7 +142,7 @@ void ClientLobbyManager::HandlePlayerJoinedLobby(){
     Lobby* lobbyOtherPlayerJoined = GetLobby(lobbyGuid);
     auto itplayer = GetOtherPlayer(pguid);
     lobbyOtherPlayerJoined->PlayerJoin(*(*itplayer));
-    if (_joinedLobby == lobbyOtherPlayerJoined){
+    if (joinedLobby == lobbyOtherPlayerJoined){
         _runner.gtkNotifications.Queue(new PlayerJoinedLobbyGTKNotification(*(*itplayer)));
         g_idle_add(GTKRunner::notification_check, &_runner);
     }
@@ -158,7 +158,7 @@ void ClientLobbyManager::HandlePlayerLeftLobby(){
     Lobby* lobbyOtherPlayerLeft = GetLobby(lobbyGuid);
     auto itplayer = GetOtherPlayer(pguid);
     lobbyOtherPlayerLeft->PlayerLeave(*(*itplayer));
-    if (_joinedLobby == lobbyOtherPlayerLeft){
+    if (joinedLobby == lobbyOtherPlayerLeft){
         _runner.gtkNotifications.Queue(new PlayerLeftLobbyGTKNotification(*(*itplayer)));
         g_idle_add(GTKRunner::notification_check, &_runner);
     }
@@ -250,7 +250,7 @@ void ClientLobbyManager::HandleMapPicked() {
     uint32_t lobbyid = -1;
     _sock.Recieve((char*) &lobbyid,  4);
     Lobby* l = GetLobby(lobbyid);
-    for (auto it = _maps.begin(); it != _maps.end(); ++it){
+    for (auto it = maps.begin(); it != maps.end(); ++it){
         std::tuple<std::string, uint32_t> tup = *it;
         if (std::get<1>(tup) == mapid){
             l->pickedMapId = mapid;
@@ -273,8 +273,12 @@ void ClientLobbyManager::HandleLoginSuccess(){
         uint32_t lobbyGuid = -1;
         _sock.Recieve((char*) &lobbyGuid, 4);
         std::string lobbyName = _sock.RecieveString();
-        _lobbies.push_back(new Lobby(lobbyName, lobbyGuid));
-        _runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*(_lobbies.back())));
+        int32_t mapId;
+        _sock.Recieve((char*)&mapId, 4);
+        Lobby* l = new Lobby(lobbyName, lobbyGuid);
+        l->pickedMapId = mapId;
+        _lobbies.push_back(l);
+        _runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*l));
         g_idle_add(GTKRunner::notification_check, &_runner);
     }
 
@@ -311,7 +315,7 @@ void ClientLobbyManager::HandleLoginSuccess(){
         _sock.Recieve((char*) &mapId, 4);
         std::string mapname = _sock.RecieveString();
         auto tup = std::tuple<std::string, uint32_t>(mapname, mapId);
-        _maps.push_back(tup);
+        maps.push_back(tup);
     }
 
     _runner.gtkNotifications.Queue(new LogInSuccessGtkNotification(_lobbies));

@@ -221,7 +221,9 @@ void TFServer::_LaunchGame(Lobby& lobby){
 	std::vector<PlayerProxy*> playersInGame = lobby.GetPlayingPlayers();
 
 	ThreadSafeQueue<GameNotification*>* notiqueue = new ThreadSafeQueue<GameNotification*>();
+	
 	TowerDefenseGame* game = new TowerDefenseGame(gameId++, *notiqueue, playersInGame, *(lobby.MapCfg));
+	
 	_game2gameNotifications[game] = notiqueue;
 	for (auto it = playersInGame.begin(); it != playersInGame.end(); ++it){
 		_player2game[(*it)] = game;

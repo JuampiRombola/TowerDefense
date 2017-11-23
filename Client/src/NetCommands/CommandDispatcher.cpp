@@ -16,10 +16,14 @@ void CommandDispatcher::Run(){
 }
 
 void CommandDispatcher::DispatchCommands(){
-	NetCommand* cmd = _DequeueCommand();
-	while (cmd != nullptr){
-		cmd->SendCommand(_sock);
-		cmd = _DequeueCommand();
+	try{
+		NetCommand* cmd = _DequeueCommand();
+		while (cmd != nullptr){
+			cmd->SendCommand(_sock);
+			cmd = _DequeueCommand();
+		}
+	} catch(const std::exception& e){
+		
 	}
 }
 

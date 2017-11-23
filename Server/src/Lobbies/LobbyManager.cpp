@@ -13,7 +13,7 @@ LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
 : _lobbiesMutex(), _lobbies(), _lobbyGUID(0), _notifications(notifications), _mapCfgs()
 {
 	//Levantar de archivo todas las configuraciones de MAPA!!!
-	int id = 1;
+	int id = 0;
 	std::string maps_path("mapas");
 	DIR *dir = opendir(maps_path.c_str());
 	if(dir){
@@ -194,6 +194,7 @@ void LobbyManager::_CreateNewLobby(std::string& lobbyName){
 		_lobbies.push_back(newLobby);
 		Notification* noti = new NewLobbyNotification(*_lobbies.back());
 		_notifications.Queue(noti);
+        //newLobby->MapCfg = _mapCfgs[0];
 		std::cout << "new lobby notification queed \n";
 	}
 }

@@ -278,6 +278,8 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/include/Lobbies/OtherPlayer.h
         Client/include/Lobbies/Lobby.h
 
+        Client/src/NetCommands/PickMapCommand.cpp
+        Client/src/NetCommands/PickMapCommand.cpp
         Client/src/NetCommands/CommandDispatcher.cpp
         Client/src/NetCommands/LoadMapCommand.cpp
         Client/src/NetCommands/PlayerLoadedGameCommand.cpp

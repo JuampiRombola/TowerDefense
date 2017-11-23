@@ -41,6 +41,11 @@ void LoggedInNotification::Notify(){
 		std::string name = (*it)->Name();
 		_player.SendInt32(lobbyGuid);
 		_player.SendString(name);
+		
+		if ((*it)->MapCfg == nullptr)
+			_player.SendInt32(-1);
+		else
+			_player.SendInt32((*it)->MapCfg->Id());
 	}
 
 	uint32_t playerAmount = _playersToNotify.size();
@@ -64,6 +69,7 @@ void LoggedInNotification::Notify(){
 	}
 
 	/** Notifico a este cliente acerca de los mapas disponibles **/
+
 	uint32_t mapsAmount = _mapCfgs.size();
 	_player.SendInt32(mapsAmount);
 	for (auto it = _mapCfgs.begin(); it != _mapCfgs.end(); ++it){
