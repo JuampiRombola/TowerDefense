@@ -18,6 +18,7 @@ public:
     SDL_Window* getWindow();
     void showErrorMessage(const std::string &title, const std::string
         &description);
+    Uint32 getID();
 };
 
 

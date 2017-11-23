@@ -6,6 +6,7 @@
 #include "Model/HudView.h"
 #include "Model/ChatView.h"
 #include "Common/MusicLoader.h"
+#include "Model/MouseMovement.h"
 
 #define TITLE "Tower Defense"
 
@@ -139,6 +140,8 @@ int main(int argc, char** argv) {
 
     ChatView chat(cmdDispatcher, window, renderer, textureLoader);
 
+    MouseMovement mouseMovement(renderer);
+
     TowerView towerView(0, TORRE_FUEGO, textureLoader, renderer);
 
 
@@ -162,6 +165,11 @@ int main(int argc, char** argv) {
             switch (event.type) {
                 case SDL_QUIT:
                     hudView.enableExitView();
+                    break;
+                case SDL_MOUSEMOTION:
+                    mouseMovement.entryMovement(event.motion.x,
+                                                event.motion.y,
+                                                event.motion.windowID);
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                     hudView.getMouseButtonDown();
@@ -228,6 +236,7 @@ int main(int argc, char** argv) {
             hudView.doMouseAction();
         }
         renderer.clearRender();
+        mouseMovement.doMovement();
 
         modelView.draw(SDL_GetTicks());
         hudView.draw();

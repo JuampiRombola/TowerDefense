@@ -46,6 +46,7 @@ public:
     void setMapHeight(int mapW, int mapH, int newH);
     int getWindowWidth();
     int getWindowHeight();
+    Uint32 getWindowID();
 };
 
 

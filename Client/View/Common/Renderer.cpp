@@ -166,3 +166,7 @@ int Renderer::getWindowWidth() {
 int Renderer::getWindowHeight() {
     return window.getHeight();
 }
+
+Uint32 Renderer::getWindowID() {
+    return window.getID();
+}

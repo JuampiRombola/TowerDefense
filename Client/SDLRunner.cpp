@@ -10,6 +10,7 @@
 #include "include/NetCommands/PlayerLoadedGameCommand.h"
 #include "include/NetCommands/LoadMapCommand.h"
 #include "View/Common/MusicLoader.h"
+#include "View/Model/MouseMovement.h"
 
 #define TITLE "Tower Defense"
 
@@ -45,6 +46,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     TextureLoader textureLoader(renderer.getRenderer(), 0);
     ModelView modelView(renderer, textureLoader);
     ChatView chat(*_dispatcher, window, renderer, textureLoader);
+    MouseMovement mouseMovement(renderer);
     MusicLoader musicLoader;
     musicLoader.playMusic();
 
@@ -87,6 +89,11 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
             switch (event.type) {
                 case SDL_QUIT:
                     hudView.enableExitView();
+                    break;
+                case SDL_MOUSEMOTION:
+                    mouseMovement.entryMovement(event.motion.x,
+                                                event.motion.y,
+                                                event.motion.windowID);
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                     hudView.getMouseButtonDown(); break;
@@ -141,6 +148,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
             hudView.doMouseAction();
         }
         renderer.clearRender();
+        mouseMovement.doMovement();
 
         modelView.draw(SDL_GetTicks());
         hudView.draw();
