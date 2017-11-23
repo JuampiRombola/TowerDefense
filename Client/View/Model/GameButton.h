@@ -22,6 +22,8 @@ public:
     void click() override;
     void setTotalProgressBar(Uint32 t);
     void setPartProgressBar(Uint32 p);
+    void addPartProgressBar(Uint32 p);
+    int getKey();
 };
 
 

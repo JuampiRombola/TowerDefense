@@ -35,6 +35,7 @@ public:
     void draw();
     void initFakeButtons();
     bool exitClicked();
+    void setCooldown(int key, Uint32 cd);
 };
 
 

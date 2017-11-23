@@ -48,7 +48,7 @@ public:
     bool isExitViewEnable();
     void enableExitView();
     void disableExitView();
-
+    void setCooldown(int key, Uint32 cd);
 };
 
 

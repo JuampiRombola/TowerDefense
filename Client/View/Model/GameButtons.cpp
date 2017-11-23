@@ -136,3 +136,20 @@ bool GameButtons::isAnyFakeClicked() {
 bool GameButtons::exitClicked() {
     return (barUpRight[INDEX_EXIT]->isClicked());
 }
+
+void GameButtons::setCooldown(int key, Uint32 cd) {
+    if (key <= CMD_AIR_TOWER) {
+        for (auto &tower : towers) {
+            if (tower->getKey() == key)
+                tower->setTotalProgressBar(cd);
+                tower->setPartProgressBar(0);
+        }
+    }
+    if (key >= CMD_TERRAFORMING) {
+        for (auto &spell : spells) {
+            if (spell->getKey() == key)
+                spell->setTotalProgressBar(cd);
+                spell->setPartProgressBar(0);
+        }
+    }
+}

@@ -295,6 +295,8 @@ void NotificationReciever::_HandleSpellCasted(){
     _sock.Recieve((char *) &duration_ms, 4);
     uint32_t cooldown_ms;
     _sock.Recieve((char *) &cooldown_ms, 4);
+    int cd_key = spell - 200 + 4; // 200 + 4 es el offset para coincidir
+    hud_view->setCooldown(cd_key, cooldown_ms);
 	switch(spell){
 		case SPELL_TERRAFORMING:
 			model_view->createStructureTile(x, y);
