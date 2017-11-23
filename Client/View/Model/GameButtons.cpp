@@ -108,12 +108,12 @@ void GameButtons::initFakeButtons() {
         int x = window.getWidth() - PADDING_HUD - i*HUD_BUTTON_X;
         int y = window.getHeight() - PADDING_HUD - HUD_BUTTON_Y;
 
-        if (i == 4) { // i==4 es la mitad de la barra de spells
+        if (i == 5) { // es la mitad de la barra de spells
             decoSpells.setDestXY(x - MARQUESINA_OFFSET_X,
                                  y - MARQUESINA_H);
         }
 
-        if (i == 11) { // i==11 es la mitad de la barra de torres
+        if (i == 12) { // es la mitad de la barra de torres
             decoTowers.setDestXY(x - MARQUESINA_OFFSET_X,
                                  y - MARQUESINA_H);
         }
