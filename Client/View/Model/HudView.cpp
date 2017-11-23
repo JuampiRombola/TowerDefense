@@ -8,7 +8,8 @@ HudView::HudView(Window &w, TextureLoader &tl, Renderer &r,
         mouse_y(-1), mousePosition(mouse_x, mouse_y),
         currentCommand(-1),
         buttons(w, mousePosition, r, tl, currentCommand),
-        model(model), upgradeTarget(nullptr) {
+        model(model), upgradeTarget(nullptr), exit(false), 
+        exitView(r, tl, mousePosition) {
     arrow = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
     crosshair = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 }
@@ -34,6 +35,19 @@ void HudView::getFingerState(SDL_Event &event) {
 
 void HudView::doMouseAction() {
     if (!mousePosition.isActive()) return;
+    if (exitView.isActive()) {
+        if (exitView.isOk())
+            exit = true;
+        if (exitView.isCancel())
+            exitView.desactivate();
+        mousePosition.deactivate();
+        return;
+    }
+    if (buttons.exitClicked()) {
+        exitView.activate();
+        mousePosition.deactivate();
+        return;
+    } 
     if (upgradeTarget && upgradeTarget->isClicked()) {
         upgradeTarget->onClick();
         SDL_SetCursor(arrow);
@@ -144,6 +158,8 @@ void HudView::draw() {
     buttons.draw();
     if (upgradeTarget)
         upgradeTarget->draw();
+    if (exitView.isActive())
+        exitView.draw();
 }
 
 void HudView::addElementalButtons(int key) {
@@ -165,4 +181,20 @@ void HudView::updateTarget(TowerView *target) {
     if (upgradeTarget) delete upgradeTarget;
     upgradeTarget = new UpgradeView(renderer, textureLoader,
                                     target, currentCommand, mousePosition);
+}
+
+bool HudView::exitActive() {
+    return exit;
+}
+
+void HudView::enableExitView() {
+    exitView.activate();
+}
+
+bool HudView::isExitViewEnable() {
+    return exitView.isActive();
+}
+
+void HudView::disableExitView() {
+    exitView.desactivate();
 }

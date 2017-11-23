@@ -69,3 +69,11 @@ void Sprite::setSourceW(int w) {
 void Sprite::setDestW(int w) {
     dstRect.w = w;
 }
+
+int Sprite::getDestX() {
+    return dstRect.x;
+}
+
+int Sprite::getDestY() {
+    return dstRect.y;
+}

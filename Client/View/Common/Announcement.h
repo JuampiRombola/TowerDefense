@@ -14,7 +14,9 @@ private:
     Uint32 time;
     Renderer &renderer;
     TTF_Font *font;
+    TTF_Font *outlineF;
     SDL_Texture *texture;
+    SDL_Texture *outline;
     SDL_Rect dstRect;
     Uint32 ticks;
 public:

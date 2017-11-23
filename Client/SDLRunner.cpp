@@ -10,6 +10,7 @@
 #include "include/NetCommands/PlayerLoadedGameCommand.h"
 #include "include/NetCommands/LoadMapCommand.h"
 #include "View/Common/MusicLoader.h"
+#include "View/Common/MouseMovement.h"
 
 #define TITLE "Tower Defense"
 
@@ -37,7 +38,6 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     _reciever = reciever;
     _sock = sock;
 
-    bool quit = false;
     SDL_Event event{};
     SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
     TTF_Init();
@@ -46,6 +46,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     TextureLoader textureLoader(renderer.getRenderer(), 0);
     ModelView modelView(renderer, textureLoader);
     ChatView chat(*_dispatcher, window, renderer, textureLoader);
+    MouseMovement mouseMovement(renderer);
     MusicLoader musicLoader;
     musicLoader.playMusic();
 
@@ -80,14 +81,20 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
         modelView.mapLoadedCondVariable.wait(lock);
 
 
-    while (!quit && _reciever->Running()) {
+    while (!hudView.exitActive()) {
         t1 = SDL_GetTicks();
 
         while(SDL_PollEvent(&event)) {
 
             switch (event.type) {
                 case SDL_QUIT:
-                    quit = true; break;
+                    hudView.enableExitView();
+                    break;
+                case SDL_MOUSEMOTION:
+                    mouseMovement.entryMovement(event.motion.x,
+                                                event.motion.y,
+                                                event.motion.windowID);
+                    break;
                 case SDL_MOUSEBUTTONDOWN:
                     hudView.getMouseButtonDown(); break;
                 case SDL_MOUSEBUTTONUP:
@@ -115,7 +122,11 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                                 chat.erase();
                             break;
                         case SDLK_ESCAPE:
-                            quit = true; break;
+                            if (hudView.isExitViewEnable())
+                                hudView.disableExitView();
+                            else
+                                hudView.enableExitView();
+                            break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:
@@ -137,6 +148,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
             hudView.doMouseAction();
         }
         renderer.clearRender();
+        mouseMovement.doMovement();
 
         modelView.draw(SDL_GetTicks());
         hudView.draw();

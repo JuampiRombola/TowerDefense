@@ -12,6 +12,7 @@
 #include "ViewConstants.h"
 #include "UpgradeView.h"
 #include "ModelView.h"
+#include "ExitView.h"
 
 class HudView {
 private:
@@ -27,6 +28,8 @@ private:
     SDL_Cursor *crosshair;
     ModelView &model;
     UpgradeView *upgradeTarget;
+    bool exit;
+    ExitView exitView;
 
 public:
     HudView(Window &w, TextureLoader &tl, Renderer &r,
@@ -41,6 +44,10 @@ public:
     void getMouseButtonDown();
     void getFingerButtonDown(SDL_Event &event);
     void updateTarget(TowerView *target);
+    bool exitActive();
+    bool isExitViewEnable();
+    void enableExitView();
+    void disableExitView();
 
 };
 

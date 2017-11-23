@@ -6,7 +6,6 @@
 #include "../Common/MousePosition.h"
 #include "../Common/TextureLoader.h"
 #include "MapView.h"
-#include "NewTowerButton.h"
 #include "../Common/SpriteNamesConfig.h"
 #include "../../include/NetCommands/CommandDispatcher.h"
 #include "PadlockButton.h"
@@ -21,8 +20,8 @@ private:
     int &cmd;
     std::list<WaitActionButton*> towers;
     std::list<WaitActionButton*> spells;
-    std::list<Image*> barUpRight;
-    std::list<PadlockButton *> fakeButtons;
+    std::vector<Image*> barUpRight;
+    std::list<PadlockButton*> fakeButtons;
     Sprite decoTowers;
     Sprite decoSpells;
 
@@ -35,6 +34,7 @@ public:
     bool isAnyFakeClicked();
     void draw();
     void initFakeButtons();
+    bool exitClicked();
 };
 
 

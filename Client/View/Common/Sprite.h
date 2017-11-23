@@ -33,6 +33,8 @@ public:
     int getOffsetY();
     void setAlphaMod(Uint8 alpha);
     void drawEuclidian();
+    int getDestX();
+    int getDestY();
 };
 
 

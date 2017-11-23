@@ -15,7 +15,7 @@ void WaitActionButton::draw() {
     background.draw(0, 0);
     bar.draw();
     Button::draw(0, 0);
-    if (!(this->wasLastClick() && bar.isFull()))
+    if (!this->wasLastClick() && bar.isFull())
         edge.draw(0, 0);
 }
 

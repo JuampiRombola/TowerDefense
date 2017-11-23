@@ -150,6 +150,7 @@ int Renderer::pixelToCartesianY(int x, int y) {
 void Renderer::setMapWidth(int mapH, int newW) {
     mapWidth = newW*WIDTHFACTOR + mapH*WIDTHFACTOR - WIDTHFACTOR;
     mapHeight = mapWidth / 2;
+    this->updateCamera(0, 0);
 }
 
 void Renderer::setMapHeight(int mapW, int mapH, int newH) {
@@ -157,6 +158,7 @@ void Renderer::setMapHeight(int mapW, int mapH, int newH) {
     mapHeight = mapWidth / 2;
     paddingWidth = newH * WIDTHFACTOR + PADDING;
     cameraX += (newH - mapH) * WIDTHFACTOR;
+    this->updateCamera(0, 0);
 }
 
 int Renderer::getWindowWidth() {
@@ -165,4 +167,8 @@ int Renderer::getWindowWidth() {
 
 int Renderer::getWindowHeight() {
     return window.getHeight();
+}
+
+Uint32 Renderer::getWindowID() {
+    return window.getID();
 }

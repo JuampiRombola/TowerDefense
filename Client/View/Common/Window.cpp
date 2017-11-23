@@ -33,3 +33,7 @@ void Window::showErrorMessage(const std::string &title, const std::string
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title.c_str(),
                              description.c_str(), window);
 }
+
+Uint32 Window::getID() {
+    return SDL_GetWindowID(window);
+}

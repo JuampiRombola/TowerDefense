@@ -1,15 +1,19 @@
 #include "GameButtons.h"
 #include "UpRightButton.h"
+#include "ViewConstants.h"
 
 #define TOTAL_BUTTONS 13
-#define FIRST_BUTTON 12
-#define FIRST_SPELL_BUTTON 7
-#define BLANK_SPACE 8
+#define FIRST_BUTTON 13
+#define FIRST_SPELL_BUTTON 8
+#define BLANK_SPACE 9
 
 #define TRANSPARENCY 212
 #define BUTTONSOFFSET 200
 #define SPELLOFFSET_1 4
 #define SPELLOFFSET_2 5
+
+#define INDEX_EXIT 0
+#define INDEX_PING 1
 
 GameButtons::GameButtons(Window &w, MousePosition &mousePosition,
                          Renderer &renderer,
@@ -18,6 +22,10 @@ GameButtons::GameButtons(Window &w, MousePosition &mousePosition,
         renderer(renderer), textureLoader(textureLoader), cmd(cmd),
         decoTowers(textureLoader.getTexture(MARQUESINA), renderer),
         decoSpells(textureLoader.getTexture(MARQUESINA), renderer) {
+    barUpRight.push_back(new UpRightButton(window, CMD_EXIT, cmd,
+               textureLoader.getTexture(EXIT_BUTTON),
+               textureLoader.getTexture(TRANSPARENCY),
+               mousePosition, renderer, barUpRight.size() + 1));
     barUpRight.push_back(new UpRightButton(window, CMD_PING, cmd,
                textureLoader.getTexture(PING_BUTTON),
                textureLoader.getTexture(TRANSPARENCY),
@@ -77,11 +85,7 @@ bool GameButtons::isAnyClicked() {
         if (spell->isClicked())
             return true;
     }
-    for (auto &button : barUpRight) {
-        if (button->isClicked())
-            return true;
-    }
-    return false;
+    return (barUpRight[INDEX_PING]->isClicked());
 }
 
 void GameButtons::draw() {
@@ -98,18 +102,18 @@ void GameButtons::draw() {
 }
 
 void GameButtons::initFakeButtons() {
-    for (int i=0; i < TOTAL_BUTTONS; ++i) {
+    for (int i=0; i <= TOTAL_BUTTONS; ++i) {
         if (i == BLANK_SPACE) continue;
 
         int x = window.getWidth() - PADDING_HUD - i*HUD_BUTTON_X;
         int y = window.getHeight() - PADDING_HUD - HUD_BUTTON_Y;
 
-        if (i == 4) { // i==4 es la mitad de la barra de spells
+        if (i == 5) { // es la mitad de la barra de spells
             decoSpells.setDestXY(x - MARQUESINA_OFFSET_X,
                                  y - MARQUESINA_H);
         }
 
-        if (i == 11) { // i==11 es la mitad de la barra de torres
+        if (i == 12) { // es la mitad de la barra de torres
             decoTowers.setDestXY(x - MARQUESINA_OFFSET_X,
                                  y - MARQUESINA_H);
         }
@@ -127,4 +131,8 @@ bool GameButtons::isAnyFakeClicked() {
             return true;
     }
     return false;
+}
+
+bool GameButtons::exitClicked() {
+    return (barUpRight[INDEX_EXIT]->isClicked());
 }

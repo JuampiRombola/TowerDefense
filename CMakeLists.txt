@@ -190,16 +190,12 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/DepthLevel.h
         Client/View/Model/HudView.cpp
         Client/View/Model/HudView.h
-        Client/View/Model/NewTowerButton.cpp
-        Client/View/Model/NewTowerButton.h
         Client/View/Model/ViewConstants.h
         Client/View/Model/GameButtons.cpp
         Client/View/Model/GameButtons.h
         Client/SDLRunner.h
         Client/SDLRunner.cpp
         Common/Lock.cpp Common/Lock.h
-        Client/View/Model/SpellButton.cpp
-        Client/View/Model/SpellButton.h
         Client/src/NetCommands/ClientBuildTowerCommand.cpp
         Client/include/NetCommands/ClientBuildTowerCommand.h
         Client/View/Model/ChatView.cpp
@@ -228,7 +224,15 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/InstantButton.cpp
         Client/View/Model/InstantButton.h
         Client/View/Model/UpgradeView.cpp
-        Client/View/Model/UpgradeView.h Client/View/Model/WaitActionButton.cpp Client/View/Model/WaitActionButton.h Client/View/Model/PadlockButton.cpp Client/View/Model/PadlockButton.h)
+        Client/View/Model/UpgradeView.h
+        Client/View/Model/WaitActionButton.cpp
+        Client/View/Model/WaitActionButton.h
+        Client/View/Model/PadlockButton.cpp
+        Client/View/Model/PadlockButton.h
+        Client/View/Model/ExitView.cpp
+        Client/View/Model/ExitView.h
+        Client/View/Common/MouseMovement.cpp
+        Client/View/Common/MouseMovement.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -414,7 +418,9 @@ set(SOURCE_FILES_EDITOR
         Client/View/Editor/DisminuirTiempoEnemigosButton.cpp
         Client/View/Editor/DisminuirTiempoEnemigosButton.h
         Client/View/Editor/ContadorTiempoEnemigosInput.cpp
-        Client/View/Editor/ContadorTiempoEnemigosInput.h)
+        Client/View/Editor/ContadorTiempoEnemigosInput.h
+        Client/View/Common/MouseMovement.cpp
+        Client/View/Common/MouseMovement.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)

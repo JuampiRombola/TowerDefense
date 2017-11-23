@@ -7,6 +7,7 @@
 #include "Editor/Editor.h"
 #include "Editor/EditorButtons.h"
 #include "Common/MusicLoader.h"
+#include "Common/MouseMovement.h"
 
 #define TITLE "Tower Defense"
 #define WINDOWWIDTH 640
@@ -24,6 +25,7 @@ int main(int argc, char** argv) {
     SDL_SetWindowFullscreen(window.getWindow(), 0);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), EDITOR_MODE);
+    MouseMovement mouseMovement(renderer);
     MusicLoader musicLoader;
     musicLoader.playMusic();
 
@@ -52,6 +54,11 @@ int main(int argc, char** argv) {
             switch (event.type) {
                 case SDL_QUIT:
                     quit = true;
+                    break;
+                case SDL_MOUSEMOTION:
+                    mouseMovement.entryMovement(event.motion.x,
+                                                event.motion.y,
+                                                event.motion.windowID);
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                     SDL_GetMouseState(&mouse_x, &mouse_y);
@@ -90,6 +97,7 @@ int main(int argc, char** argv) {
             event.type = 0;
         }
         renderer.clearRender();
+        mouseMovement.doMovement();
         editor.draw();
         buttons.draw();
         renderer.present();
