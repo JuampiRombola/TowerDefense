@@ -7,8 +7,8 @@ UpRightButton::UpRightButton(Window &w, int type, int &cmd,
                          MousePosition &mousePosition,
                          Renderer &renderer, int n)
         : type(type), command(cmd),
-          Button(w.getWidth() - n*SPELL_BUTTON_WIDTH - n*PADDING_HUD,
-                 PADDING_HUD, SPELL_BUTTON_WIDTH, SPELL_BUTTON_HEIGHT,
+          Button(w.getWidth() - n*EXIT_BUTTON_SIZE - n*PADDING_HUD,
+                 PADDING_HUD, EXIT_BUTTON_SIZE, EXIT_BUTTON_SIZE,
                  texture, mousePosition, renderer),
           transparency(button.x, button.y, button.w, button.h,
                        transp, renderer) {}

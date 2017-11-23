@@ -190,16 +190,12 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/DepthLevel.h
         Client/View/Model/HudView.cpp
         Client/View/Model/HudView.h
-        Client/View/Model/NewTowerButton.cpp
-        Client/View/Model/NewTowerButton.h
         Client/View/Model/ViewConstants.h
         Client/View/Model/GameButtons.cpp
         Client/View/Model/GameButtons.h
         Client/SDLRunner.h
         Client/SDLRunner.cpp
         Common/Lock.cpp Common/Lock.h
-        Client/View/Model/SpellButton.cpp
-        Client/View/Model/SpellButton.h
         Client/src/NetCommands/ClientBuildTowerCommand.cpp
         Client/include/NetCommands/ClientBuildTowerCommand.h
         Client/View/Model/ChatView.cpp

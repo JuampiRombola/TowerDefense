@@ -13,7 +13,7 @@ void InstantButton::draw() {
     background.draw(0, 0);
     bar.draw();
     Button::draw(0, 0);
-    if (!(this->isMarked() && bar.isFull()))
+    if (!this->isMarked() && bar.isFull())
         edge.draw(0, 0);
 }
 

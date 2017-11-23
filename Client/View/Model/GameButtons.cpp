@@ -1,5 +1,6 @@
 #include "GameButtons.h"
 #include "UpRightButton.h"
+#include "ViewConstants.h"
 
 #define TOTAL_BUTTONS 13
 #define FIRST_BUTTON 12
@@ -18,6 +19,10 @@ GameButtons::GameButtons(Window &w, MousePosition &mousePosition,
         renderer(renderer), textureLoader(textureLoader), cmd(cmd),
         decoTowers(textureLoader.getTexture(MARQUESINA), renderer),
         decoSpells(textureLoader.getTexture(MARQUESINA), renderer) {
+    barUpRight.push_back(new UpRightButton(window, CMD_EXIT, cmd,
+               textureLoader.getTexture(EXIT_BUTTON),
+               textureLoader.getTexture(TRANSPARENCY),
+               mousePosition, renderer, barUpRight.size() + 1));
     barUpRight.push_back(new UpRightButton(window, CMD_PING, cmd,
                textureLoader.getTexture(PING_BUTTON),
                textureLoader.getTexture(TRANSPARENCY),
