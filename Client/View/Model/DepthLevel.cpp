@@ -73,28 +73,6 @@ void DepthLevel::draw(Uint32 time) {
             ++it1;
     }
 
-    /*for (auto it = units.begin(); it != units.end();) {
-        if ((*it)->isDead()) {
-            delete (*it);
-            it = units.erase(it);
-        } else {
-            (*it)->draw(time);
-            ++it;
-        }
-    }*/
-
-
-    /*units.erase(std::remove_if(units.begin(),
-                               units.end(),
-                               [](UnitView* x) {
-                                   if (x->isDead()){
-                                       delete x;
-                                       return true;
-                                   }
-                                   return false;}),
-                units.end());
-     */
-    
     for (auto it = units.begin(); it != units.end(); ++it){
         UnitView* u = *it;
         u->draw(time);
