@@ -3,9 +3,9 @@
 #include "ViewConstants.h"
 
 #define TOTAL_BUTTONS 13
-#define FIRST_BUTTON 12
-#define FIRST_SPELL_BUTTON 7
-#define BLANK_SPACE 8
+#define FIRST_BUTTON 13
+#define FIRST_SPELL_BUTTON 8
+#define BLANK_SPACE 9
 
 #define TRANSPARENCY 212
 #define BUTTONSOFFSET 200
@@ -102,7 +102,7 @@ void GameButtons::draw() {
 }
 
 void GameButtons::initFakeButtons() {
-    for (int i=0; i < TOTAL_BUTTONS; ++i) {
+    for (int i=0; i <= TOTAL_BUTTONS; ++i) {
         if (i == BLANK_SPACE) continue;
 
         int x = window.getWidth() - PADDING_HUD - i*HUD_BUTTON_X;

@@ -45,13 +45,13 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
 }
 
 ChatView::~ChatView() {
-    TTF_CloseFont(font);
     if (textureIbeam) SDL_DestroyTexture(textureIbeam);
     if (input) delete input;
 
-    auto it = messages.begin();
-    while (it != messages.end())
-        delete (*it++);
+    for (int i=0; i < messages.size(); ++i) {
+        delete messages.front();
+        messages.pop_front();
+    }
 }
 
 bool ChatView::isActive() {
