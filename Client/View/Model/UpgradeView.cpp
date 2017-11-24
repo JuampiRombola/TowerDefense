@@ -37,15 +37,15 @@
 #define INDEX_RANGE 1
 #define INDEX_IMPACT 2
 
-UpgradeView::UpgradeView(Renderer &r, TextureLoader &tl,
-                         TowerView *t, int &command, MousePosition &mp) :
+UpgradeView::UpgradeView(Renderer &r, TextureLoader &tl, TowerView *t, 
+                         int &command, MousePosition &mp, bool isMine) :
         renderer(r), tl(tl), tower(t), cmd(command), mousePosition(mp),
         background(PADDING_HUD, PADDING_HUD, UPGRADE_BG_W, UPGRADE_BG_H,
         tl.getTexture(UPGRADE_BACKGROUND), renderer),
         padlock(START_X_ICON + 2*UPGRADE_ICON_SIZE
                 + 2*PADDING_ICON, START_Y_ICON, PADLOCK_W,
                 PADLOCK_H, tl.getTexture(CANDADO), renderer),
-        textColor(SDL_Color{255, 255, 255, 0xFF}) {
+        textColor(SDL_Color{255, 255, 255, 0xFF}), active(isMine) {
     font = TTF_OpenFont(FONT_UPGRD, FONT_UPGRD_SIZE);
     key = tower->getKey();
     this->addButtons();
@@ -134,6 +134,10 @@ void UpgradeView::addButtons() {
                                             + 2*PADDING_ICON, START_Y_ICON,
                                             UPGRADE_ICON_SIZE,UPGRADE_ICON_SIZE,
                                             cmd));
+    }
+    if (!active) {
+        for (auto &button : buttons)
+            button->desactivate();
     }
 }
 

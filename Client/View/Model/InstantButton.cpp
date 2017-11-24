@@ -5,7 +5,8 @@
 InstantButton::InstantButton(Renderer &r, TextureLoader &tl,
                              int spriteKey, MousePosition &mousePosition,
                              int x, int y, int w, int h, int &cmd) :
-        GameButton(r, tl, spriteKey, mousePosition, x, y, w, h, cmd) {
+        GameButton(r, tl, spriteKey, mousePosition, x, y, w, h, cmd), 
+        active(true) {
     this->mapKey(spriteKey);
 }
 
@@ -13,11 +14,12 @@ void InstantButton::draw() {
     background.draw(0, 0);
     bar.draw();
     Button::draw(0, 0);
-    if (!this->isMarked() && bar.isFull())
+    if (active && !this->isMarked() && bar.isFull())
         edge.draw(0, 0);
 }
 
 void InstantButton::click() {
+    if (!active) return;
     GameButton::click();
 }
 
@@ -30,4 +32,8 @@ void InstantButton::mapKey(int spriteKey) {
         key = CMD_IMPACT;
     if (spriteKey == FREEZE)
         key = CMD_FREEZE;
+}
+
+void InstantButton::desactivate() {
+    active = false;
 }
