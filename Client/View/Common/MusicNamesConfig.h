@@ -5,6 +5,7 @@
 #ifndef __CHUNK_ENUM__
 #define __CHUNK_ENUM__
 enum CHUNK_FILE {
+    DISPARO_TIERRA_SONIDO,
     TOTAL_CHUNKS
 } ;
 #endif

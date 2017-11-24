@@ -7,10 +7,11 @@
 
 #define INVALID_INDEX "Se esta tratandod de acceder a una posicion invalida de DepthLevel"
 
-ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader) :
+ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader, MusicPlayer &musicPlayer) :
         renderer(renderer), textureLoader(textureLoader),
         map(0, 0, 0, renderer, textureLoader), mapLoaded(false),
-        mapLoadedMutex(), mapLoadedCondVariable(), _currentAnnouncement(nullptr) {}
+        mapLoadedMutex(), mapLoadedCondVariable(), _currentAnnouncement(nullptr),
+        musicPlayer(musicPlayer) {}
 
 ModelView::~ModelView() {
     for (unsigned int i = 0; i < depthLevels.size(); ++i)
@@ -98,6 +99,7 @@ void ModelView::createShot(int key, int x, int y, int toX, int toY, Uint32 t) {
     if ((toX + toY) < (x + y))
         index = x+y;
     depthLevels[index]->addShot(shot);
+    musicPlayer.addShoot(key);
 }
 
 void ModelView::moveUnit(int id, int x, int y, int toX, int toY, Uint32 t) {

@@ -7,6 +7,7 @@
 #include "DepthLevel.h"
 #include "../Common/Announcement.h"
 #include "../../include/NonBlockingThreadSafeQueue.h"
+#include "../Common/MusicPlayer.h"
 #include <mutex>
 #include <map>
 #include <list>
@@ -24,8 +25,9 @@ private:
     std::map<int, int> idDepthLevelsUnits;
     Announcement* _currentAnnouncement;
     NonBlockingThreadSafeQueue<std::string*> newAnnouncementsMessages;
+    MusicPlayer &musicPlayer;
 public:
-    ModelView(Renderer &renderer, TextureLoader &textureLoader);
+    ModelView(Renderer &renderer, TextureLoader &textureLoader, MusicPlayer &musicPlayer);
     ~ModelView();
     void draw(Uint32 time);
     bool isValidTile(int x, int y);

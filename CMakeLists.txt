@@ -232,7 +232,11 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/ExitView.cpp
         Client/View/Model/ExitView.h
         Client/View/Common/MouseMovement.cpp
-        Client/View/Common/MouseMovement.h)
+        Client/View/Common/MouseMovement.h
+        Client/View/Common/MusicPlayer.cpp
+        Client/View/Common/MusicPlayer.h
+        Client/View/Common/SoundEffect.cpp
+        Client/View/Common/SoundEffect.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -422,7 +426,11 @@ set(SOURCE_FILES_EDITOR
         Client/View/Editor/ContadorTiempoEnemigosInput.cpp
         Client/View/Editor/ContadorTiempoEnemigosInput.h
         Client/View/Common/MouseMovement.cpp
-        Client/View/Common/MouseMovement.h)
+        Client/View/Common/MouseMovement.h
+        Client/View/Common/MusicPlayer.cpp
+        Client/View/Common/MusicPlayer.h
+        Client/View/Common/SoundEffect.cpp
+        Client/View/Common/SoundEffect.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)

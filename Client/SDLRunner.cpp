@@ -11,6 +11,7 @@
 #include "include/NetCommands/LoadMapCommand.h"
 #include "View/Common/MusicLoader.h"
 #include "View/Common/MouseMovement.h"
+#include "View/Common/MusicPlayer.h"
 
 #define TITLE "Tower Defense"
 
@@ -43,12 +44,13 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     TTF_Init();
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, _mapWidth, _mapHeight);
-    TextureLoader textureLoader(renderer.getRenderer(), 0);
-    ModelView modelView(renderer, textureLoader);
-    ChatView chat(*_dispatcher, window, renderer, textureLoader);
-    MouseMovement mouseMovement(renderer);
     MusicLoader musicLoader;
     musicLoader.playMusic();
+    MusicPlayer musicPlayer(musicLoader);
+    TextureLoader textureLoader(renderer.getRenderer(), 0);
+    ModelView modelView(renderer, textureLoader, musicPlayer);
+    ChatView chat(*_dispatcher, window, renderer, textureLoader);
+    MouseMovement mouseMovement(renderer);
 
     _reciever->model_view =  &modelView;
     _reciever->chat_view = &chat;
@@ -163,6 +165,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
         modelView.draw(SDL_GetTicks());
         hudView.draw();
         chat.draw();
+        musicPlayer.playMusic();
 
         renderer.present();
 

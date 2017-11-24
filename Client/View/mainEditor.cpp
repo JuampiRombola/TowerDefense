@@ -28,7 +28,6 @@ int main(int argc, char** argv) {
     MouseMovement mouseMovement(renderer);
     MusicLoader musicLoader;
     musicLoader.playMusic();
-
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
 
     int mouse_x = -1, mouse_y = -1;
