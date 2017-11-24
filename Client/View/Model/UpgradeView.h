@@ -25,10 +25,11 @@ private:
     TTF_Font *font;
     std::vector<InstantButton*> buttons;
     std::vector<TextView *> messages;
+    bool active;
 
 public:
     UpgradeView(Renderer &r, TextureLoader &tl, TowerView *t,
-                int &command, MousePosition &mp);
+                int &command, MousePosition &mp, bool isMine);
     ~UpgradeView();
     void draw();
     void addText();

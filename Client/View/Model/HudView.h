@@ -31,6 +31,7 @@ private:
     bool exit;
     ExitView exitView;
     std::mutex m;
+    std::vector<int> elements;
 
 public:
     HudView(Window &w, TextureLoader &tl, Renderer &r,

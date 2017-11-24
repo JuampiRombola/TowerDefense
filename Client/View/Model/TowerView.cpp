@@ -1,6 +1,7 @@
 #include "TowerView.h"
 #include "../Common/SpriteNamesConfig.h"
 #include "../../../Common/Lock.h"
+#include "ViewConstants.h"
 
 TowerView::TowerView(int id, int key, TextureLoader &textures, 
                      Renderer &renderer) :
@@ -20,7 +21,7 @@ TowerView::TowerView(int id, int key, TextureLoader &textures,
                    cfg["POWER_START_Y"].as<int>(),
                    cfg["POWER_COLUMNS"].as<int>(),
                    cfg["POWER_ROWS"].as<int>()),
-        exp(0), frequency(1), damage(1), range(1), level(1), flyDamage(0),
+        exp(500), frequency(1), damage(1), range(1), level(1), flyDamage(0),
         collateralDamage(0), collateralRange(0), freezePercent(0),
         freezeDuration(0) {
     spriteTower.setDestRect(x, y,
@@ -141,7 +142,14 @@ void TowerView::setFreezePercent(Uint32 n) {
 }
 
 int TowerView::getKey() {
-    return key;
+    if (key == TORRE_TIERRA)
+        return ELEMENTAL_EARTH;
+    if (key == TORRE_FUEGO)
+        return ELEMENTAL_FIRE;
+    if (key == TORRE_AGUA)
+        return ELEMENTAL_WATER;
+    if (key == TORRE_AIRE)
+        return ELEMENTAL_AIR;
 }
 
 Uint32 TowerView::getLevel() {

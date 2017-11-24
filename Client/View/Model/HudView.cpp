@@ -159,6 +159,7 @@ void HudView::draw() {
 
 void HudView::addElementalButtons(int key) {
     buttons.addTowerButtons(key);
+    elements.push_back(key);
 }
 
 void HudView::getMouseButtonDown() {
@@ -193,10 +194,15 @@ void HudView::setCooldown(int key, Uint32 cd) {
 }
 
 void HudView::createUpgradeTarget(TowerView *target) {
+    bool isMine = false;
+    for (auto element : elements) {
+        if (target->getKey() == element)
+            isMine = true;
+    }
     Lock(this->m);
     if (upgradeTarget) delete upgradeTarget;
-    upgradeTarget = new UpgradeView(renderer, textureLoader,
-                                    target, currentCommand, mousePosition);
+    upgradeTarget = new UpgradeView(renderer, textureLoader, target, 
+                                    currentCommand, mousePosition, isMine);
 }
 
 void HudView::updateUpgradeView(int id) {
