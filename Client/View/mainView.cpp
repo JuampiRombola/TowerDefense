@@ -148,6 +148,7 @@ int main(int argc, char** argv) {
     modelView.createTower(1, TORRE_FUEGO, 1, 1);
     modelView.createTower(2, TORRE_AGUA, 3, 3);
     modelView.createTower(3, TORRE_TIERRA, 5, 5);
+    modelView.createTower(4, TORRE_AIRE, 3, 5);
 
     Uint32 t1;
     Uint32 t2;

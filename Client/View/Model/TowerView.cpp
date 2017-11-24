@@ -21,7 +21,7 @@ TowerView::TowerView(int id, int key, TextureLoader &textures,
                    cfg["POWER_START_Y"].as<int>(),
                    cfg["POWER_COLUMNS"].as<int>(),
                    cfg["POWER_ROWS"].as<int>()),
-        exp(500), frequency(1), damage(1), range(1), level(1), flyDamage(0),
+        exp(0), frequency(1), damage(1), range(1), level(1), flyDamage(0),
         collateralDamage(0), collateralRange(0), freezePercent(0),
         freezeDuration(0) {
     spriteTower.setDestRect(x, y,
