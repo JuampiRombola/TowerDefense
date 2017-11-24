@@ -236,7 +236,7 @@ void NotificationReciever::_HandleTowerGainedExperience() {
 
     TowerView* tower= model_view->getTower(towerId);
     tower->setExp(exp);
-    hud_view->updateUpgradeView(towerId);
+    hud_view->setLastTowerId(towerId);
 }
 
 void NotificationReciever::_HandleTowerUpgrade() {

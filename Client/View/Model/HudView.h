@@ -32,6 +32,7 @@ private:
     ExitView exitView;
     std::mutex m;
     std::vector<int> elements;
+    int lastTowerUpdated;
 
 public:
     HudView(Window &w, TextureLoader &tl, Renderer &r,
@@ -52,7 +53,9 @@ public:
     void enableExitView();
     void disableExitView();
     void setCooldown(int key, Uint32 cd);
-    void updateUpgradeView(int id);
+    void setLastTowerId(int id);
+private:
+    void updateUpgradeView();
 };
 
 
