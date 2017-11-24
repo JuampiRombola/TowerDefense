@@ -1,5 +1,6 @@
 #include "HudView.h"
 #include "../../include/NetCommands/ClientCastSpellCommand.h"
+#include "../../../Common/Lock.h"
 
 
 HudView::HudView(Window &w, TextureLoader &tl, Renderer &r,
@@ -52,7 +53,7 @@ void HudView::doMouseAction() {
         upgradeTarget->onClick();
         SDL_SetCursor(arrow);
         if (currentCommand >= CMD_DAMAGE) {
-            //send Command Upgrade.type()
+            //send currentCommand y Upgrade.id()
             currentCommand = -1;
             SDL_SetCursor(arrow);
         }
@@ -82,21 +83,15 @@ void HudView::doMouseAction() {
     int isoX = renderer.pixelToCartesianX(mouse_x, mouse_y);
     int isoY = renderer.pixelToCartesianY(mouse_x, mouse_y);
     if (!model.isValidTile(isoX, isoY)) {
-        if (upgradeTarget) {
-            delete upgradeTarget;
-            upgradeTarget = nullptr;
-        }
+        this->destroyUpgradeTarget();
         return;
     }
     TowerView *target = model.onClick(isoX, isoY);
     if (!target) {
-        if (upgradeTarget) {
-            delete upgradeTarget;
-            upgradeTarget = nullptr;
-        }
+        this->destroyUpgradeTarget();
         return;
     }
-    this->updateTarget(target);
+    this->createUpgradeTarget(target);
 }
 
 void HudView::sendCommand(int x, int y) {
@@ -177,12 +172,6 @@ void HudView::getFingerButtonDown(SDL_Event &event) {
     mousePosition.activateMark();
 }
 
-void HudView::updateTarget(TowerView *target) {
-    if (upgradeTarget) delete upgradeTarget;
-    upgradeTarget = new UpgradeView(renderer, textureLoader,
-                                    target, currentCommand, mousePosition);
-}
-
 bool HudView::exitActive() {
     return exit;
 }
@@ -201,4 +190,27 @@ void HudView::disableExitView() {
 
 void HudView::setCooldown(int key, Uint32 cd) {
     buttons.setCooldown(key, cd);
+}
+
+void HudView::createUpgradeTarget(TowerView *target) {
+    Lock(this->m);
+    if (upgradeTarget) delete upgradeTarget;
+    upgradeTarget = new UpgradeView(renderer, textureLoader,
+                                    target, currentCommand, mousePosition);
+}
+
+void HudView::updateUpgradeView(int id) {
+    Lock(this->m);
+    if (!upgradeTarget) return;
+    if (upgradeTarget->getId() == id) {
+        this->createUpgradeTarget(model.getTower(id));
+    }
+}
+
+void HudView::destroyUpgradeTarget() {
+    if (upgradeTarget) {
+        Lock(this->m);
+        delete upgradeTarget;
+        upgradeTarget = nullptr;
+    }
 }

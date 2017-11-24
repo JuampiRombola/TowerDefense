@@ -1,6 +1,7 @@
 #include "UpgradeView.h"
 #include "ViewConstants.h"
 #include "../Common/SpriteNamesConfig.h"
+#include "../../../Common/Lock.h"
 
 #define UPGRADE_BG_W 264
 #define UPGRADE_BG_H 170
@@ -46,7 +47,7 @@ UpgradeView::UpgradeView(Renderer &r, TextureLoader &tl,
                 PADLOCK_H, tl.getTexture(CANDADO), renderer),
         textColor(SDL_Color{255, 255, 255, 0xFF}) {
     font = TTF_OpenFont(FONT_UPGRD, FONT_UPGRD_SIZE);
-    key = tower->getkey();
+    key = tower->getKey();
     this->addButtons();
     this->update();
 }
@@ -98,12 +99,12 @@ void UpgradeView::addText() {
     messages.push_back(t);
 
     if (key == TORRE_FUEGO) {
-        msg = MSG_IMPACTO + std::to_string(tower->getImpact());
+        msg = MSG_IMPACTO + std::to_string(tower->getCollateralRange());
         t = new TextView(renderer, font, msg, textColor);
         t->setDestXY(MSG_IMPACT_X, MSG_IMPACT_Y);
         messages.push_back(t);
     } else if (key == TORRE_AGUA) {
-        msg = MSG_FREEZE + std::to_string(tower->getFreeze());
+        msg = MSG_FREEZE + std::to_string(tower->getFreezePercent());
         t = new TextView(renderer, font, msg, textColor);
         t->setDestXY(MSG_IMPACT_X, MSG_IMPACT_Y);
         messages.push_back(t);
@@ -168,4 +169,12 @@ void UpgradeView::onClick() {
             mousePosition.deactivate();
         }
     }
+}
+
+int UpgradeView::getId() {
+    return tower->getId();
+}
+
+int UpgradeView::getElement() {
+    return tower->getKey();
 }

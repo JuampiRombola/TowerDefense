@@ -232,9 +232,11 @@ void NotificationReciever::_HandleTowerGainedExperience() {
 	std::cout << "Tower @(" << x << ", " << y << ") now has "
 			  << exp << "xp\n" <<std::flush;
 
-	uint towerid = _towerCoordToId[std::pair<uint, uint>(x, y)];
+	uint towerId = _towerCoordToId[std::pair<uint, uint>(x, y)];
 
-
+    TowerView* tower= model_view->getTower(towerId);
+    tower->setExp(exp);
+    hud_view->updateUpgradeView(towerId);
 }
 
 void NotificationReciever::_HandleTowerUpgrade() {
@@ -249,11 +251,18 @@ void NotificationReciever::_HandleTowerUpgrade() {
     _sock.Recieve((char*) &y, 4);
 	
 	uint towerId = _towerCoordToId[std::pair<uint, uint>(x, y)];
-	
+    
     _sock.Recieve((char*) &damage, 4);
     _sock.Recieve((char*) &range, 4);
     _sock.Recieve((char*) &projectile_ms_over_tile, 4);
     _sock.Recieve((char*) &level, 4);
+
+    TowerView* tower= model_view->getTower(towerId);
+    tower->setDamage(damage);
+    tower->setRange(range);
+    tower->setFrequency(projectile_ms_over_tile);
+    tower->setLevel(level);
+    
 	uint8_t type = -1;
     _sock.Recieve((char*) &type, 1);
     switch (type){
@@ -262,16 +271,22 @@ void NotificationReciever::_HandleTowerUpgrade() {
             uint32_t collateral_range;
             _sock.Recieve((char*)&collateral_damage, 4);
             _sock.Recieve((char*)&collateral_range, 4);
+            tower->setCollateralDamage(collateral_damage);
+            tower->setCollateralRange(collateral_range);
             break;
         case SPELL_TYPE_WATER:
             uint32_t slow_seconds;
             uint32_t slow_percent;
             _sock.Recieve((char*)&slow_seconds, 4);
             _sock.Recieve((char*)&slow_percent, 4);
+            tower->setFreezePercent(slow_percent);
+            tower->setFreezeDuration(slow_seconds);
             break;
         case SPELL_TYPE_AIR:
             uint32_t nonFlyingDamage;
             _sock.Recieve((char*) &nonFlyingDamage, 4);
+            tower->setDamage(nonFlyingDamage);
+            tower->setFlyDamage(damage);
             break;
         case SPELL_TYPE_GROUND:
             break;

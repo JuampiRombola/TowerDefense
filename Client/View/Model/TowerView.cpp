@@ -20,10 +20,9 @@ TowerView::TowerView(int id, int key, TextureLoader &textures,
                    cfg["POWER_START_Y"].as<int>(),
                    cfg["POWER_COLUMNS"].as<int>(),
                    cfg["POWER_ROWS"].as<int>()),
-        exp(1), damage(1), range(1), impact(0), freeze(0),
-        upgradeDamage(1), upgradeRange(2), upgradeImpact(2),
-        upgradeFreeze(2) {
-
+        exp(0), frequency(1), damage(1), range(1), level(1), flyDamage(0),
+        collateralDamage(0), collateralRange(0), freezePercent(0),
+        freezeDuration(0) {
     spriteTower.setDestRect(x, y,
                             cfg["TOWER_DST_W"].as<int>(),
                             cfg["TOWER_DST_H"].as<int>());
@@ -35,6 +34,7 @@ TowerView::TowerView(int id, int key, TextureLoader &textures,
                            cfg["POWER_DST_H"].as<int>());
     spriteFire.setOffsetXY(cfg["POWER_OFFSET_X"].as<int>(),
                            cfg["POWER_OFFSET_Y"].as<int>());
+    this->setUpgradesByElement();
 }
 
 void TowerView::draw(Uint32 ticks) {
@@ -46,6 +46,24 @@ void TowerView::setXY(int x, int y) {
     View::setXY(x, y);
     spriteTower.setDestXY(x, y);
     spriteFire.setDestXY(x, y);
+}
+
+void TowerView::setUpgradesByElement() {
+    upgradeDamage = static_cast<Uint32>(pow(1.5, level) * 100);
+    if (key == TORRE_TIERRA) {
+        upgradeRange = static_cast<Uint32>(pow(2, level) * 500);
+    }
+    if (key == TORRE_FUEGO) {
+        upgradeRange = static_cast<Uint32>(pow(2, level) * 100);
+        upgradeImpact = static_cast<Uint32>(pow(2, level) * 500);
+    }
+    if (key == TORRE_AGUA) {
+        upgradeRange = static_cast<Uint32>(pow(2, level) * 100);
+        upgradeFreeze = static_cast<Uint32>(pow(2, level) * 100);
+    }
+    if (key == TORRE_AIRE) {
+        upgradeRange = static_cast<Uint32>(pow(2, level) * 100);
+    }
 }
 
 int TowerView::getId() {
@@ -67,14 +85,14 @@ Uint32 TowerView::getRange() {
     return range;
 }
 
-Uint32 TowerView::getImpact() {
+Uint32 TowerView::getCollateralDamage() {
     Lock(this->m);
-    return impact;
+    return collateralDamage;
 }
 
-Uint32 TowerView::getFreeze() {
+Uint32 TowerView::getFreezePercent() {
     Lock(this->m);
-    return freeze;
+    return freezePercent;
 }
 
 Uint32 TowerView::getUpgradeDamage() {
@@ -112,36 +130,66 @@ void TowerView::setRange(Uint32 n) {
     range = n;
 }
 
-void TowerView::setImpact(Uint32 n) {
+void TowerView::setCollateralRange(Uint32 n) {
     Lock(this->m);
-    impact = n;
+    collateralRange = n;
 }
 
-void TowerView::setFreeze(Uint32 n) {
+void TowerView::setFreezePercent(Uint32 n) {
     Lock(this->m);
-    freeze = n;
+    freezePercent = n;
 }
 
-void TowerView::setUpgradeDamage(Uint32 n) {
-    Lock(this->m);
-    upgradeDamage = n;
-}
-
-void TowerView::setUpgradeRange(Uint32 n) {
-    Lock(this->m);
-    upgradeRange = n;
-}
-
-void TowerView::setUpgradeImpact(Uint32 n) {
-    Lock(this->m);
-    upgradeImpact = n;
-}
-
-void TowerView::setUpgradeFreeze(Uint32 n) {
-    Lock(this->m);
-    upgradeFreeze = n;
-}
-
-int TowerView::getkey() {
+int TowerView::getKey() {
     return key;
+}
+
+Uint32 TowerView::getLevel() {
+    Lock(this->m);
+    return level;
+}
+
+Uint32 TowerView::getCollateralRange() {
+    Lock(this->m);
+    return collateralRange;
+}
+
+Uint32 TowerView::getFreezeDuration() {
+    Lock(this->m);
+    return freezeDuration;
+}
+
+Uint32 TowerView::getFlyDamage() {
+    Lock(this->m);
+    return flyDamage;
+}
+
+void TowerView::setLevel(Uint32 n) {
+    Lock(this->m);
+    level = n;
+}
+
+void TowerView::setCollateralDamage(Uint32 n) {
+    Lock(this->m);
+    collateralDamage = n;
+}
+
+void TowerView::setFreezeDuration(Uint32 n) {
+    Lock(this->m);
+    freezeDuration = n;
+}
+
+void TowerView::setFlyDamage(Uint32 n) {
+    Lock(this->m);
+    flyDamage = n;
+}
+
+Uint32 TowerView::getFrequency() {
+    Lock(this->m);
+    return frequency;
+}
+
+void TowerView::setFrequency(Uint32 n) {
+    Lock(this->m);
+    frequency = n;
 }

@@ -163,3 +163,7 @@ void ModelView::createAnnounce() {
         _currentAnnouncement = annaun;
     }
 }
+
+TowerView *ModelView::getTower(int id) {
+    return depthLevels[idDepthLevelsTowers[id]]->getTower(id);
+}

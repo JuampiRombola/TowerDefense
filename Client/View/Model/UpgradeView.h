@@ -36,6 +36,8 @@ public:
     void update();
     bool isClicked();
     void onClick();
+    int getId();
+    int getElement();
 };
 
 

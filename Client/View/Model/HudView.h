@@ -30,6 +30,7 @@ private:
     UpgradeView *upgradeTarget;
     bool exit;
     ExitView exitView;
+    std::mutex m;
 
 public:
     HudView(Window &w, TextureLoader &tl, Renderer &r,
@@ -43,12 +44,14 @@ public:
     void addElementalButtons(int key);
     void getMouseButtonDown();
     void getFingerButtonDown(SDL_Event &event);
-    void updateTarget(TowerView *target);
+    void createUpgradeTarget(TowerView *target);
+    void destroyUpgradeTarget();
     bool exitActive();
     bool isExitViewEnable();
     void enableExitView();
     void disableExitView();
     void setCooldown(int key, Uint32 cd);
+    void updateUpgradeView(int id);
 };
 
 
