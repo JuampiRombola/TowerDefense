@@ -59,7 +59,13 @@ public:
     void setCollateralDamage(Uint32 n);
     void setFreezeDuration(Uint32 n);
     void setFlyDamage(Uint32 n);
-    
+
+
+    void setUpgradeExperienceDamage(uint32_t exp);
+    void setUpgradeExperienceRange(uint32_t exp);
+    void setUpgradeExperienceCollateralRange(uint32_t exp);
+    void setUpgradeExperienceSlow(uint32_t exp);
+
     Uint32 getUpgradeDamage();
     Uint32 getUpgradeRange();
     Uint32 getUpgradeImpact();

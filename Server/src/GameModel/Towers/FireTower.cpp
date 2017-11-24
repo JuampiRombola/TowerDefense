@@ -28,13 +28,13 @@ Projectile* FireTower::_BuildProjectile(PathTile* target){
 	return new FireProjectile(this, target, _damage, _collateralRange, _collateralDamage, _projectile_ms_over_tile);
 }
 
-bool FireTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
+bool FireTower::Upgrade(UpgradeType type){
 	switch (type){
 		case Range:
 			{
-				uint rangeIncrease = cfg["towers"]["fire"]["upgrade_range_increase"].as<uint>();
-				uint mult = cfg["towers"]["fire"]["upgrade_range_mult"].as<uint>();
-				double base = cfg["towers"]["fire"]["upgrade_range_base"].as<double>();
+				uint rangeIncrease = (*cfg)["towers"]["fire"]["upgrade_range_increase"].as<uint>();
+				uint mult = (*cfg)["towers"]["fire"]["upgrade_range_mult"].as<uint>();
+				double base = (*cfg)["towers"]["fire"]["upgrade_range_base"].as<double>();
 				double expRequired = pow(base, _upgradeLevel);
 				expRequired *= mult;
 				if (_experience >= expRequired){
@@ -49,10 +49,10 @@ bool FireTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
 		break;
 		case Damage:
 			{
-				uint damageIncrease = cfg["towers"]["fire"]["upgrade_damage_increase"].as<uint>();
-				uint collateralDamageIncrease = cfg["towers"]["fire"]["upgrade_collateral_damage_increase"].as<uint>();
-				uint mult = cfg["towers"]["fire"]["upgrade_damage_mult"].as<uint>();
-				double base = cfg["towers"]["fire"]["upgrade_damage_base"].as<double>();
+				uint damageIncrease = (*cfg)["towers"]["fire"]["upgrade_damage_increase"].as<uint>();
+				uint collateralDamageIncrease = (*cfg)["towers"]["fire"]["upgrade_collateral_damage_increase"].as<uint>();
+				uint mult = (*cfg)["towers"]["fire"]["upgrade_damage_mult"].as<uint>();
+				double base = (*cfg)["towers"]["fire"]["upgrade_damage_base"].as<double>();
 				double expRequired = pow(base, _upgradeLevel);
 				expRequired *= mult;
 				if (_experience > expRequired){
@@ -66,9 +66,9 @@ bool FireTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
 			break;
 		case CollateralRange:
 			{
-				uint collateralRangeIncrease = cfg["towers"]["fire"]["upgrade_collateral_range_increase"].as<uint>();
-				uint mult = cfg["towers"]["fire"]["upgrade_collateral_range_mult"].as<uint>();
-				double base = cfg["towers"]["fire"]["upgrade_collateral_range_base"].as<double>();
+				uint collateralRangeIncrease = (*cfg)["towers"]["fire"]["upgrade_collateral_range_increase"].as<uint>();
+				uint mult = (*cfg)["towers"]["fire"]["upgrade_collateral_range_mult"].as<uint>();
+				double base = (*cfg)["towers"]["fire"]["upgrade_collateral_range_base"].as<double>();
 				double expRequired = pow(base, _upgradeLevel);
 				expRequired *= mult;
 				if (_experience > expRequired){
@@ -99,5 +99,18 @@ TowerVM FireTower::GetViewModel(){
 	vm.slow_percent = -1;
 	vm.slow_seconds = -1;
 	vm.damage = _damage;
+
+	uint damagemult = (*cfg)["towers"]["fire"]["upgrade_damage_mult"].as<uint>();
+	uint rangemult = (*cfg)["towers"]["fire"]["upgrade_range_mult"].as<uint>();
+	uint collateralrangemult = (*cfg)["towers"]["fire"]["upgrade_collateral_range_mult"].as<uint>();
+
+	double damagebase = (*cfg)["towers"]["fire"]["upgrade_damage_base"].as<double>();
+	double rangebase = (*cfg)["towers"]["fire"]["upgrade_range_base"].as<double>();
+	double collatbase = (*cfg)["towers"]["fire"]["upgrade_collateral_range_base"].as<double>();
+	vm.exp_required_for_damage_upgrade = floor(pow(damagebase, _upgradeLevel) * damagemult);
+	vm.exp_required_for_range_upgrade = floor(pow(rangebase, _upgradeLevel) * rangemult);
+	vm.exp_required_for_collateral_range_upgrade = floor(pow(collatbase, _upgradeLevel) * collateralrangemult);
+	vm.exp_required_for_slow_upgrade = 0xFFFFFFFF;
+
 	return vm;
 }

@@ -21,7 +21,7 @@ public:
 	uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications);
 	~FireTower();
 	void PrintDebug();
-	bool Upgrade(const YAML::Node& cfg, UpgradeType type);
+	bool Upgrade(UpgradeType type);
 	TowerVM GetViewModel();
 };
 

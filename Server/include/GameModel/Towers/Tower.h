@@ -35,7 +35,7 @@ public:
 	virtual ~Tower();
 	Projectile* Step(); 
 	virtual void PrintDebug() = 0;
-	virtual bool Upgrade(const YAML::Node& cfg, UpgradeType type) = 0;
+	virtual bool Upgrade(UpgradeType type) = 0;
 	void AddExperience(double exp);
 	void AddDamage(uint damage);
 	SolidGroundTile* GetPosition();
@@ -43,6 +43,7 @@ public:
 	virtual TowerVM GetViewModel() = 0;
 	uint GetExperience();
 
+	const YAML::Node* cfg;
 };
 
 #endif

@@ -147,6 +147,9 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/GameNotifications/HordeUpdateGameNotification.h Server/src/GameModel/GameNotifications/TowerGainedExperienceGameNotification.cpp Server/include/GameModel/GameNotifications/TowerGainedExperienceGameNotification.h Server/src/GameModel/GameNotifications/TowerUpgradedGameNotification.cpp Server/include/GameModel/GameNotifications/TowerUpgradedGameNotification.h Server/src/Notifications/MapPickedNotification.cpp Server/include/Notifications/MapPickedNotification.h)
 
 set(SOURCE_FILES_CLIENT
+        Client/src/NetCommands/UpgradeTowerNetCommand.cpp
+        Client/include/NetCommands/UpgradeTowerNetCommand.h
+
         Client/View/Common/Window.cpp
         Client/View/Common/Window.h
         Client/View/Common/Renderer.cpp
@@ -435,7 +438,7 @@ set(SOURCE_FILES_EDITOR
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
-add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/NetCommands/UpgradeTowerNetCommand.cpp Client/include/NetCommands/UpgradeTowerNetCommand.h Client/src/GTKNotifications/LobbyPickedMapGTKNotification.cpp Client/include/GTKNotifications/LobbyPickedMapGTKNotification.h)
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
 
 

@@ -17,6 +17,10 @@ struct TowerVM {
 	uint slow_percent;
 	uint slow_seconds;
 	uint damage;
+	uint exp_required_for_range_upgrade;
+	uint exp_required_for_damage_upgrade;
+	uint exp_required_for_collateral_range_upgrade;
+	uint exp_required_for_slow_upgrade;
 };
 
 #endif

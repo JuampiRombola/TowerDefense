@@ -23,21 +23,10 @@ bool UpgradeTowerCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQu
 	if (t == nullptr)
 		return false;
 
-	if (t->Upgrade(game->GameCfg->Cfg, _type)){
+	if (t->Upgrade(_type)){
 		TowerVM vm = t->GetViewModel();
 		game->notifications.Queue(new TowerUpgradedGameNotification(vm));
 	}
 
 	return false;
 }
-
-
-/*
-CommandVM UpgradeTowerCommand::GetViewModel(){
-	CommandVM vm;
-	vm.type = UpgradeTower;
-	vm.upgradeType = _type;
-	vm.xPos = _xPos;
-	vm.yPos = _yPos;
-	return vm;
-}*/

@@ -27,14 +27,14 @@ Projectile* AirTower::_BuildProjectile(PathTile* target){
 	return new AirProjectile(this, target, _damage, _nonFlyingDamage, _projectile_ms_over_tile);
 }
 
-bool AirTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
+bool AirTower::Upgrade(UpgradeType type){
 	std::lock_guard<std::mutex> lock(_expMutex);
 	switch (type){
 		case Range:
 			{
-				uint rangeIncrease = cfg["towers"]["air"]["upgrade_range_increase"].as<uint>();
-				uint mult = cfg["towers"]["air"]["upgrade_range_mult"].as<uint>();
-				double base = cfg["towers"]["air"]["upgrade_range_base"].as<double>();
+				uint rangeIncrease = (*cfg)["towers"]["air"]["upgrade_range_increase"].as<uint>();
+				uint mult = (*cfg)["towers"]["air"]["upgrade_range_mult"].as<uint>();
+				double base = (*cfg)["towers"]["air"]["upgrade_range_base"].as<double>();
 				double expRequired = pow(base, _upgradeLevel);
 				expRequired *= mult;
 
@@ -50,10 +50,10 @@ bool AirTower::Upgrade(const YAML::Node& cfg, UpgradeType type){
 		break;
 		case Damage:
 			{
-				uint flyingTargetDamageIncrease = cfg["towers"]["air"]["upgrade_flying_target_damage_increase"].as<uint>();
-				uint nonFlyingDamageDamageIncrease = cfg["towers"]["air"]["upgrade_non_flying_target_damage_increase"].as<uint>();
-				uint mult = cfg["towers"]["air"]["upgrade_damage_mult"].as<uint>();
-				double base = cfg["towers"]["air"]["upgrade_damage_base"].as<double>();
+				uint flyingTargetDamageIncrease = (*cfg)["towers"]["air"]["upgrade_flying_target_damage_increase"].as<uint>();
+				uint nonFlyingDamageDamageIncrease = (*cfg)["towers"]["air"]["upgrade_non_flying_target_damage_increase"].as<uint>();
+				uint mult = (*cfg)["towers"]["air"]["upgrade_damage_mult"].as<uint>();
+				double base = (*cfg)["towers"]["air"]["upgrade_damage_base"].as<double>();
 				double expRequired = pow(base, _upgradeLevel);
 				expRequired *= mult;
 				if (_experience > expRequired){
@@ -88,5 +88,13 @@ TowerVM AirTower::GetViewModel(){
 	vm.slow_percent = -1;
 	vm.slow_seconds = -1;
 	vm.damage = _damage;
+	uint damagemult = (*cfg)["towers"]["fire"]["upgrade_damage_mult"].as<uint>();
+	uint rangemult = (*cfg)["towers"]["fire"]["upgrade_range_mult"].as<uint>();
+	double damagebase = (*cfg)["towers"]["air"]["upgrade_damage_base"].as<double>();
+	double rangebase = (*cfg)["towers"]["air"]["upgrade_range_base"].as<double>();
+	vm.exp_required_for_damage_upgrade = floor(pow(damagebase, _upgradeLevel) * damagemult);
+	vm.exp_required_for_range_upgrade = floor(pow(rangebase, _upgradeLevel) * rangemult);
+	vm.exp_required_for_collateral_range_upgrade = 0xFFFFFFFF;
+	vm.exp_required_for_slow_upgrade = 0xFFFFFFFF;
 	return vm;
 }
