@@ -24,6 +24,7 @@ public:
     void setPartProgressBar(Uint32 p);
     void addPartProgressBar(Uint32 p);
     int getKey();
+    bool isFullProgressBar();
 };
 
 

@@ -373,17 +373,22 @@ void NotificationReciever::_HandleTowerPlaced(){
 	uint8_t type = -1;
 	_sock.Recieve((char *) &type, 1);
 	_towerCoordToId[std::pair<uint, uint>(x, y)] = towerID;
+    Uint32 cooldown_ms = 20000;
     switch (type) {
         case SPELL_TYPE_GROUND:
+            hud_view->setCooldown(CMD_EARTH_TOWER, cooldown_ms);
             model_view->createTower(towerID++, TORRE_TIERRA , x, y);
             break;
         case SPELL_TYPE_FIRE:
+            hud_view->setCooldown(CMD_FIRE_TOWER, cooldown_ms);
             model_view->createTower(towerID++, TORRE_FUEGO , x, y);
             break;
         case SPELL_TYPE_WATER:
+            hud_view->setCooldown(CMD_WATER_TOWER, cooldown_ms);
             model_view->createTower(towerID++, TORRE_AGUA , x, y);
             break;
         case SPELL_TYPE_AIR:
+            hud_view->setCooldown(CMD_AIR_TOWER, cooldown_ms);
             model_view->createTower(towerID++, TORRE_AIRE, x, y);
             break;
     }

@@ -73,7 +73,7 @@ void DepthLevel::draw(Uint32 time) {
             ++it1;
     }
 
-    for (auto it = units.begin(); it != units.end(); ++it){
+    for (auto it = units.rbegin(); it != units.rend(); ++it){
         UnitView* u = *it;
         u->draw(time);
     }

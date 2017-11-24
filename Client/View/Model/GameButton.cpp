@@ -54,3 +54,7 @@ int GameButton::getKey() {
 void GameButton::addPartProgressBar(Uint32 p) {
     bar.addPart(p);
 }
+
+bool GameButton::isFullProgressBar() {
+    return bar.isFull();
+}
