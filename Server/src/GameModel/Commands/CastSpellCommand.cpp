@@ -56,27 +56,38 @@ bool CastSpellCommand::_CastGrieta(Map* map, TowerDefenseGame* game){
 	return false;
 }
 
+void MeteoritoKillAfterDelay(){
+
+}
+
 bool CastSpellCommand::_CastMeteorito(Map* map, TowerDefenseGame* game){
 	uint collateralDamageRange = game->GameCfg->Cfg["spells"]["meteorito"]["collateral_range"].as<uint>();
 	uint collateralDamage = game->GameCfg->Cfg["spells"]["meteorito"]["collateral_damage"].as<uint>();
 	uint targetDamage = game->GameCfg->Cfg["spells"]["meteorito"]["damage"].as<uint>();
 	PathTile* tile = map->GetPathTile(_xPos, _yPos);
 	if (tile != nullptr){
+		game->notifications.Queue(new SpellCastedGameNotification(SPELL_METEORITO, _xPos, _yPos, 1500, _cooldown_ms ));
+
 		std::vector<PathTile*> tiles = map->GetPathTilesInRange(tile, collateralDamageRange);
+		tile->HitUnitsAfterDelay(450, targetDamage);
+
+		/*
 		std::vector<EnviormentUnit*> unitsInTargetTile = tile->GetUnits();
 		for (auto it = unitsInTargetTile.begin(); it != unitsInTargetTile.end(); ++it){
 			(*it)->GetHit(targetDamage);
-		}
+		}*/
 
 		for (auto it = tiles.begin(); it != tiles.end(); ++it){
 			if (*it != tile){
+
+				(*it)->HitUnitsAfterDelay(450, collateralDamage);
+				/*
 				std::vector<EnviormentUnit*> units = (*it)->GetUnits();
 				for (auto unitIt = units.begin(); unitIt != units.end(); ++unitIt){
 					(*unitIt)->GetHit(collateralDamage);
-				}
+				}*/
 			}
 		}
-		game->notifications.Queue(new SpellCastedGameNotification(SPELL_METEORITO, _xPos, _yPos, 1500, _cooldown_ms ));
 		return true;
 	}
 	return false;

@@ -54,8 +54,16 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     _reciever->chat_view = &chat;
 
     _dispatcher->QueueCommand(new LoadMapCommand());
-
-    modelView.setMapEnvironment(PRADERA);
+    
+    if (_mapSurface == 0)
+        modelView.setMapEnvironment(PRADERA);
+    else if (_mapSurface == 2)
+        modelView.setMapEnvironment(VOLCAN);
+    else if (_mapSurface == 6)
+        modelView.setMapEnvironment(DESIERTO);
+    else
+        modelView.setMapEnvironment(GELIDO);
+    
     modelView.setMapWidthHeight(_mapWidth, _mapHeight);
 
     HudView hudView(window, textureLoader, renderer, *_dispatcher, modelView);

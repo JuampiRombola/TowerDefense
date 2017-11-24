@@ -36,6 +36,8 @@ private:
 	std::map<PathTile*, std::vector<PathTile*>> _possibleNextPaths;
 	Map* _map;
 
+	std::vector<std::tuple<unsigned long long, uint>> _damagesToApplyAfterDelay;
+
 public:
 	PathTile(uint xPos, uint yPos, Map* map, PathTile* next);
 	~PathTile();
@@ -55,6 +57,8 @@ public:
 	Map* GetMap();
 	void Ventisca(uint ventiscaDamage, uint ventiscaDuration_sec, uint slowDuration_sec, uint percentSlow);
 	void Tornado(uint tornadoMaxDamage, uint tornadoDuration_sec);
+	void HitUnitsAfterDelay(uint delay_ms, uint damage);
+	void Step();
 };
 
 #endif
