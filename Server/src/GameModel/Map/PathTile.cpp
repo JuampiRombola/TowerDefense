@@ -29,6 +29,9 @@ char PathTile::GetSymbol(){
 }
 
 void PathTile::Crack(uint time_ms){
+	for (auto it = _units.begin(); it != _units.end(); ++it){
+		(*it)->Kill();
+	}
 	_isCracked = true;
 	_lastCrackTimeStamp_ms = Helpers::MillisecondsTimeStamp();
 	_lastCrackDuration_ms = time_ms;
