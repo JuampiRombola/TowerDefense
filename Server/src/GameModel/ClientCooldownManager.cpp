@@ -51,71 +51,67 @@ bool ClientCooldownManager::IsSpellReady(CAST_SPELL_TYPE type){
     switch (type){
         case SPELL_GRIETA:
             cooldown_ms = _grietaCooldown_sec * 1000;
-            if (actual_ts - _lastGrietaTimeStamp_ms > cooldown_ms){
-                _lastGrietaTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
+            return (actual_ts - _lastGrietaTimeStamp_ms > cooldown_ms);
         case SPELL_TORNADO:
             cooldown_ms = _tornadoCooldown_sec * 1000;
-            if (actual_ts - _lastTornadoTimeStamp_ms > cooldown_ms){
-                _lastTornadoTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
-
+            return (actual_ts - _lastTornadoTimeStamp_ms > cooldown_ms);
         case SPELL_TERRAFORMING:
             cooldown_ms = _terraformingCooldown_sec * 1000;
-            if (actual_ts - _lastTerraformingTimeStamp_ms > cooldown_ms){
-                _lastTerraformingTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
-
+            return (actual_ts - _lastTerraformingTimeStamp_ms > cooldown_ms);
         case SPELL_CONGELACION:
             cooldown_ms = _congelacionCooldown_sec * 1000;
-            if (actual_ts - _lastCongelacionTimeStamp_ms > cooldown_ms){
-                _lastCongelacionTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
-
+            return (actual_ts - _lastCongelacionTimeStamp_ms > cooldown_ms);
         case SPELL_RAYO:
             cooldown_ms = _rayoCooldown_sec * 1000;
-            if (actual_ts - _lastRayoTimeStamp_ms > cooldown_ms){
-                _lastRayoTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
-
+            return (actual_ts - _lastRayoTimeStamp_ms > cooldown_ms);
         case SPELL_VENTISCA:
             cooldown_ms = _ventiscaCooldown_sec * 1000;
-            if (actual_ts - _lastVentiscaTimeStamp_ms > cooldown_ms){
-                _lastVentiscaTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
-
+            return (actual_ts - _lastVentiscaTimeStamp_ms > cooldown_ms);
         case SPELL_METEORITO:
             cooldown_ms = _meteoritoCooldown_sec * 1000;
-            if (actual_ts - _lastMeteoritoTimeStamp_ms > cooldown_ms){
-                _lastMeteoritoTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
-
+            return (actual_ts - _lastMeteoritoTimeStamp_ms > cooldown_ms);
         case SPELL_FIREWALL:
             cooldown_ms = _firewallCooldown_sec * 1000;
-            if (actual_ts - _lastFirewallTimeStamp_ms > cooldown_ms){
-                _lastFirewallTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
-
+            return (actual_ts - _lastFirewallTimeStamp_ms > cooldown_ms);
     }
     return false;
 }
 
+void ClientCooldownManager::SpellCasted(CAST_SPELL_TYPE type){
+    uint cooldown_ms;
+    unsigned long long actual_ts = Helpers::MillisecondsTimeStamp();
+    switch (type){
+        case SPELL_GRIETA:
+            _lastGrietaTimeStamp_ms = actual_ts;
+            break;
+        case SPELL_TORNADO:
+            _lastTornadoTimeStamp_ms  = actual_ts;
+            break;
+        case SPELL_TERRAFORMING:
+            _lastTerraformingTimeStamp_ms  = actual_ts;
+            break;
+        case SPELL_CONGELACION:
+            _lastCongelacionTimeStamp_ms  = actual_ts;
+            break;
+        case SPELL_RAYO:
+            _lastRayoTimeStamp_ms  = actual_ts;
+            break;
+        case SPELL_VENTISCA:
+            _lastVentiscaTimeStamp_ms  = actual_ts;
+            break;
+        case SPELL_METEORITO:
+            _lastMeteoritoTimeStamp_ms  = actual_ts;
+            break;
+        case SPELL_FIREWALL:
+            _lastFirewallTimeStamp_ms  = actual_ts;
+            break;
+    }
+}
+
+void ClientCooldownManager::PingSet(PlayerProxy& player){
+    unsigned long long actual_ts = Helpers::MillisecondsTimeStamp();
+    _pingLastTimeStamps[&player] = actual_ts;
+}
 
 
 uint ClientCooldownManager::GetPingCooldown(){
@@ -148,15 +144,11 @@ bool ClientCooldownManager::IsPingForPlayerReady(PlayerProxy& player){
     unsigned long long actual_ts = Helpers::MillisecondsTimeStamp();
     if (_pingLastTimeStamps.count(&player)){
         unsigned long long ts = _pingLastTimeStamps[&player];
-        if (actual_ts - ts > _pingCooldown_sec){
-            _pingLastTimeStamps[&player] = actual_ts;
-            return true;
-        }
+        return (actual_ts - ts > _pingCooldown_sec);
     } else {
         _pingLastTimeStamps[&player] = actual_ts;
         return true;
     }
-    return false;
 }
 
 

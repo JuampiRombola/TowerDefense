@@ -57,7 +57,6 @@ private:
 	std::vector<PlayerProxy*> _ingamePlayers;
 	HordeManager _hordeManager;
 
-	ClientCooldownManager* _clientCooldownManager;
 
 public:
 	TowerDefenseGame(uint gameId, ThreadSafeQueue<GameNotification*>& notifications,
@@ -103,6 +102,7 @@ public:
 	EnviormentUnit* SpawnEspectro();
 
     void PlayersWon();
+	ClientCooldownManager* clientCooldownManager;
 
 
 

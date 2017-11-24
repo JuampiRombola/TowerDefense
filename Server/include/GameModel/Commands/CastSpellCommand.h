@@ -22,10 +22,10 @@ private:
 	bool _CastTornado(Map* map, TowerDefenseGame* game);
 	bool _CastRayos(Map* map, TowerDefenseGame* game);
 	bool _CastPing(Map* map, TowerDefenseGame* game);
-
+	PlayerProxy& _player;
 public:
-	CastSpellCommand(CAST_SPELL_TYPE spell, uint x, uint y, uint cooldown_ms);
-	CastSpellCommand(CAST_SPELL_TYPE spell, uint unitId, uint cooldown_ms);
+	CastSpellCommand(CAST_SPELL_TYPE spell, uint x, uint y, uint cooldown_ms, PlayerProxy& player);
+	CastSpellCommand(CAST_SPELL_TYPE spell, uint unitId, uint cooldown_ms, PlayerProxy& player);
 	~CastSpellCommand();
 	bool Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueue<GameNotification*>& notifications);
 

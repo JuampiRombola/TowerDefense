@@ -22,6 +22,7 @@ LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
             std::string mapname = std::string(entry->d_name);
             if (mapname != ".." && mapname != "."){
                 std::string s = maps_path + '/' + mapname;
+				std::cout << mapname << std::endl;
                 _mapCfgs.push_back(new Configuration(s, id++, mapname));
             }
 		}
