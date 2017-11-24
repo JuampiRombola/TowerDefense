@@ -199,7 +199,6 @@ void HudView::createUpgradeTarget(TowerView *target) {
         if (target->getKey() == element)
             isMine = true;
     }
-    Lock(this->m);
     if (upgradeTarget) delete upgradeTarget;
     upgradeTarget = new UpgradeView(renderer, textureLoader, target, 
                                     currentCommand, mousePosition, isMine);
@@ -214,8 +213,8 @@ void HudView::updateUpgradeView(int id) {
 }
 
 void HudView::destroyUpgradeTarget() {
+	Lock(this->m);
     if (upgradeTarget) {
-        Lock(this->m);
         delete upgradeTarget;
         upgradeTarget = nullptr;
     }
