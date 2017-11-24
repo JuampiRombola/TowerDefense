@@ -302,31 +302,37 @@ void NotificationReciever::_HandleSpellCasted(){
     _sock.Recieve((char *) &duration_ms, 4);
     uint32_t cooldown_ms;
     _sock.Recieve((char *) &cooldown_ms, 4);
-    int cd_key = spell - 200 + 4; // 200 + 4 es el offset para coincidir
-    hud_view->setCooldown(cd_key, cooldown_ms);
 	switch(spell){
 		case SPELL_TERRAFORMING:
+            hud_view->setCooldown(CMD_TERRAFORMING, cooldown_ms);
 			model_view->createStructureTile(x, y);
 			break;
 		case SPELL_METEORITO:
+            hud_view->setCooldown(CMD_METEORITO, cooldown_ms);
 			model_view->createSpell(METEORITO, x, y, duration_ms);
 			break;
 		case SPELL_VENTISCA:
+            hud_view->setCooldown(CMD_VENTISCA, cooldown_ms);
 			model_view->createSpell(VENTISCA, x, y, duration_ms);
 			break;
 		case SPELL_CONGELACION:
+            hud_view->setCooldown(CMD_CONGELACION, cooldown_ms);
 			model_view->createSpell(CONGELACION, x, y, duration_ms);
 			break;
 		case SPELL_TORNADO:
+            hud_view->setCooldown(CMD_TORNADO, cooldown_ms);
 			model_view->createSpell(TORNADO, x, y, duration_ms);
 			break;
 		case SPELL_RAYO:
+            hud_view->setCooldown(CMD_RAYO, cooldown_ms);
 			model_view->createSpell(RAYO, x, y, duration_ms);
 			break;
 		case SPELL_FIREWALL:
+            hud_view->setCooldown(CMD_FIREWALL, cooldown_ms);
 			model_view->createSpell(FIREWALL, x, y, duration_ms);
 			break;
 		case SPELL_GRIETA:
+            hud_view->setCooldown(CMD_GRIETA, cooldown_ms);
 			model_view->createSpell(GRIETA, x, y, duration_ms);
 			break;
 		case SPELL_PING:
