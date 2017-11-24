@@ -223,7 +223,7 @@ void EditorButtons::addTiempoEntreHorda(int horda) {
 
 void EditorButtons::addTiempoEntreEnemigos(int horda) {
     Image *clockImg = new EnemigoImage(horda,
-                                       textureLoader.getTexture(CLOCK_EDITOR),
+                                       textureLoader.getTexture(CLOCK_ENEMIES_EDITOR),
                                        renderer);
     images.push_back(clockImg);
 

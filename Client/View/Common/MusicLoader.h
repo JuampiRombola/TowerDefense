@@ -16,7 +16,7 @@ public:
 
     void playMusic();
 
-    void playChunk(int chunkName);
+    Mix_Chunk *getChunk(int chunkName);
 
     ~MusicLoader();
 };

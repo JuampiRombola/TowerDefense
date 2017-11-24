@@ -23,8 +23,10 @@ int main(int argc, char** argv) {
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
-
-    ModelView modelView(renderer, textureLoader);
+    MusicLoader musicLoader;
+    musicLoader.playMusic();
+    MusicPlayer musicPlayer(musicLoader);
+    ModelView modelView(renderer, textureLoader, musicPlayer);
     modelView.setMapEnvironment(GELIDO);
     modelView.setMapWidthHeight(MAPSIZE, MAPSIZE);
     /*modelView.setMapWidthHeight(MAPSIZE, MAPSIZE);
