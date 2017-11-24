@@ -2,6 +2,7 @@
 #define TOWERDEFENSE_PROGRESSBARVIEW_H
 
 
+#include <mutex>
 #include "../Common/Sprite.h"
 
 class ProgressBarView {
@@ -14,6 +15,7 @@ private:
     Sprite bar;
     Uint32 total;
     Uint32 part;
+    std::mutex m;
 public:
     ProgressBarView(Renderer &r, SDL_Texture *t,
                     int srcW, int srcH,
@@ -23,6 +25,7 @@ public:
     void setPart(Uint32 p);
     void setDestXY(int x, int y);
     bool isFull();
+    void addPart(Uint32 p);
 };
 
 

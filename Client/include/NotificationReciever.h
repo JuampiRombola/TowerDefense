@@ -12,6 +12,7 @@
 #include "../View/Model/ModelView.h"
 #include "NetCommands/CommandDispatcher.h"
 #include "../View/Model/ChatView.h"
+#include "../View/Model/HudView.h"
 
 class NotificationReciever : public std::thread
 {
@@ -47,5 +48,6 @@ public:
 	bool Running();
 	ModelView *model_view;
 	ChatView *chat_view;
+	HudView *hud_view;
 };
 #endif

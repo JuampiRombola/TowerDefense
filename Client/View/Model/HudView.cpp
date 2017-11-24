@@ -198,3 +198,7 @@ bool HudView::isExitViewEnable() {
 void HudView::disableExitView() {
     exitView.desactivate();
 }
+
+void HudView::setCooldown(int key, Uint32 cd) {
+    buttons.setCooldown(key, cd);
+}

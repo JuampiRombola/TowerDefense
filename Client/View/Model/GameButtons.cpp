@@ -78,11 +78,11 @@ void GameButtons::addTowerButtons(int key) {
 
 bool GameButtons::isAnyClicked() {
     for (auto &tower : towers) {
-        if (tower->isClicked())
+        if (tower->isClicked() && tower->isFullProgressBar())
             return true;
     }
     for (auto &spell : spells) {
-        if (spell->isClicked())
+        if (spell->isClicked() && spell->isFullProgressBar())
             return true;
     }
     return (barUpRight[INDEX_PING]->isClicked());
@@ -135,4 +135,23 @@ bool GameButtons::isAnyFakeClicked() {
 
 bool GameButtons::exitClicked() {
     return (barUpRight[INDEX_EXIT]->isClicked());
+}
+
+void GameButtons::setCooldown(int key, Uint32 cd) {
+    if (key <= CMD_AIR_TOWER) {
+        for (auto &tower : towers) {
+            if (tower->getKey() == key) {
+                tower->setTotalProgressBar(cd);
+                tower->setPartProgressBar(0);
+            }
+        }
+    }
+    if (key >= CMD_TERRAFORMING) {
+        for (auto &spell : spells) {
+            if (spell->getKey() == key) {
+                spell->setTotalProgressBar(cd);
+                spell->setPartProgressBar(0);
+            }
+        }
+    }
 }

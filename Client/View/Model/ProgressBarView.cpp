@@ -3,6 +3,7 @@
 //
 
 #include "ProgressBarView.h"
+#include "../../../Common/Lock.h"
 
 ProgressBarView::ProgressBarView(Renderer &r, SDL_Texture *t,
                                  int srcW, int srcH,
@@ -15,20 +16,24 @@ ProgressBarView::ProgressBarView(Renderer &r, SDL_Texture *t,
     bar.setDestRect(0, 0, dstW, dstH);
 }
 
-void ProgressBarView::setTotal(Uint32 t) {
-    if (total == 0) return;
-    total = t;
-}
-
-void ProgressBarView::setPart(Uint32 p) {
-    part = p;
-}
 
 void ProgressBarView::setDestXY(int x, int y) {
     bar.setDestXY(x, y);
 }
 
+void ProgressBarView::setTotal(Uint32 t) {
+    Lock(this->m);
+    if (total == 0) return;
+    total = t;
+}
+
+void ProgressBarView::setPart(Uint32 p) {
+    Lock(this->m);
+    part = p;
+}
+
 void ProgressBarView::draw() {
+    Lock(this->m);
     if (part >= total) {
         bar.setSourceW(srcW);
         bar.setDestW(dstW);
@@ -41,5 +46,11 @@ void ProgressBarView::draw() {
 }
 
 bool ProgressBarView::isFull() {
+    Lock(this->m);
     return part >= total;
+}
+
+void ProgressBarView::addPart(Uint32 p) {
+    Lock(this->m);
+    part += p;
 }

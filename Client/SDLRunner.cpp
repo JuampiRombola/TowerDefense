@@ -52,6 +52,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
 
     _reciever->model_view =  &modelView;
     _reciever->chat_view = &chat;
+
     _dispatcher->QueueCommand(new LoadMapCommand());
     
     if (_mapSurface == 0)
@@ -66,6 +67,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     modelView.setMapWidthHeight(_mapWidth, _mapHeight);
 
     HudView hudView(window, textureLoader, renderer, *_dispatcher, modelView);
+    _reciever->hud_view = &hudView;
 
     if (_lobbyManager->groundHUDEnabled)
         hudView.addElementalButtons(ELEMENTAL_EARTH);
