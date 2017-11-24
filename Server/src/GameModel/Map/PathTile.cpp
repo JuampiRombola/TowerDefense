@@ -76,6 +76,30 @@ Map* PathTile::GetMap(){
 	return _map;
 }
 
+
+void PathTile::HitUnitsAfterDelay(uint delay_ms, uint damage) {
+	unsigned long long actual_ts = Helpers::MillisecondsTimeStamp();
+	_damagesToApplyAfterDelay.push_back(std::tuple<unsigned long long, uint>(actual_ts + delay_ms, damage));
+}
+
+void PathTile::Step(){
+
+	unsigned long long acutal_ts = Helpers::MillisecondsTimeStamp();
+	for (auto it = _damagesToApplyAfterDelay.begin(); it != _damagesToApplyAfterDelay.end();){
+		unsigned long long ts = std::get<0>(*it);
+		if (acutal_ts > ts){
+			uint damage = std::get<1>(*it);
+			for (auto unitIt = _units.begin(); unitIt != _units.end(); ++unitIt){
+				(*unitIt)->GetHit(damage);
+			}
+			it = _damagesToApplyAfterDelay.erase(it);
+		} else
+			++it;
+	}
+
+
+}
+
 void PathTile::InitPossiblePaths(){
 	PathTile* up = _map->GetPathTile(GetXPos(), GetYPos() + 1);
 	PathTile* down = _map->GetPathTile(GetXPos(), GetYPos() - 1);

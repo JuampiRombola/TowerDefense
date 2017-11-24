@@ -227,6 +227,15 @@ void Map::Step(TowerDefenseGame& game){
 		}
 	}
 
+	for (auto it = _pathTiles.begin(); it != _pathTiles.end(); ++it){
+		for (auto it2 = (*it).begin(); it2 != (*it).end(); ++it2){
+			PathTile* p = *it2;
+			if (p != nullptr){
+				p->Step();
+			}
+		}
+	}
+
 	auto it = _projectiles.begin();
 	for (; it != _projectiles.end();){
 		(*it)->Step();
