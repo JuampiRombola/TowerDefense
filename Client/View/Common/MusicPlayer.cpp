@@ -69,6 +69,10 @@ void MusicPlayer::win() {
     effects.emplace_back(musicLoader.getChunk(WIN_SONIDO), false);
 }
 
+void MusicPlayer::addStructureTile() {
+    effects.emplace_back(musicLoader.getChunk(TERRAFORMING_SONIDO), true);
+}
+
 void MusicPlayer::playMusic() {
     for (int channel = 1; channel <= 3 && !effects.empty(); ++channel) {
         if (!Mix_Playing(channel)) {

@@ -44,6 +44,8 @@ void ModelView::createPathTile(int x, int y) {
 void ModelView::createStructureTile(int x, int y) {
     Lock(this->m);
     map.addStructureTile(x, y);
+    if (mapLoaded && renderer.isOnCamera(x, y))
+        musicPlayer.addStructureTile();
 }
 
 void ModelView::createPortalEntrada(int x, int y) {
