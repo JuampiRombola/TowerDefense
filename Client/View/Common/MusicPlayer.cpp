@@ -22,6 +22,10 @@ void MusicPlayer::addShoot(int key) {
     }
 }
 
+void MusicPlayer::addDyingEnemy() {
+    effects.emplace_back(musicLoader.getChunk(ENEMIGO_MUERTE_SONIDO), true);
+}
+
 void MusicPlayer::playMusic() {
     for (int channel = 1; channel <= 10 && !effects.empty(); ++channel) {
         if (!Mix_Playing(channel)) {

@@ -12,6 +12,7 @@ private:
 public:
     MusicPlayer(MusicLoader &musicLoader);
     void addShoot(int key);
+    void addDyingEnemy();
     void playMusic();
 };
 

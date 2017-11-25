@@ -120,6 +120,7 @@ void ModelView::killUnit(int id) {
     checkIndexDepthLevel(levelIndex);
     UnitView *unit = depthLevels[levelIndex]->getUnit(id);
     unit->enableDying();
+    musicPlayer.addDyingEnemy();
 }
 
 void ModelView::draw(Uint32 time) {
