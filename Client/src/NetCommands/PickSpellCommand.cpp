@@ -14,7 +14,6 @@ PickSpellCommand::~PickSpellCommand(){
 
 
 void PickSpellCommand::SendCommand(SocketWrapper& sock){
-	uint8_t instruction = _pick ? PICK_SPELL : UNPICK_SPELL;
-	sock.SendByte(instruction);
+	sock.SendByte(_pick ? PICK_SPELL : UNPICK_SPELL);
 	sock.SendByte(_spelltype);
 }

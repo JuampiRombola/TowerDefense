@@ -13,6 +13,5 @@ PlayerIsReadyCommand::~PlayerIsReadyCommand(){
 
 
 void PlayerIsReadyCommand::SendCommand(SocketWrapper& sock){
-	uint8_t instruction = PLAYER_IS_READY;
-    sock.SendByte(instruction);
+    sock.SendByte(PLAYER_IS_READY);
 }

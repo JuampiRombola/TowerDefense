@@ -21,7 +21,6 @@ std::string intToPaddedString(uint x){
 void CreateLobbyCommand::SendCommand(SocketWrapper& sock){
 	if (_lobbyName.length() > 255)
 		return;
-	uint8_t instruction = CREATE_LOBBY; ///New lobby
-	sock.SendByte(instruction);
+	sock.SendByte(CREATE_LOBBY);
 	sock.SendString(_lobbyName);
 }

@@ -12,7 +12,6 @@ LogInCommand::~LogInCommand(){
 
 
 void LogInCommand::SendCommand(SocketWrapper& sock){
-	uint8_t opcode = LOG_IN;
-	sock.SendByte(opcode);
+	sock.SendByte(LOG_IN);
 	sock.SendString(_name);
 }

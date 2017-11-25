@@ -11,7 +11,6 @@ ChatMessageCommand::ChatMessageCommand(std::string &message) : _message(message)
 ChatMessageCommand::~ChatMessageCommand() {}
 
 void ChatMessageCommand::SendCommand(SocketWrapper &socket) {
-    uint8_t opcode = IN_GAME_CHAT_MESSAGE;
-    socket.SendByte(opcode);
+    socket.SendByte(IN_GAME_CHAT_MESSAGE);
     socket.SendString(_message);
 }
