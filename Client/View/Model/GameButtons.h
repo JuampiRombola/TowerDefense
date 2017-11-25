@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_GAMEBUTTONS_H
 #define TOWERDEFENSE_GAMEBUTTONS_H
 
-#include <list>
+#include <vector>
 #include "../Common/Image.h"
 #include "../Common/MousePosition.h"
 #include "../Common/TextureLoader.h"
@@ -10,6 +10,7 @@
 #include "../../include/NetCommands/CommandDispatcher.h"
 #include "PadlockButton.h"
 #include "WaitActionButton.h"
+#include "UpRightButton.h"
 
 class GameButtons {
 private:
@@ -18,9 +19,9 @@ private:
     Renderer &renderer;
     TextureLoader &textureLoader;
     int &cmd;
-    std::list<WaitActionButton*> towers;
-    std::list<WaitActionButton*> spells;
-    std::vector<Image*> barUpRight;
+    std::vector<WaitActionButton*> towers;
+    std::vector<WaitActionButton*> spells;
+    std::vector<UpRightButton*> barUpRight;
     std::list<PadlockButton*> fakeButtons;
     Sprite decoTowers;
     Sprite decoSpells;
@@ -36,6 +37,7 @@ public:
     void initFakeButtons();
     bool exitClicked();
     void setCooldown(int key, Uint32 cd);
+    void clickButton(SDL_Keycode sym);
 };
 
 

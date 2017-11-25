@@ -139,6 +139,22 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                             else
                                 hudView.enableExitView();
                             break;
+                        case SDLK_q: 
+                        case SDLK_w: 
+                        case SDLK_e: 
+                        case SDLK_r:
+                        case SDLK_f:
+                        case SDLK_1:
+                        case SDLK_2:
+                        case SDLK_3:
+                        case SDLK_4: 
+                        case SDLK_5:
+                        case SDLK_6:
+                        case SDLK_7: 
+                        case SDLK_8:
+                            if (!chat.isActive())
+                                hudView.clickButton(event.key.keysym.sym);
+                            break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
                         case SDLK_RIGHT:

@@ -246,3 +246,8 @@ void HudView::setLastTowerId(int id) {
     Lock(this->m);
     lastTowerUpdated = id;
 }
+
+void HudView::clickButton(SDL_Keycode sym) {
+    buttons.clickButton(sym);
+    SDL_SetCursor(crosshair);
+}

@@ -54,6 +54,7 @@ public:
     void disableExitView();
     void setCooldown(int key, Uint32 cd);
     void setLastTowerId(int id);
+    void clickButton(SDL_Keycode sym);
 private:
     void updateUpgradeView();
 };
