@@ -129,7 +129,8 @@ void ChatView::newInput(std::string &entry) {
 void ChatView::draw() {
     std::string* s = _messagesToAdd.Dequeue();
     while(s != nullptr){
-        addMessage((*s));
+        addMessage(*s);
+        std::cout << *s << std::endl << std::flush;
         delete s;
         s = _messagesToAdd.Dequeue();
     }
