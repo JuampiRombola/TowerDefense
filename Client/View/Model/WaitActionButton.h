@@ -3,17 +3,20 @@
 
 
 #include "GameButton.h"
+#include "../Common/Announcement.h"
 
 class WaitActionButton : public GameButton {
 private:
     Uint32 t;
+    Announcement *keySym;
 public:
     WaitActionButton(Renderer &r, TextureLoader &tl,
         int spriteKey, MousePosition &mousePosition,
-        int x, int y, int w, int h, int &cmd);
+        int x, int y, int w, int h, int &cmd, std::string &s);
+    ~WaitActionButton();
     void draw() override;
 private:
-        void mapKey(int spriteKey);
+    void mapKey(int spriteKey);
 };
 
 

@@ -19,12 +19,17 @@ private:
     SDL_Texture *outline;
     SDL_Rect dstRect;
     Uint32 ticks;
+    int fontSize;
+    SDL_Color front;
+    SDL_Color back;
 public:
     Announcement(std::string &text, Renderer &renderer);
+    Announcement(std::string &text, Renderer &renderer, int size);
     void draw();
     bool isActive();
     void Disable();
     ~Announcement();
+    void setDestXY(int x, int y);
 private:
     void createTexture();
 };

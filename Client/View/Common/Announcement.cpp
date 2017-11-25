@@ -1,6 +1,7 @@
 #include "Announcement.h"
 
 #define ANNOUNCE_FONT_PATH "../Resources/announcement_font.ttf"
+#define MONOSPACE_FONT_PATH "../Resources/font.ttf"
 #define FONT_SCALE 25
 #define OUTLINE_SIZE 1
 
@@ -12,9 +13,21 @@
 Announcement::Announcement(std::string &text, Renderer &renderer)
         : text(text), time(3000),
           renderer(renderer),
-          ticks(SDL_GetTicks()) {
+          ticks(SDL_GetTicks()),
+          fontSize(renderer.getWindowWidth() / FONT_SCALE),
+          front(SDL_Color{202, 164, 120}), back(SDL_Color{0, 0, 0}) {
     if (text == VICTORY || text == DEFEAT)
         time = 30000;
+    font = TTF_OpenFont(ANNOUNCE_FONT_PATH, fontSize);
+    outlineF = TTF_OpenFont(ANNOUNCE_FONT_PATH, fontSize);
+    this->createTexture();
+}
+
+Announcement::Announcement(std::string &text, Renderer &renderer, int size) :
+        text(text), renderer(renderer), fontSize(size),
+        front(SDL_Color{255, 255, 255}), back(SDL_Color{0, 0, 0}) {
+    font = TTF_OpenFont(MONOSPACE_FONT_PATH, fontSize);
+    outlineF = TTF_OpenFont(MONOSPACE_FONT_PATH, fontSize);
     this->createTexture();
 }
 
@@ -39,16 +52,10 @@ Announcement::~Announcement() {
 }
 
 void Announcement::createTexture() {
-    font = TTF_OpenFont(ANNOUNCE_FONT_PATH,
-                        renderer.getWindowWidth() / FONT_SCALE);
-    outlineF = TTF_OpenFont(ANNOUNCE_FONT_PATH,
-                            renderer.getWindowWidth() / FONT_SCALE);
     TTF_SetFontOutline(outlineF, OUTLINE_SIZE);
 
-    SDL_Color black = {0, 0, 0};
-    SDL_Color yellow = {202, 164, 120};
-    SDL_Surface *tOutline = TTF_RenderText_Solid(outlineF, text.c_str(), black);
-    SDL_Surface *t = TTF_RenderText_Solid(font, text.c_str(), yellow);
+    SDL_Surface *tOutline = TTF_RenderText_Solid(outlineF, text.c_str(), back);
+    SDL_Surface *t = TTF_RenderText_Solid(font, text.c_str(), front);
 
     dstRect = {renderer.getWindowWidth()/2-(t->w)/2, ANNOUNCE_START_Y, 0, 0};
     dstRect.w = t->w;
@@ -58,3 +65,9 @@ void Announcement::createTexture() {
     SDL_FreeSurface(t);
     SDL_FreeSurface(tOutline);
 }
+
+void Announcement::setDestXY(int x, int y) {
+    dstRect.x = x;
+    dstRect.y = y;
+}
+

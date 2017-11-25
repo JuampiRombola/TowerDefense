@@ -6,7 +6,6 @@
 #define FIRST_BUTTON 13
 #define FIRST_SPELL_BUTTON 8
 #define BLANK_SPACE 9
-#define CANT_TOWERS 4
 
 #define TRANSPARENCY 212
 #define BUTTONSOFFSET 200
@@ -16,6 +15,14 @@
 #define INDEX_EXIT 0
 #define INDEX_PING 1
 
+#define Q 0
+#define W 1
+#define E 2
+#define R 3
+
+#define MSG_EXIT "ESC"
+#define MSG_PING "F"
+
 GameButtons::GameButtons(Window &w, MousePosition &mousePosition,
                          Renderer &renderer,
                          TextureLoader &textureLoader, int &cmd) :
@@ -23,14 +30,16 @@ GameButtons::GameButtons(Window &w, MousePosition &mousePosition,
         renderer(renderer), textureLoader(textureLoader), cmd(cmd),
         decoTowers(textureLoader.getTexture(MARQUESINA), renderer),
         decoSpells(textureLoader.getTexture(MARQUESINA), renderer) {
+    std::string msg = MSG_EXIT;
     barUpRight.push_back(new UpRightButton(window, CMD_EXIT, cmd,
                textureLoader.getTexture(EXIT_BUTTON),
                textureLoader.getTexture(TRANSPARENCY),
-               mousePosition, renderer, barUpRight.size() + 1));
+               mousePosition, renderer, barUpRight.size() + 1, msg));
+    msg = MSG_PING;
     barUpRight.push_back(new UpRightButton(window, CMD_PING, cmd,
                textureLoader.getTexture(PING_BUTTON),
                textureLoader.getTexture(TRANSPARENCY),
-               mousePosition, renderer, barUpRight.size() + 1));
+               mousePosition, renderer, barUpRight.size() + 1, msg));
     decoTowers.setSourceRect(0, 0, MARQUESINA_W, MARQUESINA_H);
     decoSpells.setSourceRect(0, 0, MARQUESINA_W, MARQUESINA_H);
     decoTowers.setDestRect(0, 0, MARQUESINA_W, MARQUESINA_H);
@@ -54,26 +63,40 @@ void GameButtons::addTowerButtons(int key) {
     int y = window.getHeight() - PADDING_HUD - HUD_BUTTON_Y;
     int towerX = static_cast<int>(window.getWidth() - PADDING_HUD -
             (FIRST_BUTTON - towers.size()) * HUD_BUTTON_X);
+    std::string s;
+    switch (towers.size()) {
+        case Q:
+            s = "Q"; break;
+        case W:
+            s = "W"; break;
+        case E:
+            s = "E"; break;
+        case R:
+            s = "R"; break;
+        default:break;
+    }
     b = new WaitActionButton(renderer, textureLoader, key + BUTTONSOFFSET,
                          mousePosition, towerX, y,
-                         HUD_ICON_SIZE, HUD_ICON_SIZE, cmd);
+                         HUD_ICON_SIZE, HUD_ICON_SIZE, cmd, s);
     towers.push_back(b);
 
     int spellX = static_cast<int>(window.getWidth() - PADDING_HUD -
             (FIRST_SPELL_BUTTON - spells.size()) * HUD_BUTTON_X);
     int spellKey = key + SPELLOFFSET_1 + 1*key;
 
+    s = std::to_string(spells.size() + 1);
     b = new WaitActionButton(renderer, textureLoader, spellKey+BUTTONSOFFSET,
                              mousePosition, spellX, y,
-                             HUD_ICON_SIZE, HUD_ICON_SIZE, cmd);
+                             HUD_ICON_SIZE, HUD_ICON_SIZE, cmd, s);
     spells.push_back(b);
 
     spellX = static_cast<int>(window.getWidth() - PADDING_HUD -
             (FIRST_SPELL_BUTTON - spells.size()) * HUD_BUTTON_X);
     spellKey = key + SPELLOFFSET_2 + 1*key;
+    s = std::to_string(spells.size() + 1);
     b = new WaitActionButton(renderer, textureLoader, spellKey+BUTTONSOFFSET,
                              mousePosition, spellX, y,
-                             HUD_ICON_SIZE, HUD_ICON_SIZE, cmd);
+                             HUD_ICON_SIZE, HUD_ICON_SIZE, cmd, s);
     spells.push_back(b);
 }
 
