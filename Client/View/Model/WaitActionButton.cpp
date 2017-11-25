@@ -3,9 +3,9 @@
 #include "ViewConstants.h"
 
 #define BUTTON_OFFSET 200
-#define FONT_SIZE_KEY 16
-#define ADJUST_X 16
-#define ADJUST_Y 18
+#define FONT_SIZE_KEY 13
+#define ADJUST_X 13
+#define ADJUST_Y 15
 
 WaitActionButton::WaitActionButton(Renderer &r, TextureLoader &tl,
                              int spriteKey, MousePosition &mousePosition,
