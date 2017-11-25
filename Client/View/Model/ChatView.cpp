@@ -21,13 +21,17 @@
 #define OFFSET_Y_IBEAM 1
 #define OFFSET_X_IBEAM 3
 
+#define CMD_HIDE_CHAT "/hide"
+#define CMD_SHOW_CHAT "/show"
+
 ChatView::ChatView(CommandDispatcher &d, Window &w,
                    Renderer &r, TextureLoader &tl) :
         dispatcher(d), window(w), renderer(r), input(nullptr),
         spriteBackground(tl.getTexture(CHAT_BG), r),
         spriteInput(tl.getTexture(CHAT_INPUT), r),
         textColor(SDL_Color{255, 255, 255, 0xFF}), active(false),
-        dstX(PADDING_HUD * 4), dstY(window.getHeight() - CHAT_PAD), _messagesToAdd() {
+        dstX(PADDING_HUD * 4), dstY(window.getHeight() - CHAT_PAD), 
+        _messagesToAdd(), visible(true) {
     font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 
     int chatY = window.getHeight() - CHAT_H - PADDING_HUD;
@@ -76,11 +80,16 @@ void ChatView::disable() {
 
     active = false;
     if (!inputText.empty()) {
-        // Reemplazar esta funcion por comando al servidor
-        // dispatcher
-        //std::cout << "queieng msj\n"<<std::flush;
-        this->dispatcher.QueueCommand(new ChatMessageCommand(inputText));
-        //this->addMessage(inputText);
+        if (inputText == CMD_HIDE_CHAT) {
+            visible = false;
+        } else if ((inputText == CMD_SHOW_CHAT)) {
+            visible = true;
+        } else {
+            // Reemplazar esta funcion por comando al servidor
+            // dispatcher
+            //this->addMessage(inputText);
+            this->dispatcher.QueueCommand(new ChatMessageCommand(inputText));
+        }
     }
     inputText = "";
     if (input) delete input;
@@ -120,21 +129,25 @@ void ChatView::newInput(std::string &entry) {
 void ChatView::draw() {
     std::string* s = _messagesToAdd.Dequeue();
     while(s != nullptr){
-        addMessage((*s));
+        addMessage(*s);
+        std::cout << *s << std::endl << std::flush;
         delete s;
         s = _messagesToAdd.Dequeue();
     }
 
-    spriteBackground.drawEuclidian();
+    if (visible)
+        spriteBackground.drawEuclidian();
 
     if (active) {
         spriteInput.drawEuclidian();
-        if (input )input->draw();
+        if (input) input->draw();
         if (((SDL_GetTicks() / 600) % 2) == 0)
             renderer.copyEuclidean(textureIbeam, &dstRectIbeam);
         if (inputText.size() >= MAX_LENGTH)
             renderer.copyEuclidean(textureIbeam, &dstRectIbeam);
     }
+    
+    if (!visible) return; 
     Lock(this->mutex);
     int i = 0;
     for (auto it= messages.rbegin(); it != messages.rend(); ++it) {
@@ -166,11 +179,13 @@ void ChatView::addMessage(std::string &m) {
 void ChatView::initialMessages() {
     std::string m = "Bienvenido a Tower Defense v1.0";
     std::string i = "Para usar chat presiona Enter";
+    std::string h = "Para ocultar el chat utiliza el comando /hide";
+    std::string j = "Para mostrarlo, el comando /show";
     std::string s = " ";
     addMessage(m);
     addMessage(i);
-    addMessage(s);
-    addMessage(s);
+    addMessage(h);
+    addMessage(j);
     addMessage(s);
     addMessage(s);
     addMessage(s);

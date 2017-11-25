@@ -10,7 +10,6 @@ PickMapCommand::PickMapCommand(uint mapid) : _mapId(mapid) {}
 PickMapCommand::~PickMapCommand() {}
 
 void PickMapCommand::SendCommand(SocketWrapper &sock) {
-    uint8_t op = PICK_MAP;
-    sock.Send((char*) &op, 1);
-    sock.Send((char*) &_mapId, 4);
+    sock.SendByte(PICK_MAP);
+    sock.SendInt32(_mapId);
 }

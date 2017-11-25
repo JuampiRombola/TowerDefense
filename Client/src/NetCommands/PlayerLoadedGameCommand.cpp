@@ -15,6 +15,5 @@ PlayerLoadedGameCommand::~PlayerLoadedGameCommand(){
 }
 
 void PlayerLoadedGameCommand::SendCommand(SocketWrapper& sock){
-    uint8_t instruction = CLIENT_LOADED_GAME;
-    sock.Send((char*)&instruction, 1);
+    sock.SendByte(CLIENT_LOADED_GAME);
 }

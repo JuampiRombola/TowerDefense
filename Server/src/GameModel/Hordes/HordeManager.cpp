@@ -8,7 +8,7 @@
 
 
 HordeManager::HordeManager(Configuration& mapCfg)
-        : _hordes(), _timeStamp(0), _currentHorde(nullptr) {
+        : _hordeQueue(), _hordes(), _timeStamp(0), _currentHorde(nullptr) {
 
     int i = 1;
 	for (YAML::const_iterator it = mapCfg.Cfg["hordas"].begin();
@@ -25,13 +25,16 @@ HordeManager::HordeManager(Configuration& mapCfg)
         h->halconSangrientoAmount = node["halcon_sangriento"].as<uint>();
         h->hombreCabraAmount = node["hombre_cabra"].as<uint>();
         h->noMuertoAmount = node["no_muerto"].as<uint>();
-        _hordes.push(h);
+        _hordeQueue.push(h);
+        _hordes.push_back(h);
 	}
 
 }
 
 HordeManager::~HordeManager() {
-
+    for (auto it = _hordes.begin(); it != _hordes.end(); ++it){
+        delete (*it);
+    }
 }
 
 void HordeManager::AddHorde(Horde *horde) {
@@ -47,14 +50,14 @@ void HordeManager::Step() {
     bool isBegin = false;
     if (_currentHorde == nullptr){
 
-        if (_hordes.empty()){
+        if (_hordeQueue.empty()){
             //GANARON !!!
             game->PlayersWon();
             return;
         }
 
-        _currentHorde = _hordes.front();
-        _hordes.pop();
+        _currentHorde = _hordeQueue.front();
+        _hordeQueue.pop();
         game->notifications.Queue(new HordeUpdateGameNotification(_currentHorde->Id(), true));
         isBegin = true;
     }
@@ -67,7 +70,6 @@ void HordeManager::Step() {
         }
         else if (actualTimeStamp - _timeStamp > timeToWaitBetweenHordes_ms){
             _timeStamp = actualTimeStamp;
-            delete _currentHorde;
             _currentHorde = nullptr;
         }
         return;

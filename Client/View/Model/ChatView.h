@@ -31,6 +31,7 @@ private:
     std::list<TextView *> messages;
     std::mutex mutex;
     NonBlockingThreadSafeQueue<std::string*> _messagesToAdd;
+    bool visible;
 
 public:
     ChatView(CommandDispatcher &d, Window &w, Renderer &r, TextureLoader &tl);

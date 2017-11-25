@@ -37,6 +37,7 @@ private:
     void _HandleHordeEnded();
 
 	std::map<std::pair<uint, uint>, uint> _towerCoordToId;
+	uint _localTowerId;
 public:
 	NotificationReciever(SocketWrapper& socket,
 						 ClientLobbyManager& lobbyManager, GTKRunner& runner,

@@ -7,7 +7,8 @@
 #include "../include/NetCommands/PlayerLoadedGameCommand.h"
 
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner, CommandDispatcher& dispatcher)
-: _sock(socket), _lobbyManager(lobbyManager),  _runner(runner), _dispatcher(dispatcher), _stop(false), _towerCoordToId() {
+: _sock(socket), _lobbyManager(lobbyManager),  _runner(runner),
+  _dispatcher(dispatcher), _stop(false), _towerCoordToId(), _localTowerId() {
 
 }
 
@@ -26,7 +27,7 @@ void NotificationReciever::RecieveNotifications(){
     {
         uint8_t opcode;
         while (!_Stop()){
-            _sock.Recieve((char*) &opcode, 1);
+            opcode = _sock.RecieveByte();
             switch (opcode){
                 case CREATE_LOBBY:
                     std::cout << "CREATE_LOBBY::\n" << std::flush;
@@ -57,9 +58,12 @@ void NotificationReciever::RecieveNotifications(){
                     _lobbyManager.HandlePlayerLeave();
                     break;
                 case LOG_IN_SUCCESS:
+                {
                     std::cout << "LOG_IN_SUCCESS::\n" << std::flush;
                     _lobbyManager.HandleLoginSuccess();
                     break;
+                }
+
                 case PICK_SPELL:
                     std::cout << "PICK_SPELL::\n" << std::flush;
                     _lobbyManager.HandlePickedSpell();
@@ -86,17 +90,16 @@ void NotificationReciever::RecieveNotifications(){
                     g_idle_add(GTKRunner::notification_check, &_runner);
                     break;
                 case GAME_STARTED:
+                {
                     std::cout << "GAME_STARTED::\n" << std::flush;
-                    uint32_t width;
-                    uint32_t height;
-                    uint8_t superficie;
-                    _sock.Recieve((char*)&superficie, 1);
-                    _sock.Recieve((char*)&width, 4);
-                    _sock.Recieve((char*)&height, 4);
-
+                    uint8_t superficie = _sock.RecieveByte();
+                    uint32_t width = _sock.RecieveInt32();
+                    uint32_t height = _sock.RecieveInt32();
                     _runner.gtkNotifications.Queue(new GameStartedGTKNotification(superficie, width, height));
                     g_idle_add(GTKRunner::notification_check, &_runner);
                     break;
+                }
+
                 case GAME_OPCODE:
                     std::cout << "GAME_OPCODE::\n" << std::flush;
                     _HandleGameOpcode();
@@ -106,13 +109,11 @@ void NotificationReciever::RecieveNotifications(){
                     _dispatcher.Enable();
                     break;
                 case LOAD_MAP:
+                {
                     std::cout << "LOAD_MAP::\n" << std::flush;
-                    uint8_t op;
-                    _sock.Recieve((char*) &op, 1);
-                    uint8_t x;
-                    uint8_t y;
-                    _sock.Recieve((char*) &x, 4);
-                    _sock.Recieve((char*) &y, 4);
+                    uint8_t op = _sock.RecieveByte();
+                    uint8_t x = _sock.RecieveInt32();
+                    uint8_t y = _sock.RecieveInt32();
                     if (op == PATH_TILE)
                         model_view->createPathTile(x, y);
                     if (op == STRUCTURE_TILE)
@@ -122,6 +123,8 @@ void NotificationReciever::RecieveNotifications(){
                     if (op == FINISH_TILE)
                         model_view->createPortalSalida(x, y);
                     break;
+                }
+
                 case MAP_FINISHED_LOADING:
                 {
                     std::cout << "MAP_FINISHED_LOADING::\n" << std::flush;
@@ -136,8 +139,7 @@ void NotificationReciever::RecieveNotifications(){
                 case IN_GAME_CHAT_MESSAGE:
                 {
                     std::cout << "IN_GAME_CHAT_MESSAGE::\n" << std::flush;
-                    uint32_t pguid;
-                    _sock.Recieve((char*) &pguid, 4);
+                    uint32_t pguid = _sock.RecieveInt32();
                     std::string message = _sock.RecieveString();
 
                     if (pguid == _lobbyManager.myGuid){
@@ -162,8 +164,7 @@ void NotificationReciever::RecieveNotifications(){
 }
 
 void NotificationReciever::_HandleGameOpcode(){
-	uint8_t opcode;
-	_sock.Recieve((char*) &opcode, 1);
+	uint8_t opcode = _sock.RecieveByte();
 	switch (opcode) {
 		case TOWER_PLACED:
 			std::cout << "TOWER_PLACED::\n" << std::flush;
@@ -194,15 +195,19 @@ void NotificationReciever::_HandleGameOpcode(){
             this->Stop();
             break;
         case UNIT_DIED:
-			std::cout << "UNIT_DIED::\n" << std::flush;
-			uint32_t unitid;
-			_sock.Recieve((char *) &unitid, 4);
-			model_view->killUnit(unitid);
-			break;
+        {
+            std::cout << "UNIT_DIED::\n" << std::flush;
+            uint32_t unitid = _sock.RecieveInt32();
+            model_view->killUnit(unitid);
+            break;
+        }
+
 		case CLIENT_CAST_SPELL:
-			std::cout << "CLIENT_CAST_SPELL::\n" << std::flush;
-			_HandleSpellCasted();
-			break;
+        {
+            std::cout << "CLIENT_CAST_SPELL::\n" << std::flush;
+            _HandleSpellCasted();
+            break;
+        }
 		case HORDE_STARTED:
 			std::cout << "HORDE_STARTED::\n" << std::flush;
 			_HandleHordeStarted();
@@ -223,45 +228,29 @@ void NotificationReciever::_HandleGameOpcode(){
 }
 
 void NotificationReciever::_HandleTowerGainedExperience() {
-	uint32_t x;
-	uint32_t y;
-	uint32_t exp;
-	_sock.Recieve((char*)&x, 4);
-	_sock.Recieve((char*)&y, 4);
-	_sock.Recieve((char*)&exp, 4);
-
-	std::cout << "Tower @(" << x << ", " << y << ") now has " << exp << "xp\n" <<std::flush;
+	uint32_t x = _sock.RecieveInt32();
+	uint32_t y = _sock.RecieveInt32();
+	uint32_t exp = _sock.RecieveInt32();
 
 	uint towerId = _towerCoordToId[std::pair<uint, uint>(x, y)];
-
     TowerView* tower= model_view->getTower(towerId);
     tower->setExp(exp);
     hud_view->setLastTowerId(towerId);
 }
 
 void NotificationReciever::_HandleTowerUpgrade() {
-    uint32_t x;
-    uint32_t y;
-    uint32_t damage;
-    uint32_t range;
-    uint32_t projectile_ms_over_tile;
-    uint32_t level;
+    uint32_t x = _sock.RecieveInt32();
+    uint32_t y = _sock.RecieveInt32();
+    uint32_t damage = _sock.RecieveInt32();
+    uint32_t range = _sock.RecieveInt32();
+    uint32_t projectile_ms_over_tile = _sock.RecieveInt32();
+    uint32_t level = _sock.RecieveInt32();
 
-
-    _sock.Recieve((char*) &x, 4);
-    _sock.Recieve((char*) &y, 4);
-	
 	uint towerId = _towerCoordToId[std::pair<uint, uint>(x, y)];
-    
-    _sock.Recieve((char*) &damage, 4);
-    _sock.Recieve((char*) &range, 4);
-    _sock.Recieve((char*) &projectile_ms_over_tile, 4);
-    _sock.Recieve((char*) &level, 4);
 
-    uint32_t exp_required_for_damage_upgrade;
-    uint32_t exp_required_for_range_upgrade;
-    _sock.Recieve((char*) &exp_required_for_damage_upgrade, 4);
-    _sock.Recieve((char*) &exp_required_for_range_upgrade, 4);
+
+    uint32_t exp_required_for_damage_upgrade = _sock.RecieveInt32();
+    uint32_t exp_required_for_range_upgrade = _sock.RecieveInt32();
 
     TowerView* tower= model_view->getTower(towerId);
     tower->setDamage(damage);
@@ -271,66 +260,57 @@ void NotificationReciever::_HandleTowerUpgrade() {
     tower->setUpgradeExperienceDamage(exp_required_for_damage_upgrade);
     tower->setUpgradeExperienceRange(exp_required_for_range_upgrade);
 
-	uint8_t type = -1;
-    _sock.Recieve((char*) &type, 1);
+	uint8_t type = _sock.RecieveByte();
     switch (type){
         case SPELL_TYPE_FIRE:
-            uint32_t collateral_damage;
-            uint32_t collateral_range;
-            _sock.Recieve((char*)&collateral_damage, 4);
-            _sock.Recieve((char*)&collateral_range, 4);
+        {
+            uint32_t collateral_damage = _sock.RecieveInt32();
+            uint32_t collateral_range = _sock.RecieveInt32();
             tower->setCollateralDamage(collateral_damage);
             tower->setCollateralRange(collateral_range);
-            uint32_t exp_required_for_collateral_range_upgrade;
-            _sock.Recieve((char*)&exp_required_for_collateral_range_upgrade, 4);
+            uint32_t exp_required_for_collateral_range_upgrade = _sock.RecieveInt32();
             tower->setUpgradeExperienceCollateralRange(exp_required_for_collateral_range_upgrade);
             break;
+        }
         case SPELL_TYPE_WATER:
-            uint32_t slow_seconds;
-            uint32_t slow_percent;
-            _sock.Recieve((char*)&slow_seconds, 4);
-            _sock.Recieve((char*)&slow_percent, 4);
+        {
+            uint32_t slow_seconds = _sock.RecieveInt32();
+            uint32_t slow_percent = _sock.RecieveInt32();
             tower->setFreezePercent(slow_percent);
             tower->setFreezeDuration(slow_seconds);
-            uint32_t exp_required_for_slow_upgrade;
-            _sock.Recieve((char*)&exp_required_for_slow_upgrade, 4);
+            uint32_t exp_required_for_slow_upgrade = _sock.RecieveInt32();
             tower->setUpgradeExperienceSlow(exp_required_for_slow_upgrade);
             break;
+        }
         case SPELL_TYPE_AIR:
-            uint32_t nonFlyingDamage;
-            _sock.Recieve((char*) &nonFlyingDamage, 4);
+        {
+            uint32_t nonFlyingDamage = _sock.RecieveInt32();
             tower->setDamage(nonFlyingDamage);
             tower->setFlyDamage(damage);
             break;
+        }
         case SPELL_TYPE_GROUND:
             break;
     }
 }
 
 void NotificationReciever::_HandleHordeEnded() {
-	uint hordeId;
-	_sock.Recieve((char*) &hordeId, 4);
+	uint hordeId = _sock.RecieveInt32();
 	std::string s = "Horda " +  std::to_string(hordeId) + " superada!";
 	model_view->addAnnouncement(s);
 }
 void NotificationReciever::_HandleHordeStarted() {
-	uint hordeId;
-	_sock.Recieve((char*) &hordeId, 4);
+	uint hordeId = _sock.RecieveInt32();
 	std::string s = "Horda " +  std::to_string(hordeId) + " ha empezado!";
 	model_view->addAnnouncement(s);
 }
 
 void NotificationReciever::_HandleSpellCasted(){
-	uint8_t spell;
-	_sock.Recieve((char *) &spell, 1);
-	uint32_t x;
-	_sock.Recieve((char *) &x, 4);
-	uint32_t y;
-	_sock.Recieve((char *) &y, 4);
-    uint32_t duration_ms;
-    _sock.Recieve((char *) &duration_ms, 4);
-    uint32_t cooldown_ms;
-    _sock.Recieve((char *) &cooldown_ms, 4);
+	uint8_t spell = _sock.RecieveByte();
+	uint32_t x = _sock.RecieveInt32();
+	uint32_t y = _sock.RecieveInt32();
+    uint32_t duration_ms = _sock.RecieveInt32();
+    uint32_t cooldown_ms = _sock.RecieveInt32();
 	switch(spell){
 		case SPELL_TERRAFORMING:
             hud_view->setCooldown(CMD_TERRAFORMING, cooldown_ms);
@@ -372,18 +352,12 @@ void NotificationReciever::_HandleSpellCasted(){
 
 
 void NotificationReciever::_HandleProjectileFired(){
-	uint32_t x;
-	_sock.Recieve((char *) &x, 4);
-	uint32_t y;
-	_sock.Recieve((char *) &y, 4);
-	uint32_t tox;
-	_sock.Recieve((char *) &tox, 4);
-	uint32_t toy;
-	_sock.Recieve((char *) &toy, 4);
-	uint32_t delay_ms;
-	_sock.Recieve((char *) &delay_ms, 4);
-	uint8_t spelltype;
-	_sock.Recieve((char*) &spelltype, 1);
+	uint32_t x = _sock.RecieveInt32();
+	uint32_t y = _sock.RecieveInt32();
+	uint32_t tox = _sock.RecieveInt32();
+	uint32_t toy = _sock.RecieveInt32();
+	uint32_t delay_ms = _sock.RecieveInt32();
+	uint8_t spelltype = _sock.RecieveByte();
 	switch(spelltype){
 		case SPELL_TYPE_WATER:
 			model_view->createShot(DISPARO_AGUA, x, y, tox, toy, delay_ms);
@@ -400,47 +374,37 @@ void NotificationReciever::_HandleProjectileFired(){
 	}
 }
 void NotificationReciever::_HandleTowerPlaced(){
-    static int towerID = 1;
-	uint32_t x;
-	_sock.Recieve((char *) &x, 4);
-	uint32_t y;
-	_sock.Recieve((char *) &y, 4);
-	uint8_t type = -1;
-	_sock.Recieve((char *) &type, 1);
-	_towerCoordToId[std::pair<uint, uint>(x, y)] = towerID;
+	uint32_t x = _sock.RecieveInt32();
+	uint32_t y = _sock.RecieveInt32();
+	uint8_t type = _sock.RecieveByte();
+	_towerCoordToId[std::pair<uint, uint>(x, y)] = _localTowerId;
     Uint32 cooldown_ms = 20000;
     switch (type) {
         case SPELL_TYPE_GROUND:
             hud_view->setCooldown(CMD_EARTH_TOWER, cooldown_ms);
-            model_view->createTower(towerID++, TORRE_TIERRA , x, y);
+            model_view->createTower(_localTowerId++, TORRE_TIERRA , x, y);
             break;
         case SPELL_TYPE_FIRE:
             hud_view->setCooldown(CMD_FIRE_TOWER, cooldown_ms);
-            model_view->createTower(towerID++, TORRE_FUEGO , x, y);
+            model_view->createTower(_localTowerId++, TORRE_FUEGO , x, y);
             break;
         case SPELL_TYPE_WATER:
             hud_view->setCooldown(CMD_WATER_TOWER, cooldown_ms);
-            model_view->createTower(towerID++, TORRE_AGUA , x, y);
+            model_view->createTower(_localTowerId++, TORRE_AGUA , x, y);
             break;
         case SPELL_TYPE_AIR:
             hud_view->setCooldown(CMD_AIR_TOWER, cooldown_ms);
-            model_view->createTower(towerID++, TORRE_AIRE, x, y);
+            model_view->createTower(_localTowerId++, TORRE_AIRE, x, y);
             break;
     }
 }
 void NotificationReciever::_HandleUnitPositionUpdate(){
-    uint32_t unitID;
-    _sock.Recieve((char *) &unitID, 4);
-    uint32_t x;
-    _sock.Recieve((char *) &x, 4);
-    uint32_t y;
-    _sock.Recieve((char *) &y, 4);
-    uint32_t tox;
-    _sock.Recieve((char *) &tox, 4);
-    uint32_t toy;
-    _sock.Recieve((char *) &toy, 4);
-    uint32_t delay_ms ;
-    _sock.Recieve((char *) &delay_ms, 4);
+    uint32_t unitID = _sock.RecieveInt32();
+    uint32_t x = _sock.RecieveInt32();
+    uint32_t y = _sock.RecieveInt32();
+    uint32_t tox = _sock.RecieveInt32();
+    uint32_t toy = _sock.RecieveInt32();
+    uint32_t delay_ms = _sock.RecieveInt32();
 
 	if (tox == 0xFFFFFFFF || toy == 0xFFFFFFFF)
 		return;
@@ -448,20 +412,13 @@ void NotificationReciever::_HandleUnitPositionUpdate(){
 	model_view->moveUnit(unitID, x, y, tox, toy, delay_ms);
 }
 void NotificationReciever::_HandleUnitCreated(){
-    uint32_t unitID;
-    _sock.Recieve((char *) &unitID, 4);
-    uint32_t x;
-    _sock.Recieve((char *) &x, 4);
-    uint32_t y;
-    _sock.Recieve((char *) &y, 4);
-    uint32_t tox;
-    _sock.Recieve((char *) &tox, 4);
-    uint32_t toy;
-    _sock.Recieve((char *) &toy, 4);
-    uint32_t delay_ms ;
-    _sock.Recieve((char *) &delay_ms, 4);
-    uint8_t unittype;
-    _sock.Recieve((char *) &unittype, 1);
+    uint32_t unitID = _sock.RecieveInt32();
+    uint32_t x = _sock.RecieveInt32();
+    uint32_t y = _sock.RecieveInt32();
+    uint32_t tox = _sock.RecieveInt32();
+    uint32_t toy = _sock.RecieveInt32();
+    uint32_t delay_ms = _sock.RecieveInt32();
+    uint8_t unittype = _sock.RecieveByte();
     UNIT_TYPE type = (UNIT_TYPE) unittype;
     switch(type){
         case UNIT_TYPE_Abmonible:

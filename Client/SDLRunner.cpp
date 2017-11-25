@@ -49,19 +49,18 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     MusicPlayer musicPlayer(musicLoader);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
     ModelView modelView(renderer, textureLoader, musicPlayer);
+    HudView hudView(window, textureLoader, renderer, *_dispatcher, modelView);
     ChatView chat(*_dispatcher, window, renderer, textureLoader);
     MouseMovement mouseMovement(renderer);
 
     _reciever->model_view =  &modelView;
+    _reciever->hud_view = &hudView;
     _reciever->chat_view = &chat;
 
     _dispatcher->QueueCommand(new LoadMapCommand());
     
     modelView.setMapEnvironment(_mapSurface);
     modelView.setMapWidthHeight(_mapWidth, _mapHeight);
-
-    HudView hudView(window, textureLoader, renderer, *_dispatcher, modelView);
-    _reciever->hud_view = &hudView;
 
     if (_lobbyManager->groundHUDEnabled)
         hudView.addElementalButtons(ELEMENTAL_EARTH);

@@ -17,5 +17,5 @@ LoadMapCommand::~LoadMapCommand(){
 
 void LoadMapCommand::SendCommand(SocketWrapper& sock){
     uint8_t opcode = LOAD_MAP;
-    sock.Send((char*) &opcode, 1);
+    sock.SendByte(opcode);
 }

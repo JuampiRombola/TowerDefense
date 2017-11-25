@@ -12,7 +12,6 @@ JoinLobbyCommand::~JoinLobbyCommand(){
 
 
 void JoinLobbyCommand::SendCommand(SocketWrapper& sock){
-	uint8_t instruction = JOIN_LOBBY;
-	sock.Send((char*)&instruction, 1);
-	sock.Send((char*)&_lobbyGUID, 4);
+    sock.SendByte(JOIN_LOBBY);
+    sock.SendInt32(_lobbyGUID);
 }

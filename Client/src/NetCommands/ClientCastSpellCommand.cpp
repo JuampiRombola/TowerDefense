@@ -6,12 +6,10 @@ ClientCastSpellCommand::ClientCastSpellCommand(CAST_SPELL_TYPE type, uint32_t ti
         : _type(type), _tileX(tileX), _tileY(tileY) {}
 
 void ClientCastSpellCommand::SendCommand(SocketWrapper &sock) {
-    uint8_t gameopcode = GAME_OPCODE;
-    sock.Send((char*) &gameopcode, 1);
-    uint8_t opcode = CLIENT_CAST_SPELL;
-    sock.Send((char*) &opcode, 1);
+    sock.SendByte(GAME_OPCODE);
+    sock.SendByte(CLIENT_CAST_SPELL);
     uint8_t type = _type;
-    sock.Send((char*) &type, 1);
-    sock.Send((char*) &_tileX, 4);
-    sock.Send((char*) &_tileY, 4);
+    sock.SendByte(type);
+    sock.SendInt32(_tileX);
+    sock.SendInt32(_tileY);
 }

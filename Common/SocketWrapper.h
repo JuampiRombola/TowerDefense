@@ -14,24 +14,27 @@ class SocketWrapper
 private:
 	unsigned long long _bytesSent = 0;
 	unsigned long long _bytesRecieved = 0;
+	//Envia n bytes del buffer
+	//Devuelve falso si el socket se desconecto
+	//Lanza una excepcion en caso de error
+	bool _Send(const char *buffer, size_t n);
+
+	//Recibe n bytes del buffer
+	//Devuelve falso si el socket se desconecto
+	//Lanza una excepcion en caso de error
+	bool _Recieve(char *buffer, size_t length);
 protected:
 	int _fd;
 public:
 	explicit SocketWrapper(int fd);
 	~SocketWrapper();
-	
-	//Envia n bytes del buffer
-	//Devuelve falso si el socket se desconecto
-	//Lanza una excepcion en caso de error
-	bool Send(const char* buffer, size_t n);
-	
-	//Recibe n bytes del buffer
-	//Devuelve falso si el socket se desconecto
-	//Lanza una excepcion en caso de error
-	bool Recieve(char* buffer, size_t length);
 
 	std::string RecieveString();
 	void SendString(std::string& tosend);
+	void SendByte(uint8_t byte);
+	uint8_t RecieveByte();
+	void SendInt32(uint32_t byte);
+	uint32_t RecieveInt32();
 
 };
 

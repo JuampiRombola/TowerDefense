@@ -55,8 +55,8 @@ void HudView::doMouseAction() {
         SDL_SetCursor(arrow);
         if (currentCommand >= CMD_DAMAGE) {
             auto t = model.getTower(upgradeTarget->getId());
-            uint x = t->getX();
-            uint y = t->getY();
+            int x = t->getX();
+            int y = t->getY();
             sendCommand(x, y);
             currentCommand = -1;
             SDL_SetCursor(arrow);
@@ -70,7 +70,7 @@ void HudView::doMouseAction() {
         return;
     }
 
-    if (!buttons.isAnyClicked() && currentCommand != -1) {
+    if (!buttons.isAnyClicked() && currentCommand > -1) {
         int tileX = renderer.pixelToCartesianX(mouse_x, mouse_y);
         int tileY = renderer.pixelToCartesianY(mouse_x, mouse_y);
         if (model.isValidTile(tileX, tileY))
