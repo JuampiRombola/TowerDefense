@@ -167,5 +167,6 @@ void ModelView::createAnnounce() {
 }
 
 TowerView *ModelView::getTower(int id) {
+    Lock(this->m);
     return depthLevels[idDepthLevelsTowers[id]]->getTower(id);
 }

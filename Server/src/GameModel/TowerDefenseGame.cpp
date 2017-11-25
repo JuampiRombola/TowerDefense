@@ -43,7 +43,7 @@ TowerDefenseGame::TowerDefenseGame(uint gameId,
 	GameCfg = new Configuration(ss, 0 ,"Game");
     _hordeManager.game = this;
 	_hordeManager.timeToWaitBetweenHordes_ms = GameCfg->Cfg["time_to_wait_between_hordes_ms"].as<uint>();
-    _clientCooldownManager = new ClientCooldownManager(*GameCfg);
+    clientCooldownManager = new ClientCooldownManager(*GameCfg);
 }
 
 TowerDefenseGame::~TowerDefenseGame()
@@ -54,7 +54,7 @@ TowerDefenseGame::~TowerDefenseGame()
 		delete *it;
 
 	delete GameCfg;
-    delete _clientCooldownManager;
+    delete clientCooldownManager;
 }
 
 
@@ -176,63 +176,63 @@ void TowerDefenseGame::PlayersWon() {
 
 void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_TYPE type, uint32_t x, uint32_t y){
 	//
-	uint cooldown_ms = _clientCooldownManager->GetSpellCooldown_ms(type);
+	uint cooldown_ms = clientCooldownManager->GetSpellCooldown_ms(type);
     switch(type){
         case SPELL_GRIETA:
             if (&player != _groundPlayer)
                 return;
-            if (!_clientCooldownManager->IsSpellReady(SPELL_GRIETA))
+            if (!clientCooldownManager->IsSpellReady(SPELL_GRIETA))
 				return;
             break;
         case SPELL_TORNADO:
             if (&player != _airPlayer)
                 return;
-			if (!_clientCooldownManager->IsSpellReady(SPELL_TORNADO))
+			if (!clientCooldownManager->IsSpellReady(SPELL_TORNADO))
 				return;
             break;
         case SPELL_VENTISCA:
             if (&player != _waterPlayer)
                 return;
-			if (!_clientCooldownManager->IsSpellReady(SPELL_VENTISCA))
+			if (!clientCooldownManager->IsSpellReady(SPELL_VENTISCA))
 				return;
             break;
         case SPELL_CONGELACION:
             if (&player != _waterPlayer)
                 return;
-			if (!_clientCooldownManager->IsSpellReady(SPELL_CONGELACION))
+			if (!clientCooldownManager->IsSpellReady(SPELL_CONGELACION))
 				return;
             break;
         case SPELL_RAYO:
             if (&player != _airPlayer)
                 return;
-			if (!_clientCooldownManager->IsSpellReady(SPELL_RAYO))
+			if (!clientCooldownManager->IsSpellReady(SPELL_RAYO))
 				return;
             break;
         case SPELL_METEORITO:
             if (&player != _firePlayer)
                 return;
-			if (!_clientCooldownManager->IsSpellReady(SPELL_METEORITO))
+			if (!clientCooldownManager->IsSpellReady(SPELL_METEORITO))
 				return;
             break;
         case SPELL_FIREWALL:
             if (&player != _firePlayer)
                 return;
-			if (!_clientCooldownManager->IsSpellReady(SPELL_FIREWALL))
+			if (!clientCooldownManager->IsSpellReady(SPELL_FIREWALL))
 				return;
             break;
         case SPELL_TERRAFORMING:
             if (&player != _groundPlayer)
                 return;
-			if (!_clientCooldownManager->IsSpellReady(SPELL_TERRAFORMING))
+			if (!clientCooldownManager->IsSpellReady(SPELL_TERRAFORMING))
 				return;
             break;
 		case SPELL_PING:
-			if (!_clientCooldownManager->IsPingForPlayerReady(player))
+			if (!clientCooldownManager->IsPingForPlayerReady(player))
 				return;
-			cooldown_ms = _clientCooldownManager->GetPingCooldown();
+			cooldown_ms = clientCooldownManager->GetPingCooldown();
     }
-
-	QueueCommand(new CastSpellCommand(type, x, y, cooldown_ms));
+	auto spellcomand = new CastSpellCommand(type, x, y, cooldown_ms, player);
+	QueueCommand(spellcomand);
 }
 
 void TowerDefenseGame::SendMapToPlayer(PlayerProxy& player){
@@ -269,19 +269,19 @@ void TowerDefenseGame::HandleClientUpgradeTowerCommand(uint x, uint y, UpgradeTy
 void TowerDefenseGame::HandleClientBuildTowerCommand(PlayerProxy& player, SPELL_TYPE spelltype, uint32_t x, uint32_t y ){
 	switch(spelltype){
 		case SPELL_TYPE_GROUND:
-			if (_groundPlayer == &player && _clientCooldownManager->IsTowerPlacementReady(spelltype))
+			if (_groundPlayer == &player && clientCooldownManager->IsTowerPlacementReady(spelltype))
 				QueueCommand(new BuildTowerCommand(Ground , x, y));
 			break;
 		case SPELL_TYPE_FIRE:
-			if (_firePlayer == &player && _clientCooldownManager->IsTowerPlacementReady(spelltype))
+			if (_firePlayer == &player && clientCooldownManager->IsTowerPlacementReady(spelltype))
 				QueueCommand(new BuildTowerCommand(Fire , x, y));
 			break;
 		case SPELL_TYPE_AIR:
-			if (_airPlayer == &player && _clientCooldownManager->IsTowerPlacementReady(spelltype))
+			if (_airPlayer == &player && clientCooldownManager->IsTowerPlacementReady(spelltype))
 				QueueCommand(new BuildTowerCommand(Air , x, y));
 			break;
 		case SPELL_TYPE_WATER:
-			if (_waterPlayer == &player && _clientCooldownManager->IsTowerPlacementReady(spelltype))
+			if (_waterPlayer == &player && clientCooldownManager->IsTowerPlacementReady(spelltype))
 				QueueCommand(new BuildTowerCommand(Water , x, y));
 			break;
 	}

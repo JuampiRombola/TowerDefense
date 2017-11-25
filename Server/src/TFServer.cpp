@@ -196,6 +196,7 @@ void TFServer::_HandleGameCommand(PlayerProxy& player){
 	}
 
 	if (ins == TOWER_UPGRADE){
+		std::cout << "CLIENT TOWER_UPGRADE \n " << std::flush;
 		UpgradeType type = (UpgradeType) player.RecieveByte();
 		uint x = player.RecieveInt32();
 		uint y = player.RecieveInt32();

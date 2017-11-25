@@ -55,7 +55,8 @@ public:
     uint GetPingCooldown();
     bool IsPingForPlayerReady(PlayerProxy& player);
     uint GetSpellCooldown_ms(CAST_SPELL_TYPE type);
-
+    void SpellCasted(CAST_SPELL_TYPE type);
+    void PingSet(PlayerProxy& player);
 
 
 };

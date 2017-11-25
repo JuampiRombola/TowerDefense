@@ -1,0 +1,1686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="TowerDefense"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TowerDefenseView">
+				<Option output="/home/tino/Documents/lantf2/TowerDefenseView" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/SDL2"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircore"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 TowerDefenseView"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TowerDefenseView/fast">
+				<Option output="/home/tino/Documents/lantf2/TowerDefenseView" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/SDL2"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircore"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 TowerDefenseView/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TowerDefenseClient">
+				<Option output="/home/tino/Documents/lantf2/TowerDefenseClient" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/SDL2"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircore"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 TowerDefenseClient"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TowerDefenseClient/fast">
+				<Option output="/home/tino/Documents/lantf2/TowerDefenseClient" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/SDL2"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircore"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 TowerDefenseClient/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TowerDefenseEditor">
+				<Option output="/home/tino/Documents/lantf2/TowerDefenseEditor" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/SDL2"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircore"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 TowerDefenseEditor"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TowerDefenseEditor/fast">
+				<Option output="/home/tino/Documents/lantf2/TowerDefenseEditor" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/SDL2"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircore"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 TowerDefenseEditor/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TowerDefenseServer">
+				<Option output="/home/tino/Documents/lantf2/TowerDefenseServer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/SDL2"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircore"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 TowerDefenseServer"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="TowerDefenseServer/fast">
+				<Option output="/home/tino/Documents/lantf2/TowerDefenseServer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tino/Documents/lantf2"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/SDL2"/>
+					<Add directory="/usr/include/gtk-3.0"/>
+					<Add directory="/usr/include/at-spi2-atk/2.0"/>
+					<Add directory="/usr/include/at-spi-2.0"/>
+					<Add directory="/usr/include/dbus-1.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/dbus-1.0/include"/>
+					<Add directory="/usr/include/gio-unix-2.0"/>
+					<Add directory="/usr/include/mirclient"/>
+					<Add directory="/usr/include/mircore"/>
+					<Add directory="/usr/include/mircookie"/>
+					<Add directory="/usr/include/cairo"/>
+					<Add directory="/usr/include/pango-1.0"/>
+					<Add directory="/usr/include/harfbuzz"/>
+					<Add directory="/usr/include/atk-1.0"/>
+					<Add directory="/usr/include/pixman-1"/>
+					<Add directory="/usr/include/freetype2"/>
+					<Add directory="/usr/include/libpng12"/>
+					<Add directory="/usr/include/gdk-pixbuf-2.0"/>
+					<Add directory="/usr/include/glib-2.0"/>
+					<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 TowerDefenseServer/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tino/Documents/lantf2/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/tino/Documents/lantf2/Client/GTKRunner.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/GTKRunner.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/SDLRunner.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/SDLRunner.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/AnimatedSprite.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/AnimatedSprite.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Announcement.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Announcement.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Button.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Button.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Image.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Image.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/MouseMovement.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/MouseMovement.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/MousePosition.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/MousePosition.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/MusicLoader.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/MusicLoader.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/MusicNamesConfig.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/MusicPlayer.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/MusicPlayer.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Renderer.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Renderer.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/SoundEffect.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/SoundEffect.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Sprite.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Sprite.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/SpriteNamesConfig.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Text.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Text.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/TextureLoader.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/TextureLoader.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/View.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/View.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/ViewError.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/ViewError.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Window.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Common/Window.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AgregarCaminoButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AgregarCaminoButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AgregarEnemigoButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AgregarEnemigoButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AgregarPortalEntradaButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AgregarPortalEntradaButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AgregarPortalSalidaButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AgregarPortalSalidaButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AgregarTierraFirmeButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AgregarTierraFirmeButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AumentarAltoMapaButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AumentarAltoMapaButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AumentarAnchoMapaButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AumentarAnchoMapaButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AumentarPaddingButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AumentarPaddingButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AumentarTiempoEnemigosButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AumentarTiempoEnemigosButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AumentarTiempoHordaButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/AumentarTiempoHordaButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/ContadorEnemigosInput.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/ContadorEnemigosInput.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/ContadorHordasInput.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/ContadorHordasInput.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/ContadorTiempoEnemigosInput.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/ContadorTiempoEnemigosInput.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/ContadorTiempoHordaInput.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/ContadorTiempoHordaInput.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/DisminuirAltoMapaButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/DisminuirAltoMapaButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/DisminuirAnchoMapaButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/DisminuirAnchoMapaButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/DisminuirPaddingButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/DisminuirPaddingButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/DisminuirTiempoEnemigosButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/DisminuirTiempoEnemigosButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/DisminuirTiempoHordaButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/DisminuirTiempoHordaButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/Editor.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/Editor.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EditorButtons.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EditorButtons.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EditorConstants.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EditorValidationException.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EditorValidationException.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EliminarEnemigoButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EliminarEnemigoButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EliminarHordaButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EliminarHordaButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EnemigoImage.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/EnemigoImage.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/File.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/File.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/GuardarButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/GuardarButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/Horda.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/Horda.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/NuevaHordaButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/NuevaHordaButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/SuperficieButton.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Editor/SuperficieButton.h">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ChatView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ChatView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/DepthLevel.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/DepthLevel.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/DepthLevelError.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/DepthLevelError.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ExitView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ExitView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/GameButton.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/GameButton.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/GameButtons.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/GameButtons.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/HudView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/HudView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/InstantButton.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/InstantButton.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/MapView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/MapView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ModelView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ModelView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/PadlockButton.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/PadlockButton.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/PortalEntradaView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/PortalEntradaView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/PortalSalidaView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/PortalSalidaView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/PortalView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/PortalView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ProgressBarView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ProgressBarView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ShotView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ShotView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/SpellView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/SpellView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/TextView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/TextView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/TowerView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/TowerView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/UnitView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/UnitView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/UpRightButton.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/UpRightButton.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/UpgradeView.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/UpgradeView.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/ViewConstants.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/WaitActionButton.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/Model/WaitActionButton.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/mainEditor.cpp">
+			<Option target="TowerDefenseEditor"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/View/mainView.cpp">
+			<Option target="TowerDefenseView"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/ClientSocket.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/Exceptions/ClientDisconnectedException.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/Exceptions/OtherPlayerJoinedLobbyTwice.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/Exceptions/PlayerLeftTheLobbyAndWasntInIt.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/Exceptions/SomePlayerLeftLobbyAndLobbyNotSet.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/GTKNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/GameStartedGTKNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/JoinedLobbyGTKNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/LeftLobbyGTKNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/LobbyPickedMapGTKNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/LogInFailedGtkNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/LogInSuccessGtkNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/NewLobbyGTKNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/OtherPickedSpellGTKNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/PickedSpellGTKNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/PlayerJoinedLobbyGTKNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/PlayerLeftLobbyGTKNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/Lobbies/ClientLobbyManager.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/Lobbies/Lobby.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/Lobbies/OtherPlayer.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/ChatMessageCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/ClientBuildTowerCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/ClientCastSpellCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/CommandDispatcher.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/CreateLobbyCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/JoinLobbyCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/LeaveLobbyCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/LoadMapCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/LogInCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/NetCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/PickSpellCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/PlayerIsReadyCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/PlayerLoadedGameCommand.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NetCommands/UpgradeTowerNetCommand.h">
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NonBlockingThreadSafeQueue.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/NotificationReciever.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/SDLNotifications/SDLNotification.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/main.cpp">
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/ClientSocket.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/GTKNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/GameStartedGTKNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/JoinedLobbyGTKNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/LeftLobbyGTKNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/LobbyPickedMapGTKNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/LogInFailedGtkNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/LogInSuccessGtkNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/NewLobbyGTKNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/OtherPickedSpellGTKNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/PickedSpellGTKNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/PlayerJoinedLobbyGTKNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/PlayerLeftLobbyGTKNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/Lobbies/ClientLobbyManager.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/Lobbies/Lobby.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/Lobbies/OtherPlayer.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/ChatMessageCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/ClientBuildTowerCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/ClientCastSpellCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/CommandDispatcher.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/CreateLobbyCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/JoinLobbyCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/LeaveLobbyCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/LoadMapCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/LogInCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/NetCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/PickMapCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/PickSpellCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/PlayerIsReadyCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/PlayerLoadedGameCommand.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NetCommands/UpgradeTowerNetCommand.cpp">
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/NotificationReciever.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/SDLNotifications/SDLNotification.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Common/ClientDisconnectedException.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Common/Lock.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Common/Lock.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Common/SocketConnectionException.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Common/SocketWrapper.cpp">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Common/SocketWrapper.h">
+			<Option target="TowerDefenseView"/>
+			<Option target="TowerDefenseClient"/>
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Exceptions/PlayerLeftLobbyHeWasntInException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Exceptions/PlayerStateInLobbyAndHasNoLobbySet.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/ClientCooldownManager.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Commands/BuildTowerCommand.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Commands/CastSpellCommand.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Commands/Command.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Commands/UpgradeTowerCommand.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Configuration.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/EnviormentUnits/Abmonible.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/EnviormentUnits/DemonioVerde.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/EnviormentUnits/EnviormentUnit.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/EnviormentUnits/Espectro.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/EnviormentUnits/HalconSangriento.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/EnviormentUnits/HombreCabra.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/EnviormentUnits/NoMuerto.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Exceptions/IncompletePathException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Exceptions/NoSetSpawnTilesException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Exceptions/NonPlacedUnitCannotStepException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Exceptions/PositionAlreadyHasTileException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Exceptions/SolidGroundAlreadyHasTowerException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Exceptions/TileCannotSpawnException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Exceptions/TileIsOutOfBoundsException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Exceptions/UnitCannotMoveDiagonallyException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Exceptions/UnitIsAlreadyOnThisTileException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Exceptions/UnitIsNotOnThisTileException.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/ChatMessageNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/GameModelStartedRunningNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/GameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/GameOverGameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/HordeUpdateGameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/MapTransferNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/ProjectileFiredGameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/SpellCastedGameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/TowerGainedExperienceGameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/TowerPlacedGameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/TowerUpgradedGameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/UnitCreatedGameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/UnitDiedGameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/GameNotifications/UnitPositionGameNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Helpers.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Hordes/Horde.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Hordes/HordeManager.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Map/Map.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Map/PathTile.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Map/SolidGroundTile.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Map/Tile.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/TowerDefenseGame.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Towers/AirProjectile.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Towers/AirTower.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Towers/FireProjectile.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Towers/FireTower.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Towers/GroundProjectile.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Towers/GroundTower.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Towers/Projectile.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Towers/Tower.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Towers/WaterProjectile.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/Towers/WaterTower.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/ViewModels/CommandVM.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/ViewModels/ProjectileVM.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/ViewModels/TowerVM.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/GameModel/ViewModels/UnitVM.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Lobbies/Lobby.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Lobbies/LobbyManager.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/GameStartedNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/InvalidLogInNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/LeftLobbyNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/LobbyJoinedNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/LoggedInNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/MapPickedNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/NewLobbyNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/Notification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/PlayerLeaveNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/PlayerLeftLobbyNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/PlayerPickedSpellNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/Notifications/PlayerUnpickedSpellNotification.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/PlayerProxy.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/ServerSocket.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/TFServer.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/include/ThreadSafeQueue.h">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/ClientCooldownManager.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Commands/BuildTowerCommand.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Commands/CastSpellCommand.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Commands/Command.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Commands/UpgradeTowerCommand.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Configuration.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/EnviormentUnits/Abmonible.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/EnviormentUnits/DemonioVerde.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/EnviormentUnits/EnviormentUnit.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/EnviormentUnits/Espectro.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/EnviormentUnits/HalconSangriento.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/EnviormentUnits/HombreCabra.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/EnviormentUnits/NoMuerto.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/GameModelStartedRunningNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/GameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/GameOverGameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/HordeUpdateGameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/MapTransferNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/ProjectileFiredGameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/SpellCastedGameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/TowerGainedExperienceGameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/TowerPlacedGameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/TowerUpgradedGameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/UnitCreatedGameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/UnitDiedGameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/GameNotifications/UnitPositionGameNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Hordes/Horde.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Hordes/HordeManager.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Map/Map.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Map/PathTile.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Map/SolidGroundTile.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Map/Tile.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/TowerDefenseGame.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Towers/AirProjectile.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Towers/AirTower.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Towers/FireProjectile.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Towers/FireTower.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Towers/GroundProjectile.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Towers/GroundTower.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Towers/Projectile.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Towers/Tower.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Towers/WaterProjectile.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/GameModel/Towers/WaterTower.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Lobbies/Lobby.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Lobbies/LobbyManager.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/GameStartedNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/InvalidLoginNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/LeftLobbyNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/LobbyJoinedNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/LoggedInNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/MapPickedNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/NewLobbyNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/Notification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/PlayerLeaveNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/PlayerLeftLobbyNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/PlayerPickedSpellNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/Notifications/PlayerUnpickedSpellNotification.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/PlayerProxy.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/ServerSocket.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/TFServer.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/Server/src/main.cpp">
+			<Option target="TowerDefenseServer"/>
+		</Unit>
+		<Unit filename="/home/tino/Documents/lantf2/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

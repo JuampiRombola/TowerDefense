@@ -54,7 +54,6 @@ EnviormentUnit* Tower::_GetTargetUnitInRange(){
 
 
 Projectile* Tower::_Fire(EnviormentUnit* target){
-	std::cout << "TOWER FIRE!!!\n" << std::flush;
 	_lastTimeStamp_ms = Helpers::MillisecondsTimeStamp();
 	return _BuildProjectile(target->GetPosition());
 }

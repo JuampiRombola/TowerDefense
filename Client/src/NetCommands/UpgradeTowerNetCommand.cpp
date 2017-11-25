@@ -5,7 +5,7 @@
 #include "../../include/NetCommands/UpgradeTowerNetCommand.h"
 
 UpgradeTowerNetCommand::UpgradeTowerNetCommand(uint x, uint y, UpgradeType upgradeType)
-: _x(x), _y(x), _upgradeType(upgradeType){
+: _x(x), _y(y), _upgradeType(upgradeType){
 
 }
 

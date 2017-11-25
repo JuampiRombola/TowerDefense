@@ -4,10 +4,10 @@
 #include "../../../Common/Lock.h"
 
 #define UPGRADE_BG_W 264
-#define UPGRADE_BG_H 170
+#define UPGRADE_BG_H 185
 
 #define START_X_ICON 22
-#define START_Y_ICON 80
+#define START_Y_ICON 95
 
 #define PADLOCK_W 64
 #define PADLOCK_H 76
@@ -19,25 +19,36 @@
 #define FONT_UPGRD_SIZE 10
 
 #define MSG_EXP "Experiencia: "
+#define MSG_LVL "Nivel: "
+#define MSG_FREQ "Frecuencia(s): "
 #define MSG_DAMAGE "Damage: "
 #define MSG_RANGO "Rango: "
-#define MSG_IMPACTO "Alcance de impacto: "
-#define MSG_FREEZE "Ralentizado: "
+#define MSG_IMPACTO "Rango impacto: "
+#define MSG_IMPACTO2 "Damage I: "
+#define MSG_FREEZE "Ralentizado %: "
+#define MSG_FREEZE2 "Duracion: "
+#define FLYDAMAGE "Damage aereo: "
 
-#define MSG_EXP_X 25
-#define MSG_EXP_Y 35
-#define MSG_DAMAGE_X 25
-#define MSG_DAMAGE_Y 50
-#define MSG_RANGE_X 114
-#define MSG_RANGE_Y 50
-#define MSG_IMPACT_X 25
-#define MSG_IMPACT_Y 65
+#define MSG1_1_X 25
+#define MSG1_1_Y 35
+#define MSG2_1_X 25
+#define MSG2_1_Y 50
+#define MSG2_2_X 160
+#define MSG2_2_Y 50
+#define MSG3_1_X 25
+#define MSG3_1_Y 65
+#define MSG3_2_X 160
+#define MSG3_2_Y 65
+#define MSG4_1_X 25
+#define MSG4_1_Y 80
+#define MSG4_2_X 160
+#define MSG4_2_Y 80
 
 #define INDEX_DAMAGE 0
 #define INDEX_RANGE 1
 #define INDEX_IMPACT 2
 
-UpgradeView::UpgradeView(Renderer &r, TextureLoader &tl, TowerView *t, 
+UpgradeView::UpgradeView(Renderer &r, TextureLoader &tl, TowerView *t,
                          int &command, MousePosition &mp, bool isMine) :
         renderer(r), tl(tl), tower(t), cmd(command), mousePosition(mp),
         background(PADDING_HUD, PADDING_HUD, UPGRADE_BG_W, UPGRADE_BG_H,
@@ -78,35 +89,57 @@ void UpgradeView::addText() {
 
     msg = MSG_EXP + std::to_string(tower->getExp());
     t = new TextView(renderer, font, msg, textColor);
-    t->setDestXY(MSG_EXP_X, MSG_EXP_Y);
+    t->setDestXY(MSG1_1_X, MSG1_1_Y);
     messages.push_back(t);
 
     msg = MSG_DAMAGE + std::to_string(tower->getDamage());
     t = new TextView(renderer, font, msg, textColor);
-    t->setDestXY(MSG_DAMAGE_X, MSG_DAMAGE_Y);
+    t->setDestXY(MSG2_1_X, MSG2_1_Y);
     messages.push_back(t);
 
-    int rangeX = MSG_IMPACT_X;
-    int rangeY = MSG_IMPACT_Y;
-    if (key == TORRE_FUEGO | key == TORRE_AGUA) {
-        rangeX = MSG_RANGE_X;
-        rangeY = MSG_RANGE_Y;
+    msg = MSG_RANGO + std::to_string(tower->getRange());
+    t = new TextView(renderer, font, msg, textColor);
+    t->setDestXY(MSG2_2_X, MSG2_2_Y);
+    messages.push_back(t);
+
+    Uint32 f = tower->getFrequency() / 1000;
+    if (f == 0) f = 1;
+    msg = MSG_FREQ + std::to_string(f);
+    t = new TextView(renderer, font, msg, textColor);
+    t->setDestXY(MSG3_1_X, MSG3_1_Y);
+    messages.push_back(t);
+
+    int rangeX = MSG3_2_X;
+    int rangeY = MSG3_2_Y;
+    if (key == ELEMENTAL_EARTH | key == ELEMENTAL_AIR) {
+        rangeX = MSG4_1_X;
+        rangeY = MSG4_1_Y;
     }
 
-    msg = MSG_RANGO + std::to_string(tower->getRange());
+    msg = MSG_LVL + std::to_string(tower->getLevel());
     t = new TextView(renderer, font, msg, textColor);
     t->setDestXY(rangeX, rangeY);
     messages.push_back(t);
 
-    if (key == TORRE_FUEGO) {
+    if (key == ELEMENTAL_FIRE) {
         msg = MSG_IMPACTO + std::to_string(tower->getCollateralRange());
         t = new TextView(renderer, font, msg, textColor);
-        t->setDestXY(MSG_IMPACT_X, MSG_IMPACT_Y);
+        t->setDestXY(MSG4_1_X, MSG4_1_Y);
         messages.push_back(t);
-    } else if (key == TORRE_AGUA) {
+
+        msg = MSG_IMPACTO2 + std::to_string(tower->getCollateralDamage());
+        t = new TextView(renderer, font, msg, textColor);
+        t->setDestXY(MSG4_2_X, MSG4_2_Y);
+        messages.push_back(t);
+    } else if (key == ELEMENTAL_WATER) {
         msg = MSG_FREEZE + std::to_string(tower->getFreezePercent());
         t = new TextView(renderer, font, msg, textColor);
-        t->setDestXY(MSG_IMPACT_X, MSG_IMPACT_Y);
+        t->setDestXY(MSG4_1_X, MSG4_1_Y);
+        messages.push_back(t);
+
+        msg = MSG_FREEZE2 + std::to_string(tower->getFreezeDuration());
+        t = new TextView(renderer, font, msg, textColor);
+        t->setDestXY(MSG4_2_X, MSG4_2_Y);
         messages.push_back(t);
     }
 }
@@ -122,13 +155,13 @@ void UpgradeView::addButtons() {
                                         UPGRADE_ICON_SIZE,UPGRADE_ICON_SIZE,
                                         cmd));
 
-    if (key == TORRE_FUEGO) {
+    if (key == ELEMENTAL_FIRE) {
         buttons.push_back(new InstantButton(renderer, tl, IMPACT, mousePosition,
                                             START_X_ICON + 2*UPGRADE_ICON_SIZE
                                             + 2*PADDING_ICON, START_Y_ICON,
                                             UPGRADE_ICON_SIZE,UPGRADE_ICON_SIZE,
                                             cmd));
-    } else if (key == TORRE_AGUA) {
+    } else if (key == ELEMENTAL_WATER) {
         buttons.push_back(new InstantButton(renderer, tl, FREEZE, mousePosition,
                                             START_X_ICON + 2*UPGRADE_ICON_SIZE
                                             + 2*PADDING_ICON, START_Y_ICON,
@@ -149,10 +182,10 @@ void UpgradeView::update() {
     buttons[INDEX_RANGE]->setTotalProgressBar(tower->getUpgradeRange());
     buttons[INDEX_RANGE]->setPartProgressBar(tower->getExp());
 
-    if (key == TORRE_FUEGO) {
+    if (key == ELEMENTAL_FIRE) {
         buttons[INDEX_IMPACT]->setTotalProgressBar(tower->getUpgradeImpact());
         buttons[INDEX_IMPACT]->setPartProgressBar(tower->getExp());
-    } else if (key == TORRE_AGUA) {
+    } else if (key == ELEMENTAL_WATER) {
         buttons[INDEX_IMPACT]->setTotalProgressBar(tower->getUpgradeFreeze());
         buttons[INDEX_IMPACT]->setPartProgressBar(tower->getExp());
     }

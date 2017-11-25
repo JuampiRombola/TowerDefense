@@ -13,10 +13,12 @@ MapPickedNotification::~MapPickedNotification() {}
 void MapPickedNotification::Notify() {
     for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it){
         PlayerProxy* p = *it;
-        uint8_t opcode = PICK_MAP;
-        p->SendByte(opcode);
-        p->SendInt32(_mapid);
-        p->SendInt32(_lobbyId);
+        if (p->state != IN_GAME){
+            uint8_t opcode = PICK_MAP;
+            p->SendByte(opcode);
+            p->SendInt32(_mapid);
+            p->SendInt32(_lobbyId);
+        }
     }
 }
 

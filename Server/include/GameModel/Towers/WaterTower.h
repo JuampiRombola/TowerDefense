@@ -22,7 +22,7 @@ public:
 	 SolidGroundTile* position, Map* map, uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications);
 	~WaterTower();
 	void PrintDebug();
-	bool Upgrade(const YAML::Node& cfg, UpgradeType type);
+	bool Upgrade(UpgradeType type);
 	TowerVM GetViewModel();
 };
 

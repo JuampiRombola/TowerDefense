@@ -26,9 +26,7 @@ void NotificationReciever::RecieveNotifications(){
     {
         uint8_t opcode;
         while (!_Stop()){
-            std::cout << " CHECK \n" << std::flush;
             _sock.Recieve((char*) &opcode, 1);
-            std::cout << " RUN \n" << std::flush;
             switch (opcode){
                 case CREATE_LOBBY:
                     std::cout << "CREATE_LOBBY::\n" << std::flush;
@@ -83,6 +81,7 @@ void NotificationReciever::RecieveNotifications(){
                     _lobbyManager.HandleOtherPlayerUnpickedSpell();
                     break;
                 case LOG_IN_FAILED:
+                    std::cout << "LOG_IN_FAILED::\n" << std::flush;
                     _runner.gtkNotifications.Queue(new LogInFailedGtkNotification());
                     g_idle_add(GTKRunner::notification_check, &_runner);
                     break;
@@ -103,6 +102,7 @@ void NotificationReciever::RecieveNotifications(){
                     _HandleGameOpcode();
                     break;
                 case GAME_MODEL_STARTED_RUNNING:
+                    std::cout << "GAME_MODEL_STARTED_RUNNING::\n" << std::flush;
                     _dispatcher.Enable();
                     break;
                 case LOAD_MAP:
@@ -124,6 +124,7 @@ void NotificationReciever::RecieveNotifications(){
                     break;
                 case MAP_FINISHED_LOADING:
                 {
+                    std::cout << "MAP_FINISHED_LOADING::\n" << std::flush;
                     std::lock_guard<std::mutex> lock(model_view->mapLoadedMutex);
                     model_view->mapLoaded = true;
                     model_view->mapLoadedCondVariable.notify_one();
@@ -134,6 +135,7 @@ void NotificationReciever::RecieveNotifications(){
                     break;
                 case IN_GAME_CHAT_MESSAGE:
                 {
+                    std::cout << "IN_GAME_CHAT_MESSAGE::\n" << std::flush;
                     uint32_t pguid;
                     _sock.Recieve((char*) &pguid, 4);
                     std::string message = _sock.RecieveString();
@@ -150,7 +152,6 @@ void NotificationReciever::RecieveNotifications(){
                 default:
                     std::cout << "UNKNOWN OPCODE RECIEVED: '" << opcode << ", ( " << (int) opcode << ")\'" << std::flush;
             }
-            std::cout << " OUT \n" << std::flush;
         }
     }catch(const std::exception& e)
     {
@@ -181,15 +182,15 @@ void NotificationReciever::_HandleGameOpcode(){
 			_HandleProjectileFired();
             break;
 		case GAME_OVER:
+            std::cout << "GAME_OVER::\n" << std::flush;
             model_view->addAnnouncement("Defeat!");
             std::this_thread::sleep_for (std::chrono::milliseconds(3000));
-            std::cout << "GAME_OVER::\n" << std::flush;
 			this->Stop();
             break;
         case GAME_WON:
+            std::cout << "GAME_WON::\n" << std::flush;
             model_view->addAnnouncement("Victory!");
             std::this_thread::sleep_for (std::chrono::milliseconds(3000));
-            std::cout << "GAME_WON::\n" << std::flush;
             this->Stop();
             break;
         case UNIT_DIED:
@@ -229,14 +230,13 @@ void NotificationReciever::_HandleTowerGainedExperience() {
 	_sock.Recieve((char*)&y, 4);
 	_sock.Recieve((char*)&exp, 4);
 
-	std::cout << "Tower @(" << x << ", " << y << ") now has "
-			  << exp << "xp\n" <<std::flush;
+	std::cout << "Tower @(" << x << ", " << y << ") now has " << exp << "xp\n" <<std::flush;
 
 	uint towerId = _towerCoordToId[std::pair<uint, uint>(x, y)];
 
     TowerView* tower= model_view->getTower(towerId);
     tower->setExp(exp);
-    hud_view->updateUpgradeView(towerId);
+    hud_view->setLastTowerId(towerId);
 }
 
 void NotificationReciever::_HandleTowerUpgrade() {
@@ -246,6 +246,7 @@ void NotificationReciever::_HandleTowerUpgrade() {
     uint32_t range;
     uint32_t projectile_ms_over_tile;
     uint32_t level;
+
 
     _sock.Recieve((char*) &x, 4);
     _sock.Recieve((char*) &y, 4);
@@ -257,12 +258,19 @@ void NotificationReciever::_HandleTowerUpgrade() {
     _sock.Recieve((char*) &projectile_ms_over_tile, 4);
     _sock.Recieve((char*) &level, 4);
 
+    uint32_t exp_required_for_damage_upgrade;
+    uint32_t exp_required_for_range_upgrade;
+    _sock.Recieve((char*) &exp_required_for_damage_upgrade, 4);
+    _sock.Recieve((char*) &exp_required_for_range_upgrade, 4);
+
     TowerView* tower= model_view->getTower(towerId);
     tower->setDamage(damage);
     tower->setRange(range);
     tower->setFrequency(projectile_ms_over_tile);
     tower->setLevel(level);
-    
+    tower->setUpgradeExperienceDamage(exp_required_for_damage_upgrade);
+    tower->setUpgradeExperienceRange(exp_required_for_range_upgrade);
+
 	uint8_t type = -1;
     _sock.Recieve((char*) &type, 1);
     switch (type){
@@ -273,6 +281,9 @@ void NotificationReciever::_HandleTowerUpgrade() {
             _sock.Recieve((char*)&collateral_range, 4);
             tower->setCollateralDamage(collateral_damage);
             tower->setCollateralRange(collateral_range);
+            uint32_t exp_required_for_collateral_range_upgrade;
+            _sock.Recieve((char*)&exp_required_for_collateral_range_upgrade, 4);
+            tower->setUpgradeExperienceCollateralRange(exp_required_for_collateral_range_upgrade);
             break;
         case SPELL_TYPE_WATER:
             uint32_t slow_seconds;
@@ -281,6 +292,9 @@ void NotificationReciever::_HandleTowerUpgrade() {
             _sock.Recieve((char*)&slow_percent, 4);
             tower->setFreezePercent(slow_percent);
             tower->setFreezeDuration(slow_seconds);
+            uint32_t exp_required_for_slow_upgrade;
+            _sock.Recieve((char*)&exp_required_for_slow_upgrade, 4);
+            tower->setUpgradeExperienceSlow(exp_required_for_slow_upgrade);
             break;
         case SPELL_TYPE_AIR:
             uint32_t nonFlyingDamage;
@@ -428,7 +442,6 @@ void NotificationReciever::_HandleUnitPositionUpdate(){
     uint32_t delay_ms ;
     _sock.Recieve((char *) &delay_ms, 4);
 
-	std::cout << "unit move x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
 	if (tox == 0xFFFFFFFF || toy == 0xFFFFFFFF)
 		return;
 
@@ -447,7 +460,6 @@ void NotificationReciever::_HandleUnitCreated(){
     _sock.Recieve((char *) &toy, 4);
     uint32_t delay_ms ;
     _sock.Recieve((char *) &delay_ms, 4);
-	std::cout << "unit created x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
     uint8_t unittype;
     _sock.Recieve((char *) &unittype, 1);
     UNIT_TYPE type = (UNIT_TYPE) unittype;

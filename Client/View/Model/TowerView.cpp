@@ -21,7 +21,7 @@ TowerView::TowerView(int id, int key, TextureLoader &textures,
                    cfg["POWER_START_Y"].as<int>(),
                    cfg["POWER_COLUMNS"].as<int>(),
                    cfg["POWER_ROWS"].as<int>()),
-        exp(500), frequency(1), damage(1), range(1), level(1), flyDamage(0),
+        exp(0), frequency(1), damage(1), range(1), level(1), flyDamage(0),
         collateralDamage(0), collateralRange(0), freezePercent(0),
         freezeDuration(0) {
     spriteTower.setDestRect(x, y,
@@ -35,7 +35,7 @@ TowerView::TowerView(int id, int key, TextureLoader &textures,
                            cfg["POWER_DST_H"].as<int>());
     spriteFire.setOffsetXY(cfg["POWER_OFFSET_X"].as<int>(),
                            cfg["POWER_OFFSET_Y"].as<int>());
-    this->setUpgradesByElement();
+   // this->setUpgradesByElement();
 }
 
 void TowerView::draw(Uint32 ticks) {
@@ -66,6 +66,27 @@ void TowerView::setUpgradesByElement() {
         upgradeRange = static_cast<Uint32>(pow(2, level) * 100);
     }
 }
+
+void TowerView::setUpgradeExperienceDamage(uint32_t exp){
+    Lock(this->m);
+    upgradeDamage = exp;
+}
+
+void TowerView::setUpgradeExperienceRange(uint32_t exp){
+    Lock(this->m);
+    upgradeRange = exp;
+}
+void TowerView::setUpgradeExperienceCollateralRange(uint32_t exp){
+    Lock(this->m);
+    upgradeImpact = exp;
+
+}
+void TowerView::setUpgradeExperienceSlow(uint32_t exp){
+    Lock(this->m);
+    upgradeFreeze = exp;
+}
+
+
 
 int TowerView::getId() {
     return id;

@@ -18,7 +18,7 @@ towers:
   place_cooldown_sec: 3
   projectile_ms_over_tile: 100
   range: 4
-  cooldown_sec: 4
+  cooldown_sec: 1
   target_damage: 20
   collateral_damage: 3
   collateral_range: 1
@@ -36,7 +36,7 @@ towers:
   place_cooldown_sec: 3
   projectile_ms_over_tile: 100
   range: 4
-  cooldown_sec: 4
+  cooldown_sec: 1
   damage: 20
   slow_percent: 25
   slow_duration_sec: 2
@@ -54,7 +54,7 @@ towers:
   place_cooldown_sec: 3
   projectile_ms_over_tile: 100
   range: 4
-  cooldown_sec: 2
+  cooldown_sec: 1
   flying_target_damage: 10
   non_flying_target_damage: 5
   upgrade_range_increase: 1

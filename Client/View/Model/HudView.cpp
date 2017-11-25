@@ -1,6 +1,7 @@
 #include "HudView.h"
 #include "../../include/NetCommands/ClientCastSpellCommand.h"
 #include "../../../Common/Lock.h"
+#include "../../include/NetCommands/UpgradeTowerNetCommand.h"
 
 
 HudView::HudView(Window &w, TextureLoader &tl, Renderer &r,
@@ -10,7 +11,7 @@ HudView::HudView(Window &w, TextureLoader &tl, Renderer &r,
         currentCommand(-1),
         buttons(w, mousePosition, r, tl, currentCommand),
         model(model), upgradeTarget(nullptr), exit(false), 
-        exitView(r, tl, mousePosition) {
+        exitView(r, tl, mousePosition), lastTowerUpdated(-1) {
     arrow = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
     crosshair = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 }
@@ -53,7 +54,10 @@ void HudView::doMouseAction() {
         upgradeTarget->onClick();
         SDL_SetCursor(arrow);
         if (currentCommand >= CMD_DAMAGE) {
-            //send currentCommand y Upgrade.id()
+            auto t = model.getTower(upgradeTarget->getId());
+            uint x = t->getX();
+            uint y = t->getY();
+            sendCommand(x, y);
             currentCommand = -1;
             SDL_SetCursor(arrow);
         }
@@ -141,8 +145,22 @@ void HudView::sendCommand(int x, int y) {
             case CMD_PING:
                 command = new ClientCastSpellCommand(SPELL_PING, x, y);
                 break;
+
+            case CMD_DAMAGE:
+                command = new UpgradeTowerNetCommand(x, y, Damage);
+                break;
+            case CMD_RANGE:
+                command = new UpgradeTowerNetCommand(x, y, Range);
+                break;
+            case CMD_FREEZE:
+                command = new UpgradeTowerNetCommand(x, y, Slow);
+                break;
+            case CMD_IMPACT:
+                command = new UpgradeTowerNetCommand(x, y, CollateralRange);
+                break;
         }
     }
+
 
 
     if (command != nullptr)
@@ -151,8 +169,12 @@ void HudView::sendCommand(int x, int y) {
 
 void HudView::draw() {
     buttons.draw();
-    if (upgradeTarget)
+    if (upgradeTarget) {
+        this->updateUpgradeView();
         upgradeTarget->draw();
+    } else {
+        lastTowerUpdated = -1;
+    }
     if (exitView.isActive())
         exitView.draw();
 }
@@ -199,24 +221,28 @@ void HudView::createUpgradeTarget(TowerView *target) {
         if (target->getKey() == element)
             isMine = true;
     }
-    Lock(this->m);
     if (upgradeTarget) delete upgradeTarget;
     upgradeTarget = new UpgradeView(renderer, textureLoader, target, 
                                     currentCommand, mousePosition, isMine);
 }
 
-void HudView::updateUpgradeView(int id) {
+void HudView::updateUpgradeView() {
     Lock(this->m);
     if (!upgradeTarget) return;
-    if (upgradeTarget->getId() == id) {
-        this->createUpgradeTarget(model.getTower(id));
+    if (upgradeTarget->getId() == lastTowerUpdated) {
+        this->createUpgradeTarget(model.getTower(upgradeTarget->getId()));
     }
+    lastTowerUpdated = -1;
 }
 
 void HudView::destroyUpgradeTarget() {
     if (upgradeTarget) {
-        Lock(this->m);
         delete upgradeTarget;
         upgradeTarget = nullptr;
     }
+}
+
+void HudView::setLastTowerId(int id) {
+    Lock(this->m);
+    lastTowerUpdated = id;
 }
