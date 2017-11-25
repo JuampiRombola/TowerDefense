@@ -31,13 +31,33 @@ void MusicPlayer::addSpell(int key) {
         case RAYO:
             effects.emplace_back(musicLoader.getChunk(RAYO_SONIDO), true);
             break;
+        case METEORITO:
+            effects.emplace_back(musicLoader.getChunk(METEORITO_SONIDO), true);
+            break;
+        case TORNADO:
+            effects.emplace_back(musicLoader.getChunk(TORNADO_SONIDO), true);
+            break;
+        case FIREWALL:
+            effects.emplace_back(musicLoader.getChunk(FIREWALL_SONIDO), true);
+            break;
+        case VENTISCA:
+            effects.emplace_back(musicLoader.getChunk(VENTISCA_SONIDO), true);
+            break;
+        case GRIETA:
+            effects.emplace_back(musicLoader.getChunk(GRIETA_SONIDO), true);
+            break;
+        case CONGELACION:
+            effects.emplace_back(musicLoader.getChunk(CONGELACION_SONIDO), true);
+            break;
+        case PING:
+            effects.emplace_back(musicLoader.getChunk(PING_SONIDO), true);
         default:
             break;
     }
 }
 
 void MusicPlayer::playMusic() {
-    for (int channel = 1; channel <= 10 && !effects.empty(); ++channel) {
+    for (int channel = 1; channel <= 3 && !effects.empty(); ++channel) {
         if (!Mix_Playing(channel)) {
             auto effect = effects.front();
             if (!effect.shouldBeDropped())
