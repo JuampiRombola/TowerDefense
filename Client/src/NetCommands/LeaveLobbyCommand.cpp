@@ -14,5 +14,5 @@ LeaveLobbyCommand::~LeaveLobbyCommand(){
 
 void LeaveLobbyCommand::SendCommand(SocketWrapper& sock){
 	uint8_t instruction = LEAVE_LOBBY;
-	sock.Send((char*)&instruction, 1);
+    sock.SendByte(instruction);
 }

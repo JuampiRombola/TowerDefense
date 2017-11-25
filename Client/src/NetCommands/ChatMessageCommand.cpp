@@ -12,6 +12,6 @@ ChatMessageCommand::~ChatMessageCommand() {}
 
 void ChatMessageCommand::SendCommand(SocketWrapper &socket) {
     uint8_t opcode = IN_GAME_CHAT_MESSAGE;
-    socket.Send((char*) &opcode, 1);
+    socket.SendByte(opcode);
     socket.SendString(_message);
 }

@@ -7,12 +7,10 @@ ClientBuildTowerCommand::ClientBuildTowerCommand(SPELL_TYPE  type, uint32_t  til
 
 void ClientBuildTowerCommand::SendCommand(SocketWrapper &sock) {
     uint8_t gameopcode = GAME_OPCODE;
-    sock.Send((char*) &gameopcode, 1);
-
+    sock.SendByte(gameopcode);
     uint8_t opcode = CLIENT_CREATE_TOWER;
-    sock.Send((char*) &opcode, 1);
-
-    sock.Send((char*) &_type, 1);
-    sock.Send((char*) &_tileX, 4);
-    sock.Send((char*) &_tileY, 4);
+    sock.SendByte(opcode);
+    sock.SendByte(_type);
+    sock.SendInt32(_tileX);
+    sock.SendInt32(_tileY);
 }
