@@ -152,6 +152,16 @@ void ModelView::addAnnouncement(std::string announcement) {
     newAnnouncementsMessages.Queue(new std::string(announcement));
 }
 
+void ModelView::gameOver() {
+    this->addAnnouncement("Defeat!");
+    musicPlayer.gameOver();
+}
+
+void ModelView::win() {
+    this->addAnnouncement("Vistory!");
+    musicPlayer.win();
+}
+
 TowerView *ModelView::onClick(int x, int y) {
     Lock(this->m);
     return depthLevels[(x+y+1)]->onCLick(x, y);

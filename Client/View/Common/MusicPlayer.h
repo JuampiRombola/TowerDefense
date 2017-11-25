@@ -14,6 +14,8 @@ public:
     void addShoot(int key);
     void addDyingEnemy();
     void addSpell(int key);
+    void gameOver();
+    void win();
     void playMusic();
 };
 

@@ -56,6 +56,14 @@ void MusicPlayer::addSpell(int key) {
     }
 }
 
+void MusicPlayer::gameOver() {
+    effects.emplace_back(musicLoader.getChunk(DEFEAT_SONIDO), false);
+}
+
+void MusicPlayer::win() {
+    effects.emplace_back(musicLoader.getChunk(WIN_SONIDO), false);
+}
+
 void MusicPlayer::playMusic() {
     for (int channel = 1; channel <= 3 && !effects.empty(); ++channel) {
         if (!Mix_Playing(channel)) {
