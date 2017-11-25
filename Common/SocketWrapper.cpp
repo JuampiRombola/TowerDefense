@@ -7,16 +7,31 @@
 #include "ClientDisconnectedException.h"
 #include "SocketConnectionException.h"
 
+std::string _FormatBytes(uint bytes){
+	if (bytes < 1024)
+		return std::to_string(bytes) + " B";
+	else if (bytes < (1024 * 1024)) {
+		double kBs = (double) bytes / (double) 1024;
+		return std::to_string(kBs) + " KB";
+	} else
+	{
+		double MBs = (double) bytes / (double) (1024 * 1024);
+		return std::to_string(MBs) + " MB";
+	}
+}
+
 SocketWrapper::SocketWrapper(int fd) :  _fd(fd) {}
 
 SocketWrapper::~SocketWrapper(){
-	std::cout << "BYTES SENT: " << _bytesSent << "\n" <<std::flush;
-	std::cout << "BYTES RECIEVED: " << _bytesRecieved << "\n" <<std::flush;
+	std::cout << "Recieved: " << _FormatBytes(_bytesRecieved) << std::endl;
+	std::cout << "Sent: " << _FormatBytes(_bytesSent) << std::endl;
 	if (_fd > 0){
 		shutdown(_fd, SHUT_RDWR);
 		close(_fd);
 	}
 }
+
+
 
 bool SocketWrapper::_Send(const char *buffer, size_t length){
 	size_t sentBytes = 0;
