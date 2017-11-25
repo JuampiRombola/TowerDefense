@@ -65,12 +65,11 @@ bool SocketWrapper::Recieve(char* buffer, size_t msgLen){
 std::string SocketWrapper::RecieveString(){
 	uint8_t lenbuf = -1;
 	this->Recieve((char*) &lenbuf, 1);
-	char* buff = new char[lenbuf + 1];
-	this->Recieve(buff, lenbuf);
-	buff[lenbuf] = '\0';
-	std::string str(buff);
-	delete buff;
-	return str;
+	std::string buffer;
+	buffer.resize(lenbuf + 1);
+	this->Recieve(&buffer[0], lenbuf);
+	buffer[lenbuf] = '\0';
+	return buffer;
 }
 
 void SocketWrapper::SendString(std::string& tosend){

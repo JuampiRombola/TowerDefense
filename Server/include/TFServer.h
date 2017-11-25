@@ -52,7 +52,12 @@ private:
 
 
 	std::map<PlayerProxy*, TowerDefenseGame*> _player2game;
-	std::map<TowerDefenseGame*, ThreadSafeQueue<GameNotification*>*> _game2gameNotifications;
+
+
+	//std::map<TowerDefenseGame*, ThreadSafeQueue<GameNotification*>*> _game2gameNotifications;
+	std::vector<TowerDefenseGame*> _games;
+	std::vector<std::unique_ptr<ThreadSafeQueue<GameNotification*>>>  _gameNotifications;
+
 
 	void _AcceptConnections();
 	void _NotifyClients();

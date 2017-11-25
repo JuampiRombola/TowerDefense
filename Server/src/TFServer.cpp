@@ -18,21 +18,21 @@
 
 TFServer::TFServer(std::string service) : _playerGUID(1),_connectionHandlers(),_playerProxies(),
  _connectionHandlersMutex(), _acceptingConnsMutex(),  _playersProxiesMutex(), _gamesMutex(), _isAcceptingConnections(false),
- _lobbyManager(_notifications), _server(service), _notifications(), _gameNotificatorThreads(), _player2game(), _game2gameNotifications() {
+ _lobbyManager(_notifications), _server(service), _notifications(), _gameNotificatorThreads(), _player2game(), _games(), _gameNotifications() {
 }
 
 TFServer::~TFServer(){
 	_Stop();
 	_notifications.Release();
 
-	for (auto it=_game2gameNotifications.begin();
-		it!=_game2gameNotifications.end(); ++it){
-		it->second->Release();
-		delete it->second;
-		delete it->first;
-	}
+    for (auto it = _gameNotifications.begin(); it != _gameNotifications.end(); ++it)
+        (*it).get()->Release();
 
-	if (_acceptorThread.joinable())
+    for (auto it=_games.begin(); it!= _games.end(); ++it){
+        delete (*it);
+    }
+
+    if (_acceptorThread.joinable())
 		_acceptorThread.join();
 
 	if (_notificatorThread.joinable())
@@ -221,16 +221,21 @@ void TFServer::_LaunchGame(Lobby& lobby){
 	std::lock_guard<std::mutex> lock(_gamesMutex);
 	std::vector<PlayerProxy*> playersInGame = lobby.GetPlayingPlayers();
 
-	ThreadSafeQueue<GameNotification*>* notiqueue = new ThreadSafeQueue<GameNotification*>();
-	
-	TowerDefenseGame* game = new TowerDefenseGame(gameId++, *notiqueue, playersInGame, *(lobby.MapCfg));
-	
-	_game2gameNotifications[game] = notiqueue;
+
+    ThreadSafeQueue<GameNotification*>* notique = new ThreadSafeQueue<GameNotification*>();
+    _gameNotifications.emplace_back(std::unique_ptr<ThreadSafeQueue<GameNotification*>>(notique));
+
+    TowerDefenseGame* game = new TowerDefenseGame(gameId++, *notique , playersInGame, *(lobby.MapCfg));
+
+
+    _games.push_back(game);
+
+
 	for (auto it = playersInGame.begin(); it != playersInGame.end(); ++it){
 		_player2game[(*it)] = game;
 	}
 
-	_gameNotificatorThreads.emplace_back(std::thread(&TFServer::_NotifyGamePlayers, this, notiqueue, playersInGame));
+	_gameNotificatorThreads.emplace_back(std::thread(&TFServer::_NotifyGamePlayers, this, notique, playersInGame));
 	game->Run(lobby.GetFirePlayer(), lobby.GetAirPlayer(), lobby.GetWaterPlayer(), lobby.GetGroundPlayer());
 }
 

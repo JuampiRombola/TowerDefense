@@ -15,7 +15,8 @@ class TowerDefenseGame;
 
 class HordeManager {
 private:
-    std::queue<Horde*> _hordes;
+    std::queue<Horde*> _hordeQueue;
+    std::vector<Horde*> _hordes;
     unsigned long long _timeStamp;
     Horde* _currentHorde;
 public:

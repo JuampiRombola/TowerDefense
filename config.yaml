@@ -1,6 +1,6 @@
 time_to_wait_between_hordes_ms: 6000
 spawn_units_every_ms: 500
-unit_base_step_delay_ms: 5000
+unit_base_step_delay_ms: 2000
 towers:
  ground:
   place_cooldown_sec: 3
