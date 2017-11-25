@@ -89,6 +89,7 @@ void ModelView::createSpell(int key, int x, int y, Uint32 t) {
     Lock(this->m);
     checkIndexDepthLevel(x+y+1);
     depthLevels[x+y+1]->addSpell(spell);
+    musicPlayer.addSpell(key);
 }
 
 void ModelView::createShot(int key, int x, int y, int toX, int toY, Uint32 t) {

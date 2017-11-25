@@ -13,6 +13,7 @@ public:
     MusicPlayer(MusicLoader &musicLoader);
     void addShoot(int key);
     void addDyingEnemy();
+    void addSpell(int key);
     void playMusic();
 };
 

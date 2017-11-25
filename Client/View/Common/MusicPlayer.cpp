@@ -26,6 +26,16 @@ void MusicPlayer::addDyingEnemy() {
     effects.emplace_back(musicLoader.getChunk(ENEMIGO_MUERTE_SONIDO), true);
 }
 
+void MusicPlayer::addSpell(int key) {
+    switch (key) {
+        case RAYO:
+            effects.emplace_back(musicLoader.getChunk(RAYO_SONIDO), true);
+            break;
+        default:
+            break;
+    }
+}
+
 void MusicPlayer::playMusic() {
     for (int channel = 1; channel <= 10 && !effects.empty(); ++channel) {
         if (!Mix_Playing(channel)) {
