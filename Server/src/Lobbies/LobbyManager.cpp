@@ -21,7 +21,17 @@ LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
 		while((entry = readdir(dir))!= nullptr){
             std::string mapname = std::string(entry->d_name);
             if (mapname != ".." && mapname != "."){
-                std::string s = maps_path + '/' + mapname;
+            	int i = 0;
+				for (; i < mapname.length(); i ++){
+            		if (mapname[i] == '.')
+            			break;
+            	}
+
+	            if (i != mapname.length()){
+	            	mapname = mapname.substr(0, i);
+	            }
+
+                std::string s = maps_path + '/' + mapname + ".yaml";
                 _mapCfgs.push_back(new Configuration(s, id++, mapname));
             }
 		}
