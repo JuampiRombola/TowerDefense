@@ -6,7 +6,16 @@ MusicPlayer::MusicPlayer(MusicLoader &musicLoader) : musicLoader(musicLoader) { 
 void MusicPlayer::addShoot(int key) {
     switch (key) {
         case DISPARO_FUEGO:
+            effects.emplace_back(musicLoader.getChunk(DISPARO_FUEGO_SONIDO), true);
+            break;
+        case DISPARO_TIERRA:
             effects.emplace_back(musicLoader.getChunk(DISPARO_TIERRA_SONIDO), true);
+            break;
+        case DISPARO_AIRE:
+            effects.emplace_back(musicLoader.getChunk(DISPARO_AIRE_SONIDO), true);
+            break;
+        case DISPARO_AGUA:
+            effects.emplace_back(musicLoader.getChunk(DISPARO_AGUA_SONIDO), true);
             break;
         default:
             break;
