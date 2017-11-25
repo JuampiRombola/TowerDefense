@@ -4,22 +4,24 @@
 MusicPlayer::MusicPlayer(MusicLoader &musicLoader) : musicLoader(musicLoader) { }
 
 void MusicPlayer::addShoot(int key) {
+    int shootSound;
     switch (key) {
         case DISPARO_FUEGO:
-            effects.emplace_back(musicLoader.getChunk(DISPARO_FUEGO_SONIDO), true);
+            shootSound = DISPARO_FUEGO_SONIDO;
             break;
         case DISPARO_TIERRA:
-            effects.emplace_back(musicLoader.getChunk(DISPARO_TIERRA_SONIDO), true);
+            shootSound = DISPARO_TIERRA_SONIDO;
             break;
         case DISPARO_AIRE:
-            effects.emplace_back(musicLoader.getChunk(DISPARO_AIRE_SONIDO), true);
+            shootSound = DISPARO_AIRE_SONIDO;
             break;
         case DISPARO_AGUA:
-            effects.emplace_back(musicLoader.getChunk(DISPARO_AGUA_SONIDO), true);
+            shootSound = DISPARO_AGUA_SONIDO;
             break;
         default:
-            break;
+            return;
     }
+    effects.emplace_back(musicLoader.getChunk(shootSound), true);
 }
 
 void MusicPlayer::addDyingEnemy() {
@@ -27,33 +29,36 @@ void MusicPlayer::addDyingEnemy() {
 }
 
 void MusicPlayer::addSpell(int key) {
+    int spellSound;
     switch (key) {
         case RAYO:
-            effects.emplace_back(musicLoader.getChunk(RAYO_SONIDO), true);
+            spellSound = RAYO_SONIDO;
             break;
         case METEORITO:
-            effects.emplace_back(musicLoader.getChunk(METEORITO_SONIDO), true);
+            spellSound = METEORITO_SONIDO;
             break;
         case TORNADO:
-            effects.emplace_back(musicLoader.getChunk(TORNADO_SONIDO), true);
+            spellSound = TORNADO_SONIDO;
             break;
         case FIREWALL:
-            effects.emplace_back(musicLoader.getChunk(FIREWALL_SONIDO), true);
+            spellSound = FIREWALL_SONIDO;
             break;
         case VENTISCA:
-            effects.emplace_back(musicLoader.getChunk(VENTISCA_SONIDO), true);
+            spellSound = VENTISCA_SONIDO;
             break;
         case GRIETA:
-            effects.emplace_back(musicLoader.getChunk(GRIETA_SONIDO), true);
+            spellSound = GRIETA_SONIDO;
             break;
         case CONGELACION:
-            effects.emplace_back(musicLoader.getChunk(CONGELACION_SONIDO), true);
+            spellSound = CONGELACION_SONIDO;
             break;
         case PING:
-            effects.emplace_back(musicLoader.getChunk(PING_SONIDO), true);
-        default:
+            spellSound = PING_SONIDO;
             break;
+        default:
+            return;
     }
+    effects.emplace_back(musicLoader.getChunk(spellSound), true);
 }
 
 void MusicPlayer::gameOver() {
