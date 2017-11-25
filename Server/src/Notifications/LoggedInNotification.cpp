@@ -45,7 +45,10 @@ void LoggedInNotification::Notify(){
 		if ((*it)->MapCfg == nullptr)
 			_player.SendInt32(-1);
 		else
-			_player.SendInt32((*it)->MapCfg->Id());
+		{
+			Lobby* l = (*it);
+			_player.SendInt32((l->MapCfg->Id()));
+		}
 	}
 
 	uint32_t playerAmount = _playersToNotify.size();

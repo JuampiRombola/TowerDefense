@@ -43,6 +43,9 @@ void LobbyManager::HandlePlayerIsReady(PlayerProxy &player){
 	if (player.lobby == nullptr || player.state != IN_LOBBY)
 		return;
 
+	if (player.lobby->MapCfg == nullptr)
+		return;
+	
 	player.lobby->PlayerIsReady(player);
 }
 
@@ -194,6 +197,6 @@ void LobbyManager::_CreateNewLobby(std::string& lobbyName){
 		_lobbies.push_back(newLobby);
 		Notification* noti = new NewLobbyNotification(*_lobbies.back());
 		_notifications.Queue(noti);
-        //newLobby->MapCfg = _mapCfgs[0];
+        newLobby->MapCfg = _mapCfgs[0];
 	}
 }
