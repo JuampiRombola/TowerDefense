@@ -11,7 +11,7 @@
 #include "../../../include/GameModel/ViewModels/TowerVM.h"
 #include "../../../include/GameModel/Commands/BuildTowerCommand.h"
 
-FireTower::FireTower(uint cooldown_ms, uint range, uint damage, 
+FireTower::FireTower(uint cooldown_ms, uint range, uint damage,
 	SolidGroundTile* position, Map* map, uint collateralDamage, uint collateralRange,
 	uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications)
 : Tower(cooldown_ms, range, damage, position, map, projectile_ms_over_tile, notifications), _collateralDamage(collateralDamage), _collateralRange(collateralRange) {}
@@ -89,6 +89,7 @@ TowerVM FireTower::GetViewModel(){
 	vm.type = GetTowerType();
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
+	vm.tower_placement_cooldown_sec = (*cfg)["towers"]["fire"]["place_cooldown_sec"].as<uint>();
 	vm.experience = _experience;
 	vm.level = _upgradeLevel;
 	vm.range = _range;

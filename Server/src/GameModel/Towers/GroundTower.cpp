@@ -12,10 +12,10 @@
 #include "../../../include/GameModel/ViewModels/TowerVM.h"
 
 
-GroundTower::GroundTower(uint cooldown_sec, uint range,
+GroundTower::GroundTower(uint cooldown_ms, uint range,
 						 uint damage, SolidGroundTile* position, Map* map,
 						uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications)
-: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile, notifications) {}
+: Tower(cooldown_ms, range, damage, position, map, projectile_ms_over_tile, notifications) {}
 
 GroundTower::~GroundTower(){}
 
@@ -79,6 +79,8 @@ TowerVM GroundTower::GetViewModel(){
 	vm.type = GetTowerType();
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
+	vm.tower_placement_cooldown_sec = (*cfg)["towers"]["ground"]["place_cooldown_sec"].as<uint>();
+
 	vm.experience = floor(_experience);
 	vm.level = _upgradeLevel;
 	vm.collateral_range = -1;

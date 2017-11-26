@@ -7,6 +7,7 @@ struct TowerVM {
 	TowerType type;
 	uint xPos;
 	uint yPos;
+	uint tower_placement_cooldown_sec;
 	uint experience;
 	uint level;
 	uint nonFlyingDamage;
