@@ -97,7 +97,7 @@ spells:
   cast_cooldown_sec: 5
 units:
  abmonible:
-  health_points: 10000000
+  health_points: 1000
   speed: 1
  demonio_verde:
   health_points: 10

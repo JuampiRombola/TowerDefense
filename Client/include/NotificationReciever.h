@@ -37,6 +37,7 @@ private:
     void _HandleHordeEnded();
 	void _HandleUnitSpeedUpdate();
 	void _HandleUnitFrozen();
+	void _SwitchOnOpcode(uint8_t opcode);
 
 
 	std::map<std::pair<uint, uint>, uint> _towerCoordToId;
