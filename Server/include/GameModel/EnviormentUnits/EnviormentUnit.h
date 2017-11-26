@@ -32,7 +32,6 @@ protected:
 	ThreadSafeQueue<GameNotification*>& _notifications;
 	std::vector<std::tuple<unsigned long long, uint, uint>> _slows;
 	PathTile* _GetNextTile();
-	uint _GetActualStepDelay();
 	bool _CanStep();
 public:
 	EnviormentUnit(uint id, uint stepDelay_ms, int healthPoints, 

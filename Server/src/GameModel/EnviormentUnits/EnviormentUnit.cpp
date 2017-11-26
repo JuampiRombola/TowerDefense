@@ -167,24 +167,6 @@ bool EnviormentUnit::IsSlowed(){
 	return _isSlowed;
 }
 
-uint EnviormentUnit::_GetActualStepDelay(){
-/*
-	if (IsSlowed()){
-		unsigned long long ts = Helpers::MillisecondsTimeStamp();
-		unsigned long long delta_ms = ts - _lastSlowBeginTimeStamp_ms;
-		unsigned long long dur_ms = _lastSlowDuration_sec * 1000;
-
-		if ( delta_ms > dur_ms ){
-			_isSlowed = false;
-			return _speedtiles_over_second;
-		}
-
-		double increasedDelay = _speedtiles_over_second * ((((double) _activePercentSlow ) / 100) + 1);
-		return increasedDelay;
-	} 
-	return _speedtiles_over_second;*/
-    return 0;
-}
 
 PathTile* EnviormentUnit::_GetNextTile(){
 
