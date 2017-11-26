@@ -12,10 +12,10 @@
 #include "../../../include/GameModel/ViewModels/TowerVM.h"
 
 
-AirTower::AirTower(uint cooldown_sec, uint range, uint damage,
+AirTower::AirTower(uint cooldown_ms, uint range, uint damage,
                    uint nonflyingDamage, SolidGroundTile* position, Map* map,
                     uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications)
-: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile, notifications), _nonFlyingDamage(nonflyingDamage) {}
+: Tower(cooldown_ms, range, damage, position, map, projectile_ms_over_tile, notifications), _nonFlyingDamage(nonflyingDamage) {}
 
 AirTower::~AirTower(){}
 
@@ -77,6 +77,7 @@ TowerVM AirTower::GetViewModel(){
 	vm.type = GetTowerType();
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
+	vm.tower_placement_cooldown_sec = (*cfg)["towers"]["air"]["place_cooldown_sec"].as<uint>();
 	vm.experience = _experience;
 	vm.level = _upgradeLevel;
 	vm.nonFlyingDamage = _nonFlyingDamage;

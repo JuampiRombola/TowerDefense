@@ -398,9 +398,9 @@ void NotificationReciever::_HandleProjectileFired(){
 void NotificationReciever::_HandleTowerPlaced(){
 	uint32_t x = _sock.RecieveInt32();
 	uint32_t y = _sock.RecieveInt32();
+    uint32_t cooldown_ms = _sock.RecieveInt32() * 1000;
 	uint8_t type = _sock.RecieveByte();
 	_towerCoordToId[std::pair<uint, uint>(x, y)] = _localTowerId;
-    Uint32 cooldown_ms = 20000;
     switch (type) {
         case SPELL_TYPE_GROUND:
             hud_view->setCooldown(CMD_EARTH_TOWER, cooldown_ms);

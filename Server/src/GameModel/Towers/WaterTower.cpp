@@ -12,10 +12,10 @@
 #include "../../../include/GameModel/Commands/UpgradeTowerCommand.h"
 
 
-WaterTower::WaterTower(uint cooldown_sec, uint range, uint damage,
+WaterTower::WaterTower(uint cooldown_ms, uint range, uint damage,
 					   uint slowPercent, uint slowDuration_sec, SolidGroundTile* position, Map* map,
 						uint projectile_ms_over_tile, ThreadSafeQueue<GameNotification*>& notifications)
-: Tower(cooldown_sec, range, damage, position, map, projectile_ms_over_tile, notifications), _slowPercent(slowPercent), _slowDuration_sec(slowDuration_sec) {}
+: Tower(cooldown_ms, range, damage, position, map, projectile_ms_over_tile, notifications), _slowPercent(slowPercent), _slowDuration_sec(slowDuration_sec) {}
 
 WaterTower::~WaterTower(){}
 
@@ -100,6 +100,7 @@ TowerVM WaterTower::GetViewModel(){
 	vm.type = GetTowerType();
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
+	vm.tower_placement_cooldown_sec = (*cfg)["towers"]["water"]["place_cooldown_sec"].as<uint>();
 	vm.experience = _experience;
 	vm.level = _upgradeLevel;
 	vm.collateral_range = -1;

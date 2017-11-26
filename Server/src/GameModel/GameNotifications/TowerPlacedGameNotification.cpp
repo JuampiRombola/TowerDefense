@@ -15,14 +15,11 @@ TowerPlacedGameNotification::~TowerPlacedGameNotification(){
 void TowerPlacedGameNotification::Notify(std::vector<PlayerProxy*> playersToNotify) {
     for (auto it = playersToNotify.begin(); it != playersToNotify.end(); it++) {
         PlayerProxy *p = *it;
-        int8_t game = GAME_OPCODE;
-        p->SendByte(game);
-        int8_t opcode = TOWER_PLACED;
-        p->SendByte(opcode);
-        uint32_t x = vm.xPos;
-        p->SendInt32(x);
-        uint32_t y = vm.yPos;
-        p->SendInt32(y);
+        p->SendByte(GAME_OPCODE);
+        p->SendByte(TOWER_PLACED);
+        p->SendInt32(vm.xPos);
+        p->SendInt32(vm.yPos);
+        p->SendInt32(vm.tower_placement_cooldown_sec);
         SPELL_TYPE type;
         switch (vm.type) {
             case Ground:
@@ -38,7 +35,6 @@ void TowerPlacedGameNotification::Notify(std::vector<PlayerProxy*> playersToNoti
                 type = SPELL_TYPE_AIR;
                 break;
         }
-        uint8_t spelltype = type;
-        p->SendByte(spelltype);
+        p->SendByte(type);
     }
 }
