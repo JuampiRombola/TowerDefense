@@ -8,7 +8,7 @@
 
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager, GTKRunner& runner, CommandDispatcher& dispatcher)
 : _sock(socket), _lobbyManager(lobbyManager),  _runner(runner),
-  _dispatcher(dispatcher), _stop(false), _towerCoordToId(), _localTowerId() {
+  _dispatcher(dispatcher), _stop(false), _towerCoordToId(), _localTowerId(), canStopMutex() {
 
 }
 
@@ -26,7 +26,13 @@ void NotificationReciever::RecieveNotifications(){
     try
     {
         uint8_t opcode;
-        while (!_Stop()){
+        while (!_stop){
+
+            std::lock_guard<std::mutex> lock(_stopMutex);
+            if (_stop)
+                return;
+
+
             opcode = _sock.RecieveByte();
             switch (opcode){
                 case CREATE_LOBBY:

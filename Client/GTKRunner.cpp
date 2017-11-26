@@ -379,9 +379,6 @@ void GTKRunner::Run(int* argc, char***argv){
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
 
-
-
-//    gtk_window_set_default_size(GTK_WINDOW(this->window_global), 640, 360);
     gtk_window_set_default_size(GTK_WINDOW(this->window_global), 800, 600);
     g_object_ref(this->grid_login);
     g_object_ref(this->grid_lobbies);
