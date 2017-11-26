@@ -10,6 +10,7 @@
 #include "AumentarTiempoEnemigosButton.h"
 #include "DisminuirTiempoEnemigosButton.h"
 #include "ContadorTiempoEnemigosInput.h"
+#include "EliminarTerrenoButton.h"
 
 EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
                              TextureLoader &textureLoader) : mousePosition(mousePosition),
@@ -76,6 +77,10 @@ void EditorButtons::addInitialButtons() {
     Image *exitTileButton = new AgregarPortalSalidaButton(
             textureLoader.getTexture(PORTAL_SALIDA_EDITOR), mousePosition, renderer, editor);
     images.push_back(exitTileButton);
+
+    Image *deleteStructureButton = new EliminarTerrenoButton(
+            textureLoader.getTexture(ELIMINAR_HORDA_BTN), mousePosition, renderer, editor);
+    images.push_back(deleteStructureButton);
 
     Image *button = new NuevaHordaButton(textureLoader.getTexture(AGREGAR_HORDA_BTN), mousePosition,
                                          renderer, editor,

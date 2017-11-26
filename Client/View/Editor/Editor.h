@@ -41,10 +41,12 @@ public:
     void waitForStructureTile();
     void waitForSpawnPortalTile();
     void waitForExitPortalTile();
+    void waitForDeleteTerrainTile();
     void applyTileFunction(int x, int y);
     void unbindWaitingFunction();
     void addSpawnTile(int x, int y);
     void addExitTile(int x, int y);
+    void deleteTerrainTile(int x, int y);
     void aumentarTiempoHorda(int hordaId);
     void disminuirTiempoHorda(int horda);
     int getTiempoHorda(int horda);

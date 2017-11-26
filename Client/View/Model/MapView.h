@@ -25,7 +25,9 @@ public:
     ~MapView();
     void draw(Uint32 ticks);
     void addPathTile(int x, int y);
+    void deletePathTile(int x, int y);
     void addStructureTile(int x, int y);
+    void deleteStructureTile(int x, int y);
     void selectBackgroundColor(Renderer &renderer, int environment);
     void setEnvTile(int env);
     int getTileXFromPixel(int x, int y);
