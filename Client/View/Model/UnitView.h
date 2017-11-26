@@ -41,7 +41,6 @@ public:
     UnitView(int id, int key, TextureLoader &textures, Renderer &renderer);
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
-    void move(int x, int y, int nextX, int nextY, Uint32 t);
     void move(int x, int y, int nextX, int nextY);
     void enableDying();
     int getId();

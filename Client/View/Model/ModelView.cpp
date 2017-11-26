@@ -108,18 +108,6 @@ void ModelView::createShot(int key, int x, int y, int toX, int toY, Uint32 t) {
         musicPlayer.addShoot(key);
 }
 
-void ModelView::moveUnit(int id, int x, int y, int toX, int toY, Uint32 t) {
-    Lock(this->m);
-    int levelIndex = idDepthLevelsUnits.at(id);
-    UnitView *unit = depthLevels[levelIndex]->getUnit(id);
-    checkIndexDepthLevel(levelIndex);
-    depthLevels[levelIndex]->removeUnit(id);
-    unit->move(x, y, toX, toY, t);
-    checkIndexDepthLevel(x+y+1);
-    depthLevels[x+y+1]->addUnit(unit);
-    idDepthLevelsUnits[id] = x + y + 1;
-}
-
 void ModelView::moveUnit(int id, int x, int y, int toX, int toY) {
     Lock(this->m);
     int levelIndex = idDepthLevelsUnits.at(id);

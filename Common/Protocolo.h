@@ -105,6 +105,7 @@ enum UpgradeType {
 #define TOWER_UPGRADE 219
 #define PICK_MAP 220
 #define UNIT_SPEED_UPDATE 221
+#define UNIT_FROZEN 222
 
 
 

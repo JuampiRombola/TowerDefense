@@ -228,6 +228,10 @@ void NotificationReciever::_HandleGameOpcode(){
             std::cout << "UNIT_SPEED_UPDATE::\n" << std::flush;
             _HandleUnitSpeedUpdate();
             break;
+        case UNIT_FROZEN:
+            std::cout << "UNIT_FROZEN::\n" << std::flush;
+            _HandleUnitFrozen();
+            break;
     }
 }
 
@@ -301,8 +305,16 @@ void NotificationReciever::_HandleTowerUpgrade() {
 void NotificationReciever::_HandleUnitSpeedUpdate() {
     uint unitId = _sock.RecieveInt32();
     uint step_delay_ms = _sock.RecieveInt32();
-    model_vie
+    model_view->setUnitSpeed(unitId, step_delay_ms);
 }
+
+void NotificationReciever::_HandleUnitFrozen() {
+    uint unitId = _sock.RecieveInt32();
+    uint freeze_time_ms = _sock.RecieveInt32();
+    model_view->freezeUnit(unitId, freeze_time_ms);
+}
+
+
 
 void NotificationReciever::_HandleHordeEnded() {
 	uint hordeId = _sock.RecieveInt32();
@@ -414,12 +426,11 @@ void NotificationReciever::_HandleUnitPositionUpdate(){
     uint32_t y = _sock.RecieveInt32();
     uint32_t tox = _sock.RecieveInt32();
     uint32_t toy = _sock.RecieveInt32();
-    uint32_t delay_ms = _sock.RecieveInt32();
 
 	if (tox == 0xFFFFFFFF || toy == 0xFFFFFFFF)
 		return;
 
-	model_view->moveUnit(unitID, x, y, tox, toy, delay_ms);
+	model_view->moveUnit(unitID, x, y, tox, toy);
 }
 void NotificationReciever::_HandleUnitCreated(){
     uint32_t unitID = _sock.RecieveInt32();

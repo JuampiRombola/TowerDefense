@@ -74,18 +74,6 @@ void UnitView::draw(Uint32 ticks) {
     }
 }
 
-void UnitView::move(int x, int y, int nextX, int nextY, Uint32 t) {
-    this->setXY(x, y);
-    this->nextX = nextX;
-    this->nextY = nextY;
-    initTime = SDL_GetTicks();
-    timePerPixel = t / PIXELS;
-    isFirstStep = true;
-    accumulatedDisplacement = 0;
-    otherSpeedDisplacement = 0;
-}
-
-
 void UnitView::move(int x, int y, int nextX, int nextY) {
     if (currentState == FROZEN) currentState = WALKING;
     this->setXY(x, y);

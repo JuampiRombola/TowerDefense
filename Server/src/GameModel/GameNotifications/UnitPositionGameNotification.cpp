@@ -31,8 +31,6 @@ void UnitPositionGameNotification::Notify(std::vector<PlayerProxy*> playersToNot
         p->SendInt32(tox);
         uint32_t toy = vm.nextYpos;
         p->SendInt32(toy);
-        uint32_t delay_ms = vm.stepDelay_ms;
-        p->SendInt32(delay_ms);
         std::cout << "unit position noti x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
     }
 }

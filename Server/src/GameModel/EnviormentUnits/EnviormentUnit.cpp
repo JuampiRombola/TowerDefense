@@ -13,6 +13,7 @@
 #include "../../../include/GameModel/Exceptions/NonPlacedUnitCannotStepException.h"
 #include "../../../include/GameModel/Exceptions/IncompletePathException.h"
 #include "../../../include/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.h"
+#include "../../../include/GameModel/GameNotifications/UnitFrozenGameNotification.h"
 
 EnviormentUnit::EnviormentUnit(uint id, uint stepDelay_ms, int healthpoints,
 							   ThreadSafeQueue<GameNotification*>& notifications):
@@ -52,6 +53,7 @@ void EnviormentUnit::PushBack(){
 
 
 void EnviormentUnit::Freeze(uint seconds){
+    _notifications.Queue(new UnitFrozenGameNotification(_id, seconds * 1000));
 	_isFrozen = true;
 	_lastFreezeTimeStamp_ms = Helpers::MillisecondsTimeStamp();
 	_lastFreezeDuration_sec = seconds;

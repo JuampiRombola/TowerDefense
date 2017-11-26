@@ -152,7 +152,9 @@ set(SOURCE_FILES_SERVER
         Server/src/Notifications/MapPickedNotification.cpp
         Server/include/Notifications/MapPickedNotification.h
         Server/include/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.h
-        Server/src/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.cpp)
+        Server/src/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.cpp
+        Server/src/GameModel/GameNotifications/UnitFrozenGameNotification.cpp
+        Server/include/GameModel/GameNotifications/UnitFrozenGameNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/src/NetCommands/UpgradeTowerNetCommand.cpp
