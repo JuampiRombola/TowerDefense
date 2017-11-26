@@ -12,16 +12,17 @@
 #include "../../../include/GameModel/Helpers.h"
 #include "../../../include/GameModel/Exceptions/NonPlacedUnitCannotStepException.h"
 #include "../../../include/GameModel/Exceptions/IncompletePathException.h"
-#include "../../../include/GameModel/Exceptions/UnitCannotMoveDiagonallyException.h"
+#include "../../../include/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.h"
 
-EnviormentUnit::EnviormentUnit(uint id, uint stepDelay_ms, int healthpoints, ThreadSafeQueue<GameNotification*>& notifications): 
+EnviormentUnit::EnviormentUnit(uint id, uint stepDelay_ms, int healthpoints,
+							   ThreadSafeQueue<GameNotification*>& notifications):
 _lastTimeStamp_ms(0), _lastSlowBeginTimeStamp_ms(0), _lastFreezeTimeStamp_ms(0),
- _alive(true), _id(id), _stepDelay(stepDelay_ms),
+ _alive(true), _id(id), _stepDelay_ms(stepDelay_ms),
  _healthPoints(healthpoints), _position(nullptr), _lastPosition(nullptr), 
 _map(nullptr), _isSlowed(false), _isFrozen(false), _lastFreezeDuration_sec(0),
- _lastSlowDuration_sec(0), _activePercentSlow(1), _notifications(notifications), deathNotified(false)
+ _lastSlowDuration_sec(0), _activePercentSlow(1), _notifications(notifications), _slows(), deathNotified(false)
 {
-
+	std::cout << "Env unit created base delay "  << _stepDelay_ms << std::endl;
 }
 
 EnviormentUnit::~EnviormentUnit(){
@@ -71,10 +72,18 @@ bool EnviormentUnit::IsAlive(){
 
 
 void EnviormentUnit::Slow(uint slowSeconds, uint percentSlow){
-	_isSlowed = true;
+	auto ts = Helpers::MillisecondsTimeStamp();
+    uint delayIncrement = floor((_stepDelay_ms / (double) 100) * (double) percentSlow);
+	_stepDelay_ms += delayIncrement;
+	
+	std::cout << "slow started: unit _stepDelay_ms now is: " << _stepDelay_ms << std::endl << std::flush;
+    auto tup = std::tuple<unsigned long long, uint, uint>(ts, (slowSeconds * 1000), delayIncrement);
+	_slows.push_back(tup);
+	_notifications.Queue(new UnitSpeedUpdateGameNotification(_id, _stepDelay_ms));
+/*	_isSlowed = true;
 	_activePercentSlow = percentSlow;
 	_lastSlowBeginTimeStamp_ms = Helpers::MillisecondsTimeStamp();
-	_lastSlowDuration_sec = slowSeconds;
+	_lastSlowDuration_sec = slowSeconds;*/
 }
 
 
@@ -107,7 +116,7 @@ bool EnviormentUnit::_CanStep(){
 	if (_position == nullptr || _map == nullptr)
 		throw NonPlacedUnitCannotStepException();
 
-	uint ts = Helpers::MillisecondsTimeStamp();
+    unsigned long long ts = Helpers::MillisecondsTimeStamp();
 
 	if (_isFrozen){
 		uint delta = ts - _lastFreezeTimeStamp_ms;
@@ -125,10 +134,26 @@ bool EnviormentUnit::_CanStep(){
 		return true;
 	}
 
-	uint delta = ts - _lastTimeStamp_ms;
-	uint actualDelay = _GetActualStepDelay();
+    for (auto it = _slows.begin(); it != _slows.end();){
+        auto tup = *it;
+        auto slowTsBegin = std::get<0>(tup);
+        uint slowDuration_ms = std::get<1>(tup);
+        uint delayIncrement_ms = std::get<2>(tup);
+        if (ts - slowTsBegin > slowDuration_ms){
+            _stepDelay_ms -= delayIncrement_ms;
+            std::cout << "slow endend: unit _stepDelay_ms now is: " << _stepDelay_ms << std::endl << std::flush;
+			_notifications.Queue(new UnitSpeedUpdateGameNotification(_id, _stepDelay_ms));
+			it = _slows.erase(it);
+        } else {
+            ++it;
+        }
+    }
 
-	if (delta > actualDelay){
+
+
+	uint delta = ts - _lastTimeStamp_ms;
+
+	if (delta > _stepDelay_ms){
 		_lastTimeStamp_ms = ts;
 		return true;
 	}
@@ -141,6 +166,7 @@ bool EnviormentUnit::IsSlowed(){
 }
 
 uint EnviormentUnit::_GetActualStepDelay(){
+/*
 	if (IsSlowed()){
 		unsigned long long ts = Helpers::MillisecondsTimeStamp();
 		unsigned long long delta_ms = ts - _lastSlowBeginTimeStamp_ms;
@@ -148,13 +174,14 @@ uint EnviormentUnit::_GetActualStepDelay(){
 
 		if ( delta_ms > dur_ms ){
 			_isSlowed = false;
-			return _stepDelay;
+			return _speedtiles_over_second;
 		}
 
-		double increasedDelay = _stepDelay * ((((double) _activePercentSlow ) / 100) + 1);
+		double increasedDelay = _speedtiles_over_second * ((((double) _activePercentSlow ) / 100) + 1);
 		return increasedDelay;
 	} 
-	return _stepDelay;
+	return _speedtiles_over_second;*/
+    return 0;
 }
 
 PathTile* EnviormentUnit::_GetNextTile(){

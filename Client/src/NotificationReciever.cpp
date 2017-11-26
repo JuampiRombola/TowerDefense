@@ -224,6 +224,10 @@ void NotificationReciever::_HandleGameOpcode(){
             std::cout << "TOWER_UPGRADE::\n" << std::flush;
             _HandleTowerUpgrade();
             break;
+        case UNIT_SPEED_UPDATE:
+            std::cout << "UNIT_SPEED_UPDATE::\n" << std::flush;
+            _HandleUnitSpeedUpdate();
+            break;
     }
 }
 
@@ -292,6 +296,12 @@ void NotificationReciever::_HandleTowerUpgrade() {
         case SPELL_TYPE_GROUND:
             break;
     }
+}
+
+void NotificationReciever::_HandleUnitSpeedUpdate() {
+    uint unitId = _sock.RecieveInt32();
+    uint step_delay_ms = _sock.RecieveInt32();
+    model_vie
 }
 
 void NotificationReciever::_HandleHordeEnded() {
