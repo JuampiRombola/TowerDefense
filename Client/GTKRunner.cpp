@@ -200,15 +200,31 @@ void GTKRunner::connect_clicked(GtkWidget* widget, gpointer data){
 }
 
 
-GTKRunner::GTKRunner() : OK (false) {
+GTKRunner::GTKRunner() : sock(nullptr),
+lobbyManager(nullptr),
+reciever(nullptr),
+dispatcher(nullptr) ,OK (false) {
 }
 
 GTKRunner::~GTKRunner() {
-    if (!OK){
-        delete sock;
-        delete reciever;
-        delete dispatcher;
-        delete lobbyManager;
+    if (!OK)
+    {
+        if (sock != nullptr){
+            delete sock;
+            sock = nullptr;
+        }
+        if (reciever != nullptr){
+            delete reciever;
+            reciever = nullptr;
+        }
+        if (dispatcher != nullptr){
+            delete dispatcher;
+            dispatcher = nullptr;
+        }
+        if (lobbyManager != nullptr){
+            delete lobbyManager;
+            lobbyManager = nullptr;
+        }
     }
 }
 

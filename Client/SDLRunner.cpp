@@ -185,6 +185,11 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
         } else
             delta = elapsedTime - s;
     }
+
+
+    _reciever->Stop();
+    _dispatcher->Stop();
+
     TTF_Quit();
     SDL_Quit();
 }

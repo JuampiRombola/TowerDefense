@@ -157,8 +157,8 @@ void NotificationReciever::RecieveNotifications(){
         }
     }catch(const std::exception& e)
     {
-        _runner.OK = false;
-        GTKRunner::ShutdownGTK();
+        if (!_runner.OK)
+            GTKRunner::ShutdownGTK();
         std::cerr << e.what() << std::endl;
     }
 }
