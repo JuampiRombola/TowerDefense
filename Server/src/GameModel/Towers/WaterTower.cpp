@@ -90,9 +90,14 @@ bool WaterTower::Upgrade(UpgradeType type){
 	return false;
 }
 
+
+TowerType WaterTower::GetTowerType(){
+	return Water;
+}
+
 TowerVM WaterTower::GetViewModel(){
 	TowerVM vm;
-	vm.type = Water;
+	vm.type = GetTowerType();
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
 	vm.experience = _experience;

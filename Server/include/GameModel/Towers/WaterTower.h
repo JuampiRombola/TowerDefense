@@ -24,6 +24,7 @@ public:
 	void PrintDebug();
 	bool Upgrade(UpgradeType type);
 	TowerVM GetViewModel();
+	TowerType GetTowerType();
 };
 
 #endif

@@ -76,7 +76,7 @@ bool GroundTower::Upgrade(UpgradeType type){
 
 TowerVM GroundTower::GetViewModel(){
 	TowerVM vm;
-	vm.type = Ground;
+	vm.type = GetTowerType();
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
 	vm.experience = floor(_experience);
@@ -99,4 +99,8 @@ TowerVM GroundTower::GetViewModel(){
 	vm.exp_required_for_collateral_range_upgrade = 0xFFFFFFFF;
 	vm.exp_required_for_slow_upgrade = 0xFFFFFFFF;
 	return vm;
+}
+
+TowerType GroundTower::GetTowerType(){
+	return Ground;
 }

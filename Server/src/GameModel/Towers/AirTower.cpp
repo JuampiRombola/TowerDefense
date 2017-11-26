@@ -28,7 +28,6 @@ Projectile* AirTower::_BuildProjectile(PathTile* target){
 }
 
 bool AirTower::Upgrade(UpgradeType type){
-	std::lock_guard<std::mutex> lock(_expMutex);
 	switch (type){
 		case Range:
 			{
@@ -75,7 +74,7 @@ bool AirTower::Upgrade(UpgradeType type){
 
 TowerVM AirTower::GetViewModel(){
 	TowerVM vm;
-	vm.type = Air;
+	vm.type = GetTowerType();
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
 	vm.experience = _experience;
@@ -97,4 +96,8 @@ TowerVM AirTower::GetViewModel(){
 	vm.exp_required_for_collateral_range_upgrade = 0xFFFFFFFF;
 	vm.exp_required_for_slow_upgrade = 0xFFFFFFFF;
 	return vm;
+}
+
+TowerType AirTower::GetTowerType(){
+	return Air;
 }

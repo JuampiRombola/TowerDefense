@@ -25,18 +25,11 @@ double GroundProjectile::_OnImpact(){
 	double exp = 0;
 	for (auto it = units.begin(); it != units.end() && !hit; ++it){
 		if (!(*it)->Flies()){
-
-
 			uint currentHP = (*it)->GetHP();
-
 			(*it)->GetHit(_hitPoints);
-
 			exp += _hitPoints;
-
-			if (!((*it)->IsAlive())){
+			if (!((*it)->IsAlive()))
 				exp += currentHP / 2;
-			}
-
 			hit = true;
 		}
 	}
