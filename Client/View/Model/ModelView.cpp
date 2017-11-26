@@ -185,7 +185,7 @@ void ModelView::gameOver() {
 }
 
 void ModelView::win() {
-    this->addAnnouncement("Vistory!");
+    this->addAnnouncement("Victory!");
     musicPlayer.win();
 }
 
