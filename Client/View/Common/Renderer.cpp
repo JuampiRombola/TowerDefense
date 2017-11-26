@@ -172,3 +172,15 @@ int Renderer::getWindowHeight() {
 Uint32 Renderer::getWindowID() {
     return window.getID();
 }
+
+void Renderer::updateCameraFinger(int x, int y) {
+    this->cameraX -= x;
+    if (cameraX < 0) cameraX = 0;
+    if (cameraX > (ceil(zoom) * mapWidth + 2*PADDING - windowWidth))
+        cameraX = ceil(zoom) * mapWidth + 2*PADDING - windowWidth;
+
+    this->cameraY -= y;
+    if (cameraY < 0) cameraY = 0;
+    if (cameraY > (ceil(zoom) * mapHeight + 2*PADDING - windowHeight))
+        cameraY = ceil(zoom) * mapHeight + 2*PADDING - windowHeight;
+}

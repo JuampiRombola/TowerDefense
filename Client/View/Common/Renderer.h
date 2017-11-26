@@ -47,6 +47,7 @@ public:
     int getWindowWidth();
     int getWindowHeight();
     Uint32 getWindowID();
+    void updateCameraFinger(int x, int y);
 };
 
 

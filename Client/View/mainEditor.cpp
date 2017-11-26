@@ -68,6 +68,11 @@ int main(int argc, char** argv) {
                     mouse_y = static_cast<int>(event.tfinger.y);
                     mouse.activate();
                     break;
+                case SDL_FINGERMOTION:
+                    renderer.updateCameraFinger(
+                            static_cast<int>(event.tfinger.dx),
+                            static_cast<int>(event.tfinger.dy));
+                    break;
                 case SDL_MOUSEWHEEL:
                     if (event.wheel.y == 1) //scroll up
                         renderer.zoomIn();

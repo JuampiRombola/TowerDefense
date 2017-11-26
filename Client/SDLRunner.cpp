@@ -106,6 +106,11 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                     hudView.getFingerButtonDown(event); break;
                 case SDL_FINGERUP:
                     hudView.getFingerState(event); break;
+                case SDL_FINGERMOTION:
+                    renderer.updateCameraFinger(
+                            static_cast<int>(event.tfinger.dx),
+                            static_cast<int>(event.tfinger.dy));
+                    break;
                 case SDL_MOUSEWHEEL:
                     if (event.wheel.y == 1) //scroll up
                         renderer.zoomIn();

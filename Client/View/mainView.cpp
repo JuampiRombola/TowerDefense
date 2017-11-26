@@ -178,16 +178,16 @@ int main(int argc, char** argv) {
                                                 event.motion.windowID);
                     break;
                 case SDL_MOUSEBUTTONDOWN:
-                    hudView.getMouseButtonDown();
-                    break;
+                    hudView.getMouseButtonDown(); break;
                 case SDL_MOUSEBUTTONUP:
-                    hudView.getMouseState();
-                    break;
+                    hudView.getMouseState(); break;
                 case SDL_FINGERDOWN:
-                    hudView.getFingerButtonDown(event);
-                    break;
+                    hudView.getFingerButtonDown(event); break;
                 case SDL_FINGERUP:
-                    hudView.getFingerState(event);
+                    hudView.getFingerState(event); break;
+                case SDL_FINGERMOTION:
+                    renderer.updateCameraFinger(static_cast<int>(event.tfinger.dx),
+                                          static_cast<int>(event.tfinger.dy));
                     break;
                 case SDL_MOUSEWHEEL:
                     if (event.wheel.y == 1) //scroll up
