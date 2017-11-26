@@ -36,6 +36,7 @@ void UnitCreatedGameNotification::Notify(std::vector<PlayerProxy*> playersToNoti
         p->SendInt32(delay_ms);
         uint8_t unittype = vm.unitType;
         p->SendByte(unittype);
-        std::cout << "unit notification created x: " << x << ", y: " << y << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
+        std::cout << "unit notification created delay: " << vm.stepDelay_ms << " x: " << x << ", y: " << y 
+                  << ", to x: " << tox << ", toy: " << toy <<'\n' <<std::flush;
     }
 }

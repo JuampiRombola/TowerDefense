@@ -37,7 +37,7 @@ UnitVM Abmonible::GetViewModel(){
 		vm.nextYpos = -1;
 		vm.nextXpos = -1;
 	}
-	vm.stepDelay_ms = _GetActualStepDelay();
+	vm.stepDelay_ms = _stepDelay_ms;
 	vm.id = _id;
 	return vm;
 }

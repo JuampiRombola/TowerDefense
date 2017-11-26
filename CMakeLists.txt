@@ -144,7 +144,17 @@ set(SOURCE_FILES_SERVER
         Server/src/GameModel/GameNotifications/ChatMessageNotification.cpp
         Server/include/GameModel/GameNotifications/ChatMessageNotification.h
         Server/src/GameModel/GameNotifications/HordeUpdateGameNotification.cpp
-        Server/include/GameModel/GameNotifications/HordeUpdateGameNotification.h Server/src/GameModel/GameNotifications/TowerGainedExperienceGameNotification.cpp Server/include/GameModel/GameNotifications/TowerGainedExperienceGameNotification.h Server/src/GameModel/GameNotifications/TowerUpgradedGameNotification.cpp Server/include/GameModel/GameNotifications/TowerUpgradedGameNotification.h Server/src/Notifications/MapPickedNotification.cpp Server/include/Notifications/MapPickedNotification.h)
+        Server/include/GameModel/GameNotifications/HordeUpdateGameNotification.h
+        Server/src/GameModel/GameNotifications/TowerGainedExperienceGameNotification.cpp
+        Server/include/GameModel/GameNotifications/TowerGainedExperienceGameNotification.h
+        Server/src/GameModel/GameNotifications/TowerUpgradedGameNotification.cpp
+        Server/include/GameModel/GameNotifications/TowerUpgradedGameNotification.h
+        Server/src/Notifications/MapPickedNotification.cpp
+        Server/include/Notifications/MapPickedNotification.h
+        Server/include/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.h
+        Server/src/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.cpp
+        Server/src/GameModel/GameNotifications/UnitFrozenGameNotification.cpp
+        Server/include/GameModel/GameNotifications/UnitFrozenGameNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/src/NetCommands/UpgradeTowerNetCommand.cpp

@@ -35,6 +35,9 @@ private:
 	void _HandleHordeStarted();
     void _HandleTowerUpgrade();
     void _HandleHordeEnded();
+	void _HandleUnitSpeedUpdate();
+	void _HandleUnitFrozen();
+
 
 	std::map<std::pair<uint, uint>, uint> _towerCoordToId;
 	uint _localTowerId;

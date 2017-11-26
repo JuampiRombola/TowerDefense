@@ -1,6 +1,6 @@
 time_to_wait_between_hordes_ms: 6000
 spawn_units_every_ms: 500
-unit_base_step_delay_ms: 2000
+unit_base_step_delay_ms: 3000
 towers:
  ground:
   place_cooldown_sec: 3
@@ -34,12 +34,12 @@ towers:
   upgrade_collateral_range_mult: 500
  water:
   place_cooldown_sec: 3
-  projectile_ms_over_tile: 100
+  projectile_ms_over_tile: 50
   range: 4
-  cooldown_sec: 1
-  damage: 20
-  slow_percent: 25
-  slow_duration_sec: 2
+  cooldown_sec: 5
+  damage: 2
+  slow_percent: 70
+  slow_duration_sec: 4
   upgrade_range_increase: 1
   upgrade_range_mult: 100
   upgrade_range_base: 2
@@ -97,7 +97,7 @@ spells:
   cast_cooldown_sec: 5
 units:
  abmonible:
-  health_points: 10
+  health_points: 10000000
   speed: 1
  demonio_verde:
   health_points: 10
@@ -112,5 +112,5 @@ units:
   health_points: 10
   speed: 5
  no_muerto:
-  health_points: 10
+  health_points: 1000
   speed: 6
