@@ -59,6 +59,7 @@ public:
     static void ShutdownGTK();
 
     NonBlockingThreadSafeQueue<GTKNotification*> gtkNotifications;
+    ClientSocket* sock;
     ClientLobbyManager* lobbyManager;
     NotificationReciever* reciever;
     CommandDispatcher* dispatcher;
@@ -80,7 +81,6 @@ public:
     bool OK;
     void MessageBox(std::string s);
 
-    ClientSocket* sock;
 
     GtkComboBox *combobox_maps;
     gulong combo_box_maps_changed_handler_id;
