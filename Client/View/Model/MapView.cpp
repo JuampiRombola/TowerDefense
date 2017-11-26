@@ -59,8 +59,26 @@ void MapView::addPathTile(int x, int y) {
     pathTiles.emplace_back(x, y);
 }
 
+void MapView::deletePathTile(int x, int y) {
+    for (auto it = pathTiles.begin(); it != pathTiles.end();) {
+        if ((*it).first == x && (*it).second == y)
+            it = pathTiles.erase(it);
+        else
+            ++it;
+    }
+}
+
 void MapView::addStructureTile(int x, int y) {
     structureTiles.emplace_back(x, y);
+}
+
+void MapView::deleteStructureTile(int x, int y) {
+    for (auto it = structureTiles.begin(); it != structureTiles.end();) {
+        if ((*it).first == x && (*it).second == y)
+            it = structureTiles.erase(it);
+        else
+            ++it;
+    }
 }
 
 void MapView::selectBackgroundColor(Renderer &renderer, int environment) {

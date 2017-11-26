@@ -15,7 +15,7 @@ private:
     AnimatedSprite spriteWalking;
     AnimatedSprite spriteDying;
     enum Direction {S, SO, O, NO, N, NE, E, SE};
-    enum State {WALKING, DYING, DEAD};
+    enum State {WALKING, DYING, DEAD, FROZEN};
     int currentDirection;
     int currentState;
     int nextX;
@@ -25,23 +25,36 @@ private:
     Uint32 initTime;
     Uint32 timePerPixel;
     int currentDisplacement;
-    int accumulatedDisplacement;
     bool isFirstStep;
+    Uint32 lastTime;
+    Uint32 freezeTime;
+
+    // Es el total de desplazamiento por tile
+    // con la velocidad actual
+    int accumulatedDisplacement;
+
+    // Lo que se desplazo con otras velocidades
+    // distintas a la actual
+    int otherSpeedDisplacement;
 
 public:
     UnitView(int id, int key, TextureLoader &textures, Renderer &renderer);
     void draw(Uint32 ticks) override;
     void setXY(int x, int y) override;
     void move(int x, int y, int nextX, int nextY, Uint32 t);
+    void move(int x, int y, int nextX, int nextY);
     void enableDying();
     int getId();
     bool isDead();
+    void setSpeed(Uint32 newSpeed);
+    void totalFreeze(Uint32 duration);
 
 private:
     void setNumberOfPixelsToMove(Uint32 currentTime);
     void setOffsetXY();
     void calculateNewDirection();
     void setCurrentDirection();
+    void finishFreeze();
 };
 
 

@@ -441,7 +441,7 @@ set(SOURCE_FILES_EDITOR
         Client/View/Common/MusicPlayer.cpp
         Client/View/Common/MusicPlayer.h
         Client/View/Common/SoundEffect.cpp
-        Client/View/Common/SoundEffect.h)
+        Client/View/Common/SoundEffect.h Client/View/Editor/EliminarTerrenoButton.cpp Client/View/Editor/EliminarTerrenoButton.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)

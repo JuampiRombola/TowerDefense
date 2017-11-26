@@ -184,13 +184,13 @@ void NotificationReciever::_HandleGameOpcode(){
             break;
 		case GAME_OVER:
             std::cout << "GAME_OVER::\n" << std::flush;
-            model_view->addAnnouncement("Defeat!");
+            model_view->gameOver();
             std::this_thread::sleep_for (std::chrono::milliseconds(3000));
 			this->Stop();
             break;
         case GAME_WON:
             std::cout << "GAME_WON::\n" << std::flush;
-            model_view->addAnnouncement("Victory!");
+            model_view->win();
             std::this_thread::sleep_for (std::chrono::milliseconds(3000));
             this->Stop();
             break;

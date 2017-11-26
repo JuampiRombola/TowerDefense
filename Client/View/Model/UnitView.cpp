@@ -19,7 +19,8 @@ UnitView::UnitView(int id, int key, TextureLoader &textures,
                     cfg["DYING_START_X"].as<int>(),
                     cfg["DYING_START_Y"].as<int>(),
                     cfg["DYING_COLUMNS"].as<int>(),
-                    cfg["DYING_ROWS"].as<int>()) {
+                    cfg["DYING_ROWS"].as<int>()),
+        accumulatedDisplacement(0), otherSpeedDisplacement(0) {
     currentDirection = SE;
     this->setCurrentDirection();
     currentState = WALKING;
@@ -49,7 +50,7 @@ void UnitView::setXY(int x, int y) {
 
 void UnitView::draw(Uint32 ticks) {
     if (currentState == WALKING) {
-        if (accumulatedDisplacement < PIXELS) {
+        if (accumulatedDisplacement + otherSpeedDisplacement < PIXELS) {
             this->setNumberOfPixelsToMove(ticks);
             this->setOffsetXY();
         }
@@ -64,6 +65,12 @@ void UnitView::draw(Uint32 ticks) {
             == cfg["DYING_COLUMNS"].as<int>())
             currentState = DEAD;
         spriteDying.nextAndDraw(ticks);
+    } else if (currentState == FROZEN) {
+        spriteWalking.draw();
+        if ((ticks - initTime) >= freezeTime) {
+            lastTime = ticks;
+            this->finishFreeze();
+        }
     }
 }
 
@@ -75,27 +82,45 @@ void UnitView::move(int x, int y, int nextX, int nextY, Uint32 t) {
     timePerPixel = t / PIXELS;
     isFirstStep = true;
     accumulatedDisplacement = 0;
+    otherSpeedDisplacement = 0;
+}
+
+
+void UnitView::move(int x, int y, int nextX, int nextY) {
+    if (currentState == FROZEN) currentState = WALKING;
+    this->setXY(x, y);
+    this->nextX = nextX;
+    this->nextY = nextY;
+    initTime = SDL_GetTicks();
+    isFirstStep = true;
+    accumulatedDisplacement = 0;
+    otherSpeedDisplacement = 0;
 }
 
 void UnitView::setNumberOfPixelsToMove(Uint32 currentTime) {
     Uint32 elapsedTime = currentTime - initTime;
-    int displacement = elapsedTime / timePerPixel;
-    currentDisplacement = displacement - accumulatedDisplacement;
+    int displacement = elapsedTime / timePerPixel + otherSpeedDisplacement;
+    currentDisplacement = displacement - (accumulatedDisplacement +
+                                            otherSpeedDisplacement);
 
     if (isFirstStep && (displacement >= (PIXELS / 2)))
-        currentDisplacement = (PIXELS / 2) - accumulatedDisplacement;
+        currentDisplacement = (PIXELS / 2) - (accumulatedDisplacement +
+                                              otherSpeedDisplacement);
 
     if (displacement >= PIXELS)
-        currentDisplacement = PIXELS - accumulatedDisplacement;
+        currentDisplacement = PIXELS - (accumulatedDisplacement +
+                                        otherSpeedDisplacement);
 
     accumulatedDisplacement += currentDisplacement;
+    lastTime = currentTime;
 }
 
 void UnitView::setOffsetXY() {
     int x = spriteWalking.getOffsetX() + (directionX * currentDisplacement)*2;
     int y = spriteWalking.getOffsetY() + directionY * currentDisplacement;
     spriteWalking.setOffsetXY(x, y);
-    if (isFirstStep && (accumulatedDisplacement == (PIXELS / 2))) {
+    if (isFirstStep && ((accumulatedDisplacement +
+                         otherSpeedDisplacement) == (PIXELS / 2))) {
         isFirstStep = false;
         this->calculateNewDirection();
     }
@@ -158,4 +183,25 @@ int UnitView::getId() {
 
 bool UnitView::isDead() {
     return (currentState == DEAD);
+}
+
+void UnitView::setSpeed(Uint32 newSpeed) {
+    timePerPixel = newSpeed / PIXELS;
+    initTime = lastTime;
+    otherSpeedDisplacement += accumulatedDisplacement;
+    accumulatedDisplacement = 0;
+}
+
+void UnitView::totalFreeze(Uint32 t) {
+    if (currentState == DYING || currentState == DEAD) return;
+    initTime = SDL_GetTicks();
+    freezeTime = t;
+    currentState = FROZEN;
+}
+
+void UnitView::finishFreeze() {
+    currentState = WALKING;
+    initTime = lastTime;
+    otherSpeedDisplacement += accumulatedDisplacement;
+    accumulatedDisplacement = 0;
 }

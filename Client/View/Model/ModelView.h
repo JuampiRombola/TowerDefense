@@ -43,6 +43,9 @@ public:
     void createSpell(int key, int x, int y, Uint32 t);
     void createShot(int key, int x, int y, int toX, int toY, Uint32 t);
     void moveUnit(int id, int x, int y, int toX, int toY, Uint32 t);
+    void moveUnit(int id, int x, int y, int toX, int toY);
+    void setUnitSpeed(int id, Uint32 newSpeed);
+    void freezeUnit(int id, Uint32 duration);
     void killUnit(int id);
     TowerView* getTower(int id);
 
@@ -50,6 +53,8 @@ public:
     std::mutex mapLoadedMutex;
     std::condition_variable mapLoadedCondVariable;
     void addAnnouncement(std::string announcement);
+    void gameOver();
+    void win();
 
     TowerView *onClick(int x, int y);
 private:

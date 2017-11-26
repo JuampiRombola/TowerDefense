@@ -5,13 +5,9 @@
 #include <ios>
 #include <algorithm>
 
-Editor::Editor(MapView &map, TextureLoader &textureLoader, Renderer &renderer,
-               std::string name, Window &window) : superficie(PRADERA),
-                                                   map(map),
-                                                   textureLoader(textureLoader),
-                                                   renderer(renderer),
-                                                   nombre(name),
-                                                   window(window) {
+Editor::Editor(MapView &map, TextureLoader &textureLoader, Renderer &renderer, std::string name,
+               Window &window) : superficie(PRADERA), map(map), textureLoader(textureLoader),
+                                 renderer(renderer), nombre(name), window(window) {
 };
 
 Editor::~Editor() {
@@ -52,8 +48,7 @@ void Editor::eliminarHorda(int hordaId) {
     hordas.erase(it);
 }
 
-unsigned int
-Editor::getCantidadEnemigosEnHorda(std::string enemigo, int hordaId) {
+unsigned int Editor::getCantidadEnemigosEnHorda(std::string enemigo, int hordaId) {
     for (auto &horda : hordas) {
         if (hordaId == horda.getId())
             return horda.getCantidadEnemigosDeTipo(enemigo);
@@ -99,12 +94,12 @@ void Editor::exportar() {
 
 void Editor::waitForPathTile() {
     using namespace std::placeholders;
-    mapFunction = std::bind(&MapView::addPathTile, &map, _1, _2);
+    mapFunction = std::bind(&Editor::addPathTile, this, _1, _2);
 }
 
 void Editor::waitForStructureTile() {
     using namespace std::placeholders;
-    mapFunction = std::bind(&MapView::addStructureTile, &map, _1, _2);
+    mapFunction = std::bind(&Editor::addStructureTile, this, _1, _2);
 }
 
 void Editor::waitForSpawnPortalTile() {
@@ -117,6 +112,11 @@ void Editor::waitForExitPortalTile() {
     mapFunction = std::bind(&Editor::addExitTile, this, _1, _2);
 }
 
+void Editor::waitForDeleteTerrainTile() {
+    using namespace std::placeholders;
+    mapFunction = std::bind(&Editor::deleteTerrainTile, this, _1, _2);
+}
+
 void Editor::applyTileFunction(int x, int y) {
     if (mapFunction && map.isValidTile(x, y))
         mapFunction(x, y);
@@ -124,6 +124,18 @@ void Editor::applyTileFunction(int x, int y) {
 
 void Editor::unbindWaitingFunction() {
     mapFunction = std::function<void(int, int)>();
+}
+
+void Editor::addPathTile(int x, int y) {
+    map.deletePathTile(x, y);
+    map.deleteStructureTile(x, y);
+    map.addPathTile(x, y);
+}
+
+void Editor::addStructureTile(int x, int y) {
+    map.deleteStructureTile(x, y);
+    map.deletePathTile(x, y);
+    map.addStructureTile(x, y);
 }
 
 void Editor::addSpawnTile(int x, int y) {
@@ -138,6 +150,17 @@ void Editor::addExitTile(int x, int y) {
     portal->setXY(x, y);
     portales.push_back(portal);
     unbindWaitingFunction();
+}
+
+void Editor::deleteTerrainTile(int x, int y) {
+    for (auto it = portales.begin(); it != portales.end();) {
+        if ((*it)->getX() == x && (*it)->getY() == y)
+            it = portales.erase(it);
+        else
+            ++it;
+    }
+    map.deletePathTile(x, y);
+    map.deleteStructureTile(x, y);
 }
 
 void Editor::aumentarTiempoHorda(int hordaId) {
@@ -224,8 +247,7 @@ void Editor::validate() {
     for (auto &horda : hordas) {
         if (horda.getCantidadEnemigos() == 0)
             throw EditorValidationException(
-                    "La horda " + std::to_string(hordaNro) +
-                    " no posee enemigos");
+                    "La horda " + std::to_string(hordaNro) + " no posee enemigos");
         ++hordaNro;
     }
     if (map.getWidth() == 0)
@@ -243,7 +265,7 @@ std::string Editor::exportarMapa() {
     if (structureTileSet.empty())
         throw EditorValidationException("El mapa no posee tierra firme.");
     mapToString << "superficies: " << "\n";
-    for (auto& structureTile : structureTileSet) {
+    for (auto &structureTile : structureTileSet) {
         mapToString << " - x: " << structureTile.first << "\n";
         mapToString << "   y: " << structureTile.second << "\n";
     }
@@ -256,13 +278,10 @@ std::string Editor::exportarMapa() {
     std::set<std::pair<int, int>> portalesEntrada;
     std::set<std::pair<int, int>> portalesSalida;
     for (auto &portal : portales) {
-        if (pathSet.count(
-                std::pair<int, int>(portal->getX(), portal->getY())) == 0)
-            throw EditorValidationException("El portal que se encuentra en " +
-                                            std::to_string(portal->getX()) +
-                                            ", " +
-                                            std::to_string(portal->getY()) +
-                                            " debe estar sobre un camino.");
+        if (pathSet.count(std::pair<int, int>(portal->getX(), portal->getY())) == 0)
+            throw EditorValidationException(
+                    "El portal que se encuentra en " + std::to_string(portal->getX()) + ", " +
+                    std::to_string(portal->getY()) + " debe estar sobre un camino.");
         if (portal->getType() == "entrada")
             portalesEntrada.emplace(portal->getX(), portal->getY());
         else
@@ -274,17 +293,12 @@ std::string Editor::exportarMapa() {
     for (auto &portalEntrada : portalesEntrada) {
         // Primero me fijo si el camino es de largo mayor a 1
         std::set<std::pair<int, int>> posiblesAdyacentes;
-        posiblesAdyacentes.emplace(portalEntrada.first + 1,
-                                   portalEntrada.second);
-        posiblesAdyacentes.emplace(portalEntrada.first - 1,
-                                   portalEntrada.second);
-        posiblesAdyacentes.emplace(portalEntrada.first,
-                                   portalEntrada.second + 1);
-        posiblesAdyacentes.emplace(portalEntrada.first,
-                                   portalEntrada.second - 1);
+        posiblesAdyacentes.emplace(portalEntrada.first + 1, portalEntrada.second);
+        posiblesAdyacentes.emplace(portalEntrada.first - 1, portalEntrada.second);
+        posiblesAdyacentes.emplace(portalEntrada.first, portalEntrada.second + 1);
+        posiblesAdyacentes.emplace(portalEntrada.first, portalEntrada.second - 1);
         std::set<std::pair<int, int>> adyacentes;
-        std::set_intersection(pathSet.begin(), pathSet.end(),
-                              posiblesAdyacentes.begin(),
+        std::set_intersection(pathSet.begin(), pathSet.end(), posiblesAdyacentes.begin(),
                               posiblesAdyacentes.end(),
                               std::inserter(adyacentes, adyacentes.begin()));
         if (adyacentes.size() != 1)
@@ -311,11 +325,9 @@ std::string Editor::exportarMapa() {
             posiblesAdyacentes.emplace(tileActual.first - 1, tileActual.second);
             posiblesAdyacentes.emplace(tileActual.first, tileActual.second + 1);
             posiblesAdyacentes.emplace(tileActual.first, tileActual.second - 1);
-            std::set_intersection(pathSet.begin(), pathSet.end(),
-                                  posiblesAdyacentes.begin(),
+            std::set_intersection(pathSet.begin(), pathSet.end(), posiblesAdyacentes.begin(),
                                   posiblesAdyacentes.end(),
-                                  std::inserter(adyacentes,
-                                                adyacentes.begin()));
+                                  std::inserter(adyacentes, adyacentes.begin()));
             for (auto &tileAdyacente : adyacentes) {
                 if (tileAdyacente != tileAnterior)
                     tileSiguiente = tileAdyacente;
