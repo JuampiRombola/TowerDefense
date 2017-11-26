@@ -203,7 +203,7 @@ void NotificationReciever::_HandleGameOpcode(){
             std::cout << "GAME_WON::\n" << std::flush;
             model_view->win();
             std::this_thread::sleep_for (std::chrono::milliseconds(3000));
-            this->Stop();
+            _stop = true;
             break;
         case UNIT_DIED:
         {
