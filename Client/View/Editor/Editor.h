@@ -44,6 +44,8 @@ public:
     void waitForDeleteTerrainTile();
     void applyTileFunction(int x, int y);
     void unbindWaitingFunction();
+    void addPathTile(int x, int y);
+    void addStructureTile(int x, int y);
     void addSpawnTile(int x, int y);
     void addExitTile(int x, int y);
     void deleteTerrainTile(int x, int y);

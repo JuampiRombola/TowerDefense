@@ -94,12 +94,12 @@ void Editor::exportar() {
 
 void Editor::waitForPathTile() {
     using namespace std::placeholders;
-    mapFunction = std::bind(&MapView::addPathTile, &map, _1, _2);
+    mapFunction = std::bind(&Editor::addPathTile, this, _1, _2);
 }
 
 void Editor::waitForStructureTile() {
     using namespace std::placeholders;
-    mapFunction = std::bind(&MapView::addStructureTile, &map, _1, _2);
+    mapFunction = std::bind(&Editor::addStructureTile, this, _1, _2);
 }
 
 void Editor::waitForSpawnPortalTile() {
@@ -124,6 +124,18 @@ void Editor::applyTileFunction(int x, int y) {
 
 void Editor::unbindWaitingFunction() {
     mapFunction = std::function<void(int, int)>();
+}
+
+void Editor::addPathTile(int x, int y) {
+    map.deletePathTile(x, y);
+    map.deleteStructureTile(x, y);
+    map.addPathTile(x, y);
+}
+
+void Editor::addStructureTile(int x, int y) {
+    map.deleteStructureTile(x, y);
+    map.deletePathTile(x, y);
+    map.addStructureTile(x, y);
 }
 
 void Editor::addSpawnTile(int x, int y) {
