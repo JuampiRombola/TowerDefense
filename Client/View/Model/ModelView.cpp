@@ -68,7 +68,8 @@ void ModelView::createPortalSalida(int x, int y) {
 void ModelView::createUnit(int id, int key,
                            int x, int y, int toX, int toY, Uint32 t) {
     UnitView *unit = new UnitView(id, key, textureLoader, renderer);
-    unit->move(x, y, toX, toY, t);
+    unit->setSpeed(t);
+    unit->move(x, y, toX, toY);
     Lock(this->m);
     checkIndexDepthLevel(x+y+1);
     depthLevels[x+y+1]->addUnit(unit);
@@ -119,6 +120,30 @@ void ModelView::moveUnit(int id, int x, int y, int toX, int toY, Uint32 t) {
     idDepthLevelsUnits[id] = x + y + 1;
 }
 
+void ModelView::moveUnit(int id, int x, int y, int toX, int toY) {
+    Lock(this->m);
+    int levelIndex = idDepthLevelsUnits.at(id);
+    UnitView *unit = depthLevels[levelIndex]->getUnit(id);
+    checkIndexDepthLevel(levelIndex);
+    depthLevels[levelIndex]->removeUnit(id);
+    unit->move(x, y, toX, toY);
+    checkIndexDepthLevel(x+y+1);
+    depthLevels[x+y+1]->addUnit(unit);
+    idDepthLevelsUnits[id] = x + y + 1;
+}
+
+void ModelView::setUnitSpeed(int id, Uint32 newSpeed) {
+    Lock(this->m);
+    UnitView *unit = depthLevels[idDepthLevelsUnits[id]]->getUnit(id);
+    unit->setSpeed(newSpeed);
+}
+
+void ModelView::freezeUnit(int id, Uint32 duration) {
+    Lock(this->m);
+    UnitView *unit = depthLevels[idDepthLevelsUnits[id]]->getUnit(id);
+    unit->totalFreeze(duration);
+}
+
 void ModelView::killUnit(int id) {
     Lock(this->m);
     int levelIndex = idDepthLevelsUnits.at(id);
@@ -160,7 +185,7 @@ void ModelView::gameOver() {
 }
 
 void ModelView::win() {
-    this->addAnnouncement("Vistory!");
+    this->addAnnouncement("Victory!");
     musicPlayer.win();
 }
 

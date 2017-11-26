@@ -152,6 +152,10 @@ int main(int argc, char** argv) {
     modelView.createTower(3, TORRE_TIERRA, 5, 5);
     modelView.createTower(4, TORRE_AIRE, 3, 5);
 
+    UnitView unit(0, ABOMINABLE, textureLoader, renderer);
+    unit.setSpeed(5000);
+    unit.move(0, 2, 0, 3);
+
     Uint32 t1;
     Uint32 t2;
     Uint32 s = 1000 / FPS;
@@ -159,7 +163,6 @@ int main(int argc, char** argv) {
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
 
-    Uint32 part = 0;
     while (!hudView.exitActive()) {
         t1 = SDL_GetTicks();
 
@@ -218,12 +221,25 @@ int main(int argc, char** argv) {
                                 hudView.enableExitView();
                             break;
                         case SDLK_a:
-                            modelView.createSpell(PING, 1, 1, 5000);
+                            unit.setSpeed(10000);
                             break;
-                        case SDLK_b:
-                            if (part >= 1200)
-                                part = 0;
-                            part += 50;
+                        case SDLK_s:
+                            unit.setSpeed(5000);
+                            break;
+                        case SDLK_d:
+                            unit.totalFreeze(2000);
+                            break;
+                        case SDLK_z:
+                            unit.move(0, 3, 0, 4);
+                            break;
+                        case SDLK_x:
+                            unit.move(0, 4, 0, 5);
+                            break;
+                        case SDLK_c:
+                            unit.move(0, 5, 0, 6);
+                            break;
+                        case SDLK_v:
+                            unit.move(0, 6, 1, 6);
                             break;
                         case SDLK_LEFT:
                             renderer.updateCamera(-1, 0); break;
@@ -244,6 +260,7 @@ int main(int argc, char** argv) {
         modelView.draw(SDL_GetTicks());
         hudView.draw();
         chat.draw();
+        unit.draw(SDL_GetTicks());
 
         renderer.present();
 
