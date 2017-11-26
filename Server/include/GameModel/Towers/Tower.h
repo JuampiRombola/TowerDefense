@@ -9,10 +9,10 @@ class EnviormentUnit;
 class TowerVM;
 #include "../Commands/UpgradeTowerCommand.h"
 #include "yaml-cpp/yaml.h"
+#include "../Commands/BuildTowerCommand.h"
 #include <mutex>
 class Tower {
 protected:
-	std::mutex _expMutex;
 	unsigned long long _lastTimeStamp_ms;
 	uint _cooldown_ms;
 	Map* _map;
@@ -25,7 +25,7 @@ protected:
 
 	Projectile*  _Fire(EnviormentUnit* target); 
 	bool _CanFire(); 
-	EnviormentUnit* _GetTargetUnitInRange();
+	EnviormentUnit* _GetTargetUnitInRange(TowerType type);
 	ThreadSafeQueue<GameNotification*>& _notifications;
 	virtual Projectile* _BuildProjectile(PathTile* target) = 0;
 public:
@@ -37,11 +37,10 @@ public:
 	virtual void PrintDebug() = 0;
 	virtual bool Upgrade(UpgradeType type) = 0;
 	void AddExperience(double exp);
-	void AddDamage(uint damage);
 	SolidGroundTile* GetPosition();
 
 	virtual TowerVM GetViewModel() = 0;
-	uint GetExperience();
+	virtual TowerType GetTowerType() = 0;
 
 	const YAML::Node* cfg;
 };

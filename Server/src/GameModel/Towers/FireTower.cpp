@@ -86,7 +86,7 @@ bool FireTower::Upgrade(UpgradeType type){
 
 TowerVM FireTower::GetViewModel(){
 	TowerVM vm;
-	vm.type = Fire;
+	vm.type = GetTowerType();
 	vm.xPos = _position->GetXPos();
 	vm.yPos = _position->GetYPos();
 	vm.experience = _experience;
@@ -113,4 +113,8 @@ TowerVM FireTower::GetViewModel(){
 	vm.exp_required_for_slow_upgrade = 0xFFFFFFFF;
 
 	return vm;
+}
+
+TowerType FireTower::GetTowerType(){
+	return Fire;
 }
