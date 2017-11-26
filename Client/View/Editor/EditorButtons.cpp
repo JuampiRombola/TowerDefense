@@ -10,11 +10,14 @@
 #include "AumentarTiempoEnemigosButton.h"
 #include "DisminuirTiempoEnemigosButton.h"
 #include "ContadorTiempoEnemigosInput.h"
+#include "EliminarTerrenoButton.h"
 
-EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer,
-                             Editor &editor, TextureLoader &textureLoader)
-        : mousePosition(mousePosition), padding(0), renderer(renderer),
-          editor(editor), textureLoader(textureLoader), hordaToDelete(-1) {}
+EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
+                             TextureLoader &textureLoader) : mousePosition(mousePosition),
+                                                             padding(0), renderer(renderer),
+                                                             editor(editor),
+                                                             textureLoader(textureLoader),
+                                                             hordaToDelete(-1) {}
 
 
 EditorButtons::~EditorButtons() {
@@ -43,110 +46,90 @@ void EditorButtons::draw() {
 
 void EditorButtons::addInitialButtons() {
     using namespace std::placeholders; //Esto lo uso en el botón de crear horda
-    Image *praderaButton = new SuperficieButton(PRADERA,
-                                                textureLoader.getTexture(
-                                                        PRADERA), mousePosition,
-                                                renderer, editor);
+    Image *praderaButton = new SuperficieButton(PRADERA, textureLoader.getTexture(PRADERA),
+                                                mousePosition, renderer, editor);
     images.push_back(praderaButton);
 
-    Image *lavaButton = new SuperficieButton(VOLCAN,
-                                             textureLoader.getTexture(VOLCAN),
+    Image *lavaButton = new SuperficieButton(VOLCAN, textureLoader.getTexture(VOLCAN),
                                              mousePosition, renderer, editor);
     images.push_back(lavaButton);
 
-    Image *desiertoButton = new SuperficieButton(DESIERTO,
-                                                 textureLoader.getTexture(
-                                                         DESIERTO),
-                                                 mousePosition, renderer,
-                                                 editor);
+    Image *desiertoButton = new SuperficieButton(DESIERTO, textureLoader.getTexture(DESIERTO),
+                                                 mousePosition, renderer, editor);
     images.push_back(desiertoButton);
 
-    Image *glaciarButton = new SuperficieButton(GELIDO,
-                                                textureLoader.getTexture(
-                                                        GELIDO), mousePosition,
-                                                renderer, editor);
+    Image *glaciarButton = new SuperficieButton(GELIDO, textureLoader.getTexture(GELIDO),
+                                                mousePosition, renderer, editor);
     images.push_back(glaciarButton);
 
-    Image *pathTileButton = new AgregarCaminoButton(
-            textureLoader.getTexture(PATH_TILE_EDITOR), mousePosition, renderer,
-            editor);
+    Image *pathTileButton = new AgregarCaminoButton(textureLoader.getTexture(PATH_TILE_EDITOR),
+                                                    mousePosition, renderer, editor);
     images.push_back(pathTileButton);
 
     Image *structureTileButton = new AgregarTierraFirmeButton(
-            textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition,
-            renderer, editor);
+            textureLoader.getTexture(STRUCTURE_TILE_EDITOR), mousePosition, renderer, editor);
     images.push_back(structureTileButton);
 
     Image *spawnTileButton = new AgregarPortalEntradaButton(
-            textureLoader.getTexture(PORTAL_ENTRADA_EDITOR), mousePosition,
-            renderer, editor);
+            textureLoader.getTexture(PORTAL_ENTRADA_EDITOR), mousePosition, renderer, editor);
     images.push_back(spawnTileButton);
 
     Image *exitTileButton = new AgregarPortalSalidaButton(
-            textureLoader.getTexture(PORTAL_SALIDA_EDITOR), mousePosition,
-            renderer, editor);
+            textureLoader.getTexture(PORTAL_SALIDA_EDITOR), mousePosition, renderer, editor);
     images.push_back(exitTileButton);
 
-    Image *button = new NuevaHordaButton(
-            textureLoader.getTexture(AGREGAR_HORDA_BTN), mousePosition,
-            renderer, editor,
-            std::bind(&EditorButtons::addEnemigosButton, this, _1));
+    Image *deleteStructureButton = new EliminarTerrenoButton(
+            textureLoader.getTexture(ELIMINAR_HORDA_BTN), mousePosition, renderer, editor);
+    images.push_back(deleteStructureButton);
+
+    Image *button = new NuevaHordaButton(textureLoader.getTexture(AGREGAR_HORDA_BTN), mousePosition,
+                                         renderer, editor,
+                                         std::bind(&EditorButtons::addEnemigosButton, this, _1));
     images.push_back(button);
 
-    Image *altoIcon = new Image(ALTO_BUTTON_X, ALTO_BUTTON_Y, ALTO_BUTTON_WIDTH,
-                                ALTO_BUTTON_HEIGHT,
+    Image *altoIcon = new Image(ALTO_BUTTON_X, ALTO_BUTTON_Y, ALTO_BUTTON_WIDTH, ALTO_BUTTON_HEIGHT,
                                 textureLoader.getTexture(ALTO_MAPA), renderer);
     images.push_back(altoIcon);
 
-    Image *aumentarAlto = new AumentarAltoMapaButton(
-            textureLoader.getTexture(ENEMIGO_SUMA), mousePosition, renderer,
-            editor);
+    Image *aumentarAlto = new AumentarAltoMapaButton(textureLoader.getTexture(ENEMIGO_SUMA),
+                                                     mousePosition, renderer, editor);
     images.push_back(aumentarAlto);
 
-    Image *disminuirAlto = new DisminuirAltoMapaButton(
-            textureLoader.getTexture(ENEMIGO_RESTA), mousePosition, renderer,
-            editor);
+    Image *disminuirAlto = new DisminuirAltoMapaButton(textureLoader.getTexture(ENEMIGO_RESTA),
+                                                       mousePosition, renderer, editor);
     images.push_back(disminuirAlto);
 
-    Image *anchoIcon = new Image(ANCHO_BUTTON_X, ANCHO_BUTTON_Y,
-                                 ANCHO_BUTTON_WIDTH, ANCHO_BUTTON_HEIGHT,
-                                 textureLoader.getTexture(ANCHO_MAPA),
+    Image *anchoIcon = new Image(ANCHO_BUTTON_X, ANCHO_BUTTON_Y, ANCHO_BUTTON_WIDTH,
+                                 ANCHO_BUTTON_HEIGHT, textureLoader.getTexture(ANCHO_MAPA),
                                  renderer);
     images.push_back(anchoIcon);
 
 
-    Image *aumentarAncho = new AumentarAnchoMapaButton(
-            textureLoader.getTexture(ENEMIGO_SUMA), mousePosition, renderer,
-            editor);
+    Image *aumentarAncho = new AumentarAnchoMapaButton(textureLoader.getTexture(ENEMIGO_SUMA),
+                                                       mousePosition, renderer, editor);
     images.push_back(aumentarAncho);
 
-    Image *disminuirAncho = new DisminuirAnchoMapaButton(
-            textureLoader.getTexture(ENEMIGO_RESTA), mousePosition, renderer,
-            editor);
+    Image *disminuirAncho = new DisminuirAnchoMapaButton(textureLoader.getTexture(ENEMIGO_RESTA),
+                                                         mousePosition, renderer, editor);
     images.push_back(disminuirAncho);
 
-    Image *saveButton = new GuardarButton(textureLoader.getTexture(SAVE_BUTTON),
-                                          mousePosition, renderer, editor);
+    Image *saveButton = new GuardarButton(textureLoader.getTexture(SAVE_BUTTON), mousePosition,
+                                          renderer, editor);
     images.push_back(saveButton);
 
-    Image *scrollUp = new AumentarPaddingButton(padding,
-                                                textureLoader.getTexture(
-                                                        ARROW_UP_EDITOR),
+    Image *scrollUp = new AumentarPaddingButton(padding, textureLoader.getTexture(ARROW_UP_EDITOR),
                                                 mousePosition, renderer);
     images.push_back(scrollUp);
 
     Image *scrollDown = new DisminuirPaddingButton(padding,
-                                                   textureLoader.getTexture(
-                                                           ARROW_DOWN_EDITOR),
+                                                   textureLoader.getTexture(ARROW_DOWN_EDITOR),
                                                    mousePosition, renderer);
     images.push_back(scrollDown);
 }
 
 void EditorButtons::addEnemigosButton(int horda) {
     using namespace std::placeholders;
-    Image *contadorHorda = new ContadorHordasInput(horda,
-                                                   textureLoader.getTexture(
-                                                           FONT), renderer);
+    Image *contadorHorda = new ContadorHordasInput(horda, textureLoader.getTexture(FONT), renderer);
     images.push_back(contadorHorda);
     addEnemigoButton(horda, ABMONIBLE_KEY, ABMONIBLE_EDITOR);
     addEnemigoButton(horda, ESPECTRO_KEY, ESPECTRO_EDITOR);
@@ -156,95 +139,65 @@ void EditorButtons::addEnemigosButton(int horda) {
     addEnemigoButton(horda, HOMBRE_CABRA_KEY, HOMBRE_CABRA_EDITOR);
     addTiempoEntreEnemigos(horda);
     addTiempoEntreHorda(horda);
-    Image *eliminarHordaButton = new EliminarHordaButton(horda,
-                                                         textureLoader.getTexture(
-                                                                 ELIMINAR_HORDA_BTN),
-                                                         mousePosition,
-                                                         renderer, editor,
-                                                         std::bind(
-                                                                 &EditorButtons::deleteButtonsOfHorda,
-                                                                 this, _1));
+    Image *eliminarHordaButton = new EliminarHordaButton(horda, textureLoader.getTexture(
+            ELIMINAR_HORDA_BTN), mousePosition, renderer, editor, std::bind(
+            &EditorButtons::deleteButtonsOfHorda, this, _1));
     images.push_back(eliminarHordaButton);
 }
 
-void EditorButtons::addEnemigoButton(int horda, std::string enemigoKey,
-                                     int texture) {
-    Image *enemigoImg = new EnemigoImage(horda,
-                                         textureLoader.getTexture(texture),
-                                         renderer);
+void EditorButtons::addEnemigoButton(int horda, std::string enemigoKey, int texture) {
+    Image *enemigoImg = new EnemigoImage(horda, textureLoader.getTexture(texture), renderer);
     images.push_back(enemigoImg);
 
     Image *deleteAbmonible = new EliminarEnemigoButton(horda, enemigoKey,
-                                                       textureLoader.getTexture(
-                                                               ENEMIGO_RESTA),
-                                                       mousePosition, renderer,
-                                                       editor);
+                                                       textureLoader.getTexture(ENEMIGO_RESTA),
+                                                       mousePosition, renderer, editor);
     images.push_back(deleteAbmonible);
 
     Image *agregarAbmonible = new AgregarEnemigoButton(horda, enemigoKey,
-                                                       textureLoader.getTexture(
-                                                               ENEMIGO_SUMA),
-                                                       mousePosition, renderer,
-                                                       editor);
+                                                       textureLoader.getTexture(ENEMIGO_SUMA),
+                                                       mousePosition, renderer, editor);
     images.push_back(agregarAbmonible);
 
-    Image *cantidad = new ContadorEnemigosInput(horda, enemigoKey,
-                                                textureLoader.getTexture(FONT),
+    Image *cantidad = new ContadorEnemigosInput(horda, enemigoKey, textureLoader.getTexture(FONT),
                                                 renderer, editor);
     images.push_back(cantidad);
 }
 
 void EditorButtons::addTiempoEntreHorda(int horda) {
-    Image *clockImg = new EnemigoImage(horda,
-                                       textureLoader.getTexture(CLOCK_EDITOR),
-                                       renderer);
+    Image *clockImg = new EnemigoImage(horda, textureLoader.getTexture(CLOCK_EDITOR), renderer);
     images.push_back(clockImg);
 
     Image *aumentarTiempo = new AumentarTiempoHordaButton(horda,
-                                                          textureLoader.getTexture(
-                                                                  ENEMIGO_SUMA),
-                                                          mousePosition,
-                                                          renderer, editor);
+                                                          textureLoader.getTexture(ENEMIGO_SUMA),
+                                                          mousePosition, renderer, editor);
     images.push_back(aumentarTiempo);
 
     Image *disminuirTiempo = new DisminuirTiempoHordaButton(horda,
-                                                            textureLoader.getTexture(
-                                                                    ENEMIGO_RESTA),
-                                                            mousePosition,
-                                                            renderer, editor);
+                                                            textureLoader.getTexture(ENEMIGO_RESTA),
+                                                            mousePosition, renderer, editor);
     images.push_back(disminuirTiempo);
 
-    Image *contadorTiempo = new ContadorTiempoHordaInput(horda,
-                                                         textureLoader.getTexture(
-                                                                 FONT),
+    Image *contadorTiempo = new ContadorTiempoHordaInput(horda, textureLoader.getTexture(FONT),
                                                          renderer, editor);
     images.push_back(contadorTiempo);
 }
 
 void EditorButtons::addTiempoEntreEnemigos(int horda) {
-    Image *clockImg = new EnemigoImage(horda,
-                                       textureLoader.getTexture(CLOCK_ENEMIES_EDITOR),
+    Image *clockImg = new EnemigoImage(horda, textureLoader.getTexture(CLOCK_ENEMIES_EDITOR),
                                        renderer);
     images.push_back(clockImg);
 
     Image *aumentarTiempo = new AumentarTiempoEnemigosButton(horda,
-                                                             textureLoader.getTexture(
-                                                                     ENEMIGO_SUMA),
-                                                             mousePosition,
-                                                             renderer, editor);
+                                                             textureLoader.getTexture(ENEMIGO_SUMA),
+                                                             mousePosition, renderer, editor);
     images.push_back(aumentarTiempo);
 
-    Image *disminuirTiempo = new DisminuirTiempoEnemigosButton(horda,
-                                                               textureLoader.getTexture(
-                                                                       ENEMIGO_RESTA),
-                                                               mousePosition,
-                                                               renderer,
-                                                               editor);
+    Image *disminuirTiempo = new DisminuirTiempoEnemigosButton(horda, textureLoader.getTexture(
+            ENEMIGO_RESTA), mousePosition, renderer, editor);
     images.push_back(disminuirTiempo);
 
-    Image *contadorTiempo = new ContadorTiempoEnemigosInput(horda,
-                                                            textureLoader.getTexture(
-                                                                    FONT),
+    Image *contadorTiempo = new ContadorTiempoEnemigosInput(horda, textureLoader.getTexture(FONT),
                                                             renderer, editor);
     images.push_back(contadorTiempo);
 

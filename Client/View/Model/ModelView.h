@@ -53,6 +53,8 @@ public:
     std::mutex mapLoadedMutex;
     std::condition_variable mapLoadedCondVariable;
     void addAnnouncement(std::string announcement);
+    void gameOver();
+    void win();
 
     TowerView *onClick(int x, int y);
 private:

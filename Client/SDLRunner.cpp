@@ -59,15 +59,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
 
     _dispatcher->QueueCommand(new LoadMapCommand());
     
-    if (_mapSurface == 0)
-        modelView.setMapEnvironment(PRADERA);
-    else if (_mapSurface == 2)
-        modelView.setMapEnvironment(VOLCAN);
-    else if (_mapSurface == 6)
-        modelView.setMapEnvironment(DESIERTO);
-    else
-        modelView.setMapEnvironment(GELIDO);
-    
+    modelView.setMapEnvironment(_mapSurface);
     modelView.setMapWidthHeight(_mapWidth, _mapHeight);
 
     if (_lobbyManager->groundHUDEnabled)

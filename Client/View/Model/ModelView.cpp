@@ -44,6 +44,8 @@ void ModelView::createPathTile(int x, int y) {
 void ModelView::createStructureTile(int x, int y) {
     Lock(this->m);
     map.addStructureTile(x, y);
+    if (mapLoaded && renderer.isOnCamera(x, y))
+        musicPlayer.addStructureTile();
 }
 
 void ModelView::createPortalEntrada(int x, int y) {
@@ -90,7 +92,8 @@ void ModelView::createSpell(int key, int x, int y, Uint32 t) {
     Lock(this->m);
     checkIndexDepthLevel(x+y+1);
     depthLevels[x+y+1]->addSpell(spell);
-    musicPlayer.addSpell(key);
+    if (renderer.isOnCamera(x, y))
+        musicPlayer.addSpell(key);
 }
 
 void ModelView::createShot(int key, int x, int y, int toX, int toY, Uint32 t) {
@@ -101,7 +104,8 @@ void ModelView::createShot(int key, int x, int y, int toX, int toY, Uint32 t) {
     if ((toX + toY) < (x + y))
         index = x+y;
     depthLevels[index]->addShot(shot);
-    musicPlayer.addShoot(key);
+    if (renderer.isOnCamera(x, y) || renderer.isOnCamera(toX, toY))
+        musicPlayer.addShoot(key);
 }
 
 void ModelView::moveUnit(int id, int x, int y, int toX, int toY, Uint32 t) {
@@ -146,7 +150,8 @@ void ModelView::killUnit(int id) {
     checkIndexDepthLevel(levelIndex);
     UnitView *unit = depthLevels[levelIndex]->getUnit(id);
     unit->enableDying();
-    musicPlayer.addDyingEnemy();
+    if (renderer.isOnCamera(unit->getX(), unit->getY()))
+        musicPlayer.addDyingEnemy();
 }
 
 void ModelView::draw(Uint32 time) {
@@ -172,6 +177,16 @@ void ModelView::checkIndexDepthLevel(int key) {
 
 void ModelView::addAnnouncement(std::string announcement) {
     newAnnouncementsMessages.Queue(new std::string(announcement));
+}
+
+void ModelView::gameOver() {
+    this->addAnnouncement("Defeat!");
+    musicPlayer.gameOver();
+}
+
+void ModelView::win() {
+    this->addAnnouncement("Vistory!");
+    musicPlayer.win();
 }
 
 TowerView *ModelView::onClick(int x, int y) {
