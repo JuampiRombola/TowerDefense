@@ -15,8 +15,8 @@
 
 #define TITLE "Tower Defense"
 
-#define WINDOWWIDTH 640
-#define WINDOWHEIGHT 480
+#define WINDOWWIDTH 800
+#define WINDOWHEIGHT 600
 #define FPS 40
 
 SDLRunner::SDLRunner(uint8_t mapSurface, uint32_t mapWidth, uint32_t mapHeight)

@@ -10,8 +10,8 @@
 
 #define TITLE "Tower Defense"
 
-#define WINDOWWIDTH 640
-#define WINDOWHEIGHT 480
+#define WINDOWWIDTH 800
+#define WINDOWHEIGHT 600
 #define FPS 40
 
 #define MAPSIZE 9

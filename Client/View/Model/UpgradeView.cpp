@@ -12,8 +12,8 @@
 #define PADLOCK_W 64
 #define PADLOCK_H 76
 
-#define UPGRADE_ICON_SIZE 50
-#define PADDING_ICON 30
+#define UPGRADE_ICON_SIZE 47
+#define PADDING_ICON 32
 
 #define FONT_UPGRD "../Resources/font.ttf"
 #define FONT_UPGRD_SIZE 10
@@ -27,7 +27,7 @@
 #define MSG_IMPACTO2 "Damage I: "
 #define MSG_FREEZE "Ralentizado %: "
 #define MSG_FREEZE2 "Duracion: "
-#define FLYDAMAGE "Damage aereo: "
+#define MSG_FLYDAMAGE "Damage aereo: "
 
 #define MSG1_1_X 25
 #define MSG1_1_Y 35
@@ -111,7 +111,7 @@ void UpgradeView::addText() {
 
     int rangeX = MSG3_2_X;
     int rangeY = MSG3_2_Y;
-    if (key == ELEMENTAL_EARTH | key == ELEMENTAL_AIR) {
+    if (key == ELEMENTAL_EARTH) {
         rangeX = MSG4_1_X;
         rangeY = MSG4_1_Y;
     }
@@ -140,6 +140,11 @@ void UpgradeView::addText() {
         msg = MSG_FREEZE2 + std::to_string(tower->getFreezeDuration());
         t = new TextView(renderer, font, msg, textColor);
         t->setDestXY(MSG4_2_X, MSG4_2_Y);
+        messages.push_back(t);
+    } else if (key == ELEMENTAL_AIR) {
+        msg = MSG_FLYDAMAGE + std::to_string(tower->getFlyDamage());
+        t = new TextView(renderer, font, msg, textColor);
+        t->setDestXY(MSG4_1_X, MSG4_1_Y);
         messages.push_back(t);
     }
 }

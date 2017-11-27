@@ -4,10 +4,12 @@
 #define EDGE_X 7
 #define EDGE_Y 19
 
-#define BACKGROUND_H 26
+#define BACKGROUND_W 61
+#define BACKGROUND_H 73
 
-#define SRC_BAR_W 65
+#define SRC_BAR_W 55
 #define SRC_BAR_H 9
+
 #define BAR_X 3
 #define BAR_Y 3
 #define BAR_W 4
@@ -19,7 +21,7 @@ GameButton::GameButton(Renderer &r, TextureLoader &tl,
                w, h, tl.getTexture(spriteKey), mousePosition, r),
         edge(x + EDGE_X, y + EDGE_Y, w, h,
              tl.getTexture(BUTTON_EDGE), r),
-        background(x, y, w + 2*EDGE_X, h + BACKGROUND_H,
+        background(x, y, BACKGROUND_W, BACKGROUND_H,
                    tl.getTexture(BUTTON_BG), r),
         bar(r, tl.getTexture(BUTTON_BAR), SRC_BAR_W, SRC_BAR_H,
             w + 2*BAR_W, SRC_BAR_H), cmd(cmd) {
