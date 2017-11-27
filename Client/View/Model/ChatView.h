@@ -26,12 +26,13 @@ private:
     SDL_Texture *textureIbeam;
     SDL_Rect dstRectIbeam;
     bool active;
-    const int dstX;
-    const int dstY;
+    int dstX;
+    int dstY;
     std::list<TextView *> messages;
     std::mutex mutex;
     NonBlockingThreadSafeQueue<std::string*> _messagesToAdd;
     bool visible;
+    int offsetResolution;
 
 public:
     ChatView(CommandDispatcher &d, Window &w, Renderer &r, TextureLoader &tl);

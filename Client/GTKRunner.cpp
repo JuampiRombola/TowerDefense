@@ -200,15 +200,31 @@ void GTKRunner::connect_clicked(GtkWidget* widget, gpointer data){
 }
 
 
-GTKRunner::GTKRunner() : OK (false) {
+GTKRunner::GTKRunner() : sock(nullptr),
+lobbyManager(nullptr),
+reciever(nullptr),
+dispatcher(nullptr) ,OK (false) {
 }
 
 GTKRunner::~GTKRunner() {
-    if (!OK){
-        delete sock;
-        delete reciever;
-        delete dispatcher;
-        delete lobbyManager;
+    if (!OK)
+    {
+        if (sock != nullptr){
+            delete sock;
+            sock = nullptr;
+        }
+        if (reciever != nullptr){
+            delete reciever;
+            reciever = nullptr;
+        }
+        if (dispatcher != nullptr){
+            delete dispatcher;
+            dispatcher = nullptr;
+        }
+        if (lobbyManager != nullptr){
+            delete lobbyManager;
+            lobbyManager = nullptr;
+        }
     }
 }
 
@@ -363,9 +379,6 @@ void GTKRunner::Run(int* argc, char***argv){
     gtk_builder_connect_signals (builder, NULL);
     g_object_unref (G_OBJECT (builder));
 
-
-
-//    gtk_window_set_default_size(GTK_WINDOW(this->window_global), 640, 360);
     gtk_window_set_default_size(GTK_WINDOW(this->window_global), 800, 600);
     g_object_ref(this->grid_login);
     g_object_ref(this->grid_lobbies);

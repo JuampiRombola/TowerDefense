@@ -7,16 +7,16 @@ MouseMovement::MouseMovement(Renderer &r) : renderer(r), x(100), y(100) {}
 void MouseMovement::doMovement() {
     if (windowID != renderer.getWindowID()) return;
     if (x < MOUSE_TOLERANCE) {
-        renderer.updateCamera(-1, 0);
+        renderer.updateCamera(-2, 0);
     }
     if (x > (renderer.getWindowWidth()-MOUSE_TOLERANCE)) {
-        renderer.updateCamera(1, 0);
+        renderer.updateCamera(2, 0);
     }
     if (y < MOUSE_TOLERANCE) {
-        renderer.updateCamera(0, -1);
+        renderer.updateCamera(0, -2);
     }
     if (y > (renderer.getWindowHeight()-MOUSE_TOLERANCE)) {
-        renderer.updateCamera(0, 1);
+        renderer.updateCamera(0, 2);
     }
 }
 

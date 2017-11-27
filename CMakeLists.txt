@@ -159,7 +159,7 @@ set(SOURCE_FILES_SERVER
 set(SOURCE_FILES_CLIENT
         Client/src/NetCommands/UpgradeTowerNetCommand.cpp
         Client/include/NetCommands/UpgradeTowerNetCommand.h
-
+        Client/include/Exceptions/UnknownOpcodeException.h
         Client/View/Common/Window.cpp
         Client/View/Common/Window.h
         Client/View/Common/Renderer.cpp
@@ -450,6 +450,7 @@ add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
 add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
+add_executable(LOBBYMM Client/main-test-gtk-mm.cpp)
 
 
 INCLUDE(FindPkgConfig)
@@ -461,10 +462,13 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS}
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
 include_directories(${GTK3_INCLUDE_DIRS})
+include_directories(${GTKMM_INCLUDE_DIRS})
 link_directories(${GTK3_LIBRARY_DIRS})
 add_definitions(${GTK3_CFLAGS_OTHER})
 
+target_link_libraries(LOBBYMM ${GTKMM_LIBRARIES})
 target_link_libraries(TowerDefenseServer yaml-cpp)
 target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES} ${SDL2MIXER_LIBRARIES})
 target_link_libraries(TowerDefenseClient yaml-cpp X11 ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})

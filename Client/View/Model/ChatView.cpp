@@ -8,18 +8,23 @@
 
 #define FONT_PATH "../Resources/font.ttf"
 #define FONT_SIZE 10
-#define MAX_LENGTH 57
-#define MAX_SIZE 9
+#define MAX_LENGTH 49
+#define MAX_SIZE 8
 
 #define CHAT_PAD 20
 #define MSG_OFFSET 23
 #define TEXT_H 14
 
-#define CHAT_W 416
-#define CHAT_H 156
+#define SRC_CHAT_W 416
+#define SRC_CHAT_H 156
+
+#define CHAT_W 358
+#define CHAT_H 150
 
 #define OFFSET_Y_IBEAM 1
 #define OFFSET_X_IBEAM 3
+
+#define MIN_RESOLUTION 1152
 
 #define CMD_HIDE_CHAT "/hide"
 #define CMD_SHOW_CHAT "/show"
@@ -30,15 +35,20 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
         spriteBackground(tl.getTexture(CHAT_BG), r),
         spriteInput(tl.getTexture(CHAT_INPUT), r),
         textColor(SDL_Color{255, 255, 255, 0xFF}), active(false),
-        dstX(PADDING_HUD * 4), dstY(window.getHeight() - CHAT_PAD), 
-        _messagesToAdd(), visible(true) {
+        _messagesToAdd(), visible(true), offsetResolution(0) {
     font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
 
-    int chatY = window.getHeight() - CHAT_H - PADDING_HUD;
+    if (window.getWidth() < MIN_RESOLUTION)
+        offsetResolution = HUD_BUTTON_Y + MARQUESINA_H;
+
+    dstX = PADDING_HUD * 3;
+    dstY = window.getHeight() - CHAT_PAD - offsetResolution;
+
+    int chatY = window.getHeight() - CHAT_H - offsetResolution;
     spriteBackground.setSourceRect(0, 0, CHAT_W, CHAT_H);
-    spriteBackground.setDestRect(PADDING_HUD, chatY, CHAT_W, CHAT_H);
-    spriteInput.setSourceRect(0, 0, CHAT_W, CHAT_H);
-    spriteInput.setDestRect(PADDING_HUD, chatY, CHAT_W, CHAT_H);
+    spriteBackground.setDestRect(0, chatY, CHAT_W, CHAT_H);
+    spriteInput.setSourceRect(0, 0, SRC_CHAT_W, SRC_CHAT_H);
+    spriteInput.setDestRect(0, chatY, CHAT_W, CHAT_H);
 
     SDL_Surface *t = TTF_RenderText_Solid(font, "|", textColor);
     textureIbeam = SDL_CreateTextureFromSurface(renderer.getRenderer(), t);

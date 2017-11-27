@@ -1,0 +1,332 @@
+nombre: mapa
+superficie: 6
+ancho: 13
+alto: 11
+superficies: 
+ - x: 4
+   y: 3
+ - x: 4
+   y: 7
+ - x: 8
+   y: 1
+ - x: 10
+   y: 7
+caminos: 
+ - x: 0
+   y: 0
+   x_sig: 0
+   y_sig: 1
+ - x: 0
+   y: 1
+   x_sig: 0
+   y_sig: 2
+ - x: 0
+   y: 2
+   x_sig: 0
+   y_sig: 3
+ - x: 0
+   y: 3
+   x_sig: 0
+   y_sig: 4
+ - x: 0
+   y: 4
+   x_sig: 0
+   y_sig: 5
+ - x: 0
+   y: 5
+   x_sig: 1
+   y_sig: 5
+ - x: 1
+   y: 5
+   x_sig: 2
+   y_sig: 5
+ - x: 2
+   y: 5
+   x_sig: 2
+   y_sig: 4
+ - x: 2
+   y: 4
+   x_sig: 2
+   y_sig: 3
+ - x: 2
+   y: 3
+   x_sig: 2
+   y_sig: 2
+ - x: 2
+   y: 2
+   x_sig: 3
+   y_sig: 2
+ - x: 3
+   y: 2
+   x_sig: 4
+   y_sig: 2
+ - x: 4
+   y: 2
+   x_sig: 5
+   y_sig: 2
+ - x: 5
+   y: 2
+   x_sig: 5
+   y_sig: 3
+ - x: 5
+   y: 3
+   x_sig: 5
+   y_sig: 4
+ - x: 5
+   y: 4
+   x_sig: 5
+   y_sig: 5
+ - x: 5
+   y: 5
+   x_sig: 5
+   y_sig: 6
+ - x: 5
+   y: 6
+   x_sig: 5
+   y_sig: 7
+ - x: 5
+   y: 7
+   x_sig: 5
+   y_sig: 8
+ - x: 5
+   y: 8
+   x_sig: 4
+   y_sig: 8
+ - x: 4
+   y: 8
+   x_sig: 3
+   y_sig: 8
+ - x: 3
+   y: 8
+   x_sig: 2
+   y_sig: 8
+ - x: 2
+   y: 8
+   x_sig: 2
+   y_sig: 9
+ - x: 2
+   y: 9
+   x_sig: 2
+   y_sig: 10
+ - x: 2
+   y: 10
+   x_sig: 3
+   y_sig: 10
+ - x: 3
+   y: 10
+   x_sig: 4
+   y_sig: 10
+ - x: 4
+   y: 10
+   x_sig: 5
+   y_sig: 10
+ - x: 5
+   y: 10
+   x_sig: 6
+   y_sig: 10
+ - x: 6
+   y: 10
+   x_sig: 7
+   y_sig: 10
+ - x: 7
+   y: 10
+   x_sig: 7
+   y_sig: 9
+ - x: 7
+   y: 9
+   x_sig: 7
+   y_sig: 8
+ - x: 7
+   y: 8
+   x_sig: 7
+   y_sig: 7
+ - x: 7
+   y: 7
+   x_sig: 7
+   y_sig: 6
+ - x: 7
+   y: 6
+   x_sig: 7
+   y_sig: 5
+ - x: 7
+   y: 5
+   x_sig: 7
+   y_sig: 4
+ - x: 7
+   y: 4
+   x_sig: 8
+   y_sig: 4
+ - x: 8
+   y: 4
+   x_sig: 9
+   y_sig: 4
+ - x: 9
+   y: 4
+   x_sig: 9
+   y_sig: 5
+ - x: 9
+   y: 5
+   x_sig: -1
+   y_sig: -1
+ - x: 2
+   y: 0
+   x_sig: 3
+   y_sig: 0
+ - x: 3
+   y: 0
+   x_sig: 4
+   y_sig: 0
+ - x: 4
+   y: 0
+   x_sig: 5
+   y_sig: 0
+ - x: 5
+   y: 0
+   x_sig: 6
+   y_sig: 0
+ - x: 6
+   y: 0
+   x_sig: 7
+   y_sig: 0
+ - x: 7
+   y: 0
+   x_sig: 7
+   y_sig: 1
+ - x: 7
+   y: 1
+   x_sig: 7
+   y_sig: 2
+ - x: 7
+   y: 2
+   x_sig: 8
+   y_sig: 2
+ - x: 8
+   y: 2
+   x_sig: 9
+   y_sig: 2
+ - x: 9
+   y: 2
+   x_sig: 9
+   y_sig: 1
+ - x: 9
+   y: 1
+   x_sig: 9
+   y_sig: 0
+ - x: 9
+   y: 0
+   x_sig: 10
+   y_sig: 0
+ - x: 10
+   y: 0
+   x_sig: 11
+   y_sig: 0
+ - x: 11
+   y: 0
+   x_sig: 12
+   y_sig: 0
+ - x: 12
+   y: 0
+   x_sig: 12
+   y_sig: 1
+ - x: 12
+   y: 1
+   x_sig: 12
+   y_sig: 2
+ - x: 12
+   y: 2
+   x_sig: 11
+   y_sig: 2
+ - x: 11
+   y: 2
+   x_sig: 11
+   y_sig: 3
+ - x: 11
+   y: 3
+   x_sig: 11
+   y_sig: 4
+ - x: 11
+   y: 4
+   x_sig: 11
+   y_sig: 5
+ - x: 11
+   y: 5
+   x_sig: 11
+   y_sig: 6
+ - x: 11
+   y: 6
+   x_sig: 11
+   y_sig: 7
+ - x: 11
+   y: 7
+   x_sig: 11
+   y_sig: 8
+ - x: 11
+   y: 8
+   x_sig: 10
+   y_sig: 8
+ - x: 10
+   y: 8
+   x_sig: 9
+   y_sig: 8
+ - x: 9
+   y: 8
+   x_sig: 9
+   y_sig: 9
+ - x: 9
+   y: 9
+   x_sig: -1
+   y_sig: -1
+portales: 
+ - tipo: entrada
+   x: 0
+   y: 0
+ - tipo: salida
+   x: 9
+   y: 5
+ - tipo: entrada
+   x: 2
+   y: 0
+ - tipo: salida
+   x: 9
+   y: 9
+hordas:
+ - tiempo: 2
+   abmonible: 0
+   demonio_verde: 5
+   espectro: 0
+   halcon_sangriento: 5
+   hombre_cabra: 0
+   no_muerto: 3
+   tiempo_hordas: 5
+ - tiempo: 2
+   abmonible: 0
+   demonio_verde: 2
+   espectro: 0
+   halcon_sangriento: 2
+   hombre_cabra: 0
+   no_muerto: 10
+   tiempo_hordas: 5
+ - tiempo: 2
+   abmonible: 0
+   demonio_verde: 20
+   espectro: 0
+   halcon_sangriento: 5
+   hombre_cabra: 0
+   no_muerto: 2
+   tiempo_hordas: 5
+ - tiempo: 2
+   abmonible: 0
+   demonio_verde: 20
+   espectro: 0
+   halcon_sangriento: 20
+   hombre_cabra: 0
+   no_muerto: 10
+   tiempo_hordas: 5
+ - tiempo: 1
+   abmonible: 0
+   demonio_verde: 20
+   espectro: 0
+   halcon_sangriento: 20
+   hombre_cabra: 0
+   no_muerto: 20
+   tiempo_hordas: 5

@@ -21,8 +21,9 @@ int main(int argc, char** argv) {
     bool quit = false;
     SDL_Event event;
     SDL_Init(SDL_INIT_VIDEO);
+    SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
-    SDL_SetWindowFullscreen(window.getWindow(), 0);
+    //SDL_SetWindowFullscreen(window.getWindow(), 0);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), EDITOR_MODE);
     MouseMovement mouseMovement(renderer);
@@ -67,6 +68,11 @@ int main(int argc, char** argv) {
                     mouse_x = static_cast<int>(event.tfinger.x);
                     mouse_y = static_cast<int>(event.tfinger.y);
                     mouse.activate();
+                    break;
+                case SDL_FINGERMOTION:
+                    renderer.updateCameraFinger(
+                            static_cast<int>(event.tfinger.dx),
+                            static_cast<int>(event.tfinger.dy));
                     break;
                 case SDL_MOUSEWHEEL:
                     if (event.wheel.y == 1) //scroll up

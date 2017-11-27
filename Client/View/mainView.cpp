@@ -10,16 +10,17 @@
 
 #define TITLE "Tower Defense"
 
-#define WINDOWWIDTH 640
-#define WINDOWHEIGHT 480
+#define WINDOWWIDTH 1152
+#define WINDOWHEIGHT 600
 #define FPS 40
 
 #define MAPSIZE 9
 
 int main(int argc, char** argv) {
     SDL_Event event{};
-    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
     TTF_Init();
+    SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
@@ -136,9 +137,9 @@ int main(int argc, char** argv) {
     // HUD
     HudView hudView(window, textureLoader, renderer, cmdDispatcher,modelView);
     hudView.addElementalButtons(ELEMENTAL_EARTH);
-    hudView.addElementalButtons(ELEMENTAL_FIRE);
-    hudView.addElementalButtons(ELEMENTAL_WATER);
-    hudView.addElementalButtons(ELEMENTAL_AIR);
+    //hudView.addElementalButtons(ELEMENTAL_FIRE);
+    //hudView.addElementalButtons(ELEMENTAL_WATER);
+    //hudView.addElementalButtons(ELEMENTAL_AIR);
 
     ChatView chat(cmdDispatcher, window, renderer, textureLoader);
 
@@ -178,16 +179,16 @@ int main(int argc, char** argv) {
                                                 event.motion.windowID);
                     break;
                 case SDL_MOUSEBUTTONDOWN:
-                    hudView.getMouseButtonDown();
-                    break;
+                    hudView.getMouseButtonDown(); break;
                 case SDL_MOUSEBUTTONUP:
-                    hudView.getMouseState();
-                    break;
+                    hudView.getMouseState(); break;
                 case SDL_FINGERDOWN:
-                    hudView.getFingerButtonDown(event);
-                    break;
+                    hudView.getFingerButtonDown(event); break;
                 case SDL_FINGERUP:
-                    hudView.getFingerState(event);
+                    hudView.getFingerState(event); break;
+                case SDL_FINGERMOTION:
+                    renderer.updateCameraFinger(static_cast<int>(event.tfinger.dx),
+                                          static_cast<int>(event.tfinger.dy));
                     break;
                 case SDL_MOUSEWHEEL:
                     if (event.wheel.y == 1) //scroll up

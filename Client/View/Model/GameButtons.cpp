@@ -130,7 +130,7 @@ void GameButtons::initFakeButtons() {
         if (i == BLANK_SPACE) continue;
 
         int x = window.getWidth() - PADDING_HUD - i*HUD_BUTTON_X;
-        int y = window.getHeight() - PADDING_HUD - HUD_BUTTON_Y;
+        int y = window.getHeight() - HUD_BUTTON_Y - PADDING_HUD;
 
         if (i == 5) { // es la mitad de la barra de spells
             decoSpells.setDestXY(x - MARQUESINA_OFFSET_X,

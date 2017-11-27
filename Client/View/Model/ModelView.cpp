@@ -4,13 +4,16 @@
 #include "PortalSalidaView.h"
 #include "../../../Common/Lock.h"
 #include "DepthLevelError.h"
+#include "../Common/SpriteNamesConfig.h"
 
 #define INVALID_INDEX "Se esta tratandod de acceder a una posicion invalida de DepthLevel"
 
-ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader, MusicPlayer &musicPlayer) :
+ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader,
+                     MusicPlayer &musicPlayer) :
         renderer(renderer), textureLoader(textureLoader),
         map(0, 0, 0, renderer, textureLoader), mapLoaded(false),
-        mapLoadedMutex(), mapLoadedCondVariable(), _currentAnnouncement(nullptr),
+        mapLoadedMutex(), mapLoadedCondVariable(),
+        _currentAnnouncement(nullptr),
         musicPlayer(musicPlayer) {}
 
 ModelView::~ModelView() {
@@ -73,7 +76,6 @@ void ModelView::createUnit(int id, int key,
     Lock(this->m);
     checkIndexDepthLevel(x+y+1);
     depthLevels[x+y+1]->addUnit(unit);
-    //std::cout<<"Pongo una unidad en el DEPTHLEVEL: ("<<x<<","<<y<<"\n"<<std::flush;
     idDepthLevelsUnits[id] = x + y + 1;
 }
 
@@ -91,7 +93,10 @@ void ModelView::createSpell(int key, int x, int y, Uint32 t) {
     spell->cast(x, y, t);
     Lock(this->m);
     checkIndexDepthLevel(x+y+1);
-    depthLevels[x+y+1]->addSpell(spell);
+    if (key == GRIETA)
+        depthLevels[x+y+1]->addFloorSpell(spell);
+    else
+        depthLevels[x+y+1]->addSpell(spell);
     if (renderer.isOnCamera(x, y))
         musicPlayer.addSpell(key);
 }
@@ -112,7 +117,6 @@ void ModelView::moveUnit(int id, int x, int y, int toX, int toY) {
     Lock(this->m);
     int levelIndex = idDepthLevelsUnits.at(id);
     UnitView *unit = depthLevels[levelIndex]->getUnit(id);
-    checkIndexDepthLevel(levelIndex);
     depthLevels[levelIndex]->removeUnit(id);
     unit->move(x, y, toX, toY);
     checkIndexDepthLevel(x+y+1);

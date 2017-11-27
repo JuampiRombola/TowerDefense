@@ -15,8 +15,8 @@
 
 #define TITLE "Tower Defense"
 
-#define WINDOWWIDTH 640
-#define WINDOWHEIGHT 480
+#define WINDOWWIDTH 800
+#define WINDOWHEIGHT 600
 #define FPS 40
 
 SDLRunner::SDLRunner(uint8_t mapSurface, uint32_t mapWidth, uint32_t mapHeight)
@@ -42,6 +42,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     SDL_Event event{};
     SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
     TTF_Init();
+    SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
     Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
     Renderer renderer(window, _mapWidth, _mapHeight);
     MusicLoader musicLoader;
@@ -106,6 +107,11 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
                     hudView.getFingerButtonDown(event); break;
                 case SDL_FINGERUP:
                     hudView.getFingerState(event); break;
+                case SDL_FINGERMOTION:
+                    renderer.updateCameraFinger(
+                            static_cast<int>(event.tfinger.dx),
+                            static_cast<int>(event.tfinger.dy));
+                    break;
                 case SDL_MOUSEWHEEL:
                     if (event.wheel.y == 1) //scroll up
                         renderer.zoomIn();
@@ -185,6 +191,14 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
         } else
             delta = elapsedTime - s;
     }
+
+    _reciever->Stop();
+    _dispatcher->Stop();
+
     TTF_Quit();
     SDL_Quit();
+
+
+
+
 }
