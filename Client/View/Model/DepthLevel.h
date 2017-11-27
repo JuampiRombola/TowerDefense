@@ -14,6 +14,7 @@ private:
     PortalView *portalEntrada;
     PortalView *portalSalida;
     std::list<SpellView *> spells;
+    std::list<SpellView *> spellsFloor;
     std::list<TowerView *> towers;
     std::list<UnitView *> units;
     std::list<ShotView *> shots;
@@ -24,6 +25,7 @@ public:
     void addPortalEntrada(PortalView *portal);
     void addPortalSalida(PortalView *portal);
     void addSpell(SpellView *spell);
+    void addFloorSpell(SpellView *spell);
     void addTower(TowerView *tower);
     void addUnit(UnitView *unit);
     void addShot(ShotView *shot);

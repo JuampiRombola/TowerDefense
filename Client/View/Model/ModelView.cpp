@@ -4,6 +4,7 @@
 #include "PortalSalidaView.h"
 #include "../../../Common/Lock.h"
 #include "DepthLevelError.h"
+#include "../Common/SpriteNamesConfig.h"
 
 #define INVALID_INDEX "Se esta tratandod de acceder a una posicion invalida de DepthLevel"
 
@@ -92,7 +93,10 @@ void ModelView::createSpell(int key, int x, int y, Uint32 t) {
     spell->cast(x, y, t);
     Lock(this->m);
     checkIndexDepthLevel(x+y+1);
-    depthLevels[x+y+1]->addSpell(spell);
+    if (key == GRIETA)
+        depthLevels[x+y+1]->addFloorSpell(spell);
+    else
+        depthLevels[x+y+1]->addSpell(spell);
     if (renderer.isOnCamera(x, y))
         musicPlayer.addSpell(key);
 }
