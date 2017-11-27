@@ -7,7 +7,7 @@ Window::Window(const std::string &title, int width, int height) :
                               SDL_WINDOWPOS_UNDEFINED, // x position
                               SDL_WINDOWPOS_UNDEFINED, // y position
                               width, height,
-                              SDL_WINDOW_FOREIGN);   // Flag
+                              SDL_WINDOW_FULLSCREEN_DESKTOP);   // Flag
                            // SDL_WINDOW_FOREIGN
                            // SDL_WINDOW_FULLSCREEN_DESKTOP
     if (!window) throw ViewError("Create window error: %s", SDL_GetError());
