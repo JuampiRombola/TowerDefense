@@ -87,7 +87,7 @@ void Editor::exportar() {
         fileContent << " - " << horda.exportar();
         ++hordaNro;
     }
-    File file(nombre + ".yaml");
+    File file("/etc/TowerDefense/mapas/" + nombre + ".yaml");
     file.write(fileContent.str());
     window.showErrorMessage("", "¡El mapa se exportó con éxito!");
 }

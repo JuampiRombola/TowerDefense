@@ -307,7 +307,7 @@ void GTKRunner::Run(int* argc, char***argv){
     gtk_init (argc, argv);
 
     builder = gtk_builder_new ();
-    gtk_builder_add_from_file (builder, "../Client/Launcher.glade", NULL);
+    gtk_builder_add_from_file (builder, "/etc/TowerDefense/Launcher.glade", NULL);
 
     this->window_global = GTK_WINDOW(gtk_builder_get_object (builder, "window_global"));
     g_signal_connect (this->window_global, "destroy", G_CALLBACK(GTKRunner::ShutdownGTK), this);

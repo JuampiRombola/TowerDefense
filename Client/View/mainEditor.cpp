@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     TextureLoader textureLoader(renderer.getRenderer(), EDITOR_MODE);
     MouseMovement mouseMovement(renderer);
     MusicLoader musicLoader;
-    //musicLoader.playMusic();
+    musicLoader.playMusic();
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
 
     int mouse_x = -1, mouse_y = -1;

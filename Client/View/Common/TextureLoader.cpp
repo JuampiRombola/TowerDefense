@@ -3,8 +3,8 @@
 #include "ViewError.h"
 #include "SpriteNamesConfig.h"
 
-#define CONFIG_PATH "../Client/View/spritesConfig.yaml"
-#define RESOURCESPATH "../Resources/"
+#define CONFIG_PATH "/etc/TowerDefense/spritesConfig.yaml"
+#define RESOURCESPATH "/etc/TowerDefense/Resources/"
 #define PNGFORMAT ".png"
 
 #define GAME_MODE 0

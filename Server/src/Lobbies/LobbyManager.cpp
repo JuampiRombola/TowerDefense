@@ -14,7 +14,7 @@ LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
 {
 	//Levantar de archivo todas las configuraciones de MAPA!!!
 	int id = 0;
-	std::string maps_path("mapas");
+	std::string maps_path("/etc/TowerDefense/mapas");
 	DIR *dir = opendir(maps_path.c_str());
 	if(dir){
 		dirent *entry;
@@ -55,7 +55,7 @@ void LobbyManager::HandlePlayerIsReady(PlayerProxy &player){
 
 	if (player.lobby->MapCfg == nullptr)
 		return;
-	
+
 	player.lobby->PlayerIsReady(player);
 }
 

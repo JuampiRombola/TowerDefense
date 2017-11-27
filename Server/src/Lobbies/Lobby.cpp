@@ -58,7 +58,7 @@ void Lobby::PlayerIsReady(PlayerProxy &player) {
 
 		std::lock_guard<std::mutex> lock4(_gameEnabledMutex);
 		_gameEnabled = true;
-
+		
 		uint superficie = MapCfg->Cfg["superficie"].as<uint>();
 		uint width = MapCfg->Cfg["ancho"].as<uint>();
 		uint height = MapCfg->Cfg["alto"].as<uint>();

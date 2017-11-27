@@ -1,7 +1,7 @@
 #ifndef TOWERDEFENSE_MUSICNAMESCONFIG_H
 #define TOWERDEFENSE_MUSICNAMESCONFIG_H
 
-#define MAIN_MUSIC_PATH "../Resources/main_music.mp3"
+#define MAIN_MUSIC_PATH "/etc/TowerDefense/Resources/main_music.mp3"
 #ifndef __CHUNK_ENUM__
 #define __CHUNK_ENUM__
 enum CHUNK_FILE {

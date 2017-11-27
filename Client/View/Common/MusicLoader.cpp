@@ -7,7 +7,7 @@ MusicLoader::MusicLoader() {
     music = Mix_LoadMUS(MAIN_MUSIC_PATH);
     for (int i = 0; i < TOTAL_CHUNKS; ++i) {
         effects[i] = Mix_LoadWAV(std::string(
-                "../Resources/" + std::to_string(i) + ".ogg").c_str());
+                "/etc/TowerDefense/Resources/" + std::to_string(i) + ".ogg").c_str());
     }
 }
 
