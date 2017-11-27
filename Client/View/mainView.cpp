@@ -10,7 +10,7 @@
 
 #define TITLE "Tower Defense"
 
-#define WINDOWWIDTH 800
+#define WINDOWWIDTH 1152
 #define WINDOWHEIGHT 600
 #define FPS 40
 
@@ -137,9 +137,9 @@ int main(int argc, char** argv) {
     // HUD
     HudView hudView(window, textureLoader, renderer, cmdDispatcher,modelView);
     hudView.addElementalButtons(ELEMENTAL_EARTH);
-    hudView.addElementalButtons(ELEMENTAL_FIRE);
-    hudView.addElementalButtons(ELEMENTAL_WATER);
-    hudView.addElementalButtons(ELEMENTAL_AIR);
+    //hudView.addElementalButtons(ELEMENTAL_FIRE);
+    //hudView.addElementalButtons(ELEMENTAL_WATER);
+    //hudView.addElementalButtons(ELEMENTAL_AIR);
 
     ChatView chat(cmdDispatcher, window, renderer, textureLoader);
 

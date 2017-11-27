@@ -9,8 +9,8 @@
 #define START_X_ICON 22
 #define START_Y_ICON 95
 
-#define PADLOCK_W 64
-#define PADLOCK_H 76
+#define PADLOCK_W 61
+#define PADLOCK_H 73
 
 #define UPGRADE_ICON_SIZE 47
 #define PADDING_ICON 32
