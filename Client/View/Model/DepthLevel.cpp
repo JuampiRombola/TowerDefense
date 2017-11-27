@@ -64,14 +64,14 @@ void DepthLevel::draw(Uint32 time) {
     if (portalEntrada) portalEntrada->draw(time);
 
     //Remuevo las unidades que ya estan muertas
-    auto it1 = units.begin();
-    while (it1 != units.end()) {
-        if ((*it1)->isDead()) {
-            delete (*it1);
-            it1 = units.erase(it1);
-        } else
-            ++it1;
-    }
+    units.erase(std::remove_if(units.begin(),
+                               units.end(),
+                               [](UnitView* x) {
+                                   if (x->isDead()){
+                                       delete x;
+                                       return true; }
+                                   return false;}),
+                units.end());
 
     for (auto it = units.rbegin(); it != units.rend(); ++it){
         UnitView* u = *it;
