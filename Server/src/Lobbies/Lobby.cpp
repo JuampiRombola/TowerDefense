@@ -35,6 +35,18 @@ uint Lobby::GUID(){
 	return _guid;
 }
 
+
+bool Lobby::IsPlayerReady(PlayerProxy &player){
+    std::lock_guard<std::mutex> lock1(_readyPlayersMutex);
+    for (auto it = _readyPlayers.begin(); it != _readyPlayers.end(); ++it){
+        if ((*it) == &player){
+            return true;
+        }
+    }
+    return false;
+}
+
+
 void Lobby::PlayerIsReady(PlayerProxy &player) {
 
 	std::lock_guard<std::mutex> lock1(_readyPlayersMutex);
@@ -83,36 +95,6 @@ void Lobby::PlayerIsReady(PlayerProxy &player) {
 	} else {
 		_notifications.Queue(new PlayerIsReadyNotification(*this, player));
 	}
-	/*
-	if (_waterPlayer == nullptr || _firePlayer == nullptr || _airPlayer == nullptr || _groundPlayer == nullptr)
-		return;
-
-	std::vector<PlayerProxy*> playersAlreadyWithSpell = GetPlayersInLobbyWithSomeSpellSet();
-	if (std::find(playersAlreadyWithSpell.begin(), playersAlreadyWithSpell.end(), &player) == playersAlreadyWithSpell.end()){
-		//El jugador esta listo pero no eligio spell
-		return;
-	}
-	std::lock_guard<std::mutex> lock1(_readyPlayersMutex);
-	std::lock_guard<std::mutex> lock3(_playerSpellsSlotsMutex);
-
-	auto it = std::find(_readyPlayers.begin(), _readyPlayers.end(), &player);
-	if (it != _readyPlayers.end())
-		return;
-	_readyPlayers.push_back(&player);
-	if (_readyPlayers.size() == playersAlreadyWithSpell.size()){
-		for (auto it = playersAlreadyWithSpell.begin(); it != playersAlreadyWithSpell.end(); it++){
-			_playingPlayers.push_back(*it);
-			(*it)->state = IN_GAME;
-		}
-
-		std::lock_guard<std::mutex> lock4(_gameEnabledMutex);
-		_gameEnabled = true;
-		
-		uint superficie = MapCfg->Cfg["superficie"].as<uint>();
-		uint width = MapCfg->Cfg["ancho"].as<uint>();
-		uint height = MapCfg->Cfg["alto"].as<uint>();
-		_notifications.Queue(new GameStartedNotification(*this, superficie, width, height));
-	}*/
 }
 
 bool Lobby::GameEnabled(){
@@ -120,7 +102,7 @@ bool Lobby::GameEnabled(){
 	return _gameEnabled;
 }
 
-std::vector<PlayerProxy*> Lobby::GetOtherPlayersInLobby(){
+std::vector<PlayerProxy*> Lobby::GetPlayers(){
 	std::lock_guard<std::mutex> lock(_playersMutex);
 	return _players;
 }
@@ -148,10 +130,6 @@ std::vector<PlayerProxy*> Lobby::GetPlayersInLobbyWithSomeSpellSet(){
 }
 
 
-std::vector<PlayerProxy*> Lobby::GetPlayers(){
-    std::lock_guard<std::mutex> lock(_playersMutex);
-    return _players;
-}
 
 
 std::vector<int> Lobby::GetPlayersGUIDS(){
@@ -164,7 +142,6 @@ std::vector<int> Lobby::GetPlayersGUIDS(){
 }
 
 void Lobby::PlayerJoin(PlayerProxy& player){
-	// TO DO: fix quien setea player.lobby
 	if (GameEnabled())
 		return;
 
@@ -203,6 +180,13 @@ void Lobby::PlayerLeave(PlayerProxy& player){
 	if (p == nullptr){
 		throw PlayerLeftLobbyHeWasntInException();
 	}
+
+	auto itready = std::find(_readyPlayers.begin(), _readyPlayers.end(), &player);
+	if (itready != _readyPlayers.end()){
+		_readyPlayers.erase(itready);
+	}
+
+
 	player.state = BROWSING_LOBBIES;
 	player.lobby = nullptr;
 	_notifications.Queue(new PlayerLeftLobbyNotification(*this, player));
@@ -309,11 +293,11 @@ void Lobby::PlayerPickGround(PlayerProxy& player){
 		return;
 
 	if (_waterPlayer == &player){
-		_waterPlayer = nullptr; //__notifications.Queue(new PlayerUnpickedSpellNotification(player, *this, SPELL_TYPE_WATER));
+		_waterPlayer = nullptr;
 	} else if (_firePlayer == &player){
-		_firePlayer = nullptr; //__notifications.Queue(new PlayerUnpickedSpellNotification(player, *this, SPELL_TYPE_FIRE));
+		_firePlayer = nullptr;
 	} else if (_airPlayer == &player){
-		_airPlayer = nullptr; //__notifications.Queue(new PlayerUnpickedSpellNotification(player, *this, SPELL_TYPE_AIR));
+		_airPlayer = nullptr;
 	}
 
 	_groundPlayer = &player;
@@ -321,53 +305,6 @@ void Lobby::PlayerPickGround(PlayerProxy& player){
     _notifications.Queue(new PlayerPickedSpellNotification(player, *this, SPELL_TYPE_GROUND, true));
 
 }
-
-/*
-void Lobby::PlayerUnpickFire(PlayerProxy& player){
-	if (GameEnabled())
-		return;
-	std::lock_guard<std::mutex> lock(_playerSpellsSlotsMutex);
-
-	if (_firePlayer != &player)
-		throw PlayerDoesNotHaveThisSpellSet();
-
-	_firePlayer = nullptr;
-	_notifications.Queue(new PlayerUnpickedSpellNotification(player, *this, SPELL_TYPE_FIRE));
-}
-void Lobby::PlayerUnpickWater(PlayerProxy& player){
-	if (GameEnabled())
-		return;
-	std::lock_guard<std::mutex> lock(_playerSpellsSlotsMutex);
-
-	if (_waterPlayer != &player)
-		throw PlayerDoesNotHaveThisSpellSet();
-
-	_waterPlayer = nullptr;
-	_notifications.Queue(new PlayerUnpickedSpellNotification(player, *this, SPELL_TYPE_WATER));
-}
-void Lobby::PlayerUnpickAir(PlayerProxy& player){
-	if (GameEnabled())
-		return;
-	std::lock_guard<std::mutex> lock(_playerSpellsSlotsMutex);
-
-	if (_airPlayer != &player)
-		throw PlayerDoesNotHaveThisSpellSet();
-
-	_airPlayer = nullptr;
-	_notifications.Queue(new PlayerUnpickedSpellNotification(player, *this, SPELL_TYPE_AIR));
-}
-void Lobby::PlayerUnpickGround(PlayerProxy& player){
-	if (GameEnabled())
-		return;
-	std::lock_guard<std::mutex> lock(_playerSpellsSlotsMutex);
-
-	if (_groundPlayer != &player)
-		throw PlayerDoesNotHaveThisSpellSet();
-
-	_groundPlayer = nullptr;
-	_notifications.Queue(new PlayerUnpickedSpellNotification(player, *this, SPELL_TYPE_GROUND));
-}
-*/
 
 
 PlayerProxy* Lobby::GetFirePlayer(){

@@ -31,34 +31,54 @@ void LoggedInNotification::Notify(){
 	_player.SendInt32(_player.GUID());
 	std::string pname = _player.Name();
 	_player.SendString(pname);
+	_player.SendInt32(_player.secret);
 	/** Notifico a este jugador acerca de todos los lobbies y jugadores y sus relaciones */
 
-	uint32_t lobbyCount = _lobbies.size();
+
+	uint32_t lobbyCount = 0;
+
+	for (auto it = _lobbies.begin(); it != _lobbies.end(); ++it){
+		if (!(*it)->GameEnabled()){
+			lobbyCount++;
+		}
+	}
+	
 	_player.SendInt32(lobbyCount);
 
 	for (auto it = _lobbies.begin(); it != _lobbies.end(); ++it){
-		uint32_t lobbyGuid = (*it)->GUID();
-		std::string name = (*it)->Name();
-		_player.SendInt32(lobbyGuid);
-		_player.SendString(name);
-		
-		if ((*it)->MapCfg == nullptr)
-			_player.SendInt32(-1);
-		else
-		{
-			Lobby* l = (*it);
-			_player.SendInt32((l->MapCfg->Id()));
+		if (!(*it)->GameEnabled()){
+			uint32_t lobbyGuid = (*it)->GUID();
+			std::string name = (*it)->Name();
+			_player.SendInt32(lobbyGuid);
+			_player.SendString(name);
+
+			if ((*it)->MapCfg == nullptr)
+				_player.SendInt32(-1);
+			else
+			{
+				Lobby* l = (*it);
+				_player.SendInt32((l->MapCfg->Id()));
+			}
 		}
 	}
 
-	uint32_t playerAmount = _playersToNotify.size();
+	uint32_t playerAmount = 0;
+
+	for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it) {
+		if ((*it)->state == IN_LOBBY || (*it)->state == BROWSING_LOBBIES){
+			playerAmount++;
+		}
+	}
+	
 	_player.SendInt32(playerAmount);
 
 	for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it) {
-		uint32_t  playerGuid = (*it)->GUID();
-		std::string playerName = (*it)->Name();
-		_player.SendInt32(playerGuid);
-		_player.SendString(playerName);
+		if ((*it)->state == IN_LOBBY || (*it)->state == BROWSING_LOBBIES){
+			uint32_t  playerGuid = (*it)->GUID();
+			std::string playerName = (*it)->Name();
+			_player.SendInt32(playerGuid);
+			_player.SendString(playerName);
+		}
 	}
 
 	uint32_t relationsAmount = _lobbies2playersGUIDS.size();
@@ -88,10 +108,9 @@ void LoggedInNotification::Notify(){
 	/** Notifico a todos los otros jugadores que entro este jugadopr */
 	uint8_t otherPlayersOpcode = PLAYER_JOIN;
 	for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it){
-		if((*it)->state != DEAD){
+		if((*it)->state == IN_LOBBY || (*it)->state == BROWSING_LOBBIES){
 			(*it)->SendByte(otherPlayersOpcode);
-			uint32_t id = _player.GUID();
-			(*it)->SendInt32(id);
+			(*it)->SendInt32(_player.GUID());
 			std::string pname = _player.Name();
 			(*it)->SendString(pname);
 		}

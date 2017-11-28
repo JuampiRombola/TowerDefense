@@ -2,9 +2,10 @@
 #include "TextureLoader.h"
 #include "ViewError.h"
 #include "SpriteNamesConfig.h"
+#include "../../../Common/Paths.h"
 
-#define CONFIG_PATH "/etc/TowerDefense/spritesConfig.yaml"
-#define RESOURCESPATH "/etc/TowerDefense/Resources/"
+#define CONFIG_PATH "../Client/View/spritesConfig.yaml"
+#define SPRITES_PATH "Sprites/"
 #define PNGFORMAT ".png"
 
 #define GAME_MODE 0
@@ -26,7 +27,8 @@ TextureLoader::TextureLoader(SDL_Renderer *renderer, int mode) :
 
     IMG_Init(IMG_INIT_PNG);
     for (int i = 0; i < totalGame; ++i) {
-        SDL_Surface *im = IMG_Load((RESOURCESPATH
+        SDL_Surface *im = IMG_Load((PATH_RESOURCES_1 + std::string("")
+                                    + SPRITES_PATH
                                     + std::to_string(i)
                                     + PNGFORMAT).c_str());
         images.push_back(im);
@@ -36,7 +38,8 @@ TextureLoader::TextureLoader(SDL_Renderer *renderer, int mode) :
     }
 
     for (int i = initHUD; i < totalHUD; ++i) {
-        SDL_Surface *im = IMG_Load((RESOURCESPATH
+        SDL_Surface *im = IMG_Load((PATH_RESOURCES_1 + std::string("")
+                                    + SPRITES_PATH
                                     + std::to_string(i)
                                     + PNGFORMAT).c_str());
         images.push_back(im);
@@ -46,7 +49,8 @@ TextureLoader::TextureLoader(SDL_Renderer *renderer, int mode) :
     }
 
     for (int i = 100; i < totalEditor; ++i) {
-        SDL_Surface *im = IMG_Load((RESOURCESPATH
+        SDL_Surface *im = IMG_Load((PATH_RESOURCES_1 + std::string("")
+                                    +SPRITES_PATH
                                     + std::to_string(i)
                                     + PNGFORMAT).c_str());
         images.push_back(im);

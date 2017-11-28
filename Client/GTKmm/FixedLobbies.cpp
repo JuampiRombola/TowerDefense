@@ -26,7 +26,7 @@ void FixedLobbies::Set(const Glib::RefPtr<Gtk::Builder> &refBuilder){
     g_object_ref(store->gobj());
 
     treeview->set_model(store);
-    treeview->append_column("Nombre", this->columns.m_col_lobbyname);
+    treeview->append_column("Name", this->columns.m_col_lobbyname);
     treeview->append_column("Players", this->columns.m_col_lobby_player_amount);
 }
 
@@ -36,6 +36,23 @@ void FixedLobbies::NewLobby(std::string name, uint guid) {
     row[columns.m_col_lobbyname] = name;
     row[columns.m_col_lobbyid] = guid;
     row[columns.m_col_lobby_player_amount] = 0;
+}
+
+
+void FixedLobbies::RemoveLobby(uint32_t lobbyGuid){
+    typedef Gtk::TreeModel::Children type_children;
+    type_children children = treeview->get_model()->children();
+    for(type_children::iterator iter = children.begin();
+        iter != children.end();)
+    {
+        Gtk::TreeModel::Row row = *iter;
+        uint lguid = row.get_value(columns.m_col_lobbyid);
+        if (lguid == lobbyGuid){
+            iter = store->erase(iter);
+        } else{
+            ++iter;
+        }
+    }
 }
 
 void FixedLobbies::SetMyName(std::string &name) {

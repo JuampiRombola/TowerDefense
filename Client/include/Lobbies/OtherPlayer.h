@@ -15,7 +15,7 @@ public:
 
 	std::string Name();
 	uint GUID();
-
+    bool ready;
 };
 
 

@@ -32,7 +32,7 @@ public:
 	int32_t RecieveInt32();
 	uint8_t RecieveByte();
 
-
+	uint32_t secret;
 };
 
 #endif

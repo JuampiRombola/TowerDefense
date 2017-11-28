@@ -31,8 +31,9 @@ public:
 	void HandlePlayerJoin();
 	void HandlePlayerLeave();
 	void HandleLoginSuccess();
+    void HandlePlayerReady();
 
-	void HandlePickedSpell();
+    void HandlePickedSpell();
 	void HandleUnpickedSpell();
 	void HandleOtherPlayerPickedSpell();
 	void HandleOtherPlayerUnpickedSpell();
@@ -46,6 +47,7 @@ public:
 	bool groundHUDEnabled;
 	std::string myName;
 	uint32_t myGuid;
+	uint32_t mySecret;
 	std::vector<std::tuple<std::string, uint32_t>> maps;
 	Lobby* joinedLobby;
 

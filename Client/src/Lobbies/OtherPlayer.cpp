@@ -3,7 +3,7 @@
 
 
 OtherPlayer::OtherPlayer(std::string& name, uint guid)
-: _name(name), _guid(guid), joinedLobby(nullptr)
+: _name(name), _guid(guid), joinedLobby(nullptr), ready(false)
 {
 	std::cout << "Other player created: id " << guid << ", name " << name << '\n' << std::flush;
 

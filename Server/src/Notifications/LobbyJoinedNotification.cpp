@@ -25,22 +25,43 @@ void LobbyJoinedNotification::Notify(){
 	_player.SendInt32(lobbyGUID);
 	//recordar que devuelve 0 si nadie eligio fuego.
 
-
+	uint32_t ready = 0;
     PlayerProxy* p =_lobby.GetFirePlayer();
-	uint32_t firepguid = (p == nullptr) ? 0 : p->GUID();
-	_player.SendInt32(firepguid);
+	if (p != nullptr){
+		_player.SendInt32(p->GUID());
+		uint8_t ready = _lobby.IsPlayerReady(*p);
+		_player.SendByte(ready);
+	} else {
+		_player.SendInt32(0);
+	}
 
-    p = _lobby.GetWaterPlayer();
-	uint32_t waterpguid = (p == nullptr) ? 0 : p->GUID();
-	_player.SendInt32(waterpguid);
 
-    p = _lobby.GetAirPlayer();
-	uint32_t airpguid = (p == nullptr) ? 0 : p->GUID();
-	_player.SendInt32(airpguid);
+	p =_lobby.GetWaterPlayer();
+	if (p != nullptr){
+		_player.SendInt32(p->GUID());
+		uint8_t ready = _lobby.IsPlayerReady(*p);
+		_player.SendByte(ready);
+	} else {
+		_player.SendInt32(0);
+	}
 
-    p = _lobby.GetGroundPlayer();
-	uint32_t groundpguid = (p == nullptr) ? 0 : p->GUID();
-	_player.SendInt32(groundpguid);
+	p =_lobby.GetAirPlayer();
+	if (p != nullptr){
+		_player.SendInt32(p->GUID());
+		uint8_t ready = _lobby.IsPlayerReady(*p);
+		_player.SendByte(ready);
+	} else {
+		_player.SendInt32(0);
+	}
+
+	p =_lobby.GetGroundPlayer();
+	if (p != nullptr){
+		_player.SendInt32(p->GUID());
+		uint8_t ready = _lobby.IsPlayerReady(*p);
+		_player.SendByte(ready);
+	} else {
+		_player.SendInt32(0);
+	}
 
 
 	ins = PLAYER_JOINED_LOBBY;

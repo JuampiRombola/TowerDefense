@@ -8,6 +8,7 @@
 #include "../include/NetCommands/PlayerLoadedGameCommand.h"
 #include "../include/GTKNotifications/SpellIsFreeGTKNotification.h"
 #include "../include/GTKNotifications/PlayerIsReadyGTKNotification.h"
+#include "../include/GTKNotifications/LobbyIsGoneGTKNotification.h"
 
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager,
                                            GTKmmRunner& runner, CommandDispatcher& dispatcher)
@@ -64,9 +65,7 @@ void NotificationReciever::_SwitchOnOpcode(uint8_t opcode){
         }
         case PLAYER_IS_READY:
         {
-            uint pguid = _sock.RecieveInt32();
-            _runner.gtkNotifications.Queue(new PlayerIsReadyGTKNotification(pguid));
-            g_idle_add(GTKmmRunner::notification_check, &_runner);
+            _lobbyManager.HandlePlayerReady();
             break;
         }
         case PICK_SPELL:
@@ -81,7 +80,13 @@ void NotificationReciever::_SwitchOnOpcode(uint8_t opcode){
             g_idle_add(GTKmmRunner::notification_check, &_runner);
             break;
         }
-
+        case LOBBY_GONE:
+        {
+            uint32_t lobbyGuid = _sock.RecieveInt32();
+            _runner.gtkNotifications.Queue(new LobbyIsGoneGTKNotification(lobbyGuid));
+            g_idle_add(GTKmmRunner::notification_check, &_runner);
+            break;
+        }
         case PICK_MAP:
             std::cout << "PICK_MAP::\n" << std::flush;
             _lobbyManager.HandleMapPicked();

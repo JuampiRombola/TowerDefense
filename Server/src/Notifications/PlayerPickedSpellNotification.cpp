@@ -15,7 +15,7 @@ void PlayerPickedSpellNotification::SetPlayersToNotify(std::vector<PlayerProxy*>
 }
 
 void PlayerPickedSpellNotification::Notify(){
-	std::vector<PlayerProxy*> players = _lobby.GetOtherPlayersInLobby();
+	std::vector<PlayerProxy*> players = _lobby.GetPlayers();
 	for (auto it = players.begin(); it != players.end(); ++it){
 		PlayerProxy* p = *it;
 		if (p == &_player){

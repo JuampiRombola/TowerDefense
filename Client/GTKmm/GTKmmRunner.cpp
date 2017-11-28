@@ -36,10 +36,6 @@ void GTKmmRunner::Run(int* argc, char***argv){
     fixed_lobby.Set(refBuilder);
     fixed_lobbies.Set(refBuilder);
 
-//    g_object_ref(fixed_lobbies.fixed->gobj());
-//    g_object_ref(fixed_login.fixed->gobj());
-//    g_object_ref(fixed_lobby.fixed->gobj());
-
     box->remove(*(fixed_login.fixed));
     box->remove(*(fixed_lobby.fixed));
     box->remove(*(fixed_lobbies.fixed));
@@ -57,10 +53,6 @@ void GTKmmRunner::Run(int* argc, char***argv){
     fixed_lobby.toggle_water->signal_clicked().connect(sigc::mem_fun(this, &GTKmmRunner::radio_water_clicked));
     fixed_lobby.toggle_ground->signal_clicked().connect(sigc::mem_fun(this, &GTKmmRunner::radio_ground_clicked));
     fixed_lobby.combobox_changed_signal = fixed_lobby.combobox_maps->signal_changed().connect(sigc::mem_fun(this, &GTKmmRunner::map_changed));
-    
-
-    //button_newLobbymm->signal_clicked().connect(sigc::mem_fun(this, &GTKmmRunner::newLobby_clicked));
-    //button_loginmm->signal_clicked().connect(sigc::mem_fun(this, &GTKRunner::login_clicked));
 
     window_global->set_default_size(960, 540);
     window_global->show_all();
@@ -85,12 +77,14 @@ void GTKmmRunner::ShutDown(){
 
 void GTKmmRunner::login_clicked() {
     Glib::ustring name = fixed_login.entry_name->get_text();
-    dispatcher->QueueCommand(new LogInCommand(name));
+    if (name.size() > 0)
+        dispatcher->QueueCommand(new LogInCommand(name));
 }
 
 void GTKmmRunner::newlobby_clicked(){
     Glib::ustring lobbyname = fixed_lobbies.entry_newLobbyName->get_text();
-    dispatcher->QueueCommand(new CreateLobbyCommand(lobbyname));
+    if (lobbyname.size() > 0)
+        dispatcher->QueueCommand(new CreateLobbyCommand(lobbyname));
 }
 
 void GTKmmRunner::joinlobby_clicked(){

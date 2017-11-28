@@ -52,6 +52,7 @@ private:
 
 
 	std::map<PlayerProxy*, TowerDefenseGame*> _player2game;
+	std::map<std::string, uint32_t > _name2secret;
 
 
 	//std::map<TowerDefenseGame*, ThreadSafeQueue<GameNotification*>*> _game2gameNotifications;

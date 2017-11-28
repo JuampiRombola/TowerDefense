@@ -49,7 +49,7 @@ void FixedLobby::AddPlayer(OtherPlayer &player){
     Gtk::TreeModel::Row row = *iter;
     row[columns_players.m_col_player_name] = player.Name();
     row[columns_players.m_col_player_id] = player.GUID();
-    row[columns_players.m_col_player_ready] = "NOT READY";
+    row[columns_players.m_col_player_ready] = player.ready ? "READY" : "NOT READY";
 }
 
 void FixedLobby::RemovePlayer(OtherPlayer &player){

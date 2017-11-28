@@ -123,14 +123,16 @@ void LobbyManager::HandleLogin(PlayerProxy &player){
 	auto lobbies2playersGUIDS = std::vector<std::tuple<uint32_t, uint32_t>>();
 
 	for (auto it = _lobbies.begin(); it != _lobbies.end(); ++it){
-		uint32_t lobbyGUID = (*it)->GUID();
-		lobbies.emplace_back(*it);
-		std::vector<int> playersGUIDS = (*it)->GetPlayersGUIDS();
-		uint size = playersGUIDS.size();
-		for (auto itplayer = playersGUIDS.begin(); itplayer != playersGUIDS.end(); ++itplayer){
-			uint32_t playerguid = *itplayer;
-			std::tuple<uint32_t , uint32_t > tup = std::tuple<uint32_t , uint32_t >(lobbyGUID, playerguid);
-			lobbies2playersGUIDS.emplace_back(tup);
+		if (!(*it)->GameEnabled()){
+			uint32_t lobbyGUID = (*it)->GUID();
+			lobbies.emplace_back(*it);
+			std::vector<int> playersGUIDS = (*it)->GetPlayersGUIDS();
+			uint size = playersGUIDS.size();
+			for (auto itplayer = playersGUIDS.begin(); itplayer != playersGUIDS.end(); ++itplayer){
+				uint32_t playerguid = *itplayer;
+				std::tuple<uint32_t , uint32_t > tup = std::tuple<uint32_t , uint32_t >(lobbyGUID, playerguid);
+				lobbies2playersGUIDS.emplace_back(tup);
+			}
 		}
 	}
 

@@ -1,7 +1,8 @@
 #include "Announcement.h"
+#include "../../../Common/Paths.h"
 
-#define ANNOUNCE_FONT_PATH "../Resources/announcement_font.ttf"
-#define MONOSPACE_FONT_PATH "../Resources/font.ttf"
+#define ANNOUNCE_FONT_PATH "Fonts/announcement_font.ttf"
+#define MONOSPACE_FONT_PATH "Fonts/font.ttf"
 #define FONT_SCALE 25
 #define OUTLINE_SIZE 1
 
@@ -18,16 +19,20 @@ Announcement::Announcement(std::string &text, Renderer &renderer)
           front(SDL_Color{202, 164, 120}), back(SDL_Color{0, 0, 0}) {
     if (text == VICTORY || text == DEFEAT)
         time = 30000;
-    font = TTF_OpenFont(ANNOUNCE_FONT_PATH, fontSize);
-    outlineF = TTF_OpenFont(ANNOUNCE_FONT_PATH, fontSize);
+    font = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+                         + ANNOUNCE_FONT_PATH).c_str(), fontSize);
+    outlineF = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+                             + ANNOUNCE_FONT_PATH).c_str(), fontSize);
     this->createTexture();
 }
 
 Announcement::Announcement(std::string &text, Renderer &renderer, int size) :
         text(text), renderer(renderer), fontSize(size),
         front(SDL_Color{255, 255, 255}), back(SDL_Color{0, 0, 0}) {
-    font = TTF_OpenFont(MONOSPACE_FONT_PATH, fontSize);
-    outlineF = TTF_OpenFont(MONOSPACE_FONT_PATH, fontSize);
+    font = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+                         + MONOSPACE_FONT_PATH).c_str(), fontSize);
+    outlineF = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+                             + MONOSPACE_FONT_PATH).c_str(), fontSize);
     this->createTexture();
 }
 

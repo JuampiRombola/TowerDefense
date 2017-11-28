@@ -17,6 +17,8 @@ set(SOURCE_FILES_SERVER
         Server/src/Lobbies/Lobby.cpp
         Server/include/Lobbies/LobbyManager.h
         Server/src/Lobbies/LobbyManager.cpp
+        Server/include/Notifications/LobbyGoneNotification.h
+        Server/src/Notifications/LobbyGoneNotification.cpp
         Server/include/Notifications/InvalidLogInNotification.h
         Server/include/Notifications/GameStartedNotification.h
         Server/include/Notifications/LobbyJoinedNotification.h
@@ -152,7 +154,7 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.h
         Server/src/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.cpp
         Server/src/GameModel/GameNotifications/UnitFrozenGameNotification.cpp
-        Server/include/GameModel/GameNotifications/UnitFrozenGameNotification.h Server/src/Notifications/PlayerIsReadyNotification.cpp Server/include/Notifications/PlayerIsReadyNotification.h)
+        Server/include/GameModel/GameNotifications/UnitFrozenGameNotification.h Server/src/Notifications/PlayerIsReadyNotification.cpp Server/include/Notifications/PlayerIsReadyNotification.h Common/Paths.h)
 
 set(SOURCE_FILES_CLIENT
         Client/src/NetCommands/UpgradeTowerNetCommand.cpp
@@ -247,7 +249,7 @@ set(SOURCE_FILES_CLIENT
         Client/View/Common/MusicPlayer.cpp
         Client/View/Common/MusicPlayer.h
         Client/View/Common/SoundEffect.cpp
-        Client/View/Common/SoundEffect.h)
+        Client/View/Common/SoundEffect.h Common/Paths.h)
 
 
 set(SOURCE_FILES_CLIENT_GTK
@@ -273,6 +275,7 @@ set(SOURCE_FILES_CLIENT_GTK
 
         Client/src/SDLNotifications/SDLNotification.cpp
         Client/src/GTKNotifications/JoinedLobbyGTKNotification.cpp
+        Client/src/GTKNotifications/LobbyIsGoneGTKNotification.cpp
         Client/src/GTKNotifications/SpellIsFreeGTKNotification.cpp
         Client/src/GTKNotifications/PlayerIsReadyGTKNotification.cpp
         Client/src/GTKNotifications/LeftLobbyGTKNotification.cpp
@@ -282,6 +285,7 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/GTKNotifications/LobbyPickedMapGTKNotification.cpp
         Client/src/NotificationReciever.cpp
         Client/include/GTKNotifications/PlayerIsReadyGTKNotification.h
+        Client/include/GTKNotifications/LobbyIsGoneGTKNotification.h
 
         Client/include/GTKNotifications/SpellIsFreeGTKNotification.h
         Client/include/GTKNotifications/LobbyPickedMapGTKNotification.h
@@ -344,7 +348,7 @@ set(SOURCE_FILES_CLIENT_GTK
 
         Client/include/NonBlockingThreadSafeQueue.h
         Client/src/GTKNotifications/PlayerLeftJoinedLobbyGTKNotification.cpp
-        Client/include/GTKNotifications/PlayerLeftJoinedLobbyGTKNotification.h)
+        Client/include/GTKNotifications/PlayerLeftJoinedLobbyGTKNotification.h Common/Paths.h)
 
 
 set(SOURCE_FILES_EDITOR
@@ -454,7 +458,7 @@ set(SOURCE_FILES_EDITOR
         Client/View/Common/ExitView.cpp
         Client/View/Common/ExitView.h
         Client/View/Editor/SalidaButton.cpp
-        Client/View/Editor/SalidaButton.h)
+        Client/View/Editor/SalidaButton.h Common/Paths.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)

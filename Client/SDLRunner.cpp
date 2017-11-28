@@ -198,7 +198,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
 
     _reciever->Stop();
     _dispatcher->Stop();
-    
+
     TTF_Quit();
     SDL_Quit();
 
