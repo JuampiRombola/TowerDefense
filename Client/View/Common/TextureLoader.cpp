@@ -15,11 +15,13 @@ TextureLoader::TextureLoader(SDL_Renderer *renderer, int mode) :
     int totalGame = TOTAL;
     int totalEditor = TOTAL_EDITOR;
     int totalHUD = TOTAL_HUD;
+    int initHUD = INIT_HUD;
     if (mode == GAME_MODE)
         totalEditor = 0;
     if (mode == EDITOR_MODE) {
         totalGame = PORTALSALIDA + 1;
-        totalHUD = 0;
+        initHUD = EXIT_VIEW;
+        totalHUD = EXIT_VIEW + 1;
     }
 
     IMG_Init(IMG_INIT_PNG);
@@ -33,7 +35,7 @@ TextureLoader::TextureLoader(SDL_Renderer *renderer, int mode) :
         textures[i] = tx;
     }
 
-    for (int i = INIT_HUD; i < totalHUD; ++i) {
+    for (int i = initHUD; i < totalHUD; ++i) {
         SDL_Surface *im = IMG_Load((RESOURCESPATH
                                     + std::to_string(i)
                                     + PNGFORMAT).c_str());

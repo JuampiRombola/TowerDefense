@@ -12,7 +12,7 @@
 #include "ViewConstants.h"
 #include "UpgradeView.h"
 #include "ModelView.h"
-#include "ExitView.h"
+#include "../Common/ExitView.h"
 
 class HudView {
 private:

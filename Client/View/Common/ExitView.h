@@ -2,9 +2,9 @@
 #define TOWERDEFENSE_EXITVIEW_H
 
 
-#include "../Common/Sprite.h"
-#include "../Common/TextureLoader.h"
-#include "../Common/MousePosition.h"
+#include "Sprite.h"
+#include "TextureLoader.h"
+#include "MousePosition.h"
 
 class ExitView {
 private:

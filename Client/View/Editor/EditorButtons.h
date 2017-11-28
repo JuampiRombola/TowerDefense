@@ -30,6 +30,7 @@ class EditorButtons {
 private:
     std::list<Image*> images;
     MousePosition &mousePosition;
+    std::list<Sprite *> backgrounds;
     unsigned int padding;
     Renderer &renderer;
     Editor& editor;
@@ -46,8 +47,9 @@ public:
     void addEnemigosButton(int horda);
     void deleteButtonsOfHorda(int horda);
     bool isAnyClicked();
-
     void addTiempoEntreEnemigos(int horda);
+    void addBackground();
+    void limitPadding();
 };
 
 
