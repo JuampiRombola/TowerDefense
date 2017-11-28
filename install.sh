@@ -3,6 +3,7 @@ function installDependencies() {
     sudo apt-get install libsdl2-dev
     sudo apt-get install libsdl2-image-dev
     sudo apt-get install libsdl2-ttf-dev
+    sudo apt-get install libsdl2-mixer-dev
     sudo apt-get install libgtk-3-dev
     sudo apt-get install libgtkmm-3.0-dev
     sudo apt-get install libboost-dev
