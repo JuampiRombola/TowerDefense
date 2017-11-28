@@ -14,9 +14,9 @@ class PlayerLeftLobbyNotification : public Notification
 
 private:
 	Lobby& _lobby;
-	uint _playerGUID;
+	PlayerProxy& _playerThatLeft;
 public:
-	PlayerLeftLobbyNotification(Lobby& lobby, uint playerGUID);
+	PlayerLeftLobbyNotification(Lobby& lobby, PlayerProxy& playerThatLeft);
 	~PlayerLeftLobbyNotification();
 
 	void Notify();

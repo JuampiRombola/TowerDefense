@@ -1,11 +1,14 @@
+#include <glib.h>
 #include "../../include/Exceptions/PlayerLeftTheLobbyAndWasntInIt.h"
 #include "../../include/Lobbies/Lobby.h"
 #include "../../include/Exceptions/PlayerNotFoundException.h"
 #include "../../include/Exceptions/OtherPlayerJoinedLobbyTwice.h"
+#include "../../include/GTKNotifications/PlayerLeftJoinedLobbyGTKNotification.h"
+#include "../../include/GTKNotifications/PickSpellGTKNotification.h"
+#include "../../GTKmm/GTKmmRunner.h"
 
-
-Lobby::Lobby(std::string& name, uint guid) : _name(name), _guid(guid), _players(), _otherPlayersMutex(),
-_airPlayer(nullptr), _waterPlayer(nullptr), _firePlayer(nullptr), _groundPlayer(nullptr), pickedMapId(-1)
+Lobby::Lobby(std::string& name, uint guid, GTKmmRunner& runner) : _runner(runner), _name(name), _guid(guid), _players(), _otherPlayersMutex(),
+_airPlayerGUID(-1), _waterPlayerGUID(-1), _firePlayerGUID(-1), _groundPlayerGUID(-1), pickedMapId(-1)
 {
 	std::cout << "Lobby created: id " << guid << ", name " << name << '\n' << std::flush;
 }
@@ -22,41 +25,51 @@ std::string Lobby::Name(){
 	return _name;
 }
 
-bool Lobby::FireIsPicked(){
+int Lobby::airPlayerGUID(){
 	std::lock_guard<std::mutex> lock(_spellsMutex);
-	return _firePlayer != nullptr;
+	return _airPlayerGUID;
 }
-bool Lobby::WaterIsPicked(){
+int Lobby::waterPlayerGUID(){
 	std::lock_guard<std::mutex> lock(_spellsMutex);
-	return _waterPlayer != nullptr;
+	return _waterPlayerGUID;
 }
-bool Lobby::GroundIsPicked(){
+int Lobby::firePlayerGUID(){
 	std::lock_guard<std::mutex> lock(_spellsMutex);
-	return _groundPlayer != nullptr;
+	return _firePlayerGUID;
 }
-bool Lobby::AirIsPicked(){
+int Lobby::groundPlayerGUID(){
 	std::lock_guard<std::mutex> lock(_spellsMutex);
-	return _airPlayer!= nullptr;
+	return _groundPlayerGUID;
 }
 
-void Lobby::PlayerPickSpell(OtherPlayer& player, SPELL_TYPE spell_type, bool pick){
+void Lobby::PlayerPickSpell(uint guid, SPELL_TYPE spell_type, bool notify){
 	std::lock_guard<std::mutex> lock(_spellsMutex);
 	switch(spell_type){
 		case SPELL_TYPE_GROUND:
-			_groundPlayer = pick ? &player : nullptr;
+			_groundPlayerGUID =  guid;
 			break;
 		case SPELL_TYPE_WATER:
-			_waterPlayer = pick ? &player : nullptr;
+			_waterPlayerGUID = guid;
 			break;
 		case SPELL_TYPE_FIRE:
-			_firePlayer = pick ? &player : nullptr;
+			_firePlayerGUID = guid;
 			break;
 		case SPELL_TYPE_AIR:
-			_airPlayer = pick ? &player : nullptr;
+			_airPlayerGUID = guid;
 			break;
 	}
+
+	if (!notify)
+		return;
+
+	_runner.gtkNotifications.Queue(new PickSpellGTKNotification(guid, spell_type));
+	g_idle_add(GTKmmRunner::notification_check, &_runner);
 }
 
+uint Lobby::PlayerCount(){
+	std::lock_guard<std::mutex> lock(_otherPlayersMutex);
+	return _players.size();
+}
 
 void Lobby::PlayerJoin(OtherPlayer &player){
 	std::lock_guard<std::mutex> lock(_otherPlayersMutex);
@@ -74,6 +87,8 @@ void Lobby::PlayerJoin(OtherPlayer &player){
 
 	player.joinedLobby = this;
 	_players.push_back(&player);
+	_runner.gtkNotifications.Queue(new PlayerLeftJoinedLobbyGTKNotification(player, *this, _runner.lobbyManager->joinedLobby == this, true));
+	g_idle_add(GTKmmRunner::notification_check, &_runner);
 }
 
 void Lobby::PlayerLeave(OtherPlayer &player){
@@ -81,19 +96,22 @@ void Lobby::PlayerLeave(OtherPlayer &player){
 	auto it = GetOtherPlayer(player.GUID());
 	_players.erase(it);
 	player.joinedLobby = nullptr;
-	if (_waterPlayer == &player)
-		_waterPlayer = nullptr;
-	if (_groundPlayer == &player)
-		_groundPlayer = nullptr;
-	if (_firePlayer == &player)
-		_firePlayer = nullptr;
-	if (_airPlayer == &player)
-		_airPlayer = nullptr;
+	if (_waterPlayerGUID == player.GUID())
+	_waterPlayerGUID = -1;
+	if (_groundPlayerGUID == player.GUID())
+		_groundPlayerGUID = -1;
+	if (_firePlayerGUID == player.GUID())
+		_firePlayerGUID = -1;
+	if (_airPlayerGUID == player.GUID())
+		_airPlayerGUID = -1;
+	_runner.gtkNotifications.Queue(new PlayerLeftJoinedLobbyGTKNotification(player, *this, _runner.lobbyManager->joinedLobby == this, false));
+	g_idle_add(GTKmmRunner::notification_check, &_runner);
 }
 
 std::vector<OtherPlayer*> Lobby::GetOtherPlayersInLobby(){
 	return _players;
 }
+/*
 std::vector<OtherPlayer*> Lobby::GetOtherPlayersInLobbyWithSomeSpellSet(){
 	std::lock_guard<std::mutex> lock(_spellsMutex);
 	std::vector<OtherPlayer*> otherplayers;
@@ -106,7 +124,7 @@ std::vector<OtherPlayer*> Lobby::GetOtherPlayersInLobbyWithSomeSpellSet(){
 	if (_groundPlayer != nullptr)
 		otherplayers.push_back(_groundPlayer);
 	return otherplayers;
-}
+}*/
 
 std::vector<OtherPlayer*>::const_iterator Lobby::GetOtherPlayer(uint32_t guid){
 	bool found = false;

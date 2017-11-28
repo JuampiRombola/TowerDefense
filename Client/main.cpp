@@ -1,5 +1,5 @@
 
-#include "GTKRunner.h"
+#include "GTKmm/GTKmmRunner.h"
 #include "SDLRunner.h"
 
 int main(int argc, char** argv) {
@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
     NotificationReciever* reciever;
     ClientSocket* sock;
     
-    GTKRunner gtk;
+    GTKmmRunner gtk;
     gtk.Run(&argc, &argv);
     lobbyManager = gtk.lobbyManager;
     dispatcher = gtk.dispatcher;

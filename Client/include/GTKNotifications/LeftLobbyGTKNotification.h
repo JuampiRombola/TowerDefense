@@ -5,13 +5,13 @@
 #include <vector>
 #include "../GTKNotifications/GTKNotification.h"
 #include "../Lobbies/Lobby.h"
-class GTKRunner;
+class GTKmmRunner;
 
 class LeftLobbyGTKNotification : public GTKNotification {
 public:
 	LeftLobbyGTKNotification();
 	~LeftLobbyGTKNotification();
-	void Execute(GTKRunner& runner);
+	void Execute(GTKmmRunner& runner);
 };
 
 #endif

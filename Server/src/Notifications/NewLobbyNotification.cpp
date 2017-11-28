@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../../../Common/Protocolo.h"
 #include "../../include/Notifications/NewLobbyNotification.h"
+#include "../../../Client/include/Lobbies/Lobby.h"
 
 NewLobbyNotification::NewLobbyNotification(Lobby& lobby) : 
 _lobby(lobby) {
@@ -23,11 +24,13 @@ void NewLobbyNotification::Notify(){
 	
 	for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it){
 		PlayerProxy* p = *it;
-		uint8_t instruction = CREATE_LOBBY; ///New lobby
-		p->SendByte(instruction);
-		int32_t guid = _lobby.GUID();
-		p->SendInt32(guid);
+		p->SendByte(CREATE_LOBBY);
+		p->SendInt32(_lobby.GUID());
 		std::string lobbyName = _lobby.Name();
 		p->SendString(lobbyName);
+		if (_lobby.MapCfg != nullptr)
+			p->SendInt32(_lobby.MapCfg->Id());
+		else
+			p->SendInt32(-1);
 	}
 }

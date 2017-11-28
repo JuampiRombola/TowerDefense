@@ -10,14 +10,16 @@
 #include "GTKNotification.h"
 
 
-class PlayerJoinedLobbyGTKNotification : public GTKNotification {
+class PlayerLeftJoinedLobbyGTKNotification : public GTKNotification {
 private:
-
     OtherPlayer& _player;
+    Lobby& _lobby;
+    bool _inmylobby;
+    bool _joined;
 public:
-    PlayerJoinedLobbyGTKNotification(OtherPlayer& player);
-    ~PlayerJoinedLobbyGTKNotification();
-    void Execute(GTKRunner& runner);
+    PlayerLeftJoinedLobbyGTKNotification(OtherPlayer& player, Lobby& lobby, bool inmylobby, bool joined);
+    ~PlayerLeftJoinedLobbyGTKNotification();
+    void Execute(GTKmmRunner& runner);
 };
 
 

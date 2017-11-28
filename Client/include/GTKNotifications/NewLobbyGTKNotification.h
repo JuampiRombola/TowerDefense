@@ -12,7 +12,7 @@ private:
 public:
 	NewLobbyGTKNotification(Lobby& lobby);
 	~NewLobbyGTKNotification();
-	void Execute(GTKRunner& runner);
+	void Execute(GTKmmRunner& runner);
 };
 
 #endif
