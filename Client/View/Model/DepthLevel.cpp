@@ -85,14 +85,12 @@ void DepthLevel::draw(Uint32 time) {
         spellFloor->draw(time);
 
     //Remuevo las unidades que ya estan muertas
-    units.erase(std::remove_if(units.begin(),
-                               units.end(),
-                               [](UnitView* x) {
-                                   if (x->isDead()){
-                                       delete x;
-                                       return true; }
-                                   return false;}),
-                units.end());
+    units.remove_if([] (UnitView* x) {
+        if (x->isDead()){
+            delete x;
+            return true;
+        }
+        return false;});
 
     // Dibujo unidades en sentido inverso
     for (auto it = units.rbegin(); it != units.rend(); ++it){
