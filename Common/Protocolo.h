@@ -33,9 +33,7 @@
 #define AIR_TOWER 38
 
 #define PLAYER_PICKED_SPELL 40
-#define PLAYER_UNPICKED_SPELL 41
 #define PICK_SPELL 42
-#define UNPICK_SPELL 43
 
 #ifndef __SPELLS_ENUM__
 #define __SPELLS_ENUM__
@@ -106,7 +104,7 @@ enum UpgradeType {
 #define PICK_MAP 220
 #define UNIT_SPEED_UPDATE 221
 #define UNIT_FROZEN 222
-
+#define SPELL_IS_FREE 223
 
 
 #endif

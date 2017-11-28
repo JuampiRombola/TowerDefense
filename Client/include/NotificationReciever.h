@@ -21,7 +21,7 @@ private:
 	SocketWrapper& _sock;
 	ClientLobbyManager& _lobbyManager;
 	std::thread _thread;
-	GTKRunner& _runner;
+	GTKmmRunner& _runner;
 	CommandDispatcher& _dispatcher;
 	bool _stop;
 	bool _Stop();
@@ -44,7 +44,7 @@ private:
 	uint _localTowerId;
 public:
 	NotificationReciever(SocketWrapper& socket,
-						 ClientLobbyManager& lobbyManager, GTKRunner& runner,
+						 ClientLobbyManager& lobbyManager, GTKmmRunner& runner,
 						 CommandDispatcher& dispatcher);
 	~NotificationReciever();
 	void RecieveNotifications();

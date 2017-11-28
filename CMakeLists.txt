@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 
 set(SOURCE_FILES_SERVER
+        Server/include/Notifications/SpellIsFreeNotification.h
+        Server/src/Notifications/SpellIsFreeNotification.cpp
         Common/SocketWrapper.cpp
         Common/SocketWrapper.h
         Common/ClientDisconnectedException.h
@@ -17,14 +19,12 @@ set(SOURCE_FILES_SERVER
         Server/src/Lobbies/LobbyManager.cpp
         Server/include/Notifications/InvalidLogInNotification.h
         Server/include/Notifications/GameStartedNotification.h
-        Server/include/Notifications/LeftLobbyNotification.h
         Server/include/Notifications/LobbyJoinedNotification.h
         Server/include/Notifications/LoggedInNotification.h
         Server/include/Notifications/NewLobbyNotification.h
         Server/include/Notifications/Notification.h
         Server/include/Notifications/PlayerLeftLobbyNotification.h
         Server/src/Notifications/InvalidLoginNotification.cpp
-        Server/src/Notifications/LeftLobbyNotification.cpp
         Server/src/Notifications/LobbyJoinedNotification.cpp
         Server/src/Notifications/LoggedInNotification.cpp
         Server/src/Notifications/GameStartedNotification.cpp
@@ -32,9 +32,7 @@ set(SOURCE_FILES_SERVER
         Server/src/Notifications/Notification.cpp
         Server/src/Notifications/PlayerLeftLobbyNotification.cpp
         Server/src/Notifications/PlayerPickedSpellNotification.cpp
-        Server/src/Notifications/PlayerUnpickedSpellNotification.cpp
         Server/include/Notifications/PlayerPickedSpellNotification.h
-        Server/include/Notifications/PlayerUnpickedSpellNotification.h
         Server/src/PlayerProxy.cpp
         Server/src/ServerSocket.cpp
         Server/src/TFServer.cpp
@@ -154,7 +152,7 @@ set(SOURCE_FILES_SERVER
         Server/include/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.h
         Server/src/GameModel/GameNotifications/UnitSpeedUpdateGameNotification.cpp
         Server/src/GameModel/GameNotifications/UnitFrozenGameNotification.cpp
-        Server/include/GameModel/GameNotifications/UnitFrozenGameNotification.h)
+        Server/include/GameModel/GameNotifications/UnitFrozenGameNotification.h Server/src/Notifications/PlayerIsReadyNotification.cpp Server/include/Notifications/PlayerIsReadyNotification.h)
 
 set(SOURCE_FILES_CLIENT
         Client/src/NetCommands/UpgradeTowerNetCommand.cpp
@@ -253,9 +251,16 @@ set(SOURCE_FILES_CLIENT
 
 
 set(SOURCE_FILES_CLIENT_GTK
-        Client/GTKRunner.h
-        Client/GTKRunner.cpp
-
+        Client/GTKmm/GTKmmRunner.h
+        Client/GTKmm/GTKmmRunner.cpp
+        Client/GTKmm/FixedLobbies.cpp
+        Client/GTKmm/FixedConnect.cpp
+        Client/GTKmm/FixedLogin.cpp
+        Client/GTKmm/FixedLobby.cpp
+        Client/GTKmm/FixedLobbies.h
+        Client/GTKmm/FixedConnect.h
+        Client/GTKmm/FixedLogin.h
+        Client/GTKmm/FixedLobby.h
 
 
         Client/src/ClientSocket.cpp
@@ -268,24 +273,24 @@ set(SOURCE_FILES_CLIENT_GTK
 
         Client/src/SDLNotifications/SDLNotification.cpp
         Client/src/GTKNotifications/JoinedLobbyGTKNotification.cpp
+        Client/src/GTKNotifications/SpellIsFreeGTKNotification.cpp
+        Client/src/GTKNotifications/PlayerIsReadyGTKNotification.cpp
         Client/src/GTKNotifications/LeftLobbyGTKNotification.cpp
-        Client/src/GTKNotifications/PickedSpellGTKNotification.cpp
-        Client/src/GTKNotifications/OtherPickedSpellGTKNotification.cpp
+        Client/src/GTKNotifications/PickSpellGTKNotification.cpp
         Client/src/GTKNotifications/NewLobbyGTKNotification.cpp
         Client/src/GTKNotifications/GameStartedGTKNotification.cpp
-        Client/src/GTKNotifications/PlayerLeftLobbyGTKNotification.cpp
         Client/src/GTKNotifications/LobbyPickedMapGTKNotification.cpp
         Client/src/NotificationReciever.cpp
+        Client/include/GTKNotifications/PlayerIsReadyGTKNotification.h
 
+        Client/include/GTKNotifications/SpellIsFreeGTKNotification.h
         Client/include/GTKNotifications/LobbyPickedMapGTKNotification.h
         Client/include/SDLNotifications/SDLNotification.h
         Client/include/GTKNotifications/JoinedLobbyGTKNotification.h
-        Client/include/GTKNotifications/PickedSpellGTKNotification.h
         Client/include/GTKNotifications/GameStartedGTKNotification.h
-        Client/include/GTKNotifications/OtherPickedSpellGTKNotification.h
+        Client/include/GTKNotifications/PickSpellGTKNotification.h
         Client/include/GTKNotifications/LeftLobbyGTKNotification.h
         Client/include/GTKNotifications/NewLobbyGTKNotification.h
-        Client/include/GTKNotifications/PlayerLeftLobbyGTKNotification.h
         Client/include/NotificationReciever.h
 
         Client/src/Lobbies/ClientLobbyManager.cpp
@@ -338,8 +343,8 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/GTKNotifications/LogInFailedGtkNotification.cpp
 
         Client/include/NonBlockingThreadSafeQueue.h
-        Client/src/GTKNotifications/PlayerJoinedLobbyGTKNotification.cpp
-        Client/include/GTKNotifications/PlayerJoinedLobbyGTKNotification.h)
+        Client/src/GTKNotifications/PlayerLeftJoinedLobbyGTKNotification.cpp
+        Client/include/GTKNotifications/PlayerLeftJoinedLobbyGTKNotification.h)
 
 
 set(SOURCE_FILES_EDITOR
@@ -454,7 +459,7 @@ set(SOURCE_FILES_EDITOR
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
-add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp)
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/GTKNotifications/SpellIsFreeGTKNotification.cpp Client/include/GTKNotifications/SpellIsFreeGTKNotification.h Client/src/GTKNotifications/PlayerIsReadyGTKNotification.cpp Client/include/GTKNotifications/PlayerIsReadyGTKNotification.h)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
 add_executable(LOBBYMM Client/main-test-gtk-mm.cpp)
 
@@ -467,15 +472,10 @@ include_directories(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS}
         ${SDL2TTF_INCLUDE_DIRS} ${SDL2MIXER_INCLUDE_DIRS})
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
-include_directories(${GTK3_INCLUDE_DIRS})
 include_directories(${GTKMM_INCLUDE_DIRS})
-link_directories(${GTK3_LIBRARY_DIRS})
-add_definitions(${GTK3_CFLAGS_OTHER})
 
-target_link_libraries(LOBBYMM ${GTKMM_LIBRARIES})
 target_link_libraries(TowerDefenseServer yaml-cpp)
 target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES} ${SDL2MIXER_LIBRARIES})
-target_link_libraries(TowerDefenseClient yaml-cpp X11 ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})
-target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTK3_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})
+target_link_libraries(TowerDefenseClient yaml-cpp X11 ${GTKMM_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})
+target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTKMM_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})

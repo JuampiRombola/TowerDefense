@@ -24,7 +24,7 @@ void InstantButton::click() {
 }
 
 void InstantButton::mapKey(int spriteKey) {
-    if (spriteKey == DAMAGE)
+    if (spriteKey == DAMAGEE)
         key = CMD_DAMAGE;
     if (spriteKey == RANGE)
         key = CMD_RANGE;

@@ -77,7 +77,7 @@
 #define BUTTON_EDGE 217
 #define BUTTON_BG 218
 #define UPGRADE_BACKGROUND 219
-#define DAMAGE 220
+#define DAMAGEE 220
 #define RANGE 221
 #define IMPACT 222
 #define FREEZE 223

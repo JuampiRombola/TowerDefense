@@ -13,7 +13,7 @@ private:
 public:
 	JoinedLobbyGUINotification(Lobby& lobby);
 	~JoinedLobbyGUINotification();
-	void Execute(GTKRunner& runner);
+	void Execute(GTKmmRunner& runner);
 };
 
 #endif

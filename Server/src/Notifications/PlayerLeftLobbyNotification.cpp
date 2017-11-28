@@ -3,8 +3,11 @@
 #include <iostream>
 
 PlayerLeftLobbyNotification::PlayerLeftLobbyNotification
-(Lobby& lobby, uint playerGUID)
-: _lobby(lobby), _playerGUID(playerGUID) {
+(Lobby& lobby, PlayerProxy& playerThatLeft)
+: _lobby(lobby), _playerThatLeft(playerThatLeft)
+
+{
+
 }
 
 PlayerLeftLobbyNotification::~PlayerLeftLobbyNotification(){
@@ -12,22 +15,22 @@ PlayerLeftLobbyNotification::~PlayerLeftLobbyNotification(){
 }
 
 void PlayerLeftLobbyNotification::SetPlayersToNotify(std::vector<PlayerProxy*>* players){
-	for (auto it = players->begin(); it != players->end(); ++it){
-		PlayerProxy* p = *it;
-		if (p->GUID() != _playerGUID){
-			_playersToNotify.push_back(*it);
-		}
-	}
+	_playersToNotify = *players;
 }
 
 void PlayerLeftLobbyNotification::Notify(){
 	for (auto it = _playersToNotify.begin(); it != _playersToNotify.end(); ++it){
 		PlayerProxy* p = *it;
-		uint8_t ins = PLAYER_LEFT_LOBBY;
-		p->SendByte(ins);
-		p->SendInt32(_playerGUID);
-		uint32_t lobbyGUID = _lobby.GUID();
-		p->SendInt32(lobbyGUID);
+		if (p != &_playerThatLeft && (p->state == BROWSING_LOBBIES || p->state == IN_LOBBY)){
+			p->SendByte(PLAYER_LEFT_LOBBY);
+			p->SendInt32(_playerThatLeft.GUID());
+			p->SendInt32(_lobby.GUID());	
+		}
 	}
-
+	
+	_playerThatLeft.SendByte(PLAYER_LEFT_LOBBY);
+	_playerThatLeft.SendInt32(_playerThatLeft.GUID());
+	_playerThatLeft.SendInt32(_lobby.GUID());
+	
+	
 }

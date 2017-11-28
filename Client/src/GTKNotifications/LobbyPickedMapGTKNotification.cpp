@@ -4,7 +4,7 @@
 
 #include <zconf.h>
 #include "../../include/GTKNotifications/LobbyPickedMapGTKNotification.h"
-#include "../../GTKRunner.h"
+#include "../../GTKmm/GTKmmRunner.h"
 
 LobbyPickedMapGTKNotification::LobbyPickedMapGTKNotification(uint lobbyId, uint mapId)
 : _lobbyId(lobbyId), _mapId(mapId) {
@@ -15,10 +15,14 @@ LobbyPickedMapGTKNotification::~LobbyPickedMapGTKNotification() {
 
 }
 
-void LobbyPickedMapGTKNotification::Execute(GTKRunner &runner){
-    if (runner.lobbyManager->joinedLobby->GUID() == _lobbyId){
-        g_signal_handler_block(runner.combobox_maps, runner.combo_box_maps_changed_handler_id);
-        gtk_combo_box_set_active(runner.combobox_maps, _mapId);
-        g_signal_handler_unblock(runner.combobox_maps, runner.combo_box_maps_changed_handler_id);
+void LobbyPickedMapGTKNotification::Execute(GTKmmRunner &runner){
+    
+    if (runner.lobbyManager->joinedLobby != nullptr){
+        if (runner.lobbyManager->joinedLobby->GUID() == _lobbyId){
+            runner.fixed_lobby.combobox_changed_signal.block();
+            runner.fixed_lobby.combobox_maps->set_active(_mapId);
+            runner.fixed_lobby.combobox_changed_signal.unblock();
+        } 
     }
+
 }

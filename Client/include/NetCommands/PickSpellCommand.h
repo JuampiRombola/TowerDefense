@@ -7,9 +7,8 @@ class PickSpellCommand : public NetCommand
 {
 private:
 	SPELL_TYPE _spelltype;
-	bool _pick;
 public:
-	PickSpellCommand(SPELL_TYPE spelltype, bool pick);
+	PickSpellCommand(SPELL_TYPE spelltype);
 	~PickSpellCommand();
 	void SendCommand(SocketWrapper& sock);
 };

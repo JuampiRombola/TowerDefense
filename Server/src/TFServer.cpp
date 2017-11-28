@@ -141,9 +141,6 @@ void TFServer::HandleConnection(PlayerProxy& player){
 				case PICK_SPELL:
 					_lobbyManager.HandlePlayerPickedSpell(player);
 					break;
-				case UNPICK_SPELL:
-					_lobbyManager.HandlePlayerUnpickedSpell(player);
-					break;
 				case PICK_MAP:
 					_lobbyManager.HandlePickMap(player);
 					break;
@@ -169,9 +166,7 @@ void TFServer::HandleConnection(PlayerProxy& player){
 		auto it = std::find(_playerProxies.begin(), _playerProxies.end(), &player);
 		if (it != _playerProxies.end()){
 			PlayerProxy* playerProxy = *it;
-			//_playerProxies.erase(it);
 			_notifications.Queue(new PlayerLeaveNotification(playerProxy->GUID()));
-			//delete playerProxy;
 			playerProxy->state = DEAD;
 		}
 		std::cerr << e.what() << '\n';
@@ -219,7 +214,7 @@ void TFServer::_HandleGameCommand(PlayerProxy& player){
 void TFServer::_LaunchGame(Lobby& lobby){
 	static int gameId = 1;
 	std::lock_guard<std::mutex> lock(_gamesMutex);
-	std::vector<PlayerProxy*> playersInGame = lobby.GetPlayingPlayers();
+	std::vector<PlayerProxy*> playersInGame = lobby.GetPlayers();
 
 
     ThreadSafeQueue<GameNotification*>* notique = new ThreadSafeQueue<GameNotification*>();
@@ -236,7 +231,8 @@ void TFServer::_LaunchGame(Lobby& lobby){
 	}
 
 	_gameNotificatorThreads.emplace_back(std::thread(&TFServer::_NotifyGamePlayers, this, notique, playersInGame));
-	game->Run(lobby.GetFirePlayer(), lobby.GetAirPlayer(), lobby.GetWaterPlayer(), lobby.GetGroundPlayer());
+	game->Run(lobby.GetFirePlayer(), lobby.GetAirPlayer(),
+			  lobby.GetWaterPlayer(), lobby.GetGroundPlayer());
 }
 
 

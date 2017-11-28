@@ -11,7 +11,7 @@ class LogInFailedGtkNotification : public GTKNotification{
 public:
     LogInFailedGtkNotification();
     ~LogInFailedGtkNotification();
-    void Execute(GTKRunner& runner);
+    void Execute(GTKmmRunner& runner);
 };
 
 

@@ -6,7 +6,6 @@ _sock(socket), _commands(), _queueLock(), _isEnabledMutex(), _cv(), _stop(false)
 }
 
 CommandDispatcher::~CommandDispatcher(){
-	this->Stop();
 	if (_thread.joinable())
 		_thread.join();
 }
@@ -71,6 +70,7 @@ NetCommand* CommandDispatcher::_DequeueCommand(){
 }
 
 void CommandDispatcher::Stop(){
+	std::unique_lock<std::mutex> lock(_queueLock);
 	_stop = true;
 	_cv.notify_one();
 }

@@ -1,13 +1,15 @@
+#include <iostream>
 #include "Window.h"
 #include "ViewError.h"
 
-Window::Window(const std::string &title, int width, int height) :
+Window::Window(const std::string &title, int width, int height, Uint32 flag) :
         width(width), height(height) {
+    std::cout << "Me llegó el flag " << flag << "\n";
     window = SDL_CreateWindow(title.c_str(),
                               SDL_WINDOWPOS_UNDEFINED, // x position
                               SDL_WINDOWPOS_UNDEFINED, // y position
                               width, height,
-                              SDL_WINDOW_FULLSCREEN_DESKTOP);   // Flag
+                              flag);   // Flag
                            // SDL_WINDOW_FOREIGN
                            // SDL_WINDOW_FULLSCREEN_DESKTOP
     if (!window) throw ViewError("Create window error: %s", SDL_GetError());

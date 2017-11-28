@@ -21,7 +21,8 @@ DepthLevel::~DepthLevel() {
     while (it4 != shots.end())
         delete (*it4++);
     auto it5 = spellsFloor.begin();
-    while (it5 != spellsFloor.end());
+    while (it5 != spellsFloor.end())
+        delete (*it5++);
 }
 
 void DepthLevel::addPortalEntrada(PortalView *portal) {
