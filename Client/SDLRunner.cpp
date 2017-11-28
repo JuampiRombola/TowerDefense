@@ -15,9 +15,7 @@
 
 #define TITLE "Tower Defense"
 
-#define WINDOWWIDTH 800
-#define WINDOWHEIGHT 600
-#define FPS 40
+#define CONFIG_PATH "windowConfig.yaml"
 
 SDLRunner::SDLRunner(uint8_t mapSurface, uint32_t mapWidth, uint32_t mapHeight)
 : _mapSurface(mapSurface), _mapWidth(mapWidth), _mapHeight(mapHeight)
@@ -43,7 +41,11 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
     TTF_Init();
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-    Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    YAML::Node windowConfig(YAML::LoadFile(CONFIG_PATH));
+    Window window(TITLE, windowConfig["game_width"].as<int>(),
+                  windowConfig["game_height"].as<int>(),
+                  windowConfig["game_fullscreen"].as<bool>() ? SDL_WINDOW_FULLSCREEN_DESKTOP
+                                                               : SDL_WINDOW_FOREIGN);
     Renderer renderer(window, _mapWidth, _mapHeight);
     MusicLoader musicLoader;
     musicLoader.playMusic();
@@ -74,7 +76,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
 
     Uint32 t1;
     Uint32 t2;
-    Uint32 s = 1000 / FPS;
+    Uint32 s = 1000 / windowConfig["game_fps"].as<uint>();
     Uint32 delta = 0;
     Uint32 elapsedTime = 0;
     Uint32 delayTime = 0;
