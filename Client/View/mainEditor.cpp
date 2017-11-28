@@ -10,25 +10,27 @@
 #include "Common/MouseMovement.h"
 
 #define TITLE "Tower Defense"
-#define WINDOWWIDTH 640
-#define WINDOWHEIGHT 480
+#define CONFIG_PATH "windowConfig.yaml"
 #define EDITOR_MODE 1
 #define SALIDA_DEFAULT "mapa"
 
 #define MAPSIZE 7
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     bool quit = false;
     SDL_Event event;
     SDL_Init(SDL_INIT_VIDEO);
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-    Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
-    //SDL_SetWindowFullscreen(window.getWindow(), 0);
+    YAML::Node windowConfig(YAML::LoadFile(CONFIG_PATH));
+    Window window(TITLE, windowConfig["editor_width"].as<int>(),
+                  windowConfig["editor_height"].as<int>(),
+                  windowConfig["editor_fullscreen"].as<bool>() ? SDL_WINDOW_FULLSCREEN_DESKTOP
+                                                               : SDL_WINDOW_FOREIGN);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), EDITOR_MODE);
     MouseMovement mouseMovement(renderer);
     MusicLoader musicLoader;
-    //musicLoader.playMusic();
+    musicLoader.playMusic();
     MapView mapView(MAPSIZE, MAPSIZE, PRADERA, renderer, textureLoader);
 
     int mouse_x = -1, mouse_y = -1;
@@ -39,8 +41,7 @@ int main(int argc, char** argv) {
         salida.append(argv[1]);
     else
         salida.append(SALIDA_DEFAULT);
-    Editor editor(mapView, textureLoader, renderer, std::string(salida),
-                  window);
+    Editor editor(mapView, textureLoader, renderer, std::string(salida), window);
 
     EditorButtons buttons(mouse, renderer, editor, textureLoader);
     buttons.addInitialButtons();
@@ -50,14 +51,13 @@ int main(int argc, char** argv) {
 
     while (!quit) {
 
-        while(SDL_PollEvent(&event)) {
+        while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_QUIT:
                     quit = true;
                     break;
                 case SDL_MOUSEMOTION:
-                    mouseMovement.entryMovement(event.motion.x,
-                                                event.motion.y,
+                    mouseMovement.entryMovement(event.motion.x, event.motion.y,
                                                 event.motion.windowID);
                     break;
                 case SDL_MOUSEBUTTONDOWN:
@@ -70,9 +70,8 @@ int main(int argc, char** argv) {
                     mouse.activate();
                     break;
                 case SDL_FINGERMOTION:
-                    renderer.updateCameraFinger(
-                            static_cast<int>(event.tfinger.dx),
-                            static_cast<int>(event.tfinger.dy));
+                    renderer.updateCameraFinger(static_cast<int>(event.tfinger.dx),
+                                                static_cast<int>(event.tfinger.dy));
                     break;
                 case SDL_MOUSEWHEEL:
                     if (event.wheel.y == 1) //scroll up
@@ -82,13 +81,27 @@ int main(int argc, char** argv) {
                     break;
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
-                        case SDLK_ESCAPE: quit = true; break;
-                        case SDLK_PLUS: renderer.zoomIn(); break;
-                        case SDLK_MINUS: renderer.zoomOut(); break;
-                        case SDLK_LEFT:  renderer.updateCamera(-1, 0); break;
-                        case SDLK_RIGHT: renderer.updateCamera(1, 0); break;
-                        case SDLK_UP:    renderer.updateCamera(0, -1); break;
-                        case SDLK_DOWN:  renderer.updateCamera(0, 1); break;
+                        case SDLK_ESCAPE:
+                            quit = true;
+                            break;
+                        case SDLK_PLUS:
+                            renderer.zoomIn();
+                            break;
+                        case SDLK_MINUS:
+                            renderer.zoomOut();
+                            break;
+                        case SDLK_LEFT:
+                            renderer.updateCamera(-1, 0);
+                            break;
+                        case SDLK_RIGHT:
+                            renderer.updateCamera(1, 0);
+                            break;
+                        case SDLK_UP:
+                            renderer.updateCamera(0, -1);
+                            break;
+                        case SDLK_DOWN:
+                            renderer.updateCamera(0, 1);
+                            break;
                     }
             }
             if (mouse.isActive()) {

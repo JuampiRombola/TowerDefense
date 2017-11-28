@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
     TTF_Init();
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-    Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT);
+    Window window(TITLE, WINDOWWIDTH, WINDOWHEIGHT, 0);
     Renderer renderer(window, MAPSIZE, MAPSIZE);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
     MusicLoader musicLoader;
