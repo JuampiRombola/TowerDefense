@@ -1,0 +1,218 @@
+nombre: mapa
+superficie: 4
+ancho: 7
+alto: 9
+superficies: 
+ - x: 1
+   y: 3
+ - x: 1
+   y: 7
+ - x: 5
+   y: 1
+ - x: 5
+   y: 5
+caminos: 
+ - x: 0
+   y: 0
+   x_sig: 1
+   y_sig: 0
+ - x: 1
+   y: 0
+   x_sig: 2
+   y_sig: 0
+ - x: 2
+   y: 0
+   x_sig: 3
+   y_sig: 0
+ - x: 3
+   y: 0
+   x_sig: 4
+   y_sig: 0
+ - x: 4
+   y: 0
+   x_sig: 5
+   y_sig: 0
+ - x: 5
+   y: 0
+   x_sig: 6
+   y_sig: 0
+ - x: 6
+   y: 0
+   x_sig: 6
+   y_sig: 1
+ - x: 6
+   y: 1
+   x_sig: 6
+   y_sig: 2
+ - x: 6
+   y: 2
+   x_sig: 5
+   y_sig: 2
+ - x: 5
+   y: 2
+   x_sig: 4
+   y_sig: 2
+ - x: 4
+   y: 2
+   x_sig: 3
+   y_sig: 2
+ - x: 3
+   y: 2
+   x_sig: 2
+   y_sig: 2
+ - x: 2
+   y: 2
+   x_sig: 1
+   y_sig: 2
+ - x: 1
+   y: 2
+   x_sig: 0
+   y_sig: 2
+ - x: 0
+   y: 2
+   x_sig: 0
+   y_sig: 3
+ - x: 0
+   y: 3
+   x_sig: 0
+   y_sig: 4
+ - x: 0
+   y: 4
+   x_sig: 1
+   y_sig: 4
+ - x: 1
+   y: 4
+   x_sig: 2
+   y_sig: 4
+ - x: 2
+   y: 4
+   x_sig: 3
+   y_sig: 4
+ - x: 3
+   y: 4
+   x_sig: 4
+   y_sig: 4
+ - x: 4
+   y: 4
+   x_sig: 5
+   y_sig: 4
+ - x: 5
+   y: 4
+   x_sig: 6
+   y_sig: 4
+ - x: 6
+   y: 4
+   x_sig: 6
+   y_sig: 5
+ - x: 6
+   y: 5
+   x_sig: 6
+   y_sig: 6
+ - x: 6
+   y: 6
+   x_sig: 5
+   y_sig: 6
+ - x: 5
+   y: 6
+   x_sig: 4
+   y_sig: 6
+ - x: 4
+   y: 6
+   x_sig: 3
+   y_sig: 6
+ - x: 3
+   y: 6
+   x_sig: 2
+   y_sig: 6
+ - x: 2
+   y: 6
+   x_sig: 1
+   y_sig: 6
+ - x: 1
+   y: 6
+   x_sig: 0
+   y_sig: 6
+ - x: 0
+   y: 6
+   x_sig: 0
+   y_sig: 7
+ - x: 0
+   y: 7
+   x_sig: 0
+   y_sig: 8
+ - x: 0
+   y: 8
+   x_sig: 1
+   y_sig: 8
+ - x: 1
+   y: 8
+   x_sig: 2
+   y_sig: 8
+ - x: 2
+   y: 8
+   x_sig: 3
+   y_sig: 8
+ - x: 3
+   y: 8
+   x_sig: 4
+   y_sig: 8
+ - x: 4
+   y: 8
+   x_sig: 5
+   y_sig: 8
+ - x: 5
+   y: 8
+   x_sig: 6
+   y_sig: 8
+ - x: 6
+   y: 8
+   x_sig: -1
+   y_sig: -1
+portales: 
+ - tipo: entrada
+   x: 0
+   y: 0
+ - tipo: salida
+   x: 6
+   y: 8
+hordas:
+ - tiempo: 3
+   abmonible: 2
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 0
+   tiempo_hordas: 5
+ - tiempo: 3
+   abmonible: 3
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 0
+   tiempo_hordas: 10
+ - tiempo: 3
+   abmonible: 5
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 0
+   tiempo_hordas: 10
+ - tiempo: 2
+   abmonible: 5
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 0
+   tiempo_hordas: 10
+ - tiempo: 2
+   abmonible: 10
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 0
+   tiempo_hordas: 15

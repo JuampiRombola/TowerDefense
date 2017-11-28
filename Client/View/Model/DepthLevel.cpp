@@ -20,6 +20,8 @@ DepthLevel::~DepthLevel() {
     auto it4 = shots.begin();
     while (it4 != shots.end())
         delete (*it4++);
+    auto it5 = spellsFloor.begin();
+    while (it5 != spellsFloor.end());
 }
 
 void DepthLevel::addPortalEntrada(PortalView *portal) {
@@ -32,6 +34,10 @@ void DepthLevel::addPortalSalida(PortalView *portal) {
 
 void DepthLevel::addSpell(SpellView *spell) {
     spells.push_back(spell);
+}
+
+void DepthLevel::addFloorSpell(SpellView *spell) {
+    spellsFloor.push_back(spell);
 }
 
 void DepthLevel::addTower(TowerView *tower) {
@@ -63,16 +69,31 @@ void DepthLevel::removeUnit(int id) {
 void DepthLevel::draw(Uint32 time) {
     if (portalEntrada) portalEntrada->draw(time);
 
-    //Remuevo las unidades que ya estan muertas
-    auto it1 = units.begin();
-    while (it1 != units.end()) {
-        if ((*it1)->isDead()) {
+    // Remuevo spells de suelo
+    auto it1 = spells.begin();
+    while (it1 != spells.end()) {
+        if ((*it1)->hasFinished()) {
             delete (*it1);
-            it1 = units.erase(it1);
+            it1 = spells.erase(it1);
         } else
             ++it1;
     }
 
+    // Dibujo spells de suelo
+    for (auto spellFloor : spellsFloor)
+        spellFloor->draw(time);
+
+    //Remuevo las unidades que ya estan muertas
+    units.erase(std::remove_if(units.begin(),
+                               units.end(),
+                               [](UnitView* x) {
+                                   if (x->isDead()){
+                                       delete x;
+                                       return true; }
+                                   return false;}),
+                units.end());
+
+    // Dibujo unidades en sentido inverso
     for (auto it = units.rbegin(); it != units.rend(); ++it){
         UnitView* u = *it;
         u->draw(time);
