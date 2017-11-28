@@ -10,7 +10,7 @@
 #include "Common/MouseMovement.h"
 
 #define TITLE "Tower Defense"
-#define CONFIG_PATH "windowConfig.yaml"
+#define CONFIG_PATH "/etc/TowerDefense/windowConfig.yaml"
 #define EDITOR_MODE 1
 #define SALIDA_DEFAULT "mapa"
 

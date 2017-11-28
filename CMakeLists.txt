@@ -456,9 +456,6 @@ set(SOURCE_FILES_EDITOR
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
 add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/GTKNotifications/SpellIsFreeGTKNotification.cpp Client/include/GTKNotifications/SpellIsFreeGTKNotification.h Client/src/GTKNotifications/PlayerIsReadyGTKNotification.cpp Client/include/GTKNotifications/PlayerIsReadyGTKNotification.h)
-add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
-add_executable(LOBBYMM Client/main-test-gtk-mm.cpp)
-
 
 INCLUDE(FindPkgConfig)
 pkg_search_module(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
@@ -471,8 +468,6 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
 include_directories(${GTKMM_INCLUDE_DIRS})
 
-target_link_libraries(LOBBYMM ${GTKMM_LIBRARIES})
 target_link_libraries(TowerDefenseServer yaml-cpp)
 target_link_libraries(TowerDefenseEditor yaml-cpp ${SDL2IMAGE_LIBRARIES} ${SDL2MIXER_LIBRARIES})
 target_link_libraries(TowerDefenseClient yaml-cpp X11 ${GTKMM_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})
-target_link_libraries(TowerDefenseView yaml-cpp ${SDL2IMAGE_LIBRARIES} ${GTKMM_LIBRARIES} ${SDL2TTF_LIBRARIES} ${SDL2MIXER_LIBRARIES})

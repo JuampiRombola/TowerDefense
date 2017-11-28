@@ -15,7 +15,7 @@
 
 #define TITLE "Tower Defense"
 
-#define CONFIG_PATH "windowConfig.yaml"
+#define CONFIG_PATH "/etc/TowerDefense/windowConfig.yaml"
 
 SDLRunner::SDLRunner(uint8_t mapSurface, uint32_t mapWidth, uint32_t mapHeight)
 : _mapSurface(mapSurface), _mapWidth(mapWidth), _mapHeight(mapHeight)
@@ -52,7 +52,9 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     MusicPlayer musicPlayer(musicLoader);
     TextureLoader textureLoader(renderer.getRenderer(), 0);
     ModelView modelView(renderer, textureLoader, musicPlayer);
+    std::cout << "El modelo lo carga\n";
     HudView hudView(window, textureLoader, renderer, *_dispatcher, modelView);
+    std::cout << "Carga el hud?\n";
     ChatView chat(*_dispatcher, window, renderer, textureLoader);
     MouseMovement mouseMovement(renderer);
 
