@@ -11,21 +11,34 @@
 #include "DisminuirTiempoEnemigosButton.h"
 #include "ContadorTiempoEnemigosInput.h"
 #include "EliminarTerrenoButton.h"
+#include "SalidaButton.h"
 
-EditorButtons::EditorButtons(MousePosition &mousePosition, Renderer &renderer, Editor &editor,
-                             TextureLoader &textureLoader) : mousePosition(mousePosition),
-                                                             padding(0), renderer(renderer),
-                                                             editor(editor),
-                                                             textureLoader(textureLoader),
-                                                             hordaToDelete(-1) {}
+EditorButtons::EditorButtons(MousePosition &mousePosition,
+                             Renderer &renderer,
+                             Editor &editor,
+                             TextureLoader &textureLoader) :
+        mousePosition(mousePosition),
+        padding(0), renderer(renderer),
+        editor(editor),
+        textureLoader(textureLoader),
+        hordaToDelete(-1) {
+    this->addBackground();
+}
 
 
 EditorButtons::~EditorButtons() {
     for (Image *image : images)
         delete image;
+    for (auto sprite : backgrounds)
+        delete sprite;
 }
 
 void EditorButtons::draw() {
+    for (auto sprite : backgrounds)
+        sprite->drawEuclidian();
+
+    this->limitPadding();
+
     int i = 0;
     for (Image *image : images) {
         image->draw(i, padding);
@@ -79,50 +92,45 @@ void EditorButtons::addInitialButtons() {
     images.push_back(exitTileButton);
 
     Image *deleteStructureButton = new EliminarTerrenoButton(
-            textureLoader.getTexture(ELIMINAR_HORDA_BTN), mousePosition, renderer, editor);
+            textureLoader.getTexture(GOMA), mousePosition, renderer, editor);
     images.push_back(deleteStructureButton);
 
-    Image *button = new NuevaHordaButton(textureLoader.getTexture(AGREGAR_HORDA_BTN), mousePosition,
-                                         renderer, editor,
-                                         std::bind(&EditorButtons::addEnemigosButton, this, _1));
-    images.push_back(button);
-
-    Image *altoIcon = new Image(ALTO_BUTTON_X, ALTO_BUTTON_Y, ALTO_BUTTON_WIDTH, ALTO_BUTTON_HEIGHT,
-                                textureLoader.getTexture(ALTO_MAPA), renderer);
-    images.push_back(altoIcon);
-
-    Image *aumentarAlto = new AumentarAltoMapaButton(textureLoader.getTexture(ENEMIGO_SUMA),
+    Image *aumentarAlto = new AumentarAltoMapaButton(textureLoader.getTexture(AGRANDAR_ALTO),
                                                      mousePosition, renderer, editor);
     images.push_back(aumentarAlto);
 
-    Image *disminuirAlto = new DisminuirAltoMapaButton(textureLoader.getTexture(ENEMIGO_RESTA),
+    Image *disminuirAlto = new DisminuirAltoMapaButton(textureLoader.getTexture(ACHICAR_ALTO),
                                                        mousePosition, renderer, editor);
     images.push_back(disminuirAlto);
 
-    Image *anchoIcon = new Image(ANCHO_BUTTON_X, ANCHO_BUTTON_Y, ANCHO_BUTTON_WIDTH,
-                                 ANCHO_BUTTON_HEIGHT, textureLoader.getTexture(ANCHO_MAPA),
-                                 renderer);
-    images.push_back(anchoIcon);
 
-
-    Image *aumentarAncho = new AumentarAnchoMapaButton(textureLoader.getTexture(ENEMIGO_SUMA),
+    Image *aumentarAncho = new AumentarAnchoMapaButton(textureLoader.getTexture(AGRANDAR_ANCHO),
                                                        mousePosition, renderer, editor);
     images.push_back(aumentarAncho);
 
-    Image *disminuirAncho = new DisminuirAnchoMapaButton(textureLoader.getTexture(ENEMIGO_RESTA),
+    Image *disminuirAncho = new DisminuirAnchoMapaButton(textureLoader.getTexture(ACHICAR_ANCHO),
                                                          mousePosition, renderer, editor);
     images.push_back(disminuirAncho);
 
-    Image *saveButton = new GuardarButton(textureLoader.getTexture(SAVE_BUTTON), mousePosition,
+    Image *saveButton = new GuardarButton(textureLoader.getTexture(GUARDAR), mousePosition,
                                           renderer, editor);
     images.push_back(saveButton);
 
-    Image *scrollUp = new AumentarPaddingButton(padding, textureLoader.getTexture(ARROW_UP_EDITOR),
+    Image *exitButton = new SalidaButton(textureLoader.getTexture(SALIDA_EDITOR), mousePosition,
+                                          renderer, editor);
+    images.push_back(exitButton);
+
+    Image *button = new NuevaHordaButton(padding, textureLoader.getTexture(NUEVA_HORDA), mousePosition,
+                                 renderer, editor,
+                                 std::bind(&EditorButtons::addEnemigosButton, this, _1));
+    images.push_back(button);
+
+    Image *scrollUp = new AumentarPaddingButton(padding, textureLoader.getTexture(SCROLL_UP),
                                                 mousePosition, renderer);
     images.push_back(scrollUp);
 
     Image *scrollDown = new DisminuirPaddingButton(padding,
-                                                   textureLoader.getTexture(ARROW_DOWN_EDITOR),
+                                                   textureLoader.getTexture(SCROLL_DOWN),
                                                    mousePosition, renderer);
     images.push_back(scrollDown);
 }
@@ -213,4 +221,51 @@ bool EditorButtons::isAnyClicked() {
             return true;
     }
     return false;
+}
+
+void EditorButtons::addBackground() {
+    Sprite *s = new Sprite(textureLoader.getTexture(BG_ESCENARIO), renderer);
+    s->setSourceRect(0, 0, BG_BUTTONS_W, BG_BUTTONS_H);
+    s->setDestRect(0, 0, BG_BUTTONS_DST_W, BG_BUTTONS_DST_H);
+    s->setAlphaMod(220);
+    backgrounds.push_back(s);
+
+    s = new Sprite(textureLoader.getTexture(BG_RECURSOS), renderer);
+    s->setSourceRect(0, 0, BG_BUTTONS_W, BG_BUTTONS_H);
+    s->setDestRect(BG_BUTTONS_DST_W + BG_PADDING, 0,
+                   BG_BUTTONS_DST_W, BG_BUTTONS_DST_H);
+    s->setAlphaMod(220);
+    backgrounds.push_back(s);
+
+    s = new Sprite(textureLoader.getTexture(BG_HERRAMIENTAS), renderer);
+    s->setSourceRect(0, 0, BG_BUTTONS_W, BG_BUTTONS_H);
+    s->setDestRect(2*BG_BUTTONS_DST_W + 2*BG_PADDING, 0,
+                   BG_BUTTONS_DST_W, BG_BUTTONS_DST_H);
+    s->setAlphaMod(220);
+    backgrounds.push_back(s);
+
+    s = new Sprite(textureLoader.getTexture(BG_SCROLL), renderer);
+    s->setSourceRect(0, 0, BG_SCROLL_W, BG_SCROLL_H);
+    s->setDestRect(0, renderer.getWindowHeight() - BG_SCROLL_DST_H,
+                   BG_SCROLL_DST_W, BG_SCROLL_DST_H);
+    s->setAlphaMod(220);
+    backgrounds.push_back(s);
+
+    s = new Sprite(textureLoader.getTexture(SCROLL_BAR), renderer);
+    s->setSourceRect(0, 0, SCROLL_BAR_W, SCROLL_BAR_H);
+    s->setDestRect(0, renderer.getWindowHeight() - SCROLL_BAR_Y
+                      - SCROLL_BAR_DST_H, SCROLL_BAR_DST_W, SCROLL_BAR_DST_H);
+    s->setAlphaMod(220);
+    backgrounds.push_back(s);
+}
+
+void EditorButtons::limitPadding() {
+    int cantHordas = static_cast<int>((images.size() -
+                     TOTAL_MAIN_BUTTONS)/BUTTONS_PER_HORDA);
+    printf("IMAGES SIZE %lu\n", images.size());
+    printf("Cant horda %d\n", cantHordas);
+    if (cantHordas == 1)
+        padding = 0;
+    else if (cantHordas < padding + 1)
+        padding = static_cast<unsigned int>(cantHordas - 1);
 }

@@ -14,7 +14,8 @@ void ContadorTiempoHordaInput::draw(int number, int padding) {
         return;
     div_t enemigoNro = div(hordaNro.rem, HORDA_BUTTONS_PER_ENEMY);
     button.x = enemigoNro.quot * HORDA_ENEMIGO_IMG_SIZE + SCROLL_BUTTON_SIZE;
-    button.y = HORDA_QUANTITY_PADDING + (hordaNro.quot - padding) * HORDA_TOTAL_HEIGHT;
+    button.y = renderer.getWindowHeight() -
+               HORDA_QUANTITY_PADDING + (hordaNro.quot - padding) * HORDA_TOTAL_HEIGHT;
     this->text = std::to_string(editor.getTiempoHorda(horda));
     Text::draw(number, 0);
 }

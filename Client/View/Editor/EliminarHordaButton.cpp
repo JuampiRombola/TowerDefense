@@ -22,7 +22,7 @@ void EliminarHordaButton::draw(int number, int padding) {
         return;
     button.x = (HORDA_TOTAL_ENEMIES + 2) * HORDA_ENEMIGO_IMG_SIZE +
                HORDA_QUANTITY_WIDTH + SCROLL_BUTTON_SIZE;
-    button.y = HORDA_ENEMIGO_PADDING +
+    button.y = renderer.getWindowHeight() - HORDA_ENEMIGO_PADDING +
                (hordaNro.quot - padding) * HORDA_TOTAL_HEIGHT;
     Button::draw(number, 0);
 }

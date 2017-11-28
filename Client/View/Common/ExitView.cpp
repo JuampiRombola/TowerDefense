@@ -1,5 +1,5 @@
 #include "ExitView.h"
-#include "../Common/SpriteNamesConfig.h"
+#include "SpriteNamesConfig.h"
 
 #define EXIT_VIEW_W 426
 #define EXIT_VIEW_H 147

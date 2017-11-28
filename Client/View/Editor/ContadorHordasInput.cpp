@@ -11,7 +11,8 @@ void ContadorHordasInput::draw(int number, int padding) {
     if (hordaNro.quot < padding)
         return;
     button.x = SCROLL_BUTTON_SIZE;
-    button.y = HORDA_QUANTITY_PADDING +
+    button.y = renderer.getWindowHeight() -
+               HORDA_QUANTITY_PADDING - SCROLL_BUTTON_SIZE/2 +
                (hordaNro.quot - padding) * HORDA_TOTAL_HEIGHT;
     this->text = std::to_string(hordaNro.quot + 1);
     Text::draw(number, 0);

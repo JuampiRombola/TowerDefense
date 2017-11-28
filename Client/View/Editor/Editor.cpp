@@ -7,7 +7,8 @@
 
 Editor::Editor(MapView &map, TextureLoader &textureLoader, Renderer &renderer, std::string name,
                Window &window) : superficie(PRADERA), map(map), textureLoader(textureLoader),
-                                 renderer(renderer), nombre(name), window(window) {
+                                 renderer(renderer), nombre(name), window(window),
+                                 exitActive(false) {
 };
 
 Editor::~Editor() {
@@ -348,4 +349,16 @@ std::string Editor::exportarMapa() {
         mapToString << "   y_sig: -1\n";
     }
     return mapToString.str();
+}
+
+void Editor::activateExit() {
+    exitActive = true;
+}
+
+bool Editor::isExitActive() {
+    return exitActive;
+}
+
+void Editor::desactivateExit() {
+    exitActive = false;
 }
