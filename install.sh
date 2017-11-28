@@ -19,18 +19,21 @@ function compileServer() {
     echo 'Instalando TowerDefenseClient' >&2
     make TowerDefenseServer
     sudo mv TowerDefenseServer /usr/local/games
+    ln -s /usr/local/games/TowerDefenseServer TowerDefenseServer
 }
 
 function compileClient() {
     echo 'Instalando TowerDefenseClient' >&2
     make TowerDefenseClient
     sudo mv TowerDefenseClient /usr/local/games
+    ln -s /usr/local/games/TowerDefenseClient TowerDefenseClient
 }
 
 function compileEditor() {
     echo 'Instalando TowerDefenseEditor' >&2
     make TowerDefenseEditor
     sudo mv TowerDefenseEditor /usr/local/games
+    ln -s /usr/local/games/TowerDefenseEditor TowerDefenseEditor
 }
 
 function clean() {
