@@ -5,7 +5,8 @@ function installDependencies() {
     sudo apt-get install libsdl2-ttf-dev
     sudo apt-get install libgtk-3-dev
     sudo apt-get install libgtkmm-3.0-dev
-    #sudo apt-get install libyaml-cpp-dev
+    sudo apt-get install libboost-dev
+    sudo apt-get install libyaml-cpp-dev
     sudo apt-get install cmake
 }
 
