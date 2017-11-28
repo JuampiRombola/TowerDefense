@@ -14,7 +14,7 @@ LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
 {
 	//Levantar de archivo todas las configuraciones de MAPA!!!
 	int id = 0;
-    std::string maps_path = PATH_CONFIG_1 + std::string("") + "Maps/";
+    std::string maps_path = PATH_CONFIG + std::string("") + "Maps/";
 	DIR *dir = opendir(maps_path.c_str());
 	if(dir){
 		dirent *entry;

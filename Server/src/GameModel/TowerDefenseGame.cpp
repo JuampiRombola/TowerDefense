@@ -27,6 +27,7 @@
 #include "../../include/GameModel/GameNotifications/GameModelStartedRunningNotification.h"
 #include "../../include/GameModel/GameNotifications/MapTransferNotification.h"
 #include "../../include/GameModel/GameNotifications/ChatMessageNotification.h"
+#include "../../../Common/Paths.h"
 
 TowerDefenseGame::TowerDefenseGame(uint gameId,
 	ThreadSafeQueue<GameNotification*>& notifications, std::vector<PlayerProxy*> playersInGame,
@@ -39,7 +40,7 @@ TowerDefenseGame::TowerDefenseGame(uint gameId,
 	_map(mapCfg.Cfg["ancho"].as<uint>(), mapCfg.Cfg["alto"].as<uint>(), mapCfg), notifications(notifications),
 	_players(playersInGame), _ingamePlayers(), _hordeManager(mapCfg)
 {
-	std::string ss("../config.yaml");
+	std::string ss(PATH_CONFIG + std::string("") + "Server/config.yaml");
 	GameCfg = new Configuration(ss, 0 ,"Game");
     _hordeManager.game = this;
 	_hordeManager.timeToWaitBetweenHordes_ms = GameCfg->Cfg["time_to_wait_between_hordes_ms"].as<uint>();

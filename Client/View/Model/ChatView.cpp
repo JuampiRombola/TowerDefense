@@ -37,7 +37,7 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
         spriteInput(tl.getTexture(CHAT_INPUT), r),
         textColor(SDL_Color{255, 255, 255, 0xFF}), active(false),
         _messagesToAdd(), visible(true), offsetResolution(0) {
-    font = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+    font = TTF_OpenFont((PATH_RESOURCES + std::string("")
                          + FONT_PATH).c_str(), FONT_SIZE);
 
     if (window.getWidth() < MIN_RESOLUTION)

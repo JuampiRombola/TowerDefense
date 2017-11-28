@@ -19,9 +19,9 @@ Announcement::Announcement(std::string &text, Renderer &renderer)
           front(SDL_Color{202, 164, 120}), back(SDL_Color{0, 0, 0}) {
     if (text == VICTORY || text == DEFEAT)
         time = 30000;
-    font = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+    font = TTF_OpenFont((PATH_RESOURCES + std::string("")
                          + ANNOUNCE_FONT_PATH).c_str(), fontSize);
-    outlineF = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+    outlineF = TTF_OpenFont((PATH_RESOURCES + std::string("")
                              + ANNOUNCE_FONT_PATH).c_str(), fontSize);
     this->createTexture();
 }
@@ -29,9 +29,9 @@ Announcement::Announcement(std::string &text, Renderer &renderer)
 Announcement::Announcement(std::string &text, Renderer &renderer, int size) :
         text(text), renderer(renderer), fontSize(size),
         front(SDL_Color{255, 255, 255}), back(SDL_Color{0, 0, 0}) {
-    font = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+    font = TTF_OpenFont((PATH_RESOURCES + std::string("")
                          + MONOSPACE_FONT_PATH).c_str(), fontSize);
-    outlineF = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+    outlineF = TTF_OpenFont((PATH_RESOURCES + std::string("")
                              + MONOSPACE_FONT_PATH).c_str(), fontSize);
     this->createTexture();
 }

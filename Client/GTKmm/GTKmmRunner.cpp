@@ -12,6 +12,7 @@
 #include "../include/NetCommands/LeaveLobbyCommand.h"
 #include "../include/NetCommands/PickMapCommand.h"
 #include "../include/NetCommands/PlayerIsReadyCommand.h"
+#include "../../Common/Paths.h"
 
 
 GTKmmRunner::GTKmmRunner() : OK(false) {
@@ -27,7 +28,7 @@ void GTKmmRunner::Run(int* argc, char***argv){
 
     auto app = Gtk::Application::create(*argc, *argv);
     auto refBuilder = Gtk::Builder::create();
-    refBuilder->add_from_file("../Client/Launchermm.glade");
+    refBuilder->add_from_file(PATH_CONFIG + std::string("") + "Client/Launchermm.glade");
     refBuilder->get_widget("window_global", window_global);
     refBuilder->get_widget("box", box);
 

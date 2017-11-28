@@ -89,7 +89,7 @@ void Editor::exportar() {
         fileContent << " - " << horda.exportar();
         ++hordaNro;
     }
-    File file(PATH_CONFIG_1 + std::string("")
+    File file(PATH_CONFIG + std::string("")
               + "Maps/" + nombre + ".yaml");
     file.write(fileContent.str());
     window.showErrorMessage("", "¡El mapa se exportó con éxito!");

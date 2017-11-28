@@ -5,10 +5,11 @@
 MusicLoader::MusicLoader() {
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
 
-    music = Mix_LoadMUS(MAIN_MUSIC_PATH);
+    music = Mix_LoadMUS((PATH_RESOURCES + std::string("")
+                         + MAIN_MUSIC_PATH).c_str());
     for (int i = 0; i < TOTAL_CHUNKS; ++i) {
         effects[i] = Mix_LoadWAV(std::string(
-                PATH_RESOURCES_1 + std::string("") +
+                PATH_RESOURCES + std::string("") +
                 "Sounds/" + std::to_string(i) + ".ogg").c_str());
     }
 }

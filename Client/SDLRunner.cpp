@@ -41,7 +41,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
     TTF_Init();
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-    YAML::Node windowConfig(YAML::LoadFile(PATH_CONFIG_1
+    YAML::Node windowConfig(YAML::LoadFile(PATH_CONFIG
                                            + std::string("") + CONFIG_PATH));
     Window window(TITLE, windowConfig["game_width"].as<int>(),
                   windowConfig["game_height"].as<int>(),

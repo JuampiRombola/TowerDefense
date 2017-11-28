@@ -58,7 +58,7 @@ UpgradeView::UpgradeView(Renderer &r, TextureLoader &tl, TowerView *t,
                 + 2*PADDING_ICON, START_Y_ICON, PADLOCK_W,
                 PADLOCK_H, tl.getTexture(CANDADO), renderer),
         textColor(SDL_Color{255, 255, 255, 0xFF}), active(isMine) {
-    font = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+    font = TTF_OpenFont((PATH_RESOURCES + std::string("")
                          + FONT_UPGRD).c_str(), FONT_UPGRD_SIZE);
     key = tower->getKey();
     this->addButtons();

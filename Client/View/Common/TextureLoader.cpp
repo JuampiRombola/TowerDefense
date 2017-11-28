@@ -12,7 +12,7 @@
 #define EDITOR_MODE 1
 
 TextureLoader::TextureLoader(SDL_Renderer *renderer, int mode) :
-        cfg(YAML::LoadFile(PATH_CONFIG_1 + std::string("") + CONFIG_PATH)) {
+        cfg(YAML::LoadFile(PATH_CONFIG + std::string("") + CONFIG_PATH)) {
     int totalGame = TOTAL;
     int totalEditor = TOTAL_EDITOR;
     int totalHUD = TOTAL_HUD;
@@ -27,7 +27,7 @@ TextureLoader::TextureLoader(SDL_Renderer *renderer, int mode) :
 
     IMG_Init(IMG_INIT_PNG);
     for (int i = 0; i < totalGame; ++i) {
-        SDL_Surface *im = IMG_Load((PATH_RESOURCES_1 + std::string("")
+        SDL_Surface *im = IMG_Load((PATH_RESOURCES + std::string("")
                                     + SPRITES_PATH
                                     + std::to_string(i)
                                     + PNGFORMAT).c_str());
@@ -38,7 +38,7 @@ TextureLoader::TextureLoader(SDL_Renderer *renderer, int mode) :
     }
 
     for (int i = initHUD; i < totalHUD; ++i) {
-        SDL_Surface *im = IMG_Load((PATH_RESOURCES_1 + std::string("")
+        SDL_Surface *im = IMG_Load((PATH_RESOURCES + std::string("")
                                     + SPRITES_PATH
                                     + std::to_string(i)
                                     + PNGFORMAT).c_str());
@@ -49,7 +49,7 @@ TextureLoader::TextureLoader(SDL_Renderer *renderer, int mode) :
     }
 
     for (int i = 100; i < totalEditor; ++i) {
-        SDL_Surface *im = IMG_Load((PATH_RESOURCES_1 + std::string("")
+        SDL_Surface *im = IMG_Load((PATH_RESOURCES + std::string("")
                                     +SPRITES_PATH
                                     + std::to_string(i)
                                     + PNGFORMAT).c_str());

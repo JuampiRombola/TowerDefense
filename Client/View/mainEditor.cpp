@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     SDL_Event event;
     SDL_Init(SDL_INIT_VIDEO);
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-    YAML::Node windowConfig(YAML::LoadFile(PATH_CONFIG_1
+    YAML::Node windowConfig(YAML::LoadFile(PATH_CONFIG
                                            + std::string("") + CONFIG_PATH));
     Window window(TITLE, windowConfig["editor_width"].as<int>(),
                   windowConfig["editor_height"].as<int>(),
