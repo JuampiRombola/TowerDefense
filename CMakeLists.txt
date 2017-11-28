@@ -242,8 +242,8 @@ set(SOURCE_FILES_CLIENT
         Client/View/Model/WaitActionButton.h
         Client/View/Model/PadlockButton.cpp
         Client/View/Model/PadlockButton.h
-        Client/View/Model/ExitView.cpp
-        Client/View/Model/ExitView.h
+        Client/View/Common/ExitView.cpp
+        Client/View/Common/ExitView.h
         Client/View/Common/MouseMovement.cpp
         Client/View/Common/MouseMovement.h
         Client/View/Common/MusicPlayer.cpp
@@ -454,7 +454,11 @@ set(SOURCE_FILES_EDITOR
         Client/View/Common/SoundEffect.cpp
         Client/View/Common/SoundEffect.h
         Client/View/Editor/EliminarTerrenoButton.cpp
-        Client/View/Editor/EliminarTerrenoButton.h)
+        Client/View/Editor/EliminarTerrenoButton.h
+        Client/View/Common/ExitView.cpp
+        Client/View/Common/ExitView.h
+        Client/View/Editor/SalidaButton.cpp
+        Client/View/Editor/SalidaButton.h)
 
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)

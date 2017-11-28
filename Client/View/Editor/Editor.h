@@ -26,6 +26,7 @@ private:
     std::function<void(int, int)> mapFunction;
     void validate();
     std::string exportarMapa();
+    bool exitActive;
 public:
     explicit Editor(MapView &map, TextureLoader &textureLoader, Renderer &renderer,
                         std::string name, Window &window);
@@ -60,6 +61,9 @@ public:
     void aumentarAltoMapa();
     void disminuirAltoMapa();
     void draw();
+    void activateExit();
+    void desactivateExit();
+    bool isExitActive();
 };
 
 #endif //TOWERDEFENSE_EDITOR_H

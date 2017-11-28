@@ -8,13 +8,15 @@ class NuevaHordaButton : public Button {
 private:
     Editor &editor;
     int idHorda;
+    unsigned int &padding;
     std::function<void(int)> addButtonsFn;
     void click();
 
 public:
-    NuevaHordaButton(SDL_Texture *texture, MousePosition &mousePosition,
-                         Renderer &renderer, Editor &editor,
-                         std::function<void(int)> addButtonsFn);
+    NuevaHordaButton(unsigned int &padding, SDL_Texture *texture,
+                     MousePosition &mousePosition,
+                     Renderer &renderer, Editor &editor,
+                     std::function<void(int)> addButtonsFn);
 
 };
 

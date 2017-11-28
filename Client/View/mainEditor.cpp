@@ -8,6 +8,7 @@
 #include "Editor/EditorButtons.h"
 #include "Common/MusicLoader.h"
 #include "Common/MouseMovement.h"
+#include "Common/ExitView.h"
 
 #define TITLE "Tower Defense"
 #define CONFIG_PATH "windowConfig.yaml"
@@ -45,6 +46,7 @@ int main(int argc, char **argv) {
 
     EditorButtons buttons(mouse, renderer, editor, textureLoader);
     buttons.addInitialButtons();
+    ExitView exitView(renderer, textureLoader, mouse);
 
     int tileX = 0;
     int tileY = 0;
@@ -54,7 +56,7 @@ int main(int argc, char **argv) {
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
                 case SDL_QUIT:
-                    quit = true;
+                    exitView.activate();
                     break;
                 case SDL_MOUSEMOTION:
                     mouseMovement.entryMovement(event.motion.x, event.motion.y,
@@ -82,7 +84,13 @@ int main(int argc, char **argv) {
                 case SDL_KEYDOWN:
                     switch (event.key.keysym.sym) {
                         case SDLK_ESCAPE:
-                            quit = true;
+                            if (exitView.isActive()) {
+                                editor.desactivateExit();
+                                exitView.desactivate();
+                            } else {
+                                editor.desactivateExit();
+                                exitView.activate();
+                            }
                             break;
                         case SDLK_PLUS:
                             renderer.zoomIn();
@@ -105,6 +113,15 @@ int main(int argc, char **argv) {
                     }
             }
             if (mouse.isActive()) {
+                if (exitView.isActive()) {
+                    if (exitView.isCancel()) {
+                        editor.desactivateExit();
+                        exitView.desactivate();
+                    }
+                    if (exitView.isOk())
+                        quit = true;
+                    break;
+                }
                 if (!buttons.isAnyClicked()) {
                     tileX = mapView.getTileXFromPixel(mouse_x, mouse_y);
                     tileY = mapView.getTileYFromPixel(mouse_x, mouse_y);
@@ -118,7 +135,11 @@ int main(int argc, char **argv) {
         mouseMovement.doMovement();
         editor.draw();
         buttons.draw();
+        if (exitView.isActive())
+            exitView.draw();
         renderer.present();
+        if (editor.isExitActive() && !exitView.isActive())
+            exitView.activate();
     }
     SDL_Quit();
     return 0;
