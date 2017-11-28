@@ -23,6 +23,13 @@ GTKmmRunner::~GTKmmRunner() {
 
 }
 
+void GTKmmRunner:: ConnectionLost(){
+    Gtk::MessageDialog dialog("Server went down!", false, Gtk::MESSAGE_ERROR, Gtk::BUTTONS_OK);
+    dialog.set_secondary_text( "Try again later..." );
+    dialog.run();
+    ShutDown();
+}
+
 
 void GTKmmRunner::Run(int* argc, char***argv){
 

@@ -9,6 +9,7 @@
 #include "../../../Common/Protocolo.h"
 #include "Configuration.h"
 #include "../PlayerProxy.h"
+#include "Commands/BuildTowerCommand.h"
 
 class ClientCooldownManager {
 private:
@@ -57,6 +58,7 @@ public:
     uint GetSpellCooldown_ms(CAST_SPELL_TYPE type);
     void SpellCasted(CAST_SPELL_TYPE type);
     void PingSet(PlayerProxy& player);
+    void TowerPlaced(TowerType type);
 
 
 };

@@ -463,7 +463,7 @@ set(SOURCE_FILES_EDITOR
 
 add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
-add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/GTKNotifications/SpellIsFreeGTKNotification.cpp Client/include/GTKNotifications/SpellIsFreeGTKNotification.h Client/src/GTKNotifications/PlayerIsReadyGTKNotification.cpp Client/include/GTKNotifications/PlayerIsReadyGTKNotification.h)
+add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/GTKNotifications/SpellIsFreeGTKNotification.cpp Client/include/GTKNotifications/SpellIsFreeGTKNotification.h Client/src/GTKNotifications/PlayerIsReadyGTKNotification.cpp Client/include/GTKNotifications/PlayerIsReadyGTKNotification.h Client/src/GTKNotifications/ServerConnectionLostGTKNotification.cpp Client/include/GTKNotifications/ServerConnectionLostGTKNotification.h)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
 
 

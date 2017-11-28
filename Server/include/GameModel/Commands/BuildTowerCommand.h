@@ -17,10 +17,10 @@ private:
 	uint _yPos;
 
 	TowerType _towerType;
-	Tower* _BuildGroundTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
-	Tower* _BuildFireTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
-	Tower* _BuildWaterTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
-	Tower* _BuildAirTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg);
+	Tower* _BuildGroundTower(Map* map, SolidGroundTile* tile, TowerDefenseGame* game);
+	Tower* _BuildFireTower(Map* map, SolidGroundTile* tile, TowerDefenseGame* game);
+	Tower* _BuildWaterTower(Map* map, SolidGroundTile* tile, TowerDefenseGame* game);
+	Tower* _BuildAirTower(Map* map, SolidGroundTile* tile, TowerDefenseGame* game);
 
 	TowerDefenseGame* _game;
 public:

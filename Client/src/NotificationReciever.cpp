@@ -9,6 +9,7 @@
 #include "../include/GTKNotifications/SpellIsFreeGTKNotification.h"
 #include "../include/GTKNotifications/PlayerIsReadyGTKNotification.h"
 #include "../include/GTKNotifications/LobbyIsGoneGTKNotification.h"
+#include "../include/GTKNotifications/ServerConnectionLostGTKNotification.h"
 
 NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyManager& lobbyManager,
                                            GTKmmRunner& runner, CommandDispatcher& dispatcher)
@@ -150,7 +151,7 @@ void NotificationReciever::_SwitchOnOpcode(uint8_t opcode){
             model_view->mapLoadedCondVariable.notify_one();
             _dispatcher.QueueCommand(new PlayerLoadedGameCommand());
             _dispatcher.Disable();
-            model_view->addAnnouncement("Bienvenido a Tower Defense!");
+            model_view->addAnnouncement("Welcome to Tower Defense!");
         }
             break;
         case IN_GAME_CHAT_MESSAGE:
@@ -186,7 +187,10 @@ void NotificationReciever::RecieveNotifications(){
     }catch(const std::exception& e)
     {
         if (!_runner.OK){
-            _runner.ShutDown();
+            _runner.gtkNotifications.Queue(new ServerConnectionLostGTKNotification());
+            g_idle_add(GTKmmRunner::notification_check, &_runner);
+        } else {
+            model_view->addAnnouncement("Connection Lost!");
         }
 
         std::cerr << e.what() << std::endl;
@@ -345,12 +349,12 @@ void NotificationReciever::_HandleUnitFrozen() {
 
 void NotificationReciever::_HandleHordeEnded() {
 	uint hordeId = _sock.RecieveInt32();
-	std::string s = "Horda " +  std::to_string(hordeId) + " superada!";
+	std::string s = "Horde " +  std::to_string(hordeId) + " won!";
 	model_view->addAnnouncement(s);
 }
 void NotificationReciever::_HandleHordeStarted() {
 	uint hordeId = _sock.RecieveInt32();
-	std::string s = "Horda " +  std::to_string(hordeId) + " ha empezado!";
+	std::string s = "Horde " +  std::to_string(hordeId) + " started!";
 	model_view->addAnnouncement(s);
 }
 

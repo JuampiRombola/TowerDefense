@@ -27,21 +27,22 @@ bool BuildTowerCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueu
 
 		switch(_towerType){
 			case Ground:
-				t = _BuildGroundTower(map, tile, game->GameCfg->Cfg);
+				t = _BuildGroundTower(map, tile, game);
 				break;
 			case Air:
-				t = _BuildAirTower(map, tile, game->GameCfg->Cfg);
+				t = _BuildAirTower(map, tile, game);
 				break;
 			case Water:
-				t = _BuildWaterTower(map, tile, game->GameCfg->Cfg);
+				t = _BuildWaterTower(map, tile, game);
 				break;
 			case Fire:
-				t = _BuildFireTower(map, tile, game->GameCfg->Cfg);
+				t = _BuildFireTower(map, tile, game);
 				break;
 		}
 
 		if (t != nullptr){
 			tile->PlaceTower(t);
+			game->clientCooldownManager->TowerPlaced(_towerType);
 			TowerVM vm = t->GetViewModel();
 			std::cout << "TOWER PLACED at " <<vm.xPos << ", " << vm.yPos << "\n" << std::flush;
 			notifications.Queue(new TowerPlacedGameNotification(vm));
@@ -52,46 +53,46 @@ bool BuildTowerCommand::Execute(Map* map, TowerDefenseGame* game, ThreadSafeQueu
 	return false;
 }
 
-Tower* BuildTowerCommand::_BuildGroundTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg){
-	uint cooldown_sec = cfg["towers"]["ground"]["cooldown_sec"].as<uint>();
-	uint range = cfg["towers"]["ground"]["range"].as<uint>();
-	uint damage = cfg["towers"]["ground"]["damage"].as<uint>();
-	uint projectile_ms_over_tile = cfg["towers"]["ground"]["projectile_ms_over_tile"].as<uint>();
+Tower* BuildTowerCommand::_BuildGroundTower(Map* map, SolidGroundTile* tile, TowerDefenseGame* game){
+	uint cooldown_sec = game->GameCfg->Cfg["towers"]["ground"]["cooldown_sec"].as<uint>();
+	uint range = game->GameCfg->Cfg["towers"]["ground"]["range"].as<uint>();
+	uint damage = game->GameCfg->Cfg["towers"]["ground"]["damage"].as<uint>();
+	uint projectile_ms_over_tile = game->GameCfg->Cfg["towers"]["ground"]["projectile_ms_over_tile"].as<uint>();
 	GroundTower* t = new GroundTower(cooldown_sec * 1000, range, damage, tile, map, projectile_ms_over_tile, _game->notifications);
-	t->cfg = &cfg;
+	t->cfg = &game->GameCfg->Cfg;
 }
 
-Tower* BuildTowerCommand::_BuildFireTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg){
-	uint damage = cfg["towers"]["fire"]["target_damage"].as<uint>();
-	uint cooldown_sec = cfg["towers"]["fire"]["cooldown_sec"].as<uint>();
-	uint range = cfg["towers"]["fire"]["range"].as<uint>();
-	uint collateralRange = cfg["towers"]["fire"]["collateral_range"].as<uint>();
-	uint collateralDamage = cfg["towers"]["fire"]["collateral_damage"].as<uint>();
-	uint projectile_ms_over_tile = cfg["towers"]["fire"]["projectile_ms_over_tile"].as<uint>();
+Tower* BuildTowerCommand::_BuildFireTower(Map* map, SolidGroundTile* tile, TowerDefenseGame* game){
+	uint damage = game->GameCfg->Cfg["towers"]["fire"]["target_damage"].as<uint>();
+	uint cooldown_sec = game->GameCfg->Cfg["towers"]["fire"]["cooldown_sec"].as<uint>();
+	uint range = game->GameCfg->Cfg["towers"]["fire"]["range"].as<uint>();
+	uint collateralRange = game->GameCfg->Cfg["towers"]["fire"]["collateral_range"].as<uint>();
+	uint collateralDamage = game->GameCfg->Cfg["towers"]["fire"]["collateral_damage"].as<uint>();
+	uint projectile_ms_over_tile = game->GameCfg->Cfg["towers"]["fire"]["projectile_ms_over_tile"].as<uint>();
 	FireTower* t = new FireTower(cooldown_sec * 1000, range, damage, tile, map, collateralDamage, collateralRange, projectile_ms_over_tile, _game->notifications);
-	t->cfg = &cfg;
+	t->cfg = &game->GameCfg->Cfg;
 	return t;
 }
 
-Tower* BuildTowerCommand::_BuildWaterTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg){
-	uint cooldown_sec = cfg["towers"]["water"]["cooldown_sec"].as<uint>();
-	uint range = cfg["towers"]["water"]["range"].as<uint>();
-	uint damage = cfg["towers"]["water"]["damage"].as<uint>();
-	uint slowPercent = cfg["towers"]["water"]["slow_percent"].as<uint>();
-	uint slowDuration_sec = cfg["towers"]["water"]["slow_duration_sec"].as<uint>();
-	uint projectile_ms_over_tile = cfg["towers"]["water"]["projectile_ms_over_tile"].as<uint>();
+Tower* BuildTowerCommand::_BuildWaterTower(Map* map, SolidGroundTile* tile, TowerDefenseGame* game){
+	uint cooldown_sec = game->GameCfg->Cfg["towers"]["water"]["cooldown_sec"].as<uint>();
+	uint range = game->GameCfg->Cfg["towers"]["water"]["range"].as<uint>();
+	uint damage = game->GameCfg->Cfg["towers"]["water"]["damage"].as<uint>();
+	uint slowPercent = game->GameCfg->Cfg["towers"]["water"]["slow_percent"].as<uint>();
+	uint slowDuration_sec = game->GameCfg->Cfg["towers"]["water"]["slow_duration_sec"].as<uint>();
+	uint projectile_ms_over_tile = game->GameCfg->Cfg["towers"]["water"]["projectile_ms_over_tile"].as<uint>();
 	WaterTower* t = new WaterTower(cooldown_sec * 1000, range, damage, slowPercent, slowDuration_sec, tile, map, projectile_ms_over_tile, _game->notifications);
-	t->cfg = &cfg;
+	t->cfg = &game->GameCfg->Cfg;
 	return t;
 }
 
-Tower* BuildTowerCommand::_BuildAirTower(Map* map, SolidGroundTile* tile, const YAML::Node& cfg){
-	uint cooldown_sec = cfg["towers"]["air"]["cooldown_sec"].as<uint>();
-	uint range = cfg["towers"]["air"]["range"].as<uint>();
-	uint flyingTargetDamage = cfg["towers"]["air"]["flying_target_damage"].as<uint>();
-	uint nonFlyingTargetDamage = cfg["towers"]["air"]["non_flying_target_damage"].as<uint>();
-	uint projectile_ms_over_tile = cfg["towers"]["air"]["projectile_ms_over_tile"].as<uint>();
+Tower* BuildTowerCommand::_BuildAirTower(Map* map, SolidGroundTile* tile, TowerDefenseGame* game){
+	uint cooldown_sec = game->GameCfg->Cfg["towers"]["air"]["cooldown_sec"].as<uint>();
+	uint range = game->GameCfg->Cfg["towers"]["air"]["range"].as<uint>();
+	uint flyingTargetDamage = game->GameCfg->Cfg["towers"]["air"]["flying_target_damage"].as<uint>();
+	uint nonFlyingTargetDamage = game->GameCfg->Cfg["towers"]["air"]["non_flying_target_damage"].as<uint>();
+	uint projectile_ms_over_tile = game->GameCfg->Cfg["towers"]["air"]["projectile_ms_over_tile"].as<uint>();
 	AirTower* t = new AirTower(cooldown_sec * 1000, range, flyingTargetDamage, nonFlyingTargetDamage, tile, map, projectile_ms_over_tile, _game->notifications);
-	t->cfg = &cfg;
+	t->cfg = &game->GameCfg->Cfg;
 	return t;
 }

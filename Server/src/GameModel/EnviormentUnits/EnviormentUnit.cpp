@@ -48,7 +48,6 @@ void EnviormentUnit::PushBack(){
 	_position = _lastPosition;
 	_lastPosition = nullptr;
 	auto vm = GetViewModel();
-	_notifications.Queue(new UnitPositionGameNotification(vm));
 	std::cout << "EnviormentUnit Pushed backed\n" << std::flush;
 	PrintDebug();
 }

@@ -4,6 +4,7 @@
 #include <iostream>
 #include "../../include/GameModel/Helpers.h"
 #include "../../include/GameModel/ClientCooldownManager.h"
+#include "../../include/GameModel/Commands/BuildTowerCommand.h"
 
 ClientCooldownManager::ClientCooldownManager(Configuration& gameCfg)
 
@@ -159,34 +160,34 @@ bool ClientCooldownManager::IsTowerPlacementReady(SPELL_TYPE type){
     switch (type){
         case SPELL_TYPE_GROUND:
             cooldown_ms = _groundTowerPlacedCooldown_sec * 1000;
-            if (actual_ts - _lastGroundTowerPlacedTimeStamp_ms > cooldown_ms){
-                _lastGroundTowerPlacedTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
+            return (actual_ts - _lastGroundTowerPlacedTimeStamp_ms > cooldown_ms);
         case SPELL_TYPE_WATER:
             cooldown_ms = _waterTowerPlacedCooldown_sec * 1000;
-            if (actual_ts - _lastWaterTowerPlacedTimeStamp_ms > cooldown_ms){
-                _lastWaterTowerPlacedTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
-
+            if (actual_ts - _lastWaterTowerPlacedTimeStamp_ms > cooldown_ms);
         case SPELL_TYPE_AIR:
             cooldown_ms = _airTowerPlacedCooldown_sec * 1000;
-            if (actual_ts - _lastAirTowerPlacedTimeStamp_ms > cooldown_ms){
-                _lastAirTowerPlacedTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
-
+            return (actual_ts - _lastAirTowerPlacedTimeStamp_ms > cooldown_ms);
         case SPELL_TYPE_FIRE:
             cooldown_ms = _fireTowerPlacedCooldown_sec * 1000;
-            if (actual_ts - _lastFireTowerPlacedTimeStamp_ms > cooldown_ms){
-                _lastFireTowerPlacedTimeStamp_ms = actual_ts;
-                return true;
-            }
-            return false;
+            return (actual_ts - _lastFireTowerPlacedTimeStamp_ms > cooldown_ms);
     }
     return false;
+}
+
+void ClientCooldownManager::TowerPlaced(TowerType type){
+    unsigned long long actual_ts = Helpers::MillisecondsTimeStamp();
+    switch (type){
+        case Ground:
+            _lastGroundTowerPlacedTimeStamp_ms = actual_ts;
+            break;
+        case Water:
+            _lastWaterTowerPlacedTimeStamp_ms = actual_ts;
+            break;
+        case Air:
+            _lastAirTowerPlacedTimeStamp_ms = actual_ts;
+            break;
+        case Fire:
+            _lastFireTowerPlacedTimeStamp_ms = actual_ts;
+            break;
+    }
 }

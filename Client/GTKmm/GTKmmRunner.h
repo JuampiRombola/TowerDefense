@@ -66,6 +66,8 @@ public:
     uint32_t MapWidth;
     uint32_t MapHeight;
     bool OK;
+    void ConnectionLost();
+
 
 };
 
