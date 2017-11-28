@@ -175,7 +175,6 @@ void TowerDefenseGame::PlayersWon() {
 }
 
 void TowerDefenseGame::HandleClientSpellCommand(PlayerProxy& player, CAST_SPELL_TYPE type, uint32_t x, uint32_t y){
-	//
 	uint cooldown_ms = clientCooldownManager->GetSpellCooldown_ms(type);
     switch(type){
         case SPELL_GRIETA:

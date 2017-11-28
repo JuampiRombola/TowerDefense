@@ -192,12 +192,16 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
             delta = elapsedTime - s;
     }
 
+    std::cout << "check1" << std::endl << std::flush;
     _reciever->Stop();
+    std::cout << "check2" << std::endl << std::flush;
     _dispatcher->Stop();
-
+    std::cout << "check3" << std::endl << std::flush;
+    
     TTF_Quit();
+    std::cout << "check4" << std::endl << std::flush;
     SDL_Quit();
-
+    std::cout << "check5" << std::endl << std::flush;
 
 
 
