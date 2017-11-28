@@ -2,6 +2,7 @@
 #include "ViewConstants.h"
 #include "../Common/SpriteNamesConfig.h"
 #include "../../../Common/Lock.h"
+#include "../../../Common/Paths.h"
 
 #define UPGRADE_BG_W 264
 #define UPGRADE_BG_H 185
@@ -15,7 +16,7 @@
 #define UPGRADE_ICON_SIZE 47
 #define PADDING_ICON 32
 
-#define FONT_UPGRD "../Resources/font.ttf"
+#define FONT_UPGRD "Fonts/font.ttf"
 #define FONT_UPGRD_SIZE 10
 
 #define MSG_EXP "Experiencia: "
@@ -57,7 +58,8 @@ UpgradeView::UpgradeView(Renderer &r, TextureLoader &tl, TowerView *t,
                 + 2*PADDING_ICON, START_Y_ICON, PADLOCK_W,
                 PADLOCK_H, tl.getTexture(CANDADO), renderer),
         textColor(SDL_Color{255, 255, 255, 0xFF}), active(isMine) {
-    font = TTF_OpenFont(FONT_UPGRD, FONT_UPGRD_SIZE);
+    font = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+                         + FONT_UPGRD).c_str(), FONT_UPGRD_SIZE);
     key = tower->getKey();
     this->addButtons();
     this->update();

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "MusicLoader.h"
+#include "../../../Common/Paths.h"
 
 MusicLoader::MusicLoader() {
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
@@ -7,7 +8,8 @@ MusicLoader::MusicLoader() {
     music = Mix_LoadMUS(MAIN_MUSIC_PATH);
     for (int i = 0; i < TOTAL_CHUNKS; ++i) {
         effects[i] = Mix_LoadWAV(std::string(
-                "../Resources/" + std::to_string(i) + ".ogg").c_str());
+                PATH_RESOURCES_1 + std::string("") +
+                "Sounds/" + std::to_string(i) + ".ogg").c_str());
     }
 }
 

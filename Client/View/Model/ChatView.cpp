@@ -5,8 +5,9 @@
 #include "ViewConstants.h"
 #include "../../../Common/Lock.h"
 #include "../../include/NetCommands/ChatMessageCommand.h"
+#include "../../../Common/Paths.h"
 
-#define FONT_PATH "../Resources/font.ttf"
+#define FONT_PATH "Fonts/font.ttf"
 #define FONT_SIZE 10
 #define MAX_LENGTH 49
 #define MAX_SIZE 8
@@ -36,7 +37,8 @@ ChatView::ChatView(CommandDispatcher &d, Window &w,
         spriteInput(tl.getTexture(CHAT_INPUT), r),
         textColor(SDL_Color{255, 255, 255, 0xFF}), active(false),
         _messagesToAdd(), visible(true), offsetResolution(0) {
-    font = TTF_OpenFont(FONT_PATH, FONT_SIZE);
+    font = TTF_OpenFont((PATH_RESOURCES_1 + std::string("")
+                         + FONT_PATH).c_str(), FONT_SIZE);
 
     if (window.getWidth() < MIN_RESOLUTION)
         offsetResolution = HUD_BUTTON_Y + MARQUESINA_H;
