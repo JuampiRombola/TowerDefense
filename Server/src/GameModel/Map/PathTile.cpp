@@ -258,7 +258,7 @@ void PathTile::UnitLeave(EnviormentUnit* unit){
 	auto it = std::find(_units.begin(), _units.end(), unit);
 	if (it != _units.end()){
 		_units.erase(it);
-		unit->SetPosition(nullptr, _map); 
+		//unit->SetPosition(nullptr, _map); 
 	}
 	else
 		throw UnitIsNotOnThisTileException();
