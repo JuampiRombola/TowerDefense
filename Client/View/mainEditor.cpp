@@ -9,9 +9,10 @@
 #include "Common/MusicLoader.h"
 #include "Common/MouseMovement.h"
 #include "Common/ExitView.h"
+#include "../../Common/Paths.h"
 
 #define TITLE "Tower Defense"
-#define CONFIG_PATH "windowConfig.yaml"
+#define CONFIG_PATH "Editor/windowConfig.yaml"
 #define EDITOR_MODE 1
 #define SALIDA_DEFAULT "mapa"
 
@@ -22,7 +23,8 @@ int main(int argc, char **argv) {
     SDL_Event event;
     SDL_Init(SDL_INIT_VIDEO);
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-    YAML::Node windowConfig(YAML::LoadFile(CONFIG_PATH));
+    YAML::Node windowConfig(YAML::LoadFile(PATH_CONFIG_1
+                                           + std::string("") + CONFIG_PATH));
     Window window(TITLE, windowConfig["editor_width"].as<int>(),
                   windowConfig["editor_height"].as<int>(),
                   windowConfig["editor_fullscreen"].as<bool>() ? SDL_WINDOW_FULLSCREEN_DESKTOP

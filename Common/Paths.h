@@ -12,5 +12,5 @@
 // Hacer search and replace y cambiar por PATH_RESOURCES
 #define PATH_RESOURCES_1 "../Resources/"
 
-
+#define PATH_CONFIG_1 "../Config/"
 

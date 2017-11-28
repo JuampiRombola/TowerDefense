@@ -12,14 +12,14 @@
 #include "View/Common/MusicLoader.h"
 #include "View/Common/MouseMovement.h"
 #include "View/Common/MusicPlayer.h"
+#include "../Common/Paths.h"
 
 #define TITLE "Tower Defense"
 
-#define CONFIG_PATH "windowConfig.yaml"
+#define CONFIG_PATH "Client/windowConfig.yaml"
 
 SDLRunner::SDLRunner(uint8_t mapSurface, uint32_t mapWidth, uint32_t mapHeight)
-: _mapSurface(mapSurface), _mapWidth(mapWidth), _mapHeight(mapHeight)
-{
+: _mapSurface(mapSurface), _mapWidth(mapWidth), _mapHeight(mapHeight) {
 
 }
 
@@ -30,8 +30,8 @@ SDLRunner::~SDLRunner() {
     delete _sock;
 }
 
-void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* reciever, ClientLobbyManager* lobbyManager, ClientSocket* sock)
-{
+void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* reciever,
+                    ClientLobbyManager* lobbyManager, ClientSocket* sock) {
     _dispatcher = dispatcher;
     _lobbyManager = lobbyManager;
     _reciever = reciever;
@@ -41,11 +41,13 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
     SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
     TTF_Init();
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-    YAML::Node windowConfig(YAML::LoadFile(CONFIG_PATH));
+    YAML::Node windowConfig(YAML::LoadFile(PATH_CONFIG_1
+                                           + std::string("") + CONFIG_PATH));
     Window window(TITLE, windowConfig["game_width"].as<int>(),
                   windowConfig["game_height"].as<int>(),
-                  windowConfig["game_fullscreen"].as<bool>() ? SDL_WINDOW_FULLSCREEN_DESKTOP
-                                                               : SDL_WINDOW_FOREIGN);
+                  windowConfig["game_fullscreen"].as<bool>()
+                  ? SDL_WINDOW_FULLSCREEN_DESKTOP
+                  : SDL_WINDOW_FOREIGN);
     Renderer renderer(window, _mapWidth, _mapHeight);
     MusicLoader musicLoader;
     musicLoader.playMusic();
@@ -199,7 +201,4 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
 
     TTF_Quit();
     SDL_Quit();
-
-
-
 }

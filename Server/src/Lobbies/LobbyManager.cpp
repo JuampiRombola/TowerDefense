@@ -6,6 +6,7 @@
 #include "../../include/Exceptions/InvalidSpellTypeException.h"
 #include "../../include/Notifications/LoggedInNotification.h"
 #include "../../include/Notifications/MapPickedNotification.h"
+#include "../../../Common/Paths.h"
 
 
 LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
@@ -13,7 +14,7 @@ LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
 {
 	//Levantar de archivo todas las configuraciones de MAPA!!!
 	int id = 0;
-	std::string maps_path("mapas");
+    std::string maps_path = PATH_CONFIG_1 + std::string("") + "Maps/";
 	DIR *dir = opendir(maps_path.c_str());
 	if(dir){
 		dirent *entry;
@@ -30,7 +31,7 @@ LobbyManager::LobbyManager(ThreadSafeQueue<Notification*>& notifications)
 	            	mapname = mapname.substr(0, i);
 	            }
 
-                std::string s = maps_path + '/' + mapname + ".yaml";
+                std::string s = maps_path + mapname + ".yaml";
                 _mapCfgs.push_back(new Configuration(s, id++, mapname));
             }
 		}

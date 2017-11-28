@@ -1,0 +1,480 @@
+nombre: mapa
+superficie: 2
+ancho: 15
+alto: 19
+superficies: 
+ - x: 5
+   y: 1
+ - x: 5
+   y: 7
+ - x: 5
+   y: 11
+ - x: 7
+   y: 16
+ - x: 9
+   y: 1
+ - x: 9
+   y: 7
+ - x: 9
+   y: 11
+caminos: 
+ - x: 2
+   y: 2
+   x_sig: 3
+   y_sig: 2
+ - x: 3
+   y: 2
+   x_sig: 4
+   y_sig: 2
+ - x: 4
+   y: 2
+   x_sig: 5
+   y_sig: 2
+ - x: 5
+   y: 2
+   x_sig: 6
+   y_sig: 2
+ - x: 6
+   y: 2
+   x_sig: 7
+   y_sig: 2
+ - x: 7
+   y: 2
+   x_sig: 8
+   y_sig: 2
+ - x: 8
+   y: 2
+   x_sig: 9
+   y_sig: 2
+ - x: 9
+   y: 2
+   x_sig: 10
+   y_sig: 2
+ - x: 10
+   y: 2
+   x_sig: 11
+   y_sig: 2
+ - x: 11
+   y: 2
+   x_sig: 12
+   y_sig: 2
+ - x: 12
+   y: 2
+   x_sig: -1
+   y_sig: -1
+ - x: 4
+   y: 10
+   x_sig: 5
+   y_sig: 10
+ - x: 5
+   y: 10
+   x_sig: 6
+   y_sig: 10
+ - x: 6
+   y: 10
+   x_sig: 6
+   y_sig: 11
+ - x: 6
+   y: 11
+   x_sig: -1
+   y_sig: -1
+ - x: 5
+   y: 14
+   x_sig: 6
+   y_sig: 14
+ - x: 6
+   y: 14
+   x_sig: 7
+   y_sig: 14
+ - x: 7
+   y: 14
+   x_sig: 8
+   y_sig: 14
+ - x: 8
+   y: 14
+   x_sig: 9
+   y_sig: 14
+ - x: 9
+   y: 14
+   x_sig: -1
+   y_sig: -1
+ - x: 5
+   y: 17
+   x_sig: 5
+   y_sig: 16
+ - x: 5
+   y: 16
+   x_sig: 4
+   y_sig: 16
+ - x: 4
+   y: 16
+   x_sig: 3
+   y_sig: 16
+ - x: 3
+   y: 16
+   x_sig: 3
+   y_sig: 15
+ - x: 3
+   y: 15
+   x_sig: 3
+   y_sig: 14
+ - x: 3
+   y: 14
+   x_sig: 3
+   y_sig: 13
+ - x: 3
+   y: 13
+   x_sig: 2
+   y_sig: 13
+ - x: 2
+   y: 13
+   x_sig: 2
+   y_sig: 12
+ - x: 2
+   y: 12
+   x_sig: 2
+   y_sig: 11
+ - x: 2
+   y: 11
+   x_sig: 2
+   y_sig: 10
+ - x: 2
+   y: 10
+   x_sig: 2
+   y_sig: 9
+ - x: 2
+   y: 9
+   x_sig: 2
+   y_sig: 8
+ - x: 2
+   y: 8
+   x_sig: 2
+   y_sig: 7
+ - x: 2
+   y: 7
+   x_sig: 2
+   y_sig: 6
+ - x: 2
+   y: 6
+   x_sig: 2
+   y_sig: 5
+ - x: 2
+   y: 5
+   x_sig: 2
+   y_sig: 4
+ - x: 2
+   y: 4
+   x_sig: 3
+   y_sig: 4
+ - x: 3
+   y: 4
+   x_sig: 4
+   y_sig: 4
+ - x: 4
+   y: 4
+   x_sig: 4
+   y_sig: 5
+ - x: 4
+   y: 5
+   x_sig: 4
+   y_sig: 6
+ - x: 4
+   y: 6
+   x_sig: 4
+   y_sig: 7
+ - x: 4
+   y: 7
+   x_sig: -1
+   y_sig: -1
+ - x: 6
+   y: 7
+   x_sig: 6
+   y_sig: 6
+ - x: 6
+   y: 6
+   x_sig: 6
+   y_sig: 5
+ - x: 6
+   y: 5
+   x_sig: 6
+   y_sig: 4
+ - x: 6
+   y: 4
+   x_sig: 7
+   y_sig: 4
+ - x: 7
+   y: 4
+   x_sig: 8
+   y_sig: 4
+ - x: 8
+   y: 4
+   x_sig: 8
+   y_sig: 5
+ - x: 8
+   y: 5
+   x_sig: 8
+   y_sig: 6
+ - x: 8
+   y: 6
+   x_sig: 8
+   y_sig: 7
+ - x: 8
+   y: 7
+   x_sig: -1
+   y_sig: -1
+ - x: 8
+   y: 10
+   x_sig: 9
+   y_sig: 10
+ - x: 9
+   y: 10
+   x_sig: 10
+   y_sig: 10
+ - x: 10
+   y: 10
+   x_sig: 10
+   y_sig: 11
+ - x: 10
+   y: 11
+   x_sig: -1
+   y_sig: -1
+ - x: 10
+   y: 7
+   x_sig: 10
+   y_sig: 6
+ - x: 10
+   y: 6
+   x_sig: 10
+   y_sig: 5
+ - x: 10
+   y: 5
+   x_sig: 10
+   y_sig: 4
+ - x: 10
+   y: 4
+   x_sig: 11
+   y_sig: 4
+ - x: 11
+   y: 4
+   x_sig: 12
+   y_sig: 4
+ - x: 12
+   y: 4
+   x_sig: 12
+   y_sig: 5
+ - x: 12
+   y: 5
+   x_sig: 12
+   y_sig: 6
+ - x: 12
+   y: 6
+   x_sig: 12
+   y_sig: 7
+ - x: 12
+   y: 7
+   x_sig: 12
+   y_sig: 8
+ - x: 12
+   y: 8
+   x_sig: 12
+   y_sig: 9
+ - x: 12
+   y: 9
+   x_sig: 12
+   y_sig: 10
+ - x: 12
+   y: 10
+   x_sig: 12
+   y_sig: 11
+ - x: 12
+   y: 11
+   x_sig: 12
+   y_sig: 12
+ - x: 12
+   y: 12
+   x_sig: 12
+   y_sig: 13
+ - x: 12
+   y: 13
+   x_sig: 11
+   y_sig: 13
+ - x: 11
+   y: 13
+   x_sig: 11
+   y_sig: 14
+ - x: 11
+   y: 14
+   x_sig: 11
+   y_sig: 15
+ - x: 11
+   y: 15
+   x_sig: 11
+   y_sig: 16
+ - x: 11
+   y: 16
+   x_sig: 10
+   y_sig: 16
+ - x: 10
+   y: 16
+   x_sig: 10
+   y_sig: 17
+ - x: 10
+   y: 17
+   x_sig: -1
+   y_sig: -1
+portales: 
+ - tipo: entrada
+   x: 4
+   y: 10
+ - tipo: salida
+   x: 10
+   y: 11
+ - tipo: salida
+   x: 6
+   y: 11
+ - tipo: entrada
+   x: 8
+   y: 10
+ - tipo: entrada
+   x: 5
+   y: 14
+ - tipo: salida
+   x: 9
+   y: 14
+ - tipo: entrada
+   x: 5
+   y: 17
+ - tipo: salida
+   x: 10
+   y: 17
+ - tipo: salida
+   x: 4
+   y: 7
+ - tipo: entrada
+   x: 6
+   y: 7
+ - tipo: salida
+   x: 8
+   y: 7
+ - tipo: entrada
+   x: 10
+   y: 7
+ - tipo: entrada
+   x: 2
+   y: 2
+ - tipo: salida
+   x: 12
+   y: 2
+hordas:
+ - tiempo: 1
+   abmonible: 10
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 0
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 0
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 0
+   hombre_cabra: 10
+   no_muerto: 0
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 0
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 10
+   hombre_cabra: 0
+   no_muerto: 0
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 0
+   demonio_verde: 10
+   espectro: 0
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 0
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 0
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 10
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 0
+   demonio_verde: 0
+   espectro: 10
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 0
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 10
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 0
+   hombre_cabra: 10
+   no_muerto: 0
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 0
+   demonio_verde: 10
+   espectro: 0
+   halcon_sangriento: 10
+   hombre_cabra: 0
+   no_muerto: 0
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 0
+   demonio_verde: 0
+   espectro: 10
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 10
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 10
+   demonio_verde: 0
+   espectro: 0
+   halcon_sangriento: 10
+   hombre_cabra: 10
+   no_muerto: 0
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 0
+   demonio_verde: 10
+   espectro: 10
+   halcon_sangriento: 0
+   hombre_cabra: 0
+   no_muerto: 10
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 5
+   demonio_verde: 5
+   espectro: 5
+   halcon_sangriento: 5
+   hombre_cabra: 5
+   no_muerto: 5
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 8
+   demonio_verde: 8
+   espectro: 8
+   halcon_sangriento: 8
+   hombre_cabra: 8
+   no_muerto: 8
+   tiempo_hordas: 1
+ - tiempo: 1
+   abmonible: 10
+   demonio_verde: 10
+   espectro: 10
+   halcon_sangriento: 10
+   hombre_cabra: 10
+   no_muerto: 10
+   tiempo_hordas: 1

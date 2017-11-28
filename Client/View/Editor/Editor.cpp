@@ -1,5 +1,6 @@
 #include "Editor.h"
 #include "EditorValidationException.h"
+#include "../../../Common/Paths.h"
 #include <iostream>
 #include <bits/ios_base.h>
 #include <ios>
@@ -88,7 +89,8 @@ void Editor::exportar() {
         fileContent << " - " << horda.exportar();
         ++hordaNro;
     }
-    File file(nombre + ".yaml");
+    File file(PATH_CONFIG_1 + std::string("")
+              + "Maps/" + nombre + ".yaml");
     file.write(fileContent.str());
     window.showErrorMessage("", "¡El mapa se exportó con éxito!");
 }

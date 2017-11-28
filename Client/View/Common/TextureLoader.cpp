@@ -4,7 +4,7 @@
 #include "SpriteNamesConfig.h"
 #include "../../../Common/Paths.h"
 
-#define CONFIG_PATH "../Client/View/spritesConfig.yaml"
+#define CONFIG_PATH "Client/spritesConfig.yaml"
 #define SPRITES_PATH "Sprites/"
 #define PNGFORMAT ".png"
 
@@ -12,7 +12,7 @@
 #define EDITOR_MODE 1
 
 TextureLoader::TextureLoader(SDL_Renderer *renderer, int mode) :
-        cfg(YAML::LoadFile(CONFIG_PATH)) {
+        cfg(YAML::LoadFile(PATH_CONFIG_1 + std::string("") + CONFIG_PATH)) {
     int totalGame = TOTAL;
     int totalEditor = TOTAL_EDITOR;
     int totalHUD = TOTAL_HUD;
