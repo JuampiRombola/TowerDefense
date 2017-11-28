@@ -53,7 +53,15 @@ int main(int argc, char **argv) {
     int tileX = 0;
     int tileY = 0;
 
+    Uint32 t1;
+    Uint32 t2;
+    Uint32 s = 1000 / windowConfig["editor_fps"].as<uint>();
+    Uint32 delta = 0;
+    Uint32 elapsedTime = 0;
+    Uint32 delayTime = 0;
+
     while (!quit) {
+        t1 = SDL_GetTicks();
 
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -142,6 +150,15 @@ int main(int argc, char **argv) {
         renderer.present();
         if (editor.isExitActive() && !exitView.isActive())
             exitView.activate();
+
+        t2 = SDL_GetTicks();
+        elapsedTime = t2 - t1 + delta;
+        delayTime = s - elapsedTime;
+        if (elapsedTime < s) {
+            SDL_Delay(delayTime);
+            delta = SDL_GetTicks() - t2 - delayTime;
+        } else
+            delta = elapsedTime - s;
     }
     SDL_Quit();
     return 0;
