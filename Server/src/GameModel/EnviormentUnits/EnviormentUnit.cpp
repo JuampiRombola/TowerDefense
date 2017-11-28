@@ -47,6 +47,8 @@ void EnviormentUnit::PushBack(){
 
 	_position = _lastPosition;
 	_lastPosition = nullptr;
+	auto vm = GetViewModel();
+	_notifications.Queue(new UnitPositionGameNotification(vm));
 	std::cout << "EnviormentUnit Pushed backed\n" << std::flush;
 	PrintDebug();
 }
@@ -84,10 +86,6 @@ void EnviormentUnit::Slow(uint slowSeconds, uint percentSlow){
     auto tup = std::tuple<unsigned long long, uint, uint>(ts, (slowSeconds * 1000), delayIncrement);
 	_slows.push_back(tup);
 	_notifications.Queue(new UnitSpeedUpdateGameNotification(_id, _stepDelay_ms));
-/*	_isSlowed = true;
-	_activePercentSlow = percentSlow;
-	_lastSlowBeginTimeStamp_ms = Helpers::MillisecondsTimeStamp();
-	_lastSlowDuration_sec = slowSeconds;*/
 }
 
 

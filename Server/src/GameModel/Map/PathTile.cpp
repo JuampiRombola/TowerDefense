@@ -30,7 +30,8 @@ char PathTile::GetSymbol(){
 
 void PathTile::Crack(uint time_ms){
 	for (auto it = _units.begin(); it != _units.end(); ++it){
-		(*it)->Kill();
+		if (!(*it)->Flies())
+			(*it)->Kill();
 	}
 	_isCracked = true;
 	_lastCrackTimeStamp_ms = Helpers::MillisecondsTimeStamp();
@@ -207,8 +208,8 @@ void PathTile::UnitEnter(EnviormentUnit* unit){
 			_isCracked = false;
 			_lastCrackDuration_ms = 0;
 		} else {
-			std::cout << "FALLED INTO CRACK\n" << std::flush;
-			unit->Kill();
+			if (!unit->Flies())
+				unit->Kill();
 			return;
 		}
 	}
@@ -219,7 +220,6 @@ void PathTile::UnitEnter(EnviormentUnit* unit){
 			_isOnFire = false;
 			_lastFireDuration_ms = 0;
 		} else {
-			std::cout << "UNIT GOT BURNT!!\n" << std::flush;
 			unit->GetHit(_lastFireDamage);
 		}
 	}
@@ -258,7 +258,7 @@ void PathTile::UnitLeave(EnviormentUnit* unit){
 	auto it = std::find(_units.begin(), _units.end(), unit);
 	if (it != _units.end()){
 		_units.erase(it);
-		unit->SetPosition(nullptr, _map); 
+		//unit->SetPosition(nullptr, _map); 
 	}
 	else
 		throw UnitIsNotOnThisTileException();
@@ -268,7 +268,7 @@ bool PathTile::HasAnyUnit(){
 	return _units.begin() != _units.end();
 }
 
-std::vector<EnviormentUnit*> PathTile::GetUnits(){ //copia!!!!!
+std::vector<EnviormentUnit*> PathTile::GetUnits(){ 
 	return _units;
 }
 

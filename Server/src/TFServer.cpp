@@ -141,9 +141,6 @@ void TFServer::HandleConnection(PlayerProxy& player){
 				case PICK_SPELL:
 					_lobbyManager.HandlePlayerPickedSpell(player);
 					break;
-				//case UNPICK_SPELL:
-					//_lobbyManager.HandlePlayerUnpickedSpell(player);
-				//	break;
 				case PICK_MAP:
 					_lobbyManager.HandlePickMap(player);
 					break;
@@ -169,9 +166,7 @@ void TFServer::HandleConnection(PlayerProxy& player){
 		auto it = std::find(_playerProxies.begin(), _playerProxies.end(), &player);
 		if (it != _playerProxies.end()){
 			PlayerProxy* playerProxy = *it;
-			//_playerProxies.erase(it);
 			_notifications.Queue(new PlayerLeaveNotification(playerProxy->GUID()));
-			//delete playerProxy;
 			playerProxy->state = DEAD;
 		}
 		std::cerr << e.what() << '\n';

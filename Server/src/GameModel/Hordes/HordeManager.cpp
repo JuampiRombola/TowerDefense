@@ -18,7 +18,7 @@ HordeManager::HordeManager(Configuration& mapCfg)
 
 		const YAML::Node& node = *it;
         Horde* h = new Horde(i++);
-        h->timeBetweenUnits_ms  = 100 * node["tiempo"].as<uint>();
+        h->timeBetweenUnits_ms  = 1000 * node["tiempo"].as<uint>();
         h->abmonibleAmount = node["abmonible"].as<uint>();
         h->demonioVerdeAmount = node["demonio_verde"].as<uint>();
         h->espectroAmount = node["espectro"].as<uint>();

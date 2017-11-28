@@ -17,8 +17,6 @@ NotificationReciever::NotificationReciever(SocketWrapper& socket, ClientLobbyMan
 }
 
 NotificationReciever::~NotificationReciever(){
-    if (!_stop)
-	    this->Stop();
 	if (_thread.joinable())
 		_thread.join();
 }
@@ -84,10 +82,6 @@ void NotificationReciever::_SwitchOnOpcode(uint8_t opcode){
             break;
         }
 
-        //case UNPICK_SPELL:
-            //std::cout << "UNPICK_SPELL::\n" << std::flush;
-            //_lobbyManager.HandleUnpickedSpell();
-          //  break;
         case PICK_MAP:
             std::cout << "PICK_MAP::\n" << std::flush;
             _lobbyManager.HandleMapPicked();
@@ -96,10 +90,6 @@ void NotificationReciever::_SwitchOnOpcode(uint8_t opcode){
             std::cout << "PLAYER_PICKED_SPELL::\n" << std::flush;
             _lobbyManager.HandleOtherPlayerPickedSpell();
             break;
-        //case PLAYER_UNPICKED_SPELL:
-            //std::cout << "PLAYER_UNPICKED_SPELL::\n" << std::flush;
-            //_lobbyManager.HandleOtherPlayerUnpickedSpell();
-           // break;
         case LOG_IN_FAILED:
             std::cout << "LOG_IN_FAILED::\n" << std::flush;
             _runner.gtkNotifications.Queue(new LogInFailedGtkNotification());
@@ -219,13 +209,11 @@ void NotificationReciever::_HandleGameOpcode(){
 		case GAME_OVER:
             std::cout << "GAME_OVER::\n" << std::flush;
             model_view->gameOver();
-            std::this_thread::sleep_for (std::chrono::milliseconds(3000));
             _stop = true;
             break;
         case GAME_WON:
             std::cout << "GAME_WON::\n" << std::flush;
             model_view->win();
-            std::this_thread::sleep_for (std::chrono::milliseconds(3000));
             _stop = true;
             break;
         case UNIT_DIED:

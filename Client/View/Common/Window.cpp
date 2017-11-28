@@ -4,6 +4,7 @@
 
 Window::Window(const std::string &title, int width, int height, Uint32 flag) :
         width(width), height(height) {
+    std::cout << "Me llegó el flag " << flag << "\n";
     window = SDL_CreateWindow(title.c_str(),
                               SDL_WINDOWPOS_UNDEFINED, // x position
                               SDL_WINDOWPOS_UNDEFINED, // y position
