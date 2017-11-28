@@ -26,7 +26,7 @@ void FixedLobbies::Set(const Glib::RefPtr<Gtk::Builder> &refBuilder){
     g_object_ref(store->gobj());
 
     treeview->set_model(store);
-    treeview->append_column("Nombre", this->columns.m_col_lobbyname);
+    treeview->append_column("Name", this->columns.m_col_lobbyname);
     treeview->append_column("Players", this->columns.m_col_lobby_player_amount);
 }
 
