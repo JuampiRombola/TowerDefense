@@ -175,6 +175,10 @@ void TFServer::HandleConnection(PlayerProxy& player){
 		auto it = std::find(_playerProxies.begin(), _playerProxies.end(), &player);
 		if (it != _playerProxies.end()){
 			PlayerProxy* playerProxy = *it;
+			if (playerProxy->lobby != nullptr){
+				auto l = playerProxy->lobby;
+				l->PlayerLeave(*playerProxy);
+			}
 			_notifications.Queue(new PlayerLeaveNotification(playerProxy->GUID()));
 			playerProxy->state = DEAD;
 		}

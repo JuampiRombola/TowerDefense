@@ -87,6 +87,10 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">label</property>
+                <property name="xalign">0.10000000149011612</property>
+                <attributes>
+                  <attribute name="font-desc" value="&lt;Enter Value&gt; 37"/>
+                </attributes>
               </object>
             </child>
             <child>
@@ -98,7 +102,7 @@
                 <property name="receives_default">True</property>
               </object>
               <packing>
-                <property name="x">400</property>
+                <property name="x">165</property>
                 <property name="y">350</property>
               </packing>
             </child>
@@ -111,7 +115,7 @@
                 <property name="receives_default">True</property>
               </object>
               <packing>
-                <property name="x">29</property>
+                <property name="x">53</property>
                 <property name="y">350</property>
               </packing>
             </child>
@@ -126,16 +130,16 @@
                 </child>
               </object>
               <packing>
-                <property name="x">157</property>
-                <property name="y">154</property>
+                <property name="x">53</property>
+                <property name="y">151</property>
               </packing>
             </child>
             <child>
               <object class="GtkGrid" id="grid1">
                 <property name="width_request">100</property>
-                <property name="height_request">80</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="column_spacing">26</property>
                 <child>
                   <object class="GtkRadioButton" id="radio_fire">
                     <property name="label" translatable="yes">Fire</property>
@@ -162,8 +166,8 @@
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">1</property>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">0</property>
                   </packing>
                 </child>
                 <child>
@@ -177,8 +181,8 @@
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">2</property>
+                    <property name="left_attach">2</property>
+                    <property name="top_attach">0</property>
                   </packing>
                 </child>
                 <child>
@@ -192,14 +196,14 @@
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">3</property>
+                    <property name="left_attach">3</property>
+                    <property name="top_attach">0</property>
                   </packing>
                 </child>
               </object>
               <packing>
-                <property name="x">22</property>
-                <property name="y">220</property>
+                <property name="x">320</property>
+                <property name="y">101</property>
               </packing>
             </child>
             <child>
@@ -210,8 +214,19 @@
                 <property name="can_focus">False</property>
               </object>
               <packing>
-                <property name="x">350</property>
+                <property name="x">94</property>
                 <property name="y">94</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label6">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Map:</property>
+              </object>
+              <packing>
+                <property name="x">53</property>
+                <property name="y">101</property>
               </packing>
             </child>
           </object>
