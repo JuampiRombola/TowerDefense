@@ -262,8 +262,6 @@ void EditorButtons::addBackground() {
 void EditorButtons::limitPadding() {
     int cantHordas = static_cast<int>((images.size() -
                      TOTAL_MAIN_BUTTONS)/BUTTONS_PER_HORDA);
-    printf("IMAGES SIZE %lu\n", images.size());
-    printf("Cant horda %d\n", cantHordas);
     if (cantHordas == 1)
         padding = 0;
     else if (cantHordas < padding + 1)
