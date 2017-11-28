@@ -105,6 +105,7 @@ enum UpgradeType {
 #define UNIT_SPEED_UPDATE 221
 #define UNIT_FROZEN 222
 #define SPELL_IS_FREE 223
+#define LOBBY_GONE 224
 
 
 #endif

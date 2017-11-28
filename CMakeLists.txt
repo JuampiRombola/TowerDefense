@@ -17,6 +17,8 @@ set(SOURCE_FILES_SERVER
         Server/src/Lobbies/Lobby.cpp
         Server/include/Lobbies/LobbyManager.h
         Server/src/Lobbies/LobbyManager.cpp
+        Server/include/Notifications/LobbyGoneNotification.h
+        Server/src/Notifications/LobbyGoneNotification.cpp
         Server/include/Notifications/InvalidLogInNotification.h
         Server/include/Notifications/GameStartedNotification.h
         Server/include/Notifications/LobbyJoinedNotification.h
@@ -273,6 +275,7 @@ set(SOURCE_FILES_CLIENT_GTK
 
         Client/src/SDLNotifications/SDLNotification.cpp
         Client/src/GTKNotifications/JoinedLobbyGTKNotification.cpp
+        Client/src/GTKNotifications/LobbyIsGoneGTKNotification.cpp
         Client/src/GTKNotifications/SpellIsFreeGTKNotification.cpp
         Client/src/GTKNotifications/PlayerIsReadyGTKNotification.cpp
         Client/src/GTKNotifications/LeftLobbyGTKNotification.cpp
@@ -282,6 +285,7 @@ set(SOURCE_FILES_CLIENT_GTK
         Client/src/GTKNotifications/LobbyPickedMapGTKNotification.cpp
         Client/src/NotificationReciever.cpp
         Client/include/GTKNotifications/PlayerIsReadyGTKNotification.h
+        Client/include/GTKNotifications/LobbyIsGoneGTKNotification.h
 
         Client/include/GTKNotifications/SpellIsFreeGTKNotification.h
         Client/include/GTKNotifications/LobbyPickedMapGTKNotification.h
@@ -457,7 +461,6 @@ add_executable(TowerDefenseServer ${SOURCE_FILES_SERVER} Server/src/main.cpp)
 add_executable(TowerDefenseEditor ${SOURCE_FILES_EDITOR} Client/View/mainEditor.cpp)
 add_executable(TowerDefenseClient ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/main.cpp Client/src/GTKNotifications/SpellIsFreeGTKNotification.cpp Client/include/GTKNotifications/SpellIsFreeGTKNotification.h Client/src/GTKNotifications/PlayerIsReadyGTKNotification.cpp Client/include/GTKNotifications/PlayerIsReadyGTKNotification.h)
 add_executable(TowerDefenseView ${SOURCE_FILES_CLIENT} ${SOURCE_FILES_CLIENT_GTK} Client/View/mainView.cpp)
-add_executable(LOBBYMM Client/main-test-gtk-mm.cpp)
 
 
 INCLUDE(FindPkgConfig)

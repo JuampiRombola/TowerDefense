@@ -38,6 +38,23 @@ void FixedLobbies::NewLobby(std::string name, uint guid) {
     row[columns.m_col_lobby_player_amount] = 0;
 }
 
+
+void FixedLobbies::RemoveLobby(uint32_t lobbyGuid){
+    typedef Gtk::TreeModel::Children type_children;
+    type_children children = treeview->get_model()->children();
+    for(type_children::iterator iter = children.begin();
+        iter != children.end();)
+    {
+        Gtk::TreeModel::Row row = *iter;
+        uint lguid = row.get_value(columns.m_col_lobbyid);
+        if (lguid == lobbyGuid){
+            iter = store->erase(iter);
+        } else{
+            ++iter;
+        }
+    }
+}
+
 void FixedLobbies::SetMyName(std::string &name) {
     label_myname->set_text(name);
 }

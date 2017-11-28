@@ -55,7 +55,7 @@ public:
     Gtk::Entry* entry_newLobbyName;
 
     void NewLobby(std::string name, uint guid);
-
+    void RemoveLobby(uint32_t lobbyGuid);
     void Set(const Glib::RefPtr<Gtk::Builder> &refBuilder);
 
     int GetSelectedLobbyId();

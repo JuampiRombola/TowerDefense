@@ -39,7 +39,7 @@ bool SocketWrapper::_Send(const char *buffer, size_t length){
 	size_t sentBytes = 0;
 	int rv = 0;
 	while (sentBytes < length){
-		rv = send(_fd, &buffer[sentBytes], length - sentBytes, 0);
+		rv = send(_fd, &buffer[sentBytes], length - sentBytes, MSG_NOSIGNAL);
 		if (rv < 0){
 			throw SocketConnectionException();
 		} else if (rv == 0){
@@ -62,7 +62,7 @@ bool SocketWrapper::_Recieve(char *buffer, size_t msgLen){
 	int rv = 0;
 	memset(buffer, 0, msgLen);
 	while ((bytesRecieved < msgLen) && socketIsOpen){
-		rv = recv(_fd, &buffer[bytesRecieved], msgLen - bytesRecieved, 0);
+		rv = recv(_fd, &buffer[bytesRecieved], msgLen - bytesRecieved, MSG_NOSIGNAL);
 		if (rv < 0){
 			throw SocketConnectionException();
 		} else if (rv == 0){

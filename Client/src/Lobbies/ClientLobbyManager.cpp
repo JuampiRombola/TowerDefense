@@ -17,6 +17,7 @@
 #include "../../include/GTKNotifications/PickSpellGTKNotification.h"
 #include "../../../Server/include/Lobbies/Lobby.h"
 #include "../../include/GTKNotifications/LobbyPickedMapGTKNotification.h"
+#include "../../include/GTKNotifications/PlayerIsReadyGTKNotification.h"
 
 
 ClientLobbyManager::ClientLobbyManager(SocketWrapper& _sock, GTKmmRunner& runner)
@@ -42,21 +43,40 @@ void ClientLobbyManager::HandleLobbyJoin(){
     joinedLobby = GetLobby(lobbyGuid);
 
 
+
     uint32_t firepguid = _sock.RecieveInt32();
-    if (firepguid > 0)
+    if (firepguid > 0){
+        uint8_t ready = _sock.RecieveByte();// espero 0 o 1
+        if (firepguid != myGuid)
+            (*GetOtherPlayer(firepguid))->ready = ready;
         joinedLobby->PlayerPickSpell(firepguid, SPELL_TYPE_FIRE, false);
+    }
 
     uint32_t waterpguid = _sock.RecieveInt32();
-    if (waterpguid > 0)
+    if (waterpguid > 0){
+        uint8_t ready = _sock.RecieveByte();// espero 0 o 1
+        if (waterpguid != myGuid)
+            (*GetOtherPlayer(waterpguid))->ready = ready;
         joinedLobby->PlayerPickSpell(waterpguid, SPELL_TYPE_WATER, false);
+    }
 
     uint32_t airpguid = _sock.RecieveInt32();
-    if (airpguid > 0)
+    if (airpguid > 0){
+        uint8_t ready = _sock.RecieveByte();// espero 0 o 1
+        if (airpguid != myGuid)
+            (*GetOtherPlayer(airpguid))->ready = ready;
         joinedLobby->PlayerPickSpell(airpguid, SPELL_TYPE_AIR, false);
+    }
 
     uint32_t groundpguid = _sock.RecieveInt32();
-    if (groundpguid > 0)
+    if (groundpguid > 0){
+        uint8_t ready = _sock.RecieveByte();// espero 0 o 1
+        if (groundpguid != myGuid)
+            (*GetOtherPlayer(groundpguid))->ready = ready;
         joinedLobby->PlayerPickSpell(groundpguid, SPELL_TYPE_GROUND, false);
+    }
+
+
 
     _runner.gtkNotifications.Queue(new JoinedLobbyGUINotification(*joinedLobby));
     g_idle_add(GTKmmRunner::notification_check, &_runner);
@@ -65,7 +85,16 @@ void ClientLobbyManager::HandleLobbyJoin(){
 void ClientLobbyManager::HandlePlayerJoin(){
     uint32_t pguid = _sock.RecieveInt32();
     std::string pname = _sock.RecieveString();
-    _otherPlayers.push_back(new OtherPlayer(pname, pguid));
+
+    OtherPlayer* p = nullptr;
+    for (auto it = _otherPlayers.begin(); it != _otherPlayers.end(); ++it){
+        if ((*it)->GUID() == pguid)
+            p = *it;
+    }
+
+    if (p == nullptr)
+        _otherPlayers.push_back(new OtherPlayer(pname, pguid));
+
     std::cout << pname << ", id: " << pguid <<  " joined\n" << std::flush;
 }
 
@@ -79,8 +108,8 @@ void ClientLobbyManager::HandlePlayerLeave(){
             p->joinedLobby->PlayerLeave(*p);
         }
 
-        _otherPlayers.erase(it);
-        delete *it;
+        //_otherPlayers.erase(it);
+        //delete *it;
     } catch (std::exception& e){
 
     }
@@ -133,8 +162,6 @@ void ClientLobbyManager::HandlePlayerLeftLobby(){
         Lobby* lobbyOtherPlayerLeft = GetLobby(lobbyGuid);
         auto itplayer = GetOtherPlayer(pguid);
         lobbyOtherPlayerLeft->PlayerLeave(*(*itplayer));
-        _runner.gtkNotifications.Queue(new PlayerLeftJoinedLobbyGTKNotification(*(*itplayer), *lobbyOtherPlayerLeft, false, false));
-        g_idle_add(GTKmmRunner::notification_check, &_runner);
     }
 }
 
@@ -229,9 +256,26 @@ void ClientLobbyManager::HandleMapPicked() {
 
 }
 
+
+void ClientLobbyManager::HandlePlayerReady(){
+    uint32_t pguid = _sock.RecieveInt32();
+
+
+    if (pguid != myGuid){
+        OtherPlayer* p = *GetOtherPlayer(pguid);
+        p->ready = true;
+    }
+
+
+    _runner.gtkNotifications.Queue(new PlayerIsReadyGTKNotification(pguid));
+    g_idle_add(GTKmmRunner::notification_check, &_runner);
+}
+
+
 void ClientLobbyManager::HandleLoginSuccess(){
     myGuid = _sock.RecieveInt32();
     myName = _sock.RecieveString();
+    mySecret = _sock.RecieveInt32();
 
     uint32_t lobbyCount = _sock.RecieveInt32();
 
@@ -242,8 +286,6 @@ void ClientLobbyManager::HandleLoginSuccess(){
         Lobby* l = new Lobby(lobbyName, lobbyGuid, _runner);
         l->pickedMapId = mapId;
         _lobbies.push_back(l);
-        //_runner.gtkNotifications.Queue(new NewLobbyGTKNotification(*l));
-        //g_idle_add(GTKmmRunner::notification_check, &_runner);
     }
 
     uint32_t playerAmount = _sock.RecieveInt32();

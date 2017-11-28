@@ -94,6 +94,7 @@ void Lobby::PlayerJoin(OtherPlayer &player){
 void Lobby::PlayerLeave(OtherPlayer &player){
 	std::lock_guard<std::mutex> lock(_otherPlayersMutex);
 	auto it = GetOtherPlayer(player.GUID());
+    (*it)->ready = false;
 	_players.erase(it);
 	player.joinedLobby = nullptr;
 	if (_waterPlayerGUID == player.GUID())
@@ -111,20 +112,7 @@ void Lobby::PlayerLeave(OtherPlayer &player){
 std::vector<OtherPlayer*> Lobby::GetOtherPlayersInLobby(){
 	return _players;
 }
-/*
-std::vector<OtherPlayer*> Lobby::GetOtherPlayersInLobbyWithSomeSpellSet(){
-	std::lock_guard<std::mutex> lock(_spellsMutex);
-	std::vector<OtherPlayer*> otherplayers;
-	if (_firePlayer != nullptr)
-		otherplayers.push_back(_firePlayer);
-	if (_waterPlayer != nullptr)
-		otherplayers.push_back(_waterPlayer);
-	if (_airPlayer != nullptr)
-		otherplayers.push_back(_airPlayer);
-	if (_groundPlayer != nullptr)
-		otherplayers.push_back(_groundPlayer);
-	return otherplayers;
-}*/
+
 
 std::vector<OtherPlayer*>::const_iterator Lobby::GetOtherPlayer(uint32_t guid){
 	bool found = false;

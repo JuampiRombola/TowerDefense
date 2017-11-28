@@ -32,7 +32,7 @@ public:
 	Lobby(std::string name, uint guid, ThreadSafeQueue<Notification*>& notifications);
 	~Lobby();
 	std::vector<int> GetPlayersGUIDS();
-	std::vector<PlayerProxy*> GetOtherPlayersInLobby();
+	std::vector<PlayerProxy*> GetPlayers();
 	std::string Name();
 	uint GUID();
 	void PlayerJoin(PlayerProxy& player);
@@ -47,6 +47,7 @@ public:
 	//void PlayerUnpickAir(PlayerProxy& player);
 	//void PlayerUnpickGround(PlayerProxy& player);
 
+    bool IsPlayerReady(PlayerProxy &player);
 	//Devuelve 0 si nadie eligio fuego.
 	PlayerProxy* GetFirePlayer();
 	PlayerProxy* GetWaterPlayer();
@@ -57,7 +58,6 @@ public:
 	bool GameEnabled();
 
     std::vector<PlayerProxy*> GetPlayersInLobbyWithSomeSpellSet();
-    std::vector<PlayerProxy*> GetPlayers();
 
 	Configuration* MapCfg;
 

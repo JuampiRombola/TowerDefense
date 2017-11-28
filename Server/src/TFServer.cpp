@@ -14,11 +14,12 @@
 #include "../include/Notifications/InvalidLogInNotification.h"
 #include "../include/Notifications/PlayerLeaveNotification.h"
 #include "../include/GameModel/Commands/CastSpellCommand.h"
+#include "../include/Notifications/LobbyGoneNotification.h"
 
 
 TFServer::TFServer(std::string service) : _playerGUID(1),_connectionHandlers(),_playerProxies(),
  _connectionHandlersMutex(), _acceptingConnsMutex(),  _playersProxiesMutex(), _gamesMutex(), _isAcceptingConnections(false),
- _lobbyManager(_notifications), _server(service), _notifications(), _gameNotificatorThreads(), _player2game(), _games(), _gameNotifications() {
+ _lobbyManager(_notifications), _server(service), _notifications(), _gameNotificatorThreads(), _player2game(), _name2secret(), _games(), _gameNotifications() {
 }
 
 TFServer::~TFServer(){
@@ -62,6 +63,14 @@ void TFServer::_AcceptConnections(){
 		if (sock != nullptr){
 			std::lock_guard<std::mutex> lock(_connectionHandlersMutex);
 			std::lock_guard<std::mutex> lock1(_playersProxiesMutex);
+			
+			
+			//uint8_t usingSecret = sock->RecieveByte();
+			//if (usingSecret){
+				
+			//}
+			
+			
 			_playerProxies.push_back(new PlayerProxy(*sock, ++_playerGUID));
 			_connectionHandlers.push_back(std::thread([&] { HandleConnection(*_playerProxies.back()); } ));
 		}
@@ -215,8 +224,7 @@ void TFServer::_LaunchGame(Lobby& lobby){
 	static int gameId = 1;
 	std::lock_guard<std::mutex> lock(_gamesMutex);
 	std::vector<PlayerProxy*> playersInGame = lobby.GetPlayers();
-
-
+	
     ThreadSafeQueue<GameNotification*>* notique = new ThreadSafeQueue<GameNotification*>();
     _gameNotifications.emplace_back(std::unique_ptr<ThreadSafeQueue<GameNotification*>>(notique));
 
@@ -230,8 +238,12 @@ void TFServer::_LaunchGame(Lobby& lobby){
 		_player2game[(*it)] = game;
 	}
 
+
+    _notifications.Queue(new LobbyGoneNotification(lobby));
+
 	_gameNotificatorThreads.emplace_back(std::thread(&TFServer::_NotifyGamePlayers, this, notique, playersInGame));
-	game->Run(lobby.GetFirePlayer(), lobby.GetAirPlayer(),
+
+    game->Run(lobby.GetFirePlayer(), lobby.GetAirPlayer(),
 			  lobby.GetWaterPlayer(), lobby.GetGroundPlayer());
 }
 
@@ -242,6 +254,7 @@ void TFServer::_LaunchGame(Lobby& lobby){
 void TFServer::_HandleLogin(PlayerProxy& player){
 	std::string playerName = player.RecieveString();
 
+
 	std::lock_guard<std::mutex> lock1(_playersProxiesMutex);
 	for (auto it = _playerProxies.begin(); it != _playerProxies.end(); ++it){
 		if ((*it)->Name() == playerName ){
@@ -251,6 +264,10 @@ void TFServer::_HandleLogin(PlayerProxy& player){
 	}
 
 	player.SetName(playerName);
+	std::hash<std::string> hash;
+	uint32_t secret = hash(playerName) & 0xFFFFFFFF;
+	_name2secret[playerName] = secret;
+	player.secret = secret;
 	std::cout << " CHECKPOINT \n" << std::flush;
 	_lobbyManager.HandleLogin(player);
 
