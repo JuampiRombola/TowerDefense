@@ -18,19 +18,19 @@ function startCompiling() {
 function compileServer() {
     echo 'Instalando TowerDefenseClient' >&2
     make TowerDefenseServer
-    sudo mv TowerDefenseServer /usr/bin
+    sudo mv TowerDefenseServer /usr/local/games
 }
 
 function compileClient() {
     echo 'Instalando TowerDefenseClient' >&2
     make TowerDefenseClient
-    sudo mv TowerDefenseClient /usr/bin
+    sudo mv TowerDefenseClient /usr/local/games
 }
 
 function compileEditor() {
     echo 'Instalando TowerDefenseEditor' >&2
     make TowerDefenseEditor
-    sudo mv TowerDefenseEditor /usr/bin
+    sudo mv TowerDefenseEditor /usr/local/games
 }
 
 function clean() {
@@ -39,11 +39,11 @@ function clean() {
 }
 
 function moveConfigAndResources() {
-    if [ ! -d /etc/TowerDefense ]; then
-      sudo mkdir /etc/TowerDefense
+    if [ ! -d /usr/local/etc/TowerDefense ]; then
+      sudo mkdir /usr/local/etc/TowerDefense
     fi
-    sudo cp -a Resources /etc/TowerDefense
-    sudo cp -a config/* /etc/TowerDefense
+    sudo cp -a Resources /usr/local/etc/TowerDefense
+    sudo cp -a config/* /usr/local/etc/TowerDefense
 }
 
 case $1 in
