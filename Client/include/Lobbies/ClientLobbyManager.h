@@ -9,26 +9,25 @@
 #include "Lobby.h"
 #include "../../../Common/SocketWrapper.h"
 
-class GTKRunner;
+class GTKmmRunner;
 
 class ClientLobbyManager{
 private:
 	SocketWrapper& _sock;
 	std::vector<Lobby*> _lobbies;
 	std::vector<OtherPlayer*> _otherPlayers;
-	GTKRunner& _runner;
+	GTKmmRunner& _runner;
 
 
 	std::vector<OtherPlayer*>::const_iterator  GetOtherPlayer(uint32_t guid);
 	Lobby* GetLobby(uint32_t guid);
 public:
-	ClientLobbyManager(SocketWrapper& sock, GTKRunner& GtkRunner);
+	ClientLobbyManager(SocketWrapper& sock, GTKmmRunner& GtkRunner);
 	~ClientLobbyManager();
 	void HandleNewLobbyNotification();
 	void HandleLobbyJoin();
 	void HandlePlayerLeftLobby();
 	void HandlePlayerJoinedLobby();
-	void HandleLeaveLobby();
 	void HandlePlayerJoin();
 	void HandlePlayerLeave();
 	void HandleLoginSuccess();

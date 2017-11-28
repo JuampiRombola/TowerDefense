@@ -57,6 +57,8 @@ void EnviormentUnit::Freeze(uint seconds){
 	_isFrozen = true;
 	_lastFreezeTimeStamp_ms = Helpers::MillisecondsTimeStamp();
 	_lastFreezeDuration_sec = seconds;
+	uint timeAlreadyDone = (_lastFreezeTimeStamp_ms > _lastTimeStamp_ms) ? _lastFreezeTimeStamp_ms - _lastTimeStamp_ms : 0;
+	_lastTimeStamp_ms += (_lastFreezeDuration_sec * 1000) - timeAlreadyDone;
 	std::cout << "EnviormentUnit frozen for " << seconds << "\n";
 }
 
@@ -152,6 +154,9 @@ bool EnviormentUnit::_CanStep(){
     }
 
 
+	if (_lastTimeStamp_ms > ts){
+		return false;
+	}
 
 	uint delta = ts - _lastTimeStamp_ms;
 

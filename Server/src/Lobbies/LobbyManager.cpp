@@ -2,7 +2,6 @@
 #include "../../include/Lobbies/LobbyManager.h"
 #include "../../../Common/Protocolo.h"
 #include "../../include/Notifications/LobbyJoinedNotification.h"
-#include "../../include/Notifications/LeftLobbyNotification.h"
 #include "../../include/Exceptions/PlayerStateInLobbyAndHasNoLobbySet.h"
 #include "../../include/Exceptions/InvalidSpellTypeException.h"
 #include "../../include/Notifications/LoggedInNotification.h"
@@ -94,7 +93,7 @@ void LobbyManager::HandlePickMap(PlayerProxy &player){
 
 
 
-
+/*
 void LobbyManager::HandlePlayerUnpickedSpell(PlayerProxy &player){
 	uint8_t spell = player.RecieveByte();
 	SPELL_TYPE type = (SPELL_TYPE )spell;
@@ -114,7 +113,7 @@ void LobbyManager::HandlePlayerUnpickedSpell(PlayerProxy &player){
 		default:
 			throw InvalidSpellTypeException();
 	}
-}
+}*/
 
 void LobbyManager::HandleLogin(PlayerProxy &player){
 	std::lock_guard<std::mutex> lock(_lobbiesMutex);
@@ -144,7 +143,7 @@ void LobbyManager::HandleLogin(PlayerProxy &player){
 	}
 
 	_notifications.Queue(new LoggedInNotification(player, lobbies, lobbies2playersGUIDS, mapConfigs));
-
+	player.state = BROWSING_LOBBIES;
 }
 
 void LobbyManager::HandleLeaveLobby(PlayerProxy &player){
@@ -179,11 +178,7 @@ void LobbyManager::HandleJoinLobby(PlayerProxy &player){
 		}
 	}
 
-
-	if (lobby->PlayerJoin(player)){
-		player.lobby = lobby;
-		_notifications.Queue(new LobbyJoinedNotification(player, *lobby));
-	}
+	lobby->PlayerJoin(player);
 }
 
 

@@ -33,7 +33,7 @@ public:
 	void HandleLogin(PlayerProxy &player);
 	void HandlePlayerIsReady(PlayerProxy &player);
 	void HandlePlayerPickedSpell(PlayerProxy &player);
-	void HandlePlayerUnpickedSpell(PlayerProxy &player);
+	//void HandlePlayerUnpickedSpell(PlayerProxy &player);
 	void HandlePickMap(PlayerProxy &player);
 };
 

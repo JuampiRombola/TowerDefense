@@ -7,15 +7,14 @@
 #include "../../../Common/Protocolo.h"
 
 
-class OtherPickedSpellGTKNotification : public GTKNotification {
+class PickSpellGTKNotification : public GTKNotification {
 private:
-    OtherPlayer& _otherPlayer;
+    uint _pguid;
     SPELL_TYPE _spelltype;
-    bool _pick;
 public:
-    OtherPickedSpellGTKNotification(OtherPlayer& otherPlayer, SPELL_TYPE spelltype, bool pick);
-    ~OtherPickedSpellGTKNotification();
-    void Execute(GTKRunner& runner);
+    PickSpellGTKNotification(uint pguid, SPELL_TYPE spelltype);
+    ~PickSpellGTKNotification();
+    void Execute(GTKmmRunner& runner);
 };
 
 

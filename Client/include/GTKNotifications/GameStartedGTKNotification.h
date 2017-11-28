@@ -14,7 +14,7 @@ private:
 public:
 	GameStartedGTKNotification(uint8_t sup, uint32_t width, uint32_t height);
 	~GameStartedGTKNotification();
-	void Execute(GTKRunner& runner);
+	void Execute(GTKmmRunner& runner);
 };
 
 #endif

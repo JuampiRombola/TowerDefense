@@ -16,8 +16,9 @@ private:
 	PlayerProxy& _player;
 	SPELL_TYPE _spelltype;
 	Lobby& _lobby;
+	bool _notifyThePlayer;
 public:
-	PlayerPickedSpellNotification(PlayerProxy& player, Lobby &lobby, SPELL_TYPE spelltype);
+	PlayerPickedSpellNotification(PlayerProxy& player, Lobby &lobby, SPELL_TYPE spelltype, bool notifyThePlayer);
 	~PlayerPickedSpellNotification();
 
 	void Notify();

@@ -18,13 +18,40 @@ void GameStartedNotification::SetPlayersToNotify(std::vector<PlayerProxy*>* play
 }
 
 void GameStartedNotification::Notify(){
-	std::vector<PlayerProxy*> playersInLobby = _lobby.GetPlayersInLobbyWithSomeSpellSet();
-	for (auto it = playersInLobby.begin(); it != playersInLobby.end(); ++it){
+	std::vector<PlayerProxy*> players = _lobby.GetPlayers();
+
+	PlayerProxy* fire = _lobby.GetFirePlayer();
+	PlayerProxy* ground = _lobby.GetGroundPlayer();
+	PlayerProxy* air = _lobby.GetAirPlayer();
+	PlayerProxy* water = _lobby.GetWaterPlayer();
+
+
+	for (auto it = players.begin(); it != players.end(); ++it){
 		PlayerProxy* p = *it;
 		uint8_t ins = GAME_STARTED;
 		p->SendByte(ins);
 		p->SendByte(_sup);
 		p->SendInt32(_width);
 		p->SendInt32(_height);
+		if (p == fire)
+			p->SendByte(1);
+		else
+			p->SendByte(0);
+
+		if (p == water)
+			p->SendByte(1);
+		else
+			p->SendByte(0);
+
+		if (p == air)
+			p->SendByte(1);
+		else
+			p->SendByte(0);
+
+		if (p == ground)
+			p->SendByte(1);
+		else
+			p->SendByte(0);
+
 	}
 }

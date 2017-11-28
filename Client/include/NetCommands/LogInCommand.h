@@ -10,7 +10,7 @@ class LogInCommand : public NetCommand{
 private:
 	std::string _name;
 public:
-	LogInCommand(std::string& name);
+	LogInCommand(std::string name);
 	~LogInCommand();
 	void SendCommand(SocketWrapper& sock);
 };

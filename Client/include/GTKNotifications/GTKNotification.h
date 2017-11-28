@@ -5,13 +5,13 @@
 #ifndef TOWERDEFENSE_GTKNOTIFICATION_H_H
 #define TOWERDEFENSE_GTKNOTIFICATION_H_H
 
-class GTKRunner;
+class GTKmmRunner;
 
 class GTKNotification {
 public:
     GTKNotification();
     virtual ~GTKNotification() = 0;
-    virtual void Execute(GTKRunner& runner) = 0;
+    virtual void Execute(GTKmmRunner& runner) = 0;
 };
 
 

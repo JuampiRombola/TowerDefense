@@ -15,7 +15,7 @@ private:
 public:
     LobbyPickedMapGTKNotification(uint lobbyId, uint mapId);
     ~LobbyPickedMapGTKNotification();
-    void Execute(GTKRunner& runner);
+    void Execute(GTKmmRunner& runner);
 };
 
 

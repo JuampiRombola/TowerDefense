@@ -18,14 +18,14 @@ private:
 	std::mutex _gameEnabledMutex;
 	uint _guid;
 	std::string _name;
-	std::vector<PlayerProxy*> _players;	
+	std::vector<PlayerProxy*> _players;
 	ThreadSafeQueue<Notification*>& _notifications;
 	PlayerProxy* _firePlayer;
 	PlayerProxy* _airPlayer;
 	PlayerProxy* _groundPlayer;
 	PlayerProxy* _waterPlayer;
     std::vector<PlayerProxy*> _readyPlayers;
-    std::vector<PlayerProxy*> _playingPlayers;
+    //std::vector<PlayerProxy*> _playingPlayers;
 	bool _gameEnabled;
 
 public:
@@ -35,28 +35,29 @@ public:
 	std::vector<PlayerProxy*> GetOtherPlayersInLobby();
 	std::string Name();
 	uint GUID();
-	bool PlayerJoin(PlayerProxy& player);
+	void PlayerJoin(PlayerProxy& player);
 	void PlayerLeave(PlayerProxy& player);
 	void PlayerIsReady(PlayerProxy& player);
 	void PlayerPickFire(PlayerProxy& player);
 	void PlayerPickWater(PlayerProxy& player);
 	void PlayerPickAir(PlayerProxy& player);
 	void PlayerPickGround(PlayerProxy& player);
-	void PlayerUnpickFire(PlayerProxy& player);
-	void PlayerUnpickWater(PlayerProxy& player);
-	void PlayerUnpickAir(PlayerProxy& player);
-	void PlayerUnpickGround(PlayerProxy& player);
+	//void PlayerUnpickFire(PlayerProxy& player);
+	//void PlayerUnpickWater(PlayerProxy& player);
+	//void PlayerUnpickAir(PlayerProxy& player);
+	//void PlayerUnpickGround(PlayerProxy& player);
 
 	//Devuelve 0 si nadie eligio fuego.
 	PlayerProxy* GetFirePlayer();
 	PlayerProxy* GetWaterPlayer();
-	PlayerProxy * GetAirPlayer();
-	PlayerProxy * GetGroundPlayer();
+	PlayerProxy* GetAirPlayer();
+	PlayerProxy* GetGroundPlayer();
+
 
 	bool GameEnabled();
 
     std::vector<PlayerProxy*> GetPlayersInLobbyWithSomeSpellSet();
-    std::vector<PlayerProxy*> GetPlayingPlayers();
+    std::vector<PlayerProxy*> GetPlayers();
 
 	Configuration* MapCfg;
 
