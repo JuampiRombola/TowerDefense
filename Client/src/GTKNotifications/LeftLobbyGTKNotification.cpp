@@ -1,5 +1,5 @@
 #include "../../include/GTKNotifications/LeftLobbyGTKNotification.h"
-#include "../../GTKRunner.h"
+#include "../../GTKmm/GTKmmRunner.h"
 
 
 LeftLobbyGTKNotification::LeftLobbyGTKNotification() {
@@ -10,8 +10,7 @@ LeftLobbyGTKNotification::~LeftLobbyGTKNotification(){
 	
 }
 
-void LeftLobbyGTKNotification::Execute(GTKRunner& runner){
-    g_object_ref(runner.grid_lobby);
-    gtk_container_remove(GTK_CONTAINER(runner.box1), GTK_WIDGET(runner.grid_lobby));
-    gtk_container_add(GTK_CONTAINER(runner.box1), GTK_WIDGET(runner.grid_lobbies));
+void LeftLobbyGTKNotification::Execute(GTKmmRunner& runner){
+    runner.box->remove(*runner.fixed_lobby.fixed);
+    runner.box->add(*runner.fixed_lobbies.fixed);
 }

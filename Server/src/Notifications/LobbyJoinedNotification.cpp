@@ -12,7 +12,7 @@ LobbyJoinedNotification::~LobbyJoinedNotification(){
 
 void LobbyJoinedNotification::SetPlayersToNotify(std::vector<PlayerProxy*>* players){
 	for (auto it = players->begin(); it != players->end(); ++it){
-		if ((*it)->GUID() != _player.GUID() && (*it)->state != IN_GAME){
+		if ((*it)->GUID() != _player.GUID() && (*it)->state != IN_GAME && ((*it)->state == IN_LOBBY || (*it)->state == BROWSING_LOBBIES )){
 			_playersToNotify.push_back(*it);
 		}
 	}
@@ -51,5 +51,4 @@ void LobbyJoinedNotification::Notify(){
 		p->SendInt32(playerGUID);
 		p->SendInt32(lobbyGUID);
 	}
-	
 }

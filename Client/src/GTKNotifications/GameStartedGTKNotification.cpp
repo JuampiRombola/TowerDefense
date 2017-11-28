@@ -1,6 +1,5 @@
-#include <gtk/gtk.h>
 #include "../../include/GTKNotifications/GameStartedGTKNotification.h"
-#include "../../GTKRunner.h"
+#include "../../GTKmm/GTKmmRunner.h"
 
 
 GameStartedGTKNotification::GameStartedGTKNotification(uint8_t sup, uint32_t width, uint32_t height)
@@ -13,8 +12,9 @@ GameStartedGTKNotification::~GameStartedGTKNotification(){
 	
 }
 
-void GameStartedGTKNotification::Execute(GTKRunner& runner){
-    GTKRunner::ShutdownGTK();
+void GameStartedGTKNotification::Execute(GTKmmRunner& runner){
+    //GTKmmRunner::ShutdownGTK();
+    runner.window_global->close();
     runner.OK = true;
     runner.MapSurface = _sup;
     runner.MapWidth = _width;

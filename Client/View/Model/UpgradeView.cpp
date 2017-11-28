@@ -145,7 +145,7 @@ void UpgradeView::addText() {
 }
 
 void UpgradeView::addButtons() {
-    buttons.push_back(new InstantButton(renderer, tl, DAMAGE, mousePosition,
+    buttons.push_back(new InstantButton(renderer, tl, DAMAGEE, mousePosition,
                                         START_X_ICON, START_Y_ICON,
                                         UPGRADE_ICON_SIZE,UPGRADE_ICON_SIZE,
                                         cmd));

@@ -2,7 +2,7 @@
 #include "../../../Common/Protocolo.h"
 
 
-LogInCommand::LogInCommand(std::string& name) : _name(name) {
+LogInCommand::LogInCommand(std::string name) : _name(name) {
 	
 }
 

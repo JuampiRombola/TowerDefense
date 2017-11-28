@@ -1007,7 +1007,7 @@
 			<Option target="TowerDefenseView"/>
 			<Option target="TowerDefenseClient"/>
 		</Unit>
-		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/PlayerJoinedLobbyGTKNotification.h">
+		<Unit filename="/home/tino/Documents/lantf2/Client/include/GTKNotifications/PlayerLeftJoinedLobbyGTKNotification.h">
 			<Option target="TowerDefenseView"/>
 			<Option target="TowerDefenseClient"/>
 		</Unit>
@@ -1141,7 +1141,7 @@
 			<Option target="TowerDefenseView"/>
 			<Option target="TowerDefenseClient"/>
 		</Unit>
-		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/PlayerJoinedLobbyGTKNotification.cpp">
+		<Unit filename="/home/tino/Documents/lantf2/Client/src/GTKNotifications/PlayerLeftJoinedLobbyGTKNotification.cpp">
 			<Option target="TowerDefenseView"/>
 			<Option target="TowerDefenseClient"/>
 		</Unit>

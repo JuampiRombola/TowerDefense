@@ -13,5 +13,5 @@ LeaveLobbyCommand::~LeaveLobbyCommand(){
 
 
 void LeaveLobbyCommand::SendCommand(SocketWrapper& sock){
-    sock.SendByte(JOIN_LOBBY);
+    sock.SendByte(LEAVE_LOBBY);
 }

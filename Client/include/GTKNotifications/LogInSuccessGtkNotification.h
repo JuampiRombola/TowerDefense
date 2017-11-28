@@ -10,11 +10,12 @@
 
 class LogInSuccessGtkNotification : public GTKNotification{
 private:
+    std::string _myname;
     std::vector<Lobby*> _lobbies;
 public:
-    LogInSuccessGtkNotification(std::vector<Lobby*>& lobbies);
+    LogInSuccessGtkNotification(std::vector<Lobby*>& lobbies, std::string myname);
     ~LogInSuccessGtkNotification();
-    void Execute(GTKRunner& runner);
+    void Execute(GTKmmRunner& runner);
 };
 
 
