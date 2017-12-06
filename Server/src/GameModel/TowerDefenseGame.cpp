@@ -380,25 +380,29 @@ void TowerDefenseGame::_Run()
 	while(!_canGameStart)
 		_gameStartCondVariable.wait(lock);
     
-	static uint clockFrequency = 100;
-    std::this_thread::sleep_for (std::chrono::milliseconds(5000));
+	static uint clockFrequency = 10;
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
     notifications.Queue(new GameModelStartedRunningNotification());
 
 
-    unsigned long long lastTimestamp = Helpers::MillisecondsTimeStamp();
-	unsigned long long timestamp = 0;
+    unsigned long long t1 = Helpers::MillisecondsTimeStamp();
+	unsigned long long t2 = 0;
 	unsigned long long delta = 0;
-	unsigned long long diference = 0;
-	while(_Step() && !_stopped) {
-		timestamp = Helpers::MillisecondsTimeStamp();
-		delta = timestamp - lastTimestamp;
-		diference = clockFrequency - delta;
+	unsigned long long elapsedTime = 0;
+	unsigned long long delayTime = 0;
 
-		if (diference >= 0)
-			std::this_thread::sleep_for (std::chrono::milliseconds(diference));
-		else
-			std::cout << "\n\nClock delayed " << diference * -1 << " ms\n\n" << std::flush;
+	while(_Step() && !_stopped) {
+		t2 = Helpers::MillisecondsTimeStamp();
+		elapsedTime = t2 - t1 + delta;
+		delayTime = clockFrequency - elapsedTime;
+		if (elapsedTime < clockFrequency) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(delayTime));
+			delta = Helpers::MillisecondsTimeStamp() - t2 - delayTime;
+		} else {
+			delta = 0;
+		}
+		t1 = Helpers::MillisecondsTimeStamp();
 	}
 
 }
