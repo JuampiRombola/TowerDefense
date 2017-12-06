@@ -46,7 +46,6 @@ void DepthLevel::addTower(TowerView *tower) {
 }
 
 void DepthLevel::addUnit(UnitView *unit) {
-    std::cout << "Added unit " << unit->getId() << std::endl;
     units.push_back(unit);
 }
 
@@ -89,15 +88,13 @@ void DepthLevel::draw(Uint32 time) {
         spellFloor->draw(time);
 
     // Dibujo unidades en sentido inverso
-    for (auto it = units.rbegin(); it != units.rend(); ++it){
-        UnitView* u = *it;
-        u->draw(time);
-    }
+    for (auto it = units.rbegin(); it != units.rend(); ++it)
+        (*it)->draw(time);
 
     //Remuevo las unidades que ya estan muertas
-    units.remove_if([] (UnitView* x) {
-        if (x->isDead()){
-            delete x;
+    units.remove_if([] (UnitView *unit) {
+        if (unit->isDead()){
+            delete unit;
             return true;
         }
         return false;});

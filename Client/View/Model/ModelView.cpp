@@ -2,11 +2,10 @@
 #include "ModelView.h"
 #include "PortalEntradaView.h"
 #include "PortalSalidaView.h"
-#include "../../../Common/Lock.h"
 #include "DepthLevelError.h"
 #include "../Common/SpriteNamesConfig.h"
 
-#define INVALID_INDEX "Se esta tratandod de acceder a una posicion invalida de DepthLevel"
+#define INVALID_INDEX "Se esta tratando de acceder a una posicion invalida de DepthLevel"
 
 ModelView::ModelView(Renderer &renderer, TextureLoader &textureLoader,
                      MusicPlayer &musicPlayer) :
@@ -45,7 +44,7 @@ void ModelView::createPathTile(int x, int y) {
 }
 
 void ModelView::createStructureTile(int x, int y) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     map.addStructureTile(x, y);
     if (mapLoaded && renderer.isOnCamera(x, y))
         musicPlayer.addStructureTile();
@@ -54,7 +53,7 @@ void ModelView::createStructureTile(int x, int y) {
 void ModelView::createPortalEntrada(int x, int y) {
     PortalEntradaView *p = new PortalEntradaView(textureLoader, renderer);
     p->setXY(x, y);
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     checkIndexDepthLevel(x+y+1);
     depthLevels[x+y+1]->addPortalEntrada(p);
 }
@@ -63,7 +62,7 @@ void ModelView::createPortalEntrada(int x, int y) {
 void ModelView::createPortalSalida(int x, int y) {
     PortalSalidaView *p = new PortalSalidaView(textureLoader, renderer);
     p->setXY(x, y);
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     checkIndexDepthLevel(x+y+1);
     depthLevels[x+y+1]->addPortalSalida(p);
 }
@@ -73,7 +72,7 @@ void ModelView::createUnit(int id, int key,
     UnitView *unit = new UnitView(id, key, textureLoader, renderer);
     unit->setSpeed(t);
     unit->move(x, y, toX, toY);
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     checkIndexDepthLevel(x+y+1);
     depthLevels[x+y+1]->addUnit(unit);
     idDepthLevelsUnits[id] = x + y + 1;
@@ -82,7 +81,7 @@ void ModelView::createUnit(int id, int key,
 void ModelView::createTower(int id, int key, int x, int y) {
     TowerView *tower = new TowerView(id, key, textureLoader, renderer);
     tower->setXY(x, y);
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     checkIndexDepthLevel(x+y+1);
     depthLevels[x+y+1]->addTower(tower);
     idDepthLevelsTowers[id] = x + y + 1;
@@ -91,7 +90,7 @@ void ModelView::createTower(int id, int key, int x, int y) {
 void ModelView::createSpell(int key, int x, int y, Uint32 t) {
     SpellView *spell = new SpellView(key, textureLoader, renderer);
     spell->cast(x, y, t);
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     checkIndexDepthLevel(x+y+1);
     if (key == GRIETA)
         depthLevels[x+y+1]->addFloorSpell(spell);
@@ -104,7 +103,7 @@ void ModelView::createSpell(int key, int x, int y, Uint32 t) {
 void ModelView::createShot(int key, int x, int y, int toX, int toY, Uint32 t) {
     ShotView *shot = new ShotView(key, textureLoader, renderer);
     shot->shoot(x, y, toX, toY, t);
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     int index = x+y+1;
     if ((toX + toY) < (x + y))
         index = x+y;
@@ -114,7 +113,7 @@ void ModelView::createShot(int key, int x, int y, int toX, int toY, Uint32 t) {
 }
 
 void ModelView::moveUnit(int id, int x, int y, int toX, int toY) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     int levelIndex = idDepthLevelsUnits.at(id);
     UnitView *unit = depthLevels[levelIndex]->getUnit(id);
     if (!unit) return;
@@ -126,21 +125,21 @@ void ModelView::moveUnit(int id, int x, int y, int toX, int toY) {
 }
 
 void ModelView::setUnitSpeed(int id, Uint32 newSpeed) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     UnitView *unit = depthLevels[idDepthLevelsUnits[id]]->getUnit(id);
     if (!unit) return;
     unit->setSpeed(newSpeed);
 }
 
 void ModelView::freezeUnit(int id, Uint32 duration) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     UnitView *unit = depthLevels[idDepthLevelsUnits[id]]->getUnit(id);
     if (!unit) return;
     unit->totalFreeze(duration);
 }
 
 void ModelView::killUnit(int id) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     int levelIndex = idDepthLevelsUnits.at(id);
     checkIndexDepthLevel(levelIndex);
     UnitView *unit = depthLevels[levelIndex]->getUnit(id);
@@ -151,7 +150,7 @@ void ModelView::killUnit(int id) {
 }
 
 void ModelView::draw(Uint32 time) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
 
     // Dibujo mapa
     map.draw(time);
@@ -186,7 +185,7 @@ void ModelView::win() {
 }
 
 TowerView *ModelView::onClick(int x, int y) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     return depthLevels[(x+y+1)]->onCLick(x, y);
 }
 
@@ -205,6 +204,6 @@ void ModelView::createAnnounce() {
 }
 
 TowerView *ModelView::getTower(int id) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     return depthLevels[idDepthLevelsTowers[id]]->getTower(id);
 }

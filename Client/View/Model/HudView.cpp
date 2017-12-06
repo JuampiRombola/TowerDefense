@@ -227,7 +227,7 @@ void HudView::createUpgradeTarget(TowerView *target) {
 }
 
 void HudView::updateUpgradeView() {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     if (!upgradeTarget) return;
     if (upgradeTarget->getId() == lastTowerUpdated) {
         this->createUpgradeTarget(model.getTower(upgradeTarget->getId()));
@@ -243,7 +243,7 @@ void HudView::destroyUpgradeTarget() {
 }
 
 void HudView::setLastTowerId(int id) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     lastTowerUpdated = id;
 }
 

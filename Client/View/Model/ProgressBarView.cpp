@@ -22,18 +22,18 @@ void ProgressBarView::setDestXY(int x, int y) {
 }
 
 void ProgressBarView::setTotal(Uint32 t) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     if (total == 0) return;
     total = t;
 }
 
 void ProgressBarView::setPart(Uint32 p) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     part = p;
 }
 
 void ProgressBarView::draw() {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     if (part >= total) {
         bar.setSourceW(srcW);
         bar.setDestW(dstW);
@@ -46,11 +46,11 @@ void ProgressBarView::draw() {
 }
 
 bool ProgressBarView::isFull() {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     return part >= total;
 }
 
 void ProgressBarView::addPart(Uint32 p) {
-    Lock(this->m);
+    std::unique_lock<std::mutex> lock(this->m);
     part += p;
 }
