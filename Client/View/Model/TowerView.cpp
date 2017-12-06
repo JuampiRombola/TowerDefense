@@ -68,21 +68,21 @@ void TowerView::setUpgradesByElement() {
 }
 
 void TowerView::setUpgradeExperienceDamage(uint32_t exp){
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     upgradeDamage = exp;
 }
 
 void TowerView::setUpgradeExperienceRange(uint32_t exp){
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     upgradeRange = exp;
 }
 void TowerView::setUpgradeExperienceCollateralRange(uint32_t exp){
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     upgradeImpact = exp;
 
 }
 void TowerView::setUpgradeExperienceSlow(uint32_t exp){
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     upgradeFreeze = exp;
 }
 
@@ -93,72 +93,72 @@ int TowerView::getId() {
 }
 
 Uint32 TowerView::getExp() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return exp;
 }
 
 Uint32 TowerView::getDamage() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return damage;
 }
 
 Uint32 TowerView::getRange() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return range;
 }
 
 Uint32 TowerView::getCollateralDamage() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return collateralDamage;
 }
 
 Uint32 TowerView::getFreezePercent() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return freezePercent;
 }
 
 Uint32 TowerView::getUpgradeDamage() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return upgradeDamage;
 }
 
 Uint32 TowerView::getUpgradeRange() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return upgradeRange;
 }
 
 Uint32 TowerView::getUpgradeImpact() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return upgradeImpact;
 }
 
 Uint32 TowerView::getUpgradeFreeze() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return upgradeFreeze;
 }
 
 void TowerView::setExp(Uint32 n) {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     exp = n;
 }
 
 void TowerView::setDamage(Uint32 n) {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     damage = n;
 }
 
 void TowerView::setRange(Uint32 n) {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     range = n;
 }
 
 void TowerView::setCollateralRange(Uint32 n) {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     collateralRange = n;
 }
 
 void TowerView::setFreezePercent(Uint32 n) {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     freezePercent = n;
 }
 
@@ -174,51 +174,51 @@ int TowerView::getKey() {
 }
 
 Uint32 TowerView::getLevel() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return level;
 }
 
 Uint32 TowerView::getCollateralRange() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return collateralRange;
 }
 
 Uint32 TowerView::getFreezeDuration() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return freezeDuration;
 }
 
 Uint32 TowerView::getFlyDamage() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return flyDamage;
 }
 
 void TowerView::setLevel(Uint32 n) {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     level = n;
 }
 
 void TowerView::setCollateralDamage(Uint32 n) {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     collateralDamage = n;
 }
 
 void TowerView::setFreezeDuration(Uint32 n) {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     freezeDuration = n;
 }
 
 void TowerView::setFlyDamage(Uint32 n) {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     flyDamage = n;
 }
 
 Uint32 TowerView::getFrequency() {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     return frequency;
 }
 
 void TowerView::setFrequency(Uint32 n) {
-    std::unique_lock<std::mutex> lock(this->m);
+    std::lock_guard<std::mutex> lock(this->m);
     frequency = n;
 }

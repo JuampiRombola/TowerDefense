@@ -71,7 +71,7 @@ ChatView::~ChatView() {
 }
 
 bool ChatView::isActive() {
-    std::unique_lock<std::mutex> lock(this->mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
 
     return active;
 }
@@ -79,7 +79,7 @@ bool ChatView::isActive() {
 void ChatView::enable() {
     SDL_StartTextInput();
 
-    std::unique_lock<std::mutex> lock(this->mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
 
     active = true;
     dstRectIbeam.x = dstX - OFFSET_X_IBEAM;
@@ -88,7 +88,7 @@ void ChatView::enable() {
 void ChatView::disable() {
     SDL_StopTextInput();
 
-    std::unique_lock<std::mutex> lock(this->mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
 
     active = false;
     if (!inputText.empty()) {
@@ -109,7 +109,7 @@ void ChatView::disable() {
 }
 
 void ChatView::erase() {
-    std::unique_lock<std::mutex> lock(this->mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
 
     if (inputText.empty()) return;
     inputText.pop_back();
@@ -119,7 +119,7 @@ void ChatView::erase() {
 }
 
 void ChatView::renderText() {
-    std::unique_lock<std::mutex> lock(this->mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
     if (input) delete input;
     input = nullptr;
     if (inputText.empty()) return;
@@ -129,7 +129,7 @@ void ChatView::renderText() {
 }
 
 void ChatView::newInput(std::string &entry) {
-    std::unique_lock<std::mutex> lock(this->mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
     if (!active) return;
     if (inputText.size() >= MAX_LENGTH) return;
     inputText += entry;
@@ -160,7 +160,7 @@ void ChatView::draw() {
     }
     
     if (!visible) return; 
-    std::unique_lock<std::mutex> lock(this->mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
     int i = 0;
     for (auto it= messages.rbegin(); it != messages.rend(); ++it) {
         (*it)->setDestXY(dstX, dstY-MSG_OFFSET-(TEXT_H * i++));
@@ -174,7 +174,7 @@ void ChatView::MessageFrom(std::string &msg, std::string &playerName) {
 }
 
 void ChatView::addMessage(std::string &m) {
-    std::unique_lock<std::mutex> lock(this->mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
     TextView *t;
     for (int i=MAX_SIZE; i <= (messages.size()+m.size()/(MAX_LENGTH+1)); ++i){
         t = messages.front();
