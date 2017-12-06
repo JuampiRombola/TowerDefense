@@ -163,7 +163,7 @@ bool ClientCooldownManager::IsTowerPlacementReady(SPELL_TYPE type){
             return (actual_ts - _lastGroundTowerPlacedTimeStamp_ms > cooldown_ms);
         case SPELL_TYPE_WATER:
             cooldown_ms = _waterTowerPlacedCooldown_sec * 1000;
-            if (actual_ts - _lastWaterTowerPlacedTimeStamp_ms > cooldown_ms);
+            return (actual_ts - _lastWaterTowerPlacedTimeStamp_ms > cooldown_ms);
         case SPELL_TYPE_AIR:
             cooldown_ms = _airTowerPlacedCooldown_sec * 1000;
             return (actual_ts - _lastAirTowerPlacedTimeStamp_ms > cooldown_ms);
