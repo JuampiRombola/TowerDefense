@@ -117,6 +117,7 @@ void ModelView::moveUnit(int id, int x, int y, int toX, int toY) {
     Lock(this->m);
     int levelIndex = idDepthLevelsUnits.at(id);
     UnitView *unit = depthLevels[levelIndex]->getUnit(id);
+    if (!unit) return;
     depthLevels[levelIndex]->removeUnit(id);
     unit->move(x, y, toX, toY);
     checkIndexDepthLevel(x+y+1);
@@ -127,12 +128,14 @@ void ModelView::moveUnit(int id, int x, int y, int toX, int toY) {
 void ModelView::setUnitSpeed(int id, Uint32 newSpeed) {
     Lock(this->m);
     UnitView *unit = depthLevels[idDepthLevelsUnits[id]]->getUnit(id);
+    if (!unit) return;
     unit->setSpeed(newSpeed);
 }
 
 void ModelView::freezeUnit(int id, Uint32 duration) {
     Lock(this->m);
     UnitView *unit = depthLevels[idDepthLevelsUnits[id]]->getUnit(id);
+    if (!unit) return;
     unit->totalFreeze(duration);
 }
 
@@ -141,6 +144,7 @@ void ModelView::killUnit(int id) {
     int levelIndex = idDepthLevelsUnits.at(id);
     checkIndexDepthLevel(levelIndex);
     UnitView *unit = depthLevels[levelIndex]->getUnit(id);
+    if (!unit) return;
     unit->enableDying();
     if (renderer.isOnCamera(unit->getX(), unit->getY()))
         musicPlayer.addDyingEnemy();

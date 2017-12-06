@@ -46,6 +46,7 @@ void DepthLevel::addTower(TowerView *tower) {
 }
 
 void DepthLevel::addUnit(UnitView *unit) {
+    std::cout << "Added unit " << unit->getId() << std::endl;
     units.push_back(unit);
 }
 
@@ -59,8 +60,11 @@ TowerView *DepthLevel::getTower(int id) {
 }
 
 UnitView *DepthLevel::getUnit(int id) {
-    for (auto unit : units)
-        if (unit->getId() == id) return unit;
+    for (auto unit : units) {
+        if (unit->getId() == id) 
+            return unit;
+    }
+    return nullptr;
 }
 
 void DepthLevel::removeUnit(int id) {
@@ -84,6 +88,12 @@ void DepthLevel::draw(Uint32 time) {
     for (auto spellFloor : spellsFloor)
         spellFloor->draw(time);
 
+    // Dibujo unidades en sentido inverso
+    for (auto it = units.rbegin(); it != units.rend(); ++it){
+        UnitView* u = *it;
+        u->draw(time);
+    }
+
     //Remuevo las unidades que ya estan muertas
     units.remove_if([] (UnitView* x) {
         if (x->isDead()){
@@ -91,12 +101,6 @@ void DepthLevel::draw(Uint32 time) {
             return true;
         }
         return false;});
-
-    // Dibujo unidades en sentido inverso
-    for (auto it = units.rbegin(); it != units.rend(); ++it){
-        UnitView* u = *it;
-        u->draw(time);
-    }
 
     // Dibujo torres
     for (auto tower : towers)
