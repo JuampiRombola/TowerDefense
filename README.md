@@ -18,8 +18,8 @@ Los enemigos aparecen de a hordas cada cierto tiempo, dependiendo de cada nivel.
 
 ![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/Torres.png "Vista al 06/11/17")
 
-![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/Juego1.png "Vista nivel Easy termianda")
+![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/Juego1.png "Vista nivel Easy")
 
-![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/Juego2.png "Vista nivel Medium termianda")
+![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/Juego2.png "Vista nivel Medium")
 
-![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/Juego3.png "Vista nivel Insane termianda")
+![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/Juego3.png "Vista nivel Insane")
