@@ -158,7 +158,7 @@ int main(int argc, char **argv) {
             SDL_Delay(delayTime);
             delta = SDL_GetTicks() - t2 - delayTime;
         } else
-            delta = elapsedTime - s;
+            delta = 0;
     }
     SDL_Quit();
     return 0;

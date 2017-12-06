@@ -193,7 +193,7 @@ void SDLRunner::Run(CommandDispatcher* dispatcher, NotificationReciever* recieve
             SDL_Delay(delayTime);
             delta = SDL_GetTicks() - t2 - delayTime;
         } else
-            delta = elapsedTime - s;
+            delta = 0;
     }
 
     _reciever->Stop();
