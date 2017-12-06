@@ -2,14 +2,14 @@
 ## Taller de Programación I con Veiga
 ### 2do cuatrimestre de 2017
 \
-*Ayudante a cargo:* Martín Di Paola \
+_Ayudante a cargo:_ Martín Di Paola \
 \
-*Integrantes:* \
+_Integrantes:_ \
 Martín Queija 96455 \
 Damián Cassinotti 96618 \
 Juan Pablo Rombolá 97131 \
 \
-*Nota:* 10 (diez)
+_Nota:_ 10 (diez)
 \
 \
 El trabajo práctico de este cuatrimestre consistió en implementar una variante del clásico género Tower Defense, en donde varios enemigos emergen desde uno o varios portales y se mueven por caminos predefinidos hacia su destino y es el objetivo de los jugadores evitar que lleguen a destino. \
