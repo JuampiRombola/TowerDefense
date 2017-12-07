@@ -3,9 +3,9 @@
 
 #endif //TOWERDEFENSE_PATHS_H
 
-// "/usr/local/share/TowerDefense/Resources/"
-#define PATH_RESOURCES "../Resources/"
+// "../Resources/"
+#define PATH_RESOURCES "/usr/local/share/TowerDefense/Resources/"
 
-// "/usr/local/etc/TowerDefense/Config/"
-#define PATH_CONFIG "../Config/"
+// "../Config/"
+#define PATH_CONFIG "/usr/local/etc/TowerDefense/Config/"
 

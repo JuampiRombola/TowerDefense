@@ -46,6 +46,7 @@ De​ ​ esta​ ​ forma,​ ​ el​ ​ comando​ ​ a ​ ​ ejecutar�
 3.2-​ ​ Si​ ​ quiere​ ​ instalar​ ​ solo​ ​ el​ ​ servidor,​ ​ ejecute​ ​ 
 ```
 ./install.sh​ ​ -s
+```
 3.3-​ ​ Si​ ​ quiere​ ​ instalar​ ​ solo​ ​ el​ ​ editor,​ ​ ejecute​ ​ 
 ```
 ./install.sh​ ​ -e
