@@ -36,20 +36,20 @@ El juego cuenta con un editor de escenarios que permite crear cualquier tipo de 
 2- Si no se poseen las dependencias (ver [Documentación Técnica](https://github.com/JuampiRombola/TowerDefense/blob/master/Documentos/Documentaci%C3%B3n%20T%C3%A9cnica.pdf)), ejecutar el archivo
 install.sh​ ​con​ ​el​ ​comando​ ​ -i.​ Es decir: 
 ```
-./install.sh​ ​ -i
+./install.sh​ -i
 ```
 3-​ ​Una​ ​vez​ ​instaladas​ ​las​ ​dependencias,​ se debe:
 3.1-​ ​Si​ se quiere​ instalar​ ​solo​ ​el​ cliente:
 ```
-./install.sh​ ​ -c
+./install.sh​ ​-c
 ```
 3.2-​ ​Si​ se quiere​ instalar​ solo​ el​ servidor:
 ```
-./install.sh​ ​ -s
+./install.sh​ ​-s
 ```
 3.3-​ ​Si​ ​se quiere​ ​instalar​ ​solo​ ​el​ ​editor:
 ```
-./install.sh​ ​ -e
+./install.sh​ ​-e
 ```
 3.4-​ ​Si​ se quiere​ instalar​ todo: 
 ```
