@@ -1,8 +1,8 @@
 # TowerDefense - TP final [FIUBA]
-![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/fiuba.jpg "Logo FIUBA")
 ## Taller de Programación I con Veiga
 ### 2do cuatrimestre de 2017
-\
+![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/fiuba.jpg =176x86 "Logo FIUBA")
+
 **Ayudante a cargo:** Martín Di Paola \
 \
 **Integrantes:** \
