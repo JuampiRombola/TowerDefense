@@ -57,8 +57,8 @@ De​ ​ esta​ ​ forma,​ ​ el​ ​ comando​ ​ a ​ ​ ejecutar�
 ```
 \
 El​ ​ juego​ ​ se​ ​ instala​ ​ en:
-● /usr/local/games ​ ​ para​ ​ los​ ​ ejecutables
-● /usr/local/etc/TowerDefense ​ ​ para​ ​ los​ ​ archivos​ ​ de​ ​ configuración
-● /usr/local/share/TowerDefense ​ ​ para​ ​ los​ ​ recursos​ ​ como​ ​ fuentes,​ ​ sprites​ ​ y ​ ​ sonidos.
+- /usr/local/games ​ ​ para​ ​ los​ ​ ejecutables
+- /usr/local/etc/TowerDefense ​ ​ para​ ​ los​ ​ archivos​ ​ de​ ​ configuración
+- /usr/local/share/TowerDefense ​ ​ para​ ​ los​ ​ recursos​ ​ como​ ​ fuentes,​ ​ sprites​ ​ y ​ ​ sonidos.
 
-# [Manual de usuario](https://github.com/JuampiRombola/TowerDefense/blob/master/Documentos/Manual\ de\ Usuario.pdf)
+ [Manual de usuario](https://github.com/JuampiRombola/TowerDefense/blob/master/Documentos/Manual\ de\ Usuario.pdf)
