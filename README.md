@@ -1,5 +1,5 @@
 # TowerDefense - TP final [FIUBA]
-![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/fiuba.png "Logo FIUBA")
+![alt text](https://github.com/JuampiRombola/TowerDefense/blob/master/Resources/fiuba.jpg "Logo FIUBA")
 ## Taller de Programación I con Veiga
 ### 2do cuatrimestre de 2017
 \
