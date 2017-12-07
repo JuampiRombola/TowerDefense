@@ -38,7 +38,7 @@ install.sh​ ​con​ ​el​ ​comando​ ​ -i.​ Es decir:
 ```
 ./install.sh​ -i
 ```
-3-​ ​Una​ ​vez​ ​instaladas​ ​las​ ​dependencias,​ se debe:
+3-​ ​Una​ ​vez​ ​instaladas​ ​las​ ​dependencias,​ se debe:\
 3.1-​ ​Si​ se quiere​ instalar​ ​solo​ ​el​ cliente:
 ```
 ./install.sh​ ​-c
