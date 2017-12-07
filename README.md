@@ -5,9 +5,9 @@
 **Ayudante a cargo:** Martín Di Paola \
 \
 **Integrantes:** \
-Martín Queija 96455 \
-Damián Cassinotti 96618 \
-Juan Pablo Rombolá 97131 \
+Martín Queija 96455 (tinqueija@gmail.com)\
+Damián Cassinotti 96618 (damiancassinotti@gmail.com)\
+Juan Pablo Rombolá 97131 (juampi.rombola@gmail.com)\
 \
 **Nota:** 10 (diez)
 ## El juego
@@ -64,4 +64,4 @@ El​ juego​​ se​ instala​ en:
 ## Más información
 - [Manual de usuario](https://github.com/JuampiRombola/TowerDefense/blob/master/Documentos/Manual%20de%20Usuario.pdf)
 - [Documentación Técnica](https://github.com/JuampiRombola/TowerDefense/blob/master/Documentos/Documentaci%C3%B3n%20T%C3%A9cnica.pdf)
-- Mail de contacto: juampi.rombola@gmail.com
+- [Manual de proyecto](https://github.com/JuampiRombola/TowerDefense/blob/master/Documentos/Manual%20del%20Proyecto.pdf)
