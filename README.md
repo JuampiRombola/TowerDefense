@@ -40,21 +40,11 @@ install.sh​ ​con​ ​el​ ​comando​ ​ -i.​ Es decir:
 ./install.sh​ -i
 ```
 3-​ ​Una​ ​vez​ ​instaladas​ ​las​ ​dependencias,​ se debe:\
-3.1-​ ​Si​ se quiere​ instalar​ ​solo​ ​el​ cliente:
 ```
-./install.sh​ ​-c
-```
-3.2-​ ​Si​ se quiere​ instalar​ solo​ el​ servidor:
-```
-./install.sh​ ​-s
-```
-3.3-​ ​Si​ ​se quiere​ ​instalar​ ​solo​ ​el​ ​editor:
-```
-./install.sh​ ​-e
-```
-3.4-​ ​Si​ se quiere​ instalar​ todo: 
-```
-./install.sh
+./install.sh​ ​-c  // Si​ se quiere​ instalar​ ​solo​ ​el​ cliente
+./install.sh​ ​-s  // ​Si​ se quiere​ instalar​ solo​ el​ servidor
+./install.sh​ ​-e  // ​Si​ ​se quiere​ ​instalar​ ​solo​ ​el​ ​editor
+./install.sh  // ​Si​ se quiere​ instalar​ todo
 ```
 \
 El​ juego​​ se​ instala​ en:
