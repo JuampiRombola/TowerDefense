@@ -119,7 +119,6 @@ void ChatView::erase() {
 }
 
 void ChatView::renderText() {
-    std::lock_guard<std::mutex> lock(this->mutex);
     if (input) delete input;
     input = nullptr;
     if (inputText.empty()) return;
@@ -129,7 +128,6 @@ void ChatView::renderText() {
 }
 
 void ChatView::newInput(std::string &entry) {
-    std::lock_guard<std::mutex> lock(this->mutex);
     if (!active) return;
     if (inputText.size() >= MAX_LENGTH) return;
     inputText += entry;
