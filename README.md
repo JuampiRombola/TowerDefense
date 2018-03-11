@@ -10,7 +10,9 @@ Martín Queija 96455 (tinqueija@gmail.com)\
 Damián Cassinotti 96618 (damiancassinotti@gmail.com)\
 Juan Pablo Rombolá 97131 (juampi.rombola@gmail.com)\
 \
-**Nota:** 10 (diez)
+**Nota:** 10 (diez) \
+\
+**Trailer:** https://www.youtube.com/watch?v=RLAoDbgdZdY
 ## El juego
 El trabajo práctico de este cuatrimestre consistió en implementar una variante del clásico género Tower Defense, en donde varios enemigos emergen desde uno o varios portales y se mueven por caminos predefinidos y es el objetivo de los jugadores evitar que lleguen a destino.
 
